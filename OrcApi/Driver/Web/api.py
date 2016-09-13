@@ -2,11 +2,15 @@
 from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
+from OrcLib.LibLog import OrcLog
 from OrcApi.Driver.Web.PageDefModel import PageDefHandle
 from OrcApi.Driver.Web.PageDetModel import PageDetHandle
 from OrcApi.Driver.Web.WidgetDefModel import WidgetDefHandle
 from OrcApi.Driver.Web.WidgetDetModel import WidgetDetHandle
 from OrcApi import app
+
+
+_logger = OrcLog("api.driver.web")
 
 
 # ---- Page definition ---------------------------------------------------------- #
@@ -26,7 +30,7 @@ def page_def_get_flag():
     if 0 < len(_value):
         _result = _value[0].page_flag
     else:
-        _result = ""
+        _result = None
 
     _return.set_str_result(_result)
 
@@ -355,16 +359,25 @@ def widget_det_modify():
 @allow_cross_domain
 def page_get_url():
     """
+    Get page url by page detail id
     :return:
     """
-    _parameter = orc_get_parameter()
     _return = OrcReturn()
+
+    # input
+    _parameter = orc_get_parameter()
+    _logger.debug(_parameter)
 
     _model_page_det = PageDetHandle()
 
-    _page_def = _model_page_det.usr_search(_parameter)[0]
-    _page_url = _page_def.page_url
+    _page_def = _model_page_det.usr_search(_parameter)
+    if 0 < len(_page_def):
+        _page_url = _page_def[0].page_url
+    else:
+        _page_url = None
 
+    # output
+    _logger.debug(_page_url)
     _return.set_str_result(_page_url)
 
     return _return.get_return()
@@ -375,17 +388,28 @@ def page_get_url():
 @allow_cross_domain
 def widget_get_def():
     """
-    :return:
+    :return: list or None
     """
-    _parameter = orc_get_parameter()
     _return = OrcReturn()
+
+    # Input
+    _parameter = orc_get_parameter()
+    _logger.debug(_parameter)
 
     _model_widget_def = WidgetDefHandle()
 
     _widget_def = _model_widget_def.usr_search(_parameter)
 
-    _return.set_db_result(_widget_def)
+    # Set result to None if definition is not exists, replace [] to None
+    if 0 < len(_widget_def):
+        _res = _widget_def
+    else:
+        _res = None
 
+    # Output
+    _logger.debug(_res)
+    _return.set_db_result(_res)
+    print _return.get_return()
     return _return.get_return()
 
 
@@ -393,15 +417,26 @@ def widget_get_def():
 @allow_cross_domain
 def widget_get_det():
     """
-    :return:
+    :return: list or None
     """
-    _parameter = orc_get_parameter()
     _return = OrcReturn()
+
+    # Input
+    _parameter = orc_get_parameter()
+    _logger.debug(_parameter)
 
     _model_widget_det = WidgetDetHandle()
 
     _widget_det = _model_widget_det.usr_search(_parameter)
 
+    # Set result to None if detail is not exists, replace [] to None
+    if 0 < len(_widget_det):
+        _res = _widget_det
+    else:
+        _res = None
+
+    # Output
+    _logger.debug(_res)
     _return.set_db_result(_widget_det)
 
     return _return.get_return()

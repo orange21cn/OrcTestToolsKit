@@ -52,6 +52,10 @@ class WidgetDefHandle:
             if 'widget_desc' in p_filter:
                 i_res = i_res.filter(WebWidgetDef.widget_desc.ilike(f_value('widget_desc')))
 
+        _res = i_res.all()
+        if 0 == len(_res):
+            return []
+
         # get tree
         for t_item in i_res.all():
 

@@ -1,5 +1,5 @@
 import sys
-
+from OrcLib import init_log
 
 class OrcTest:
 
@@ -20,3 +20,4 @@ class OrcTest:
     @staticmethod
     def test_print_begin():
         print ">--- Case %s begin -------------------->" % sys._getframe().f_back.f_code.co_name
+        init_log()

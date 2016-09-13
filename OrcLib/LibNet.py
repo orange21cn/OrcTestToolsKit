@@ -9,13 +9,11 @@ from flask import request
 from requests.exceptions import RequestException
 from requests.packages.urllib3.exceptions import HTTPError
 
-from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibCommon import is_false
-
 from OrcLib.LibLog import OrcLog
 
 
-_logger = OrcLog("basic.net")
+_logger = OrcLog("api.test01")
 
 
 class OrcReturn:
@@ -33,16 +31,17 @@ class OrcReturn:
 
     def set_db_result(self, p_values):
 
-        self.__result["VALUE"] = []
-
-        if p_values is not None:
+        if p_values is None:
+            self.__result["VALUE"] = None
+        else:
+            self.__result["VALUE"] = []
             for t_data in p_values:
                 self.__result["VALUE"].append(t_data.to_json())
 
     def set_str_result(self, p_value):
 
         if p_value is None:
-            self.__result["VALUE"] = ""
+            self.__result["VALUE"] = None
         else:
             self.__result["VALUE"] = p_value
 
