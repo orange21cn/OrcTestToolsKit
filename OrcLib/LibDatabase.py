@@ -1,0 +1,413 @@
+# -*- coding: utf-8 -*-
+from datetime import datetime
+
+from OrcLib.LibCommon import time2char
+from OrcApi import orc_db
+
+
+def gen_id(p_name):
+    _seq = orc_db.session \
+        .query(LibSequence) \
+        .filter(LibSequence.field_name == p_name) \
+        .first()
+    _seq.field_seq += 1
+    orc_db.session.commit()
+
+    return _seq.field_seq
+
+
+class TabBatchDef(orc_db.Model):
+    """
+    Table orc_batch_def
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    pid = orc_db.Column(orc_db.Integer)
+    batch_no = orc_db.Column(orc_db.String(16))
+    batch_name = orc_db.Column(orc_db.String(32))
+    batch_desc = orc_db.Column(orc_db.String(512))
+    comment = orc_db.Column(orc_db.String(1024))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "pid": str(self.pid),
+            "batch_no": self.batch_no,
+            "batch_name": self.batch_name,
+            "batch_desc": self.batch_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class TabBatchDet(orc_db.Model):
+    """
+    Table tab_batch_det
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    batch_id = orc_db.Column(orc_db.Integer)
+    case_id = orc_db.Column(orc_db.Integer)
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "batch_id": str(self.batch_id),
+            "case_id": str(self.case_id),
+            "create_time": time2char(self.create_time)
+        }
+        return _value
+
+
+class TabCaseDef(orc_db.Model):
+    """
+    Table tab_case_def
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    pid = orc_db.Column(orc_db.Integer)
+    case_no = orc_db.Column(orc_db.String(8))
+    case_path = orc_db.Column(orc_db.String(32))
+    case_type = orc_db.Column(orc_db.String(8))
+    case_name = orc_db.Column(orc_db.String(64))
+    case_desc = orc_db.Column(orc_db.String(512))
+    comment = orc_db.Column(orc_db.String(1024))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "pid": str(self.pid),
+            "case_no": str(self.case_no),
+            "case_path": self.case_path,
+            "case_type": self.case_type,
+            "case_name": self.case_name,
+            "case_desc": self.case_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class TabCaseDet(orc_db.Model):
+    """
+    Table tab_case_det
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    case_id = orc_db.Column(orc_db.Integer)
+    step_id = orc_db.Column(orc_db.Integer)
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "case_id": str(self.case_id),
+            "step_id": str(self.step_id),
+            "create_time": time2char(self.create_time)
+        }
+        return _value
+
+
+class TabStepDef(orc_db.Model):
+    """
+    Table tab_step_def
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    step_no = orc_db.Column(orc_db.String(8))
+    step_desc = orc_db.Column(orc_db.String(512))
+    comment = orc_db.Column(orc_db.String(1024))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+
+        return dict(
+            id=str(self.id),
+            step_no=self.step_no,
+            step_desc=self.step_desc,
+            comment=self.comment,
+            create_time=time2char(self.create_time),
+            modify_time=time2char(self.modify_time)
+        )
+
+
+class TabStepDet(orc_db.Model):
+    """
+
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    step_id = orc_db.Column(orc_db.Integer)
+    item_id = orc_db.Column(orc_db.Integer)
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "step_id": str(self.step_id),
+            "item_id": str(self.item_id),
+            "create_time": time2char(self.create_time)
+        }
+        return _value
+
+
+class TabItem(orc_db.Model):
+    """
+
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    item_no = orc_db.Column(orc_db.String(32))
+    item_type = orc_db.Column(orc_db.String(8))
+    item_mode = orc_db.Column(orc_db.String(8))
+    item_operate = orc_db.Column(orc_db.String(256))
+    item_desc = orc_db.Column(orc_db.String(256))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "item_no": self.item_no,
+            "item_type": self.item_type,
+            "item_mode": self.item_mode,
+            "item_operate": self.item_operate,
+            "item_desc": self.item_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class TabData(orc_db.Model):
+    """
+    Data table
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    src_id = orc_db.Column(orc_db.Integer)
+    src_type = orc_db.Column(orc_db.String(16))
+    data_flag = orc_db.Column(orc_db.String(32))
+    data_order = orc_db.Column(orc_db.Integer)
+    data_type = orc_db.Column(orc_db.String(16))
+    data_mode = orc_db.Column(orc_db.String(16))
+    data_value = orc_db.Column(orc_db.String(128))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "src_id": str(self.src_id),
+            "src_type": self.src_type,
+            "data_flag": self.data_flag,
+            "data_order": str(self.data_order),
+            "data_type": self.data_type,
+            "data_mode": self.data_mode,
+            "data_value": self.data_value,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class WebPageDef(orc_db.Model):
+    """
+    Table page definition
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    page_flag = orc_db.Column(orc_db.String(32))
+    page_desc = orc_db.Column(orc_db.String(32))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "page_flag": self.page_flag,
+            "page_desc": self.page_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class WebPageDet(orc_db.Model):
+    """
+    Table page detail
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    page_id = orc_db.Column(orc_db.Integer, primary_key=True)
+    page_env = orc_db.Column(orc_db.String(32))
+    page_url = orc_db.Column(orc_db.String(32))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "page_id": str(self.page_id),
+            "page_env": self.page_env,
+            "page_url": self.page_url,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class WebWidgetDef(orc_db.Model):
+    """
+    Table widget definition
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    pid = orc_db.Column(orc_db.Integer)
+    widget_flag = orc_db.Column(orc_db.String(8))
+    widget_path = orc_db.Column(orc_db.String(32))
+    widget_type = orc_db.Column(orc_db.String(16))
+    widget_desc = orc_db.Column(orc_db.String(255))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "pid": str(self.pid),
+            "widget_flag": self.widget_flag,
+            "widget_path": self.widget_path,
+            "widget_type": self.widget_type,
+            "widget_desc": self.widget_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class WebWidgetDet(orc_db.Model):
+    """
+    Table widget definition
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    widget_id = orc_db.Column(orc_db.Integer)
+    widget_order = orc_db.Column(orc_db.String(16))
+    widget_attr_type = orc_db.Column(orc_db.String(16))
+    widget_attr_value = orc_db.Column(orc_db.String(64))
+    widget_desc = orc_db.Column(orc_db.String(255))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self):
+        pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "widget_id": self.widget_id,
+            "widget_order": self.widget_order,
+            "widget_attr_type": self.widget_attr_type,
+            "widget_attr_value": self.widget_attr_value,
+            "widget_desc": self.widget_desc,
+            "comment": self.comment,
+            "create_time": time2char(self.create_time),
+            "modify_time": time2char(self.modify_time)
+        }
+        return _value
+
+
+class LibDictionary(orc_db.Model):
+    """
+    Table dictionary
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    dict_flag = orc_db.Column(orc_db.String(32))
+    dict_order = orc_db.Column(orc_db.String(32))
+    dict_value = orc_db.Column(orc_db.String(16))
+    dict_text = orc_db.Column(orc_db.String(16))
+    dict_desc = orc_db.Column(orc_db.String(255))
+
+    def __init__(self, p_data):
+        """
+        :param p_data: dict
+        :return: None
+        """
+        if "id" in p_data:
+            self.id = p_data["id"]
+        elif "" in p_data:
+            self.dict_flag = p_data["dict_flag"]
+        elif "dict_flag" in p_data:
+            self.dict_order = p_data["dict_order"]
+        elif "dict_value" in p_data:
+            self.dict_value = p_data["dict_value"]
+        elif "dict_text" in p_data:
+            self.dict_text = p_data["dict_text"]
+        elif "dict_desc" in p_data:
+            self.dict_desc = p_data["dict_desc"]
+        else:
+            pass
+
+    def to_json(self):
+        _value = {
+            "id": str(self.id),
+            "dict_flag": self.dict_flag,
+            "dict_order": self.dict_order,
+            "dict_value": self.dict_value,
+            "dict_text": self.dict_text,
+            "dict_desc": self.dict_desc
+        }
+        return _value
+
+
+class LibSequence(orc_db.Model):
+    """
+    Table sequence
+    """
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    field_name = orc_db.Column(orc_db.String(32))
+    field_seq = orc_db.Column(orc_db.Integer)
+
+    def __init__(self):
+        pass
