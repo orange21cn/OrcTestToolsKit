@@ -1,6 +1,6 @@
 import unittest
 
-from OrcDriver.Web.WebObject import ObjectMag
+from OrcLib.LibNet import orc_invoke
 from OrcLib.LibTest import OrcTest
 
 
@@ -13,19 +13,11 @@ class TestSelenium(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = ObjectMag()
-        _handle.open_page("120100000000003")
+        _data = dict(TYPE="GET_PAGE",
+                     PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000004"))
+        _url = "http://localhost:5002/WebServer/run"
+        _res = orc_invoke(_url, _data)
 
-        OrcTest.test_print_end()
-
-    def test_get_widget(self):
-        """
-        Test get root
-        :return:
-        """
-        OrcTest.test_print_begin()
-
-        _handle = ObjectMag()
-        _handle.get_widget("120300000000022")
+        OrcTest.test_print_result(_res)
 
         OrcTest.test_print_end()

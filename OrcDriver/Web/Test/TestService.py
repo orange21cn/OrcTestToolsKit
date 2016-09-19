@@ -1,6 +1,5 @@
 import unittest
 
-from OrcDriver.Web.WebObject import ObjectMag
 from OrcLib.LibTest import OrcTest
 from OrcDriver.Web.service import DriverService
 

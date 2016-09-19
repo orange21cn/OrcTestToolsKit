@@ -23,8 +23,8 @@ def api_web_run():
     _return = OrcReturn()
 
     _model = DriverSelenium()
-    _value = _model.get_test()
+    _value = _model.run(_parameter)
 
-    _return.set_db_result(_value)
+    _return.set_str_result(_value)
 
     return _return.get_return()

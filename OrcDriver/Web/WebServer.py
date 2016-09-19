@@ -13,7 +13,7 @@ class DriverSelenium:
 
     def __init__(self):
 
-        self.logger = OrcLog("driver.selenium")
+        self.__logger = OrcLog("driver.selenium")
         self.__service = DriverService()
 
         self.__browser = "FIREFOX"  # 浏览器
@@ -24,34 +24,46 @@ class DriverSelenium:
 
         self.__objects = {}  # 存储出现过的对象
 
-    def run(self):
-        pass
-
-    def set_browser(self, p_browser):
+    def run(self, p_data):
         """
-        Set test browser
-        :param p_browser:
+        执行调用
+        :param p_data: {TYPE, PARA}
         :return:
         """
-        self.__browser = p_browser
+        self.__logger.debug(p_data)
 
-    def set_env(self, p_env):
+        _type = p_data["TYPE"]
+        _para = p_data["PARA"]
+        _node = None
+
+        if "GET_PAGE" == _type:
+            _node = self.__get_page(_para)
+        elif "GET_WIDGET" == _type:
+            _node = self.__get_widget(_para)
+        else:
+            self.__logger.error("Wrong type %s." % _type)
+
+        if _node is not None:
+            _node = "Success"
+
+        return _node
+
+    def __get_page(self, p_para):
         """
-        Set environment
-        :param p_env:
+        打开浏览器
+        :param p_para: {BROWSER, ID, ENV}
         :return:
         """
-        self.__env = p_env
+        self.__logger.debug(p_para)
 
-    def open_page(self, p_page_id):
-        """
-        Return a selenium object of page or frame
-        :param p_page_id: page_id
-        :return: NodeDef
-        """
-        _para = dict(page_id=p_page_id, page_env=self.__env)
-        _url = self.__service.page_get_url(_para)
+        self.__browser = p_para["BROWSER"]
+        self.__env = p_para["ENV"]
+        _page_id = p_para["ID"]
 
+        # 获取 url
+        _url = self.__service.page_get_url(_page_id)
+
+        # 打开页面
         if self.__root is None:
 
             try:
@@ -68,27 +80,47 @@ class DriverSelenium:
                 self.__root.get(_url)
 
             except WebDriverException, err:
+                self.__logger.error("Open browser failed.")
 
-                self.__root = None
+        return self.__root
 
-    def get_widget(self, p_object_id):
+    def __get_widget(self, p_widget_id):
+        _node = None
+        return _node
+
+    def __set_browser(self, p_browser):
+        """
+        Set test browser
+        :param p_browser:
+        :return:
+        """
+        self.__browser = p_browser
+
+    def __set_env(self, p_env):
+        """
+        Set environment
+        :param p_env:
+        :return:
+        """
+        self.__env = p_env
+
+    def get_widget0(self, p_widget_id):
         """
         Get a selenium object of widget
-        :param p_object_id:
+        :param p_widget_id:
         :return: NodeDef
         """
-        # if self.__root is None:
-        #     return None
+        if self.__root is None:
+            return None
 
-        _para_def = dict(id=p_object_id)
-        _path_def = orc_invoke(self.__interface["usr_get_def"], _para_def)
         _widget = self.__root
+        _widget_def = self.__service.widget_get_definition(p_widget_id)
 
         # noinspection PyTypeChecker
-        for t_def in _path_def:
+        for t_def in _widget_def:
 
             _para_det = dict(widget_id=t_def["id"])
-            _path_det = orc_invoke(self.__interface["usr_get_det"], _para_det)
+            _path_det = self.__service.widget_get_detail(t_def[id])
 
             _type = t_def["widget_type"]
             _flag = t_def["widget_flag"]
