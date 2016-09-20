@@ -116,10 +116,8 @@ class DriverSelenium:
         _widget = self.__root
         _widget_def = self.__service.widget_get_definition(p_widget_id)
 
-        # noinspection PyTypeChecker
         for t_def in _widget_def:
 
-            _para_det = dict(widget_id=t_def["id"])
             _path_det = self.__service.widget_get_detail(t_def[id])
 
             _type = t_def["widget_type"]

@@ -15,7 +15,7 @@ class TestModel(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.usr_search
+        _res = _service.usr_search()
 
         OrcTest.test_print_result(_res)
 

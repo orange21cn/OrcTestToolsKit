@@ -18,24 +18,6 @@ import re
 #     return mod_obj
 
 
-class OrcDict():
-
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def get_batch_path():
-        pass
-
-    @staticmethod
-    def get_case_path():
-        pass
-
-    @staticmethod
-    def get_dict_text():
-        pass
-
-
 def is_equal_str(str_a, str_b):
     """
     判断字符串相等，None 作为空串处理
@@ -74,55 +56,70 @@ def gen_date_str():
     return time.strftime("%Y%m%d%H%M%S")
 
 
-def get_parent_no(p_no):
-    """
-    According to tree expression 10.11.12.13 function get the parent no.
-    Remove the last part of expression ".13"
-    If the expression is a root expression return None
-    :param p_no: tree expression
-    :return: parent expression
-    """
-    res_value = None
-
-    if re.search('\.', p_no):
-        res_value = re.sub('\.[^\.]*$', '', p_no)
-
-    return res_value
-
-
-def tuple2list(p_inp):
-    if p_inp is not None:
-        return list(str(member) for member in p_inp)
-    else:
-        return None
+# def get_parent_no(p_no):
+#     """
+#     According to tree expression 10.11.12.13 function get the parent no.
+#     Remove the last part of expression ".13"
+#     If the expression is a root expression return None
+#     :param p_no: tree expression
+#     :return: parent expression
+#     """
+#     res_value = None
+#
+#     if re.search('\.', p_no):
+#         res_value = re.sub('\.[^\.]*$', '', p_no)
+#
+#     return res_value
 
 
-def time2char(p_inp):
-    if is_null(p_inp):
-        return ""
-    else:
-        return p_inp.strftime("%Y-%m-%d %H:%M:%S")
+# def tuple2list(p_inp):
+#     if p_inp is not None:
+#         return list(str(member) for member in p_inp)
+#     else:
+#         return None
 
 
-def add_quote(p_str):
-    if type(p_str) is not int:
-        return '\'' + p_str + '\''
-    return '\'' + str(p_str) + '\''
+class OrcCover:
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def time2str(p_time):
+        try:
+            _res = p_time.strftime("%Y-%m-%d %H:%M:%S")
+        except AttributeError:
+            _res = None
+        return _res
+
+    @staticmethod
+    def str2time(p_str):
+        try:
+            _res = time.mktime(time.strptime(p_str, "%Y-%m-%d %H:%M:%S"))
+        except AttributeError:
+            _res = None
+        return _res
+
+#
+# def add_quote(p_str):
+#     if type(p_str) is not int:
+#         return '\'' + p_str + '\''
+#     return '\'' + str(p_str) + '\''
+#
+#
+# def add_dquote(p_str):
+#     return '\'' + str(p_str) + '\''
 
 
-def add_dquote(p_str):
-    return '\'' + str(p_str) + '\''
-
-
-class IndexStr:
-
-    def __init__(self, p_seed):
-        self.seed = p_seed
-
-    def get_index(self):
-        self.seed += 1
-        return self.seed
-
-    def get_date_index(self):
-        self.seed += 1
-        return gen_date_str() + "%s" % self.seed
+# class IndexStr:
+#
+#     def __init__(self, p_seed):
+#         self.seed = p_seed
+#
+#     def get_index(self):
+#         self.seed += 1
+#         return self.seed
+#
+#     def get_date_index(self):
+#         self.seed += 1
+#         return gen_date_str() + "%s" % self.seed

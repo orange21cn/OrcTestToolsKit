@@ -1,26 +1,96 @@
 import traceback
 import unittest
 
-from OrcDriver.Web.WidgetDefModel import WidgetDefHandle
+from OrcApi.Driver.Web.WidgetDefModel import WidgetDefHandle
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
 
-from OrcLib import OrcTest
+from OrcLib.LibTest import OrcTest
 
 
-class TestModel(unittest.TestCase):
+class TestSearch(unittest.TestCase):
 
-    def test_model_usr_search(self):
+    def test_usr_search_01(self):
         """
-        Test get root
+        Test search
         :return:
         """
         OrcTest.test_print_begin()
 
         _handle = WidgetDefHandle()
-        _res = _handle.usr_search({"id": "1004"})
+        _res = _handle.usr_search({"id": "3200000001"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_usr_search_02(self):
+        """
+        Test search
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _handle = WidgetDefHandle()
+        _res = _handle.usr_search({"id": "3200000004"})
+        for i in _res:
+            OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_usr_search_all_01(self):
+        """
+        Test search all
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _handle = WidgetDefHandle()
+        _res = _handle.usr_search_all({"id": "3200000001"})
+        for i in _res:
+            OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_usr_search_all_02(self):
+        """
+        Not exists
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _handle = WidgetDefHandle()
+        _res = _handle.usr_search_all({"id": "3200000004"})
+        for i in _res:
+            OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_usr_search_tree_01(self):
+        """
+        Search tree
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _handle = WidgetDefHandle()
+        _res = _handle.usr_search_tree("3200000003")
+        for i in _res:
+            OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_usr_search_tree_02(self):
+        """
+        Not exists
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _handle = WidgetDefHandle()
+        _res = _handle.usr_search_tree("3200000004")
+        for i in _res:
+            OrcTest.test_print_result(i)
 
         OrcTest.test_print_end()
 

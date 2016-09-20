@@ -23,50 +23,77 @@ class WidgetDefHandle:
 
     def usr_search(self, p_filter=None):
         """
+        查询符合条件的控件
         :param p_filter:
         :return:
         """
-        _res_list = []
+        if not p_filter:
+            p_filter = dict()
 
         # search
         def f_value(p_flag):
             return "%%%s%%" % p_filter[p_flag]
 
-        if p_filter is None:
-            i_res = self.__session.query(WebWidgetDef).all()
-        else:
-            i_res = self.__session.query(WebWidgetDef)
+        _res = self.__session.query(WebWidgetDef)
 
-            if 'id' in p_filter:
-                i_res = i_res.filter(WebWidgetDef.id == p_filter['id'])
+        if 'id' in p_filter:
+            _res = _res.filter(WebWidgetDef.id == p_filter['id'])
 
-            if 'widget_id' in p_filter:
-                i_res = i_res.filter(WebWidgetDef.widget_id == p_filter['widget_id'])
+        if 'widget_id' in p_filter:
+            _res = _res.filter(WebWidgetDef.widget_id == p_filter['widget_id'])
 
-            if 'widget_type' in p_filter:
-                i_res = i_res.filter(WebWidgetDef.widget_type == p_filter['widget_type'])
+        if 'widget_type' in p_filter:
+            _res = _res.filter(WebWidgetDef.widget_type == p_filter['widget_type'])
 
-            if 'widget_flag' in p_filter:
-                i_res = i_res.filter(WebWidgetDef.widget_flag.ilike(f_value('widget_flag')))
+        if 'widget_flag' in p_filter:
+            _res = _res.filter(WebWidgetDef.widget_flag.ilike(f_value('widget_flag')))
 
-            if 'widget_desc' in p_filter:
-                i_res = i_res.filter(WebWidgetDef.widget_desc.ilike(f_value('widget_desc')))
+        if 'widget_desc' in p_filter:
+            _res = _res.filter(WebWidgetDef.widget_desc.ilike(f_value('widget_desc')))
 
-        _res = i_res.all()
-        if 0 == len(_res):
-            return []
+        return _res.all()
+
+    def usr_search_all(self, p_filter):
+        """
+        查询符合条件的控件,追述到根节点,获取整棵树
+        :param p_filter:
+        :return:
+        """
+        _res_tree = []
+        _res = self.usr_search(p_filter)
 
         # get tree
-        for t_item in i_res.all():
+        for t_item in _res:
 
-            if t_item not in _res_list:
+            if t_item not in _res_tree:
 
-                t_tree = self._get_tree(self._get_root(t_item))
-                _res_list.extend(t_tree)
+                t_root = self.__get_root(t_item)
+                t_tree = self.__get_tree(t_root)
+
+                _res_tree.extend(t_tree)
+
+        return _res_tree
+
+    def usr_search_tree(self, p_id):
+        """
+        查询符合条件的控件,并获取其所有父节点
+        :param p_id:
+        :return:
+        """
+        _res_list = []
+
+        _item = self.__session\
+                .query(WebWidgetDef)\
+                .filter(WebWidgetDef.id == p_id)\
+                .first()
+
+        if _item is not None:
+            _res_list = self.usr_search_tree(_item.pid)
+            _res_list.append(_item)
 
         return _res_list
 
-    def _get_root(self, p_item):
+    def __get_root(self, p_item):
         """
         :param p_item:
         :return:
@@ -74,14 +101,14 @@ class WidgetDefHandle:
         if p_item.pid is None:
             return p_item
 
-        _res = self.__session.query(WebWidgetDef).filter(WebWidgetDef.id == p_item.pid).first()
+        _res = self.__session\
+            .query(WebWidgetDef)\
+            .filter(WebWidgetDef.id == p_item.pid)\
+            .first()
 
-        if _res.pid is None:
-            return _res
-        else:
-            return self._get_root(_res)
+        return self.__get_root(_res)
 
-    def _get_tree(self, p_item):
+    def __get_tree(self, p_item):
         """
         :param p_item:
         :return:
@@ -90,7 +117,7 @@ class WidgetDefHandle:
         _items = self.__session.query(WebWidgetDef).filter(WebWidgetDef.pid == p_item.id).all()
 
         for t_item in _items:
-            _tree.extend(self._get_tree(t_item))
+            _tree.extend(self.__get_tree(t_item))
 
         return _tree
 
@@ -135,7 +162,7 @@ class WidgetDefHandle:
 
         return {u'id': str(_node.id)}
 
-    def _create_no(self):
+    def __create_no(self):
         """
         Create a no, like batch_no
         :return:
@@ -144,7 +171,7 @@ class WidgetDefHandle:
         t_item = self.__session.query(WebWidgetDef).filter(WebWidgetDef.batch_no == _no).first()
 
         if t_item is not None:
-            return self._create_no()
+            return self.__create_no()
         else:
             return _no
 
@@ -166,11 +193,11 @@ class WidgetDefHandle:
         if "list" in p_list:
 
             for t_id in p_list["list"]:
-                self._del_tree(t_id)
+                self.__del_tree(t_id)
 
         self.__session.commit()
 
-    def _del_tree(self, p_id):
+    def __del_tree(self, p_id):
 
         def _del(_id):
             """
@@ -189,7 +216,7 @@ class WidgetDefHandle:
 
             for t_id in _list:
                 _del(t_id)  # Delete widget detail
-                self._del_tree(t_id)  # Delete widget definition
+                self.__del_tree(t_id)  # Delete widget definition
 
             # Delete current item
             _del(p_id)  # Delete detail

@@ -23,7 +23,7 @@ class TestTab(unittest.TestCase):
         test = BatchDefHandle()
         ttt = TabCaseDef()
         ttt.id = '2'
-        i = test._get_root(ttt)
+        i = test.__get_root(ttt)
         OrcTest.test_print_result(i.to_json())
 
         OrcTest.test_print_end()
@@ -38,7 +38,7 @@ class TestTab(unittest.TestCase):
         test = BatchDefHandle()
         ttt = TabCaseDef()
         ttt.id = '1'
-        i = test._get_tree(ttt)
+        i = test.__get_tree(ttt)
         for a in i:
             OrcTest.test_print_result(a.to_json())
 

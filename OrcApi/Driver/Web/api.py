@@ -198,7 +198,25 @@ def widget_def_search():
     _return = OrcReturn()
 
     _model = WidgetDefHandle()
-    _value = _model.usr_search(_parameter)
+    _value = _model.usr_search_all(_parameter)
+
+    _return.set_db_result(_value)
+
+    return _return.get_return()
+
+
+@app.route("/WidgetDef/usr_search_tree", methods=['POST'])
+@allow_cross_domain
+def widget_def_search_tree():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WidgetDefHandle()
+    _value = _model.usr_search_tree(_parameter["id"])
 
     _return.set_db_result(_value)
 
@@ -355,88 +373,88 @@ def widget_det_modify():
 
 
 # ---- Page ---------------------------------------------------------- #
-@app.route("/Page/usr_get_url", methods=['POST'])
-@allow_cross_domain
-def page_get_url():
-    """
-    Get page url by page detail id
-    :return:
-    """
-    _return = OrcReturn()
-
-    # input
-    _parameter = orc_get_parameter()
-    _logger.debug(_parameter)
-
-    _model_page_det = PageDetHandle()
-
-    _page_def = _model_page_det.usr_search(_parameter)
-    if 0 < len(_page_def):
-        _page_url = _page_def[0].page_url
-    else:
-        _page_url = None
-
-    # output
-    _logger.debug(_page_url)
-    _return.set_str_result(_page_url)
-
-    return _return.get_return()
+# @app.route("/Page/usr_get_url", methods=['POST'])
+# @allow_cross_domain
+# def page_get_url():
+#     """
+#     Get page url by page detail id
+#     :return:
+#     """
+#     _return = OrcReturn()
+#
+#     # input
+#     _parameter = orc_get_parameter()
+#     _logger.debug(_parameter)
+#
+#     _model_page_det = PageDetHandle()
+#
+#     _page_def = _model_page_det.usr_search(_parameter)
+#     if 0 < len(_page_def):
+#         _page_url = _page_def[0].page_url
+#     else:
+#         _page_url = None
+#
+#     # output
+#     _logger.debug(_page_url)
+#     _return.set_str_result(_page_url)
+#
+#     return _return.get_return()
 
 
 # ---- Widget ---------------------------------------------------------- #
-@app.route("/Widget/usr_get_def", methods=['POST'])
-@allow_cross_domain
-def widget_get_def():
-    """
-    :return: list or None
-    """
-    _return = OrcReturn()
-
-    # Input
-    _parameter = orc_get_parameter()
-    _logger.debug(_parameter)
-
-    _model_widget_def = WidgetDefHandle()
-
-    _widget_def = _model_widget_def.usr_search(_parameter)
-
-    # Set result to None if definition is not exists, replace [] to None
-    if 0 < len(_widget_def):
-        _res = _widget_def
-    else:
-        _res = None
-
-    # Output
-    _logger.debug(_res)
-    _return.set_db_result(_res)
-    print _return.get_return()
-    return _return.get_return()
-
-
-@app.route("/Widget/usr_get_det", methods=['POST'])
-@allow_cross_domain
-def widget_get_det():
-    """
-    :return: list or None
-    """
-    _return = OrcReturn()
-
-    # Input
-    _parameter = orc_get_parameter()
-    _logger.debug(_parameter)
-
-    _model_widget_det = WidgetDetHandle()
-
-    _widget_det = _model_widget_det.usr_search(_parameter)
-
-    # Set result to None if detail is not exists, replace [] to None
-    if 0 < len(_widget_det):
-        _res = _widget_det
-    else:
-        _res = None
-
-    # Output
-    _logger.debug(_res)
-    _return.set_db_result(_widget_det)
-
-    return _return.get_return()
+# @app.route("/Widget/usr_get_def", methods=['POST'])
+# @allow_cross_domain
+# def widget_get_def():
+#     """
+#     :return: list or None
+#     """
+#     _return = OrcReturn()
+#
+#     # Input
+#     _parameter = orc_get_parameter()
+#     _logger.debug(_parameter)
+#
+#     _model_widget_def = WidgetDefHandle()
+#
+#     _widget_def = _model_widget_def.usr_search(_parameter)
+#
+#     # Set result to None if definition is not exists, replace [] to None
+#     if 0 < len(_widget_def):
+#         _res = _widget_def
+#     else:
+#         _res = None
+#
+#     # Output
+#     _logger.debug(_res)
+#     _return.set_db_result(_res)
+#
+#     return _return.get_return()
+#
+#
+# @app.route("/Widget/usr_get_det", methods=['POST'])
+# @allow_cross_domain
+# def widget_get_det():
+#     """
+#     :return: list or None
+#     """
+#     _return = OrcReturn()
+#
+#     # Input
+#     _parameter = orc_get_parameter()
+#     _logger.debug(_parameter)
+#
+#     _model_widget_det = WidgetDetHandle()
+#
+#     _widget_det = _model_widget_det.usr_search(_parameter)
+#
+#     # Set result to None if detail is not exists, replace [] to None
+#     if 0 < len(_widget_det):
+#         _res = _widget_det
+#     else:
+#         _res = None
+#
+#     # Output
+#     _logger.debug(_res)
+#     _return.set_db_result(_widget_det)
+#
+#     return _return.get_return()

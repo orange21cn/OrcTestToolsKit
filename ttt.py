@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from selenium import webdriver
+abc = {}
 
-_driver = webdriver.Firefox()
-_driver.get("http://www.sina.com.cn")
+for i in abc:
+    print i
