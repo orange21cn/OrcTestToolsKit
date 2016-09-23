@@ -17,12 +17,12 @@ class WidgetDefModel(ModelTree):
 
         ModelTree.__init__(self)
 
-        i_base_url = 'http://localhost:5000/WidgetDef'
+        _base_url = 'http://localhost:5000/WidgetDef'
         _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url
+            'usr_add': '%s/usr_add' % _base_url,
+            'usr_delete': '%s/usr_delete' % _base_url,
+            'usr_modify': '%s/usr_modify' % _base_url,
+            'usr_search': '%s/usr_search_all' % _base_url
         }
 
         self.usr_set_interface(_interface)

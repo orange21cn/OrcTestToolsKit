@@ -21,19 +21,6 @@ def slm_select(p_sel, p_flg, p_value):
         pass
 
 
-def slm_input(p_inp, p_value):
-    """
-    input 输入数据
-    :param p_value:
-    :param p_inp:
-    :return:
-    """
-    if p_inp.get_attribute("value") is not None:
-        p_inp.clear()
-
-    p_inp.send_keys(p_value)
-
-
 def slm_click(p_inp):
     """
     Click

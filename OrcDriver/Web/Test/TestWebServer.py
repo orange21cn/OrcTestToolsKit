@@ -1,5 +1,7 @@
 import unittest
 
+from OrcDriver.Web.WebServer import DriverSelenium
+from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcLib.LibNet import orc_invoke
 from OrcLib.LibTest import OrcTest
 
@@ -19,5 +21,44 @@ class TestSelenium(unittest.TestCase):
         _res = orc_invoke(_url, _data)
 
         OrcTest.test_print_result(_res)
+
+        OrcTest.test_print_end()
+
+    def test_get_widget(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _model = OrcWidget()
+
+        _data = dict(TYPE="GET_PAGE",
+                     PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000004"))
+        _url = "http://localhost:5002/WebServer/run"
+        _res = orc_invoke(_url, _data)
+
+        OrcTest.test_print_result(_res)
+
+        OrcTest.test_print_end()
+
+    def test_widget_definition_02(self):
+        """
+        Test widget is not exist
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _driver = DriverSelenium()
+
+        _para_01 = dict(TYPE="GET_PAGE",
+                        PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000005"),
+                        OPERATE=None)
+        _driver.execute(_para_01)
+
+        _para_02 = dict(TYPE="GET_WIDGET",
+                        PARA=3200000011,
+                        OPERATE=None)
+        _driver.execute(_para_02)
 
         OrcTest.test_print_end()

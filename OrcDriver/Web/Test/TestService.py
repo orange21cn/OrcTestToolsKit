@@ -42,9 +42,9 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.widget_get_definition("3200000003")
+        _res = _service.widget_get_definition("3200000001")
 
-        OrcTest.test_print_result(_res.to_json(), "Widget definition")
+        OrcTest.test_print_result(_res, "Widget definition")
 
         OrcTest.test_print_end()
 

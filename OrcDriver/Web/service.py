@@ -36,13 +36,13 @@ class DriverService:
         :param p_id:
         :return: definition list or None
         """
-        _url = '%s/WidgetDef/usr_search' % self.__url
+        _url = '%s/WidgetDef/usr_search_tree' % self.__url
         _data = orc_invoke(_url, dict(id=p_id))
 
         if _data is None or 0 == len(_data):
             return None
         else:
-            return WebWidgetDef(_data[0])  # Todo
+            return [WebWidgetDef(_item) for _item in _data]
 
     def widget_get_detail(self, p_id):
         """
@@ -56,4 +56,4 @@ class DriverService:
         if _data is None or 0 == len(_data):
             return None
         else:
-            return WebWidgetDet(_data[0])  # Todo
+            return [WebWidgetDet(_item) for _item in _data]

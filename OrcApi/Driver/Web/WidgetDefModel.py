@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
 from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-
 from OrcApi.Driver.Web.WidgetDetModel import WidgetDetHandle
 
 
@@ -30,10 +28,7 @@ class WidgetDefHandle:
         if not p_filter:
             p_filter = dict()
 
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
-
+        _like = lambda p_flag: "%%%s%%" % p_filter[p_flag]
         _res = self.__session.query(WebWidgetDef)
 
         if 'id' in p_filter:
@@ -46,10 +41,10 @@ class WidgetDefHandle:
             _res = _res.filter(WebWidgetDef.widget_type == p_filter['widget_type'])
 
         if 'widget_flag' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_flag.ilike(f_value('widget_flag')))
+            _res = _res.filter(WebWidgetDef.widget_flag.ilike(_like('widget_flag')))
 
         if 'widget_desc' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_desc.ilike(f_value('widget_desc')))
+            _res = _res.filter(WebWidgetDef.widget_desc.ilike(_like('widget_desc')))
 
         return _res.all()
 
@@ -66,7 +61,6 @@ class WidgetDefHandle:
         for t_item in _res:
 
             if t_item not in _res_tree:
-
                 t_root = self.__get_root(t_item)
                 t_tree = self.__get_tree(t_root)
 
@@ -82,10 +76,10 @@ class WidgetDefHandle:
         """
         _res_list = []
 
-        _item = self.__session\
-                .query(WebWidgetDef)\
-                .filter(WebWidgetDef.id == p_id)\
-                .first()
+        _item = self.__session \
+            .query(WebWidgetDef) \
+            .filter(WebWidgetDef.id == p_id) \
+            .first()
 
         if _item is not None:
             _res_list = self.usr_search_tree(_item.pid)
@@ -101,9 +95,9 @@ class WidgetDefHandle:
         if p_item.pid is None:
             return p_item
 
-        _res = self.__session\
-            .query(WebWidgetDef)\
-            .filter(WebWidgetDef.id == p_item.pid)\
+        _res = self.__session \
+            .query(WebWidgetDef) \
+            .filter(WebWidgetDef.id == p_item.pid) \
             .first()
 
         return self.__get_root(_res)
@@ -220,10 +214,10 @@ class WidgetDefHandle:
 
             # Delete current item
             _del(p_id)  # Delete detail
-            self.__session\
-                .query(WebWidgetDef)\
-                .filter(WebWidgetDef.id == p_id)\
-                .delete()  # Delete widget definitio
+            self.__session \
+                .query(WebWidgetDef) \
+                .filter(WebWidgetDef.id == p_id) \
+                .delete()  # Delete widget definition
 
         except Exception:
             # Todo

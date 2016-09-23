@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import asc
 
 from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
@@ -23,23 +24,26 @@ class WidgetDetHandle():
         :param p_filter:
         :return:
         """
+        if not p_filter:
+            p_filter = dict()
+
         # search
         def f_value(p_flag):
             return "%%%s%%" % p_filter[p_flag]
 
-        if p_filter is None:
-            _res = self.__session.query(WebWidgetDet).all()
-        else:
-            _res = self.__session.query(WebWidgetDet)
+        _res = self.__session.query(WebWidgetDet)
 
-            if 'id' in p_filter:
-                _res = _res.filter(WebWidgetDet.id.ilike(f_value('id')))
+        if 'id' in p_filter:
+            _res = _res.filter(WebWidgetDet.id.ilike(f_value('id')))
 
-            if 'widget_id' in p_filter:
-                _res = _res.filter(WebWidgetDet.widget_id == p_filter['widget_id'])
+        if 'widget_id' in p_filter:
+            _res = _res.filter(WebWidgetDet.widget_id == p_filter['widget_id'])
 
-            if 'widget_env' in p_filter:
-                _res = _res.filter(WebWidgetDet.widget_env.ilike(f_value('widget_env')))
+        if 'widget_env' in p_filter:
+            _res = _res.filter(WebWidgetDet.widget_env.ilike(f_value('widget_env')))
+
+        # add order
+        _res = _res.order_by(asc(WebWidgetDet.widget_order))
 
         return _res.all()
 

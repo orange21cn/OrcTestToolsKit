@@ -198,6 +198,24 @@ def widget_def_search():
     _return = OrcReturn()
 
     _model = WidgetDefHandle()
+    _value = _model.usr_search(_parameter)
+
+    _return.set_db_result(_value)
+
+    return _return.get_return()
+
+
+@app.route("/WidgetDef/usr_search_all", methods=['POST'])
+@allow_cross_domain
+def widget_def_search_all():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WidgetDefHandle()
     _value = _model.usr_search_all(_parameter)
 
     _return.set_db_result(_value)

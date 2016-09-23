@@ -35,7 +35,7 @@ class BatchDetHandle(TabBatchDet):
         if 'case_id' in p_filter:
             _res = _res.filter(TabBatchDet.case_id == p_filter['case_id'])
 
-        return _res
+        return _res.all()
 
     def usr_add(self, p_data):
         """
