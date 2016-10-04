@@ -1,10 +1,8 @@
 # coding=utf-8
-from PySide.QtGui import QWidget
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QLabel
-from PySide.QtGui import QFormLayout
 from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit

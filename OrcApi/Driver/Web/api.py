@@ -7,6 +7,7 @@ from OrcApi.Driver.Web.PageDefModel import PageDefHandle
 from OrcApi.Driver.Web.PageDetModel import PageDetHandle
 from OrcApi.Driver.Web.WidgetDefModel import WidgetDefHandle
 from OrcApi.Driver.Web.WidgetDetModel import WidgetDetHandle
+from OrcApi.Driver.Web.WindowDefModel import WindowDefModel
 from OrcApi import app
 
 
@@ -386,6 +387,79 @@ def widget_det_modify():
     _model = WidgetDetHandle()
     _value = _model.usr_modify(_parameter)
     _return.set_str_result(_value)
+
+    return _return.get_return()
+
+
+# ---- Widget detail ---------------------------------------------------------- #
+@app.route("/WindowDef/usr_search", methods=['POST'])
+@allow_cross_domain
+def window_def_search():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WindowDefModel()
+    _value = _model.usr_search(_parameter)
+
+    _return.set_db_result(_value)
+
+    return _return.get_return()
+
+
+@app.route("/WindowDef/usr_add", methods=['POST'])
+@allow_cross_domain
+def window_def_add():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WindowDefModel()
+    _value = _model.usr_add(_parameter)
+
+    _return.set_db_result(_value)
+
+    return _return.get_return()
+
+
+@app.route("/WindowDef/usr_modify", methods=['POST'])
+@allow_cross_domain
+def window_def_modify():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WindowDefModel()
+    _value = _model.usr_modify(_parameter)
+
+    _return.set_db_result(_value)
+
+    return _return.get_return()
+
+
+@app.route("/WindowDef/usr_delete", methods=['POST'])
+@allow_cross_domain
+def window_def_delete():
+    """
+    request: {id:..,case_no:....}
+    :return:
+    """
+    _parameter = orc_get_parameter()
+    _return = OrcReturn()
+
+    _model = WindowDefModel()
+    _value = _model.usr_delete(_parameter)
+
+    _return.set_db_result(_value)
 
     return _return.get_return()
 

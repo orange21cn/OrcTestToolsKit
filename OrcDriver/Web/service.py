@@ -36,6 +36,20 @@ class DriverService:
         :param p_id:
         :return: definition list or None
         """
+        _url = '%s/WidgetDef/usr_search' % self.__url
+        _data = orc_invoke(_url, dict(id=p_id))
+
+        if _data is None or 0 == len(_data):
+            return None
+        else:
+            return WebWidgetDef(_data[0])
+
+    def widget_get_definition_tree(self, p_id):
+        """
+        获取控件定义
+        :param p_id:
+        :return: definition list or None
+        """
         _url = '%s/WidgetDef/usr_search_tree' % self.__url
         _data = orc_invoke(_url, dict(id=p_id))
 

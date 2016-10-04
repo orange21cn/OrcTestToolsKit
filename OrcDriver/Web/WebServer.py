@@ -4,9 +4,11 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
-from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcLib.LibLog import OrcLog
 from service import DriverService
+
+from OrcDriver.Web.Widget.WidgetInput import WidgetInput
+from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 
 
 class DriverSelenium:
@@ -34,20 +36,40 @@ class DriverSelenium:
 
         _type = p_data["TYPE"]
         _para = p_data["PARA"]
-        _node = None
 
-        if "GET_PAGE" == _type:
-            _node = self.__get_page(_para)
-        elif "GET_WIDGET" == _type:
-            _node = OrcWidget(self.__root, _para)
-            print _node.exists()
+        if "OPEN_PAGE" == _type:
+            _status = self.__get_page(_para)
+        elif "EXEC_STEP" == _type:
+            _status = self.__action(_para)
         else:
+            _status = False
             self.__logger.error("Wrong type %s." % _type)
 
-        if _node is not None:
-            _node = "Success"
+        return _status
 
-        return _node
+    def __action(self, p_para):
+
+        _id = p_para["ID"]
+        _act = p_para["ACTION"]
+        _node = None
+
+        _definition = self.__service.widget_get_definition(_id)
+
+        # 输入框
+        if "INP" == _definition.widget_type:
+            _node = WidgetInput(self.__root, _id)
+            _node.execute(_act)
+
+        # Button
+        elif "BTN" == _definition.widget_type:
+            _node = WidgetButton(self.__root, _id)
+            _node.execute(_act)
+
+        # 自定义控件
+        else:
+            pass
+
+        return True
 
     def __get_page(self, p_para):
         """
@@ -89,13 +111,6 @@ class DriverSelenium:
         time.sleep(0.5)
         self.__root.save_screenshot(p_file)
 
-    # def __design(self):
-    #
-    #     for wid in definition:
-    #
-    #         for item in wid:
-    #
-    #             get_object(item)
 
 
 

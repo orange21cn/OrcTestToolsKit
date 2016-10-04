@@ -23,7 +23,7 @@ def api_web_run():
     _return = OrcReturn()
 
     _model = DriverSelenium()
-    _value = _model.run(_parameter)
+    _value = _model.execute(_parameter)
 
     _return.set_str_result(_value)
 

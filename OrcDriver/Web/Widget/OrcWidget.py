@@ -75,7 +75,7 @@ class OrcWidget:
     def _get_object(self, p_det):
         """
         获取对象,调用 selenium 函数
-        :param p_def:
+        :param p_det:
         :return:
         """
         if 0 == len(p_det):

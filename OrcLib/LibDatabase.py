@@ -6,10 +6,16 @@ from OrcApi import orc_db
 
 
 def gen_id(p_name):
+    """
+    生成 id
+    :param p_name:
+    :return: id
+    """
     _seq = orc_db.session \
         .query(LibSequence) \
         .filter(LibSequence.field_name == p_name) \
         .first()
+
     _seq.field_seq += 1
     orc_db.session.commit()
 
@@ -20,6 +26,8 @@ class TabBatchDef(orc_db.Model):
     """
     Table orc_batch_def
     """
+    __tablename__ = 'tab_batch_def'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     pid = orc_db.Column(orc_db.Integer)
     batch_no = orc_db.Column(orc_db.String(16))
@@ -60,6 +68,8 @@ class TabBatchDet(orc_db.Model):
     """
     Table tab_batch_det
     """
+    __tablename__ = 'tab_batch_det'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     batch_id = orc_db.Column(orc_db.Integer)
     case_id = orc_db.Column(orc_db.Integer)
@@ -88,6 +98,8 @@ class TabCaseDef(orc_db.Model):
     """
     Table tab_case_def
     """
+    __tablename__ = 'tab_case_def'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     pid = orc_db.Column(orc_db.Integer)
     case_no = orc_db.Column(orc_db.String(8))
@@ -134,6 +146,8 @@ class TabCaseDet(orc_db.Model):
     """
     Table tab_case_det
     """
+    __tablename__ = 'tab_case_det'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     case_id = orc_db.Column(orc_db.Integer)
     step_id = orc_db.Column(orc_db.Integer)
@@ -162,6 +176,8 @@ class TabStepDef(orc_db.Model):
     """
     Table tab_step_def
     """
+    __tablename__ = 'tab_step_def'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     step_no = orc_db.Column(orc_db.String(8))
     step_desc = orc_db.Column(orc_db.String(512))
@@ -196,6 +212,8 @@ class TabStepDet(orc_db.Model):
     """
 
     """
+    __tablename__ = 'tab_step_det'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     step_id = orc_db.Column(orc_db.Integer)
     item_id = orc_db.Column(orc_db.Integer)
@@ -224,6 +242,7 @@ class TabItem(orc_db.Model):
     """
 
     """
+    __tablename__ = 'tab_item'
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     item_no = orc_db.Column(orc_db.String(32))
     item_type = orc_db.Column(orc_db.String(8))
@@ -267,6 +286,8 @@ class TabData(orc_db.Model):
     """
     Data table
     """
+    __tablename__ = 'tab_data'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     src_id = orc_db.Column(orc_db.Integer)
     src_type = orc_db.Column(orc_db.String(16))
@@ -315,6 +336,8 @@ class WebPageDef(orc_db.Model):
     """
     Table page definition
     """
+    __tablename__ = 'web_page_def'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     page_flag = orc_db.Column(orc_db.String(32))
     page_desc = orc_db.Column(orc_db.String(32))
@@ -349,6 +372,8 @@ class WebPageDet(orc_db.Model):
     """
     Table page detail
     """
+    __tablename__ = 'web_page_det'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     page_id = orc_db.Column(orc_db.Integer, primary_key=True)
     page_env = orc_db.Column(orc_db.String(32))
@@ -386,6 +411,8 @@ class WebWidgetDef(orc_db.Model):
     """
     Table widget definition
     """
+    __tablename__ = 'web_widget_def'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     pid = orc_db.Column(orc_db.Integer)
     widget_flag = orc_db.Column(orc_db.String(8))
@@ -429,6 +456,8 @@ class WebWidgetDet(orc_db.Model):
     """
     Table widget definition
     """
+    __tablename__ = 'web_widget_det'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     widget_id = orc_db.Column(orc_db.Integer)
     widget_order = orc_db.Column(orc_db.String(16))
@@ -468,10 +497,49 @@ class WebWidgetDet(orc_db.Model):
         )
 
 
+class WebWindowDef(orc_db.Model):
+
+    """
+    Table widget definition
+    """
+    __tablename__ = 'web_window_def'
+
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    window_mark = orc_db.Column(orc_db.String(16))
+    window_desc = orc_db.Column(orc_db.String(255))
+    comment = orc_db.Column(orc_db.String(512))
+    create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+    modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
+
+    def __init__(self, p_def=None):
+
+        if p_def is not None:
+
+            self.id = p_def["id"]
+            self.window_mark = p_def["window_mark"]
+            self.window_desc = p_def["window_desc"]
+            self.comment = p_def["comment"]
+            self.create_time = OrcCover.str2time(p_def["create_time"])
+            self.modify_time = OrcCover.str2time(p_def["modify_time"])
+
+    def to_json(self):
+
+        return dict(
+            id=str(self.id),
+            window_mark=self.window_mark,
+            window_desc=self.window_desc,
+            comment=self.comment,
+            create_time=OrcCover.time2str(self.create_time),
+            modify_time=OrcCover.time2str(self.modify_time)
+        )
+
+
 class LibDictionary(orc_db.Model):
     """
     Table dictionary
     """
+    __tablename__ = 'lib_dictionary'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     dict_flag = orc_db.Column(orc_db.String(32))
     dict_order = orc_db.Column(orc_db.String(32))
@@ -479,25 +547,19 @@ class LibDictionary(orc_db.Model):
     dict_text = orc_db.Column(orc_db.String(16))
     dict_desc = orc_db.Column(orc_db.String(255))
 
-    def __init__(self, p_data):
+    def __init__(self, p_def=None):
         """
-        :param p_data: dict
+        :param p_def: dict
         :return: None
         """
-        if "id" in p_data:
-            self.id = p_data["id"]
-        elif "" in p_data:
-            self.dict_flag = p_data["dict_flag"]
-        elif "dict_flag" in p_data:
-            self.dict_order = p_data["dict_order"]
-        elif "dict_value" in p_data:
-            self.dict_value = p_data["dict_value"]
-        elif "dict_text" in p_data:
-            self.dict_text = p_data["dict_text"]
-        elif "dict_desc" in p_data:
-            self.dict_desc = p_data["dict_desc"]
-        else:
-            pass
+        if p_def is not None:
+
+            self.id = int(p_def["id"])
+            self.dict_flag = p_def["dict_flag"]
+            self.dict_order = p_def["dict_order"]
+            self.dict_value = p_def["dict_value"]
+            self.dict_text = p_def["dict_text"]
+            self.dict_desc = p_def["dict_desc"]
 
     def to_json(self):
         _value = {
@@ -515,9 +577,16 @@ class LibSequence(orc_db.Model):
     """
     Table sequence
     """
+    __tablename__ = 'lib_sequence'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     field_name = orc_db.Column(orc_db.String(32))
     field_seq = orc_db.Column(orc_db.Integer)
 
-    def __init__(self):
-        pass
+    def __init__(self, p_def=None):
+
+        if p_def is not None:
+
+            self.id = int(p_def["id"])
+            self.field_name = p_def["field_name"]
+            self.field_seq = p_def["field_seq"]

@@ -1,11 +1,15 @@
+from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 
-class WidgetButton:
 
-    def __init__(self, p_widget):
+class WidgetButton(OrcWidget):
 
-        self.__widget = p_widget
+    def __init__(self, p_root, p_id):
 
-    def execute(self, p_flg):
+        OrcWidget.__init__(self, p_root, p_id)
 
-        if "CLICK" == p_flg:
-            self.__widget.click()
+    def execute(self, p_para):
+
+        _flag = p_para["OPERATION"]
+
+        if "CLICK" == _flag:
+            self._widget.click()

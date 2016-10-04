@@ -80,15 +80,15 @@ class OrcLaunch(TestBase):
         """
         self._share.set_data("ITEM_ID", p_item_id)
 
-        i_type = self.__item.get_type(p_item_id)
+        _type = self.__item.get_type(p_item_id)
 
-        if "WEB" == i_type:
+        if "WEB" == _type:
             self.__run_web(p_item_id)
-        elif "WEBSERVICE" == i_type:
+        elif "WEBSERVICE" == _type:
             self.__run_webservice(p_item_id)
-        elif "ANDROID" == i_type:
+        elif "ANDROID" == _type:
             self.__run_android(p_item_id)
-        elif "IOS" == i_type:
+        elif "IOS" == _type:
             self.__run_ios(p_item_id)
         else:
             pass

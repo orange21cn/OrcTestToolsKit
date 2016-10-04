@@ -3,17 +3,20 @@ from OrcWidget import OrcWidget
 
 class WidgetInput(OrcWidget):
 
-    def __init__(self, p_root, p_def):
+    def __init__(self, p_root, p_id):
 
-        OrcWidget.__init__(self, p_root, p_def)
+        OrcWidget.__init__(self, p_root, p_id)
 
-    def execute(self, p_flg, p_para):
+    def execute(self, p_para):
 
-        if "INPUT" == p_flg:
+        _flag = p_para["OPERATION"]
+        _data = p_para["DATA"]
+
+        if "INPUT" == _flag:
 
             if self._widget.get_attribute("value") is not None:
                 self._widget.clear()
 
-            self._widget.send_keys(p_para)
+            self._widget.send_keys(_data)
 
             return None

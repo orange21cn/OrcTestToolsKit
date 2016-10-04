@@ -34,7 +34,7 @@ class TestService(unittest.TestCase):
 
         OrcTest.test_print_end()
 
-    def test_get_widget_def_01(self):
+    def test_get_widget_def_tree_01(self):
         """
         Get widget definition
         :return:
@@ -42,13 +42,13 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.widget_get_definition("3200000001")
+        _res = _service.widget_get_definition_tree("3200000001")
 
         OrcTest.test_print_result(_res, "Widget definition")
 
         OrcTest.test_print_end()
 
-    def test_get_widget_def_02(self):
+    def test_get_widget_def_tree_02(self):
         """
         Widget is not exists
         :return:
@@ -56,7 +56,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.widget_get_definition("3300000001")
+        _res = _service.widget_get_definition_tree("3300000001")
 
         OrcTest.test_print_result(_res, "Widget definition")
 
@@ -70,7 +70,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.widget_get_definition("3200000003")
+        _res = _service.widget_get_detail("3200000007")
 
         OrcTest.test_print_result(_res, "Widget detail")
 
@@ -84,7 +84,35 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.widget_get_definition("3300000003")
+        _res = _service.widget_get_detail("3300000003")
+
+        OrcTest.test_print_result(_res, "Widget detail")
+
+        OrcTest.test_print_end()
+
+    def test_get_widget_search_01(self):
+        """
+        Widget is not exists
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _service = DriverService()
+        _res = _service.widget_get_definition("3200000011")
+
+        OrcTest.test_print_result(_res, "Widget detail")
+
+        OrcTest.test_print_end()
+
+    def test_get_widget_search_02(self):
+        """
+        Widget is not exists
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _service = DriverService()
+        _res = _service.widget_get_definition("4200000011")
 
         OrcTest.test_print_result(_res, "Widget detail")
 
