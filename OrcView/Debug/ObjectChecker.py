@@ -12,7 +12,9 @@ from OrcView.Lib.LibView import ObjectOperator
 
 
 class ObjectChecker(QWidget):
-
+    """
+    废弃
+    """
     def __init__(self):
 
         QWidget.__init__(self)
@@ -39,7 +41,7 @@ class ObjectChecker(QWidget):
 
         # data widget
         _label_father = QLabel(u"父对象")
-        _input_father = OrcLineEdit(self)
+        _input_father = OrcLineEdit()
         _button_father = QPushButton("...")
 
         _layout_father = QHBoxLayout()
@@ -48,7 +50,7 @@ class ObjectChecker(QWidget):
         _layout_father.addWidget(_button_father)
 
         _label_object_name = QLabel(u"对象名")
-        _input_object_name = OrcLineEdit(self)
+        _input_object_name = OrcLineEdit()
 
         _layout_object = QHBoxLayout()
         _layout_object.addWidget(_label_object_name)

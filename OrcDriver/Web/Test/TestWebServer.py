@@ -15,13 +15,11 @@ class TestSelenium(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _data = dict(TYPE="GET_PAGE",
-                     PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000004"))
+        _data = dict(TYPE="PAGE", BROWSER="FIREFOX", ENV="TESTa", ID="3000000001")
         _url = "http://localhost:5002/WebServer/run"
         _res = orc_invoke(_url, _data)
 
         OrcTest.test_print_result(_res)
-
         OrcTest.test_print_end()
 
     def test_get_widget(self):
@@ -31,15 +29,11 @@ class TestSelenium(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _model = OrcWidget()
-
-        _data = dict(TYPE="GET_PAGE",
-                     PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000004"))
+        _data = dict(TYPE="WIDGET", ID="3300000005", OPERATION="CLICK")
         _url = "http://localhost:5002/WebServer/run"
         _res = orc_invoke(_url, _data)
 
         OrcTest.test_print_result(_res)
-
         OrcTest.test_print_end()
 
     def test_widget_definition_02(self):
@@ -54,11 +48,11 @@ class TestSelenium(unittest.TestCase):
         _para_01 = dict(TYPE="GET_PAGE",
                         PARA=dict(BROWSER="FIREFOX", ENV="TEST",ID="3100000005"),
                         OPERATE=None)
-        _driver.execute(_para_01)
+        _driver.__execute(_para_01)
 
         _para_02 = dict(TYPE="GET_WIDGET",
                         PARA=3200000011,
                         OPERATE=None)
-        _driver.execute(_para_02)
+        _driver.__execute(_para_02)
 
         OrcTest.test_print_end()

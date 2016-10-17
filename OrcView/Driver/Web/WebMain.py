@@ -1,23 +1,43 @@
 # coding=utf-8
+from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QTabWidget
 from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QFormLayout
+from PySide.QtGui import QLabel
+from PySide.QtGui import QPushButton
+from PySide.QtGui import QTextEdit
 
 from OrcView.Driver.Web.PageMain import PageContainer
 from OrcView.Driver.Web.WidgetMain import WidgetContainer
+from OrcView.Driver.Web.WindowDef import ViewWindow
+
+from OrcView.Lib.LibView import OrcSelect
+from OrcView.Lib.LibView import OrcLineEdit
+from OrcView.Lib.LibView import SelectWidgetType
+from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcView.Lib.LibDict import LibDict
+
+from service import WebMainService
 
 
 class ViewWebMain(QWidget):
     """
 
     """
+    sig_page_selected = OrcSignal(str)
+
     def __init__(self):
         QWidget.__init__(self)
+
+        self.title = u"Web对象管理"
 
         # Page
         _page = PageContainer()
 
         # Window
+        _window = ViewWindow()
 
         # Widget
         _widget = WidgetContainer()
@@ -25,10 +45,169 @@ class ViewWebMain(QWidget):
         # 页面 tab
         _tab = QTabWidget()
         _tab.addTab(_page, "Page")
+        _tab.addTab(_window, "Window")
         _tab.addTab(_widget, "Widget")
 
+        # 测试区
+        self.__test = WidgetTest()
+
         # 主layout
-        _layout = QVBoxLayout()
+        _layout = QHBoxLayout()
         _layout.addWidget(_tab)
+        _layout.addWidget(self.__test)
 
         self.setLayout(_layout)
+
+        # 信号
+        _page.sig_selected.connect(self.set_page)
+        _widget.sig_selected.connect(self.set_widget)
+        self.__test.sig_exec.connect(self.send)
+
+    def set_page(self, p_id):
+        self.__test.set_type("PAGE", p_id)
+
+    def set_widget(self, p_id):
+        self.__test.set_type("WIDGET", p_id)
+
+    def send(self):
+        # Todo 接口调用方式
+        _data = dict(ID=self.__test.id,
+                     TYPE=self.__test.type,
+                     OPERATION=self.__test.operation,
+                     DATA=self.__test.data)
+
+        _url = "http://localhost:5002/WebServer/run"
+
+        from OrcLib.LibNet import orc_invoke
+
+        _result = orc_invoke(_url, _data)
+        self.__test.set_status(_result)
+
+
+class WidgetTest(QWidget):
+
+    sig_exec = OrcSignal()
+
+    def __init__(self):
+
+        QWidget.__init__(self)
+
+        self.__dict = LibDict()
+        self.__service = WebMainService()
+
+        self.id = None
+        self.type = None
+        self.operation = None
+        self.data = None
+
+        # 输入框
+        _layout_top = QFormLayout()
+
+        self.__edit_type = OrcSelect()  # 类型,页面或者控件
+        self.__edit_flag = OrcLineEdit()  # 标识符
+        self.__widget_type = SelectWidgetType(True)  # 控件类型
+        self.__widget_ope = SelectWidgetOperation(True)  # 控件操作类型
+        self.__widget_data = OrcLineEdit()
+
+        self.__edit_type.set_empty()
+        self.__edit_type.set_flag("operate_object_type")
+        self.__edit_type.setEnabled(False)
+        self.__edit_flag.setEnabled(False)
+        self.__widget_type.setEnabled(False)
+        self.__widget_data.setEnabled(False)
+
+        _layout_top.addRow(u"类型", self.__edit_type)
+        _layout_top.addRow(u"标识", self.__edit_flag)
+        _layout_top.addRow(u"控件", self.__widget_type)
+        _layout_top.addRow(u"操作", self.__widget_ope)
+        _layout_top.addRow(u"数据", self.__widget_data)
+
+        self.__edit_status = QLabel()
+
+        # 按钮
+        _layout_button = QHBoxLayout()
+
+        self.__btn_exec = QPushButton(u"执行")
+
+        _layout_button.addStretch()
+        _layout_button.addWidget(self.__btn_exec)
+
+        # 主界面
+        _layout = QVBoxLayout()
+        _layout.addLayout(_layout_top)
+        _layout.addWidget(self.__edit_status)
+        _layout.addLayout(_layout_button)
+
+        self.setLayout(_layout)
+
+        self.__widget_ope.currentIndexChanged.connect(self.__set_operation)
+        self.__widget_data.textChanged.connect(self.__set_data)
+        self.__btn_exec.clicked.connect(self.sig_exec.emit)
+
+    def __set_operation(self):
+
+        _ope = self.__widget_ope.get_data()
+
+        if not _ope:
+            self.operation = None
+        else:
+            self.operation = _ope
+
+    def __set_data(self):
+        self.data = self.__widget_data.get_data()
+
+    def set_type(self, p_type, p_id):
+
+        # 设置对象类型
+        _type_text = self.__dict.get_dict("operate_object_type", p_type)[0].dict_text
+        self.__edit_type.set_data(_type_text)
+
+        self.id = p_id
+        self.type = p_type
+
+        if "PAGE" == p_type:
+
+            _page_key = self.__service.get_page_key(p_id)
+
+            # 设置页面标识
+            self.__edit_flag.set_data(_page_key)
+
+            # 禁用控件类型
+            self.__widget_type.set_data("")
+
+            # 禁用控件操作
+            self.__widget_ope.set_item_data()
+            self.__widget_ope.setEnabled(False)
+
+            # 禁止输入数据
+            self.__widget_data.clear()
+            self.__widget_data.setEnabled(False)
+
+        elif "WIDGET" == p_type:
+
+            _widget_key = self.__service.get_widget_key(p_id)
+            _widget_type = self.__service.get_widget_type(p_id)
+
+            # 设置控件标识
+            self.__edit_flag.set_data(_widget_key)
+
+            # 设置控件类型
+            print _widget_type
+            self.__widget_type.set_data(_widget_type)
+
+            # 重置控件操作项并使之可用
+            self.__widget_ope.set_id(_widget_type)
+            self.__widget_ope.setEnabled(True)
+
+            # 数据输入框可用
+            self.__widget_data.setEnabled(True)
+
+        else:
+            pass
+
+    def set_status(self, p_status):
+
+        if p_status:
+            self.__edit_status.setText("Success")
+        else:
+            self.__edit_status.setText("Fail")

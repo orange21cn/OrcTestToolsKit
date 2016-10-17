@@ -1,6 +1,8 @@
 # coding=utf-8
 import sys
 
+from OrcLib import init_log
+
 from OrcApi import app
 from OrcApi import orc_api
 
@@ -9,7 +11,7 @@ from OrcApi.Case import api
 from OrcApi.Data import api
 from OrcApi.Driver.Web import api
 from OrcApi.Lib import api
-from OrcLib import init_log
+
 from OrcApi.Driver.Web.WindowApi import WindowsListAPI
 from OrcApi.Driver.Web.WindowApi import WindowsAPI
 

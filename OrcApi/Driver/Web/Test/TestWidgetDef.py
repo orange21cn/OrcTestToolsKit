@@ -74,7 +74,7 @@ class TestSearch(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _handle = WidgetDefHandle()
-        _res = _handle.usr_search_tree("3200000003")
+        _res = _handle.usr_search_path("3200000003")
         for i in _res:
             OrcTest.test_print_result(i.to_json())
 
@@ -88,7 +88,7 @@ class TestSearch(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _handle = WidgetDefHandle()
-        _res = _handle.usr_search_tree("3200000004")
+        _res = _handle.usr_search_path("3200000004")
         for i in _res:
             OrcTest.test_print_result(i)
 

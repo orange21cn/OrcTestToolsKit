@@ -14,7 +14,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.page_get_url("3100000001")
+        _res = _service.page_get_url("3000000001", "TEST")
 
         OrcTest.test_print_result(_res, "Page url")
 
@@ -28,7 +28,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = DriverService()
-        _res = _service.page_get_url("3300000001")
+        _res = _service.page_get_url("3300000001", "TEST")
 
         OrcTest.test_print_result(_res, "Page url")
 

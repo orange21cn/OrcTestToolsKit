@@ -562,15 +562,87 @@ class LibDictionary(orc_db.Model):
             self.dict_desc = p_def["dict_desc"]
 
     def to_json(self):
-        _value = {
-            "id": str(self.id),
-            "dict_flag": self.dict_flag,
-            "dict_order": self.dict_order,
-            "dict_value": self.dict_value,
-            "dict_text": self.dict_text,
-            "dict_desc": self.dict_desc
-        }
-        return _value
+
+        return dict(
+            id=str(self.id),
+            dict_flag=self.dict_flag,
+            dict_order=self.dict_order,
+            dict_value=self.dict_value,
+            dict_text=self.dict_text,
+            dict_desc=self.dict_desc
+        )
+
+
+class LibWidgetType(orc_db.Model):
+    """
+    Table dictionary
+    """
+    __tablename__ = 'lib_widget_type'
+
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    type_order = orc_db.Column(orc_db.Integer)
+    type_mode = orc_db.Column(orc_db.String(16))  # 固有或自定义
+    type_name = orc_db.Column(orc_db.String(16), unique=True)
+    type_text = orc_db.Column(orc_db.String(16))
+    type_desc = orc_db.Column(orc_db.String(255))
+
+    def __init__(self, p_def):
+
+        if p_def is not None:
+
+            self.id = int(p_def["id"])
+            self.type_order = p_def["type_order"]
+            self.type_mode = p_def["type_mode"]
+            self.type_name = p_def["type_name"]
+            self.type_text = p_def["type_text"]
+            self.type_desc = p_def["type_desc"]
+
+    def to_json(self):
+
+        return dict(
+            id=str(self.id),
+            type_order=self.type_order,
+            type_mode=self.type_mode,
+            type_name=self.type_name,
+            type_text=self.type_text,
+            type_desc=self.type_desc
+        )
+
+
+class LibWidgetOperation(orc_db.Model):
+    """
+    Table dictionary
+    """
+    __tablename__ = 'lib_widget_operation'
+
+    id = orc_db.Column(orc_db.Integer, primary_key=True)
+    type_name = orc_db.Column(orc_db.String(16))
+    ope_order = orc_db.Column(orc_db.Integer)
+    ope_name = orc_db.Column(orc_db.String(16))
+    ope_text = orc_db.Column(orc_db.String(16))
+    ope_desc = orc_db.Column(orc_db.String(255))
+
+    def __init__(self, p_def):
+
+        if p_def is not None:
+
+            self.id = int(p_def["id"])
+            self.type_name = p_def["type_name"]
+            self.ope_order = int(p_def["ope_order"])
+            self.ope_name = p_def["ope_name"]
+            self.ope_text = p_def["ope_text"]
+            self.ope_desc = p_def["ope_desc"]
+
+    def to_json(self):
+
+        return dict(
+            id=str(self.id),
+            type_name=self.type_name,
+            ope_order=self.ope_order,
+            ope_name=self.ope_name,
+            ope_text=self.ope_text,
+            ope_desc=self.ope_desc
+        )
 
 
 class LibSequence(orc_db.Model):

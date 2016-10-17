@@ -235,7 +235,7 @@ def widget_def_search_tree():
     _return = OrcReturn()
 
     _model = WidgetDefHandle()
-    _value = _model.usr_search_tree(_parameter["id"])
+    _value = _model.usr_search_path(_parameter["id"])
 
     _return.set_db_result(_value)
 
@@ -439,7 +439,7 @@ def window_def_modify():
     _return = OrcReturn()
 
     _model = WindowDefModel()
-    _value = _model.usr_modify(_parameter)
+    _value = _model.usr_update(_parameter)
 
     _return.set_db_result(_value)
 

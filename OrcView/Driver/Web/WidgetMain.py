@@ -1,4 +1,5 @@
 # coding=utf-8
+from PySide.QtCore import Signal as OrcSignal
 
 from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
@@ -10,6 +11,8 @@ from OrcView.Lib.LibSearch import ViewSearch
 
 
 class WidgetContainer(QWidget):
+
+    sig_selected = OrcSignal(str)
 
     def __init__(self):
 
@@ -79,6 +82,7 @@ class WidgetContainer(QWidget):
         self.setLayout(_layout_main)
 
         self.__wid_widget_def.sig_selected.connect(self.__wid_widget_det.set_widget_id)
+        self.__wid_widget_def.sig_selected.connect(self.sig_selected.emit)
         self.__wid_widget_def.sig_search.connect(self.search_definition)
         self.__wid_widget_def.sig_delete.connect(self.__wid_widget_det.clean)
 

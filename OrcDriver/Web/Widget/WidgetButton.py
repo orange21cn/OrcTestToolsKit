@@ -11,5 +11,13 @@ class WidgetButton(OrcWidget):
 
         _flag = p_para["OPERATION"]
 
-        if "CLICK" == _flag:
+        if "EXISTS" == _flag:
+
+            return self.exists()
+
+        elif "CLICK" == _flag:
+
             self._widget.click()
+
+        else:
+            pass

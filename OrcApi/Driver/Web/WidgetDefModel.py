@@ -68,7 +68,7 @@ class WidgetDefHandle:
 
         return _res_tree
 
-    def usr_search_tree(self, p_id):
+    def usr_search_path(self, p_id):
         """
         查询符合条件的控件,并获取其所有父节点
         :param p_id:
@@ -82,7 +82,7 @@ class WidgetDefHandle:
             .first()
 
         if _item is not None:
-            _res_list = self.usr_search_tree(_item.pid)
+            _res_list = self.usr_search_path(_item.pid)
             _res_list.append(_item)
 
         return _res_list

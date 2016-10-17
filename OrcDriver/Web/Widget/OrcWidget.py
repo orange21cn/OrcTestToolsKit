@@ -6,7 +6,9 @@ from OrcLib.LibLog import OrcLog
 
 
 class OrcWidget:
-
+    """
+    控件基类
+    """
     def __init__(self, p_root, p_id):
 
         self._logger = OrcLog("driver.web")
@@ -29,7 +31,7 @@ class OrcWidget:
         _definition = list()
 
         # Get definition
-        _widget_def = self.__service.widget_get_definition(p_id)
+        _widget_def = self.__service.widget_get_definition_tree(p_id)
 
         if _widget_def is None:
             return None
@@ -43,11 +45,12 @@ class OrcWidget:
         return _definition
 
     def exists(self):
+        # todo None AttributeError
         return self._widget.is_displayed()
 
     def _get_widget(self):
         """
-        获取对象
+        获取对象,处理 frame 和 window 跳转
         :return:
         """
         if self._root is None or self._def is None:
@@ -67,7 +70,9 @@ class OrcWidget:
                 self._widget = self._root
 
             elif "WINDOW" == _definition.widget_type:
-                self.__switch_window(_detail)
+                # Todo 处理当前 window 未变放到这里
+                # self.__switch_window(_detail)
+                pass
 
             else:
                 self._get_object(_detail)
@@ -94,6 +99,8 @@ class OrcWidget:
                 self._widget = self._widget.find_element_by_tag_name(_attr)
             elif "XPATH" == _type:
                 self._widget = self._widget.find_element_by_xpath(_attr)
+            else:
+                pass
 
     def __switch_window(self, p_def):
         """

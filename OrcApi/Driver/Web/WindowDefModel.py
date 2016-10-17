@@ -3,7 +3,6 @@ from datetime import datetime
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWindowDef
-from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 from OrcLib.LibLog import OrcLog
 
@@ -34,10 +33,14 @@ class WindowDefModel:
         _search = self.__session.query(WebWindowDef)
 
         if 'id' in _filter:
-            _search = _search.filter(WebWindowDef.id == _filter['id'])
+
+            if isinstance(_filter["id"], list):
+                _search = _search.filter(WebWindowDef.id.in_(_filter['id']))
+            else:
+                _search = _search.filter(WebWindowDef.id == _filter['id'])
 
         if 'window_mark' in _filter:
-            _search = _search.filter(WebWindowDef.window_mark == _filter['window_mark'])
+            _search = _search.filter(WebWindowDef.window_mark.ilike(_like('window_mark')))
 
         if 'window_desc' in _filter:
             _search = _search.filter(WebWindowDef.window_desc.ilike(_like('window_desc')))
@@ -79,7 +82,7 @@ class WindowDefModel:
 
         return dict(id=str(_node.id))
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 
@@ -92,11 +95,18 @@ class WindowDefModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
-
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
+    def usr_delete(self, p_ids):
+        """
+        Delete
+        :param p_ids: [IDs] or ID
+        :return:
+        """
+        if isinstance(p_ids, int):
+            self.__session.query(WebWindowDef).filter(WebWindowDef.id == p_ids).delete()
+        elif isinstance(p_ids, list):
+            for t_id in p_ids:
                 self.__session.query(WebWindowDef).filter(WebWindowDef.id == t_id).delete()
+        else:
+            pass
 
         self.__session.commit()

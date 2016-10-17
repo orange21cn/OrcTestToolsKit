@@ -1,5 +1,7 @@
 # coding=utf-8
 import time
+import json
+import socket
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -13,7 +15,7 @@ from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 
 class DriverSelenium:
 
-    def __init__(self):
+    def __init__(self, p_ip, p_port):
 
         self.__logger = OrcLog("driver.selenium")
         self.__service = DriverService()
@@ -26,21 +28,48 @@ class DriverSelenium:
 
         self.__objects = {}  # 存储出现过的对象
 
-    def execute(self, p_data):
+        self.__ip = p_ip
+        self.__port = p_port
+
+    def start(self):
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind((self.__ip, self.__port))
+        sock.listen(1)
+
+        while True:
+
+            connection, address = sock.accept()
+
+            try:
+                connection.settimeout(5)
+
+                _cmd = connection.recv(1024)
+                _result = self.__execute(json.loads(json.loads(_cmd)))
+
+                connection.send(str(_result))
+
+            except socket.timeout:
+                self.__logger.error("time out")
+            except Exception, err:
+                print err
+
+            connection.close()
+
+    def __execute(self, p_cmd):
         """
         执行调用
-        :param p_data: {TYPE, PARA, OPERATE}
+        :param p_cmd: {TYPE, PARA, OPERATE}
         :return:
         """
-        self.__logger.debug(p_data)
+        self.__logger.debug(p_cmd)
 
-        _type = p_data["TYPE"]
-        _para = p_data["PARA"]
+        _type = p_cmd["TYPE"]
 
-        if "OPEN_PAGE" == _type:
-            _status = self.__get_page(_para)
-        elif "EXEC_STEP" == _type:
-            _status = self.__action(_para)
+        if "PAGE" == _type:
+            _status = self.__get_page(p_cmd)
+        elif "WIDGET" == _type:
+            _status = self.__action(p_cmd)
         else:
             _status = False
             self.__logger.error("Wrong type %s." % _type)
@@ -50,20 +79,18 @@ class DriverSelenium:
     def __action(self, p_para):
 
         _id = p_para["ID"]
-        _act = p_para["ACTION"]
-        _node = None
 
         _definition = self.__service.widget_get_definition(_id)
 
         # 输入框
         if "INP" == _definition.widget_type:
             _node = WidgetInput(self.__root, _id)
-            _node.execute(_act)
+            _node.execute(p_para)
 
         # Button
         elif "BTN" == _definition.widget_type:
             _node = WidgetButton(self.__root, _id)
-            _node.execute(_act)
+            _node.execute(p_para)
 
         # 自定义控件
         else:
@@ -79,12 +106,20 @@ class DriverSelenium:
         """
         self.__logger.debug(p_para)
 
-        self.__browser = p_para["BROWSER"]
-        self.__env = p_para["ENV"]
-        _page_id = p_para["ID"]
+        if "BROWSER" in p_para:
+            self.__browser = p_para["BROWSER"]
+        else:
+            self.__browser = "FIREFOX"
+
+        if "ENV" in p_para:
+            self.__env = p_para["ENV"]
+        else:
+            self.__env = "TEST"
+
+        _page_det_id = p_para["ID"]
 
         # 获取 url
-        _url = self.__service.page_get_url(_page_id)
+        _url = self.__service.page_get_url(_page_det_id)
 
         # 打开页面
         if self.__root is None:
@@ -100,10 +135,10 @@ class DriverSelenium:
                 else:
                     pass
 
-                self.__root.get(_url)
-
             except WebDriverException:
                 self.__logger.error("Open browser failed.")
+
+        self.__root.get(_url)
 
         return self.__root is not None
 

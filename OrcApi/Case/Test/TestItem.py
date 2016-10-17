@@ -95,7 +95,7 @@ class TestModify(unittest.TestCase):
 
         test = BatchDefHandle()
 
-        test.usr_modify({'id': '1001000000000003', 'pid': '1001000000000001'})
+        test.usr_update({'id': '1001000000000003', 'pid': '1001000000000001'})
 
         OrcTest.test_print_end()
 

@@ -3,6 +3,7 @@ import logging
 from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
+from OrcLib.LibNet import OrcInvoke
 from OrcDriver.Web.WebServer import DriverSelenium
 
 from OrcDriver import app
@@ -22,8 +23,10 @@ def api_web_run():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = DriverSelenium()
-    _value = _model.execute(_parameter)
+    print _parameter
+    import json
+
+    _value = OrcInvoke.socket("localhost", 6001, json.dumps(_parameter))
 
     _return.set_str_result(_value)
 

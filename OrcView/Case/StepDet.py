@@ -194,7 +194,7 @@ class ViewOperate(QWidget):
 
         # 控件信息输入
         _widget_label = QLabel(u"控件")
-        self.__widget_input = OrcLineEdit(self)
+        self.__widget_input = OrcLineEdit()
         self.__widget_input.setReadOnly(True)
         self.__widget_button = QPushButton(u"输入")
 

@@ -36,6 +36,10 @@ class PageDetControl(LibControl):
 
 
 class ViewPageDetMag(QWidget):
+    """
+
+    """
+    sig_selected = OrcSignal(str)
 
     def __init__(self, p_def):
 
@@ -79,8 +83,13 @@ class ViewPageDetMag(QWidget):
         _wid_buttons.sig_add.connect(self.add_show)
         _wid_buttons.sig_delete.connect(self.__model.usr_delete)
         _wid_buttons.sig_modify.connect(self.__model.usr_editable)
+        _wid_display.clicked[QModelIndex].connect(self.__page_select)
 
         self.__win_add.sig_submit[dict].connect(self.add)
+
+    def __page_select(self, p_index):
+        _id = self.__model.usr_get_data(p_index.row())["id"]
+        self.sig_selected.emit(_id)
 
     def add_show(self):
         if self.__page_id is not None:

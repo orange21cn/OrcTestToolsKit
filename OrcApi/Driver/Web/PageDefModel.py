@@ -26,8 +26,6 @@ class PageDefHandle:
         :param p_filter:
         :return:
         """
-        _res = []
-
         # search
         def f_value(p_flag):
             return "%%%s%%" % p_filter[p_flag]

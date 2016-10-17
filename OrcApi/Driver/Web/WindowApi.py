@@ -3,7 +3,7 @@ from flask import request
 
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_get_parameter
-from OrcLib.LibNet import OrcReturn
+from OrcLib.LibNet import OrcResult
 from WindowDefModel import WindowDefModel
 
 
@@ -24,7 +24,32 @@ class WindowsListAPI(Resource):
         return _method(*args, **kwargs)
 
     def get(self):
-        return 1
+        """
+        Search
+        :return:
+        """
+        _parameter = orc_get_parameter()
+        _return = OrcResult()
+
+        _value = self.__model.usr_search(_parameter)
+
+        _return.set_data(_value)
+
+        return _return.get_message()
+
+    def delete(self):
+        """
+        Delete
+        :return:
+        """
+        _parameter = orc_get_parameter()
+        _return = OrcResult()
+
+        _value = self.__model.usr_delete(_parameter)
+
+        _return.set_data(_value)
+
+        return _return.get_message()
 
 
 class WindowsAPI(Resource):
@@ -50,13 +75,13 @@ class WindowsAPI(Resource):
         :return:
         """
         _parameter = dict(id=p_id)
-        _return = OrcReturn()
+        _return = OrcResult()
 
         _value = self.__model.usr_search(_parameter)
 
-        _return.set_db_result(_value)
+        _return.set_data(_value)
 
-        return _return.get_return()
+        return _return.get_message()
 
     def post(self, p_id):
         """
@@ -64,30 +89,31 @@ class WindowsAPI(Resource):
         :param p_id:
         :return:
         """
-        # Todo
-        _parameter = dict(id=p_id)
-        _return = OrcReturn()
+        _parameter = orc_get_parameter()
+        _parameter["id"] = p_id
+        _return = OrcResult()
 
-        _value = self.__model.usr_search(_parameter)
+        _value = self.__model.usr_add(_parameter)
 
-        _return.set_db_result(_value)
+        _return.set_data(str(_value))
 
-        return _return.get_return()
+        return _return.get_message()
 
     def put(self, p_id):
         """
         Update
-        :param id:
+        :param p_id:
         :return:
         """
-        _parameter = dict(id=p_id)
-        _return = OrcReturn()
+        _parameter = orc_get_parameter()
+        _parameter["id"] = p_id
+        _return = OrcResult()
 
-        _value = self.__model.usr_search(_parameter)
+        _value = self.__model.usr_update(_parameter)
 
-        _return.set_db_result(_value)
+        _return.set_data(_value)
 
-        return _return.get_return()
+        return _return.get_message()
 
     def delete(self, p_id):
         """
@@ -95,12 +121,11 @@ class WindowsAPI(Resource):
         :param p_id:
         :return:
         """
-        _parameter = dict(id=p_id)
-        _return = OrcReturn()
+        _parameter = p_id
+        _return = OrcResult()
 
-        _value = self.__model.usr_search(_parameter)
+        _value = self.__model.usr_delete(_parameter)
 
-        _return.set_db_result(_value)
+        _return.set_data(_value)
 
-        return _return.get_return()
-
+        return _return.get_message()

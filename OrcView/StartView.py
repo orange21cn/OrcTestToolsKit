@@ -13,7 +13,7 @@ from OrcView.Batch.BatchDet import ViewBatchDetMag
 from OrcView.Case.CaseDef import ViewCaseDefMag
 from OrcView.Case.StepMain import StepContainer
 from OrcView.Data.DataDef import ViewDataMag
-from OrcView.Driver.Web.PageMain import PageContainer
+from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Driver.Web.WidgetMain import WidgetContainer
 
 
@@ -39,8 +39,8 @@ class StartView(QMainWindow):
         action_batch = self.create.addAction('&Batch')
         action_case = self.create.addAction('&Case')
         action_data = self.create.addAction('&Data')
-        action_page = self.create.addAction('&Page')
-        action_widget = self.create.addAction('&Widget')
+        # action_page = self.create.addAction('&Page')
+        action_web_object = self.create.addAction('&Web')
         action_test = self.create.addAction('&Test')
 
         action_open = self.file.addAction('Open')
@@ -51,8 +51,8 @@ class StartView(QMainWindow):
         self.connect(action_case, SIGNAL('triggered()'), self.open_case)
         self.connect(action_test, SIGNAL('triggered()'), self.open_test)
         self.connect(action_data, SIGNAL('triggered()'), self.open_data)
-        self.connect(action_page, SIGNAL('triggered()'), self.open_page)
-        self.connect(action_widget, SIGNAL('triggered()'), self.open_widget)
+        # self.connect(action_page, SIGNAL('triggered()'), self.open_page)
+        self.connect(action_web_object, SIGNAL('triggered()'), self.open_web_object)
         self.connect(action_close, SIGNAL('triggered()'), self.close)
 
         # Dock
@@ -96,13 +96,13 @@ class StartView(QMainWindow):
         self.__wid_center.addTab(_view, _view.title)
         self.__show_dock()
 
-    def open_page(self):
-        _view = PageContainer()
-        self.__wid_center.addTab(_view, _view.title)
-        self.__show_dock()
+    # def open_page(self):
+    #     _view = PageContainer()
+    #     self.__wid_center.addTab(_view, _view.title)
+    #     self.__show_dock()
 
-    def open_widget(self):
-        _view = WidgetContainer()
+    def open_web_object(self):
+        _view = ViewWebMain()
         self.__wid_center.addTab(_view, _view.title)
         self.__show_dock()
 

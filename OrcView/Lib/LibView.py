@@ -39,18 +39,18 @@ def create_editor(parent, p_type):
     """
     # 单行输入框
     if "LINETEXT" == p_type["TYPE"]:
-        return OrcLineEdit(parent)
+        return OrcLineEdit()
 
     # 多行输入框
     elif "TEXTAREA" == p_type["TYPE"]:
         if "SEARCH" == p_type["SOURCE"]:
-            return OrcLineEdit(parent)
+            return OrcLineEdit()
         else:
             return OrcTextArea(parent)
 
     # 时间显示
     elif "DATETIME" == p_type["TYPE"]:
-        return OrcLineEdit(parent)
+        return OrcLineEdit()
 
     # 选择输入框
     elif "SELECT" == p_type["TYPE"]:
@@ -66,7 +66,7 @@ def create_editor(parent, p_type):
 
     # 其他
     else:
-        return OrcLineEdit(parent)
+        return OrcLineEdit()
 
 
 def get_dict(p_flag):
@@ -88,8 +88,8 @@ class OrcLineEdit(QLineEdit):
     单行输入框
     """
 
-    def __init__(self, parent):
-        QLineEdit.__init__(self, parent)
+    def __init__(self):
+        QLineEdit.__init__(self)
 
     def get_data(self):
         return self.text()
@@ -167,7 +167,14 @@ class OrcSelect(QComboBox):
             order_by(LibDictionary.dict_order).all()
 
         if self.__empty:
-            _items[0:0] = [LibDictionary(dict(dict_text="", dict_value=""))]
+            _items[0:0] = [LibDictionary(dict(
+                id=0,
+                dict_flag="",
+                dict_text="",
+                dict_order=0,
+                dict_value="",
+                dict_desc=""
+            ))]
 
         for t_item in _items:
             self.addItem(t_item.dict_text, t_item.dict_value)
@@ -191,6 +198,103 @@ class OrcSelect(QComboBox):
             self.setCurrentIndex(self.__value.index(p_data))
         else:
             pass
+
+
+class OrcSelectBase(QComboBox):
+    """
+    下拉列表
+    """
+    def __init__(self, p_empty=False):
+        """
+        User defined combobox, it's data is come from table lib_dictionary
+        :param p_flag: 数据库中的标识符
+        :return:
+        """
+        QComboBox.__init__(self)
+
+        self.__texts = []
+        self.__names = []
+
+        self.empty = p_empty
+
+    def set_item_data(self, p_data=None):
+
+        self.clear()
+        self.__texts = []
+        self.__names = []
+
+        if p_data is None:
+            return
+
+        if self.empty:
+            self.addItem("", "")
+            self.__texts.append("")
+            self.__names.append("")
+
+        for _item in p_data:
+            self.addItem(_item["text"], _item["name"])
+            self.__names.append(_item["name"])
+            self.__texts.append(_item["text"])
+
+    def get_data(self):
+        return self.itemData(self.currentIndex())
+
+    def get_text(self):
+        return self.itemText(self.currentIndex())
+
+    def set_data(self, p_data):
+
+        if p_data in self.__texts:
+            self.setCurrentIndex(self.__texts.index(p_data))
+        elif p_data in self.__names:
+            self.setCurrentIndex(self.__names.index(p_data))
+        else:
+            pass
+
+
+class SelectWidgetType(OrcSelectBase):
+    """
+    下拉控件类型列表
+    """
+    def __init__(self, p_empty=False):
+        """
+        User defined combobox, it's data is come from table lib_dictionary
+        :param p_flag: 数据库中的标识符
+        :return:
+        """
+        OrcSelectBase.__init__(self, p_empty)
+
+        from LibDict import LibDict
+
+        self.__dict = LibDict()
+        _data = [dict(name=_item.type_name, text=_item.type_text)
+                 for _item in self.__dict.get_widget_type()]
+
+        self.set_item_data(_data)
+
+
+class SelectWidgetOperation(OrcSelectBase):
+    """
+    下拉控件类型列表
+    """
+    def __init__(self, p_empty=False):
+        """
+        User defined combobox, it's data is come from table lib_dictionary
+        :param p_flag: 数据库中的标识符
+        :return:
+        """
+        OrcSelectBase.__init__(self, p_empty)
+
+        from LibDict import LibDict
+
+        self.__dict = LibDict()
+
+    def set_id(self, p_type_id):
+
+        _data = [dict(name=_item.ope_name, text=_item.ope_text)
+                 for _item in self.__dict.get_widget_operation(p_type_id)]
+
+        self.set_item_data(_data)
 
 
 def operate_to_str(p_data):
@@ -231,7 +335,6 @@ def operate_to_str(p_data):
             _type = orc_invoke(_get_dict_text, dict(flag="operate_object_type", value=_type))
         except OrcPostFailedException:
             # Todo
-            print _object
             pass
 
         return "%s|%s" % (_type, _object)
@@ -270,7 +373,7 @@ class ObjectOperator(QVBoxLayout):
 
         if "WIDGET" == _type:
             self.__operate.set_flag("widget_operator")
-        elif"PAGE" == _type:
+        elif "PAGE" == _type:
             self.__operate.set_flag("page_operator")
         else:
             self.__operate.set_flag("")
