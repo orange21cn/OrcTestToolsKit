@@ -11,6 +11,7 @@ from requests.exceptions import RequestException
 from requests.packages.urllib3.exceptions import HTTPError
 from OrcLib.LibCommon import is_false
 from OrcLib.LibLog import OrcLog
+from OrcLib import get_config
 from OrcApi import orc_db
 
 _logger = OrcLog("api.test01")
@@ -68,7 +69,6 @@ def orc_invoke(p_url, p_para=""):
     """
     _type = {'content-type': 'application/json'}
     _para = json.dumps(p_para)
-    _result = None
 
     try:
         _response = requests.post(p_url, data=_para, headers=_type)
@@ -97,8 +97,10 @@ def orc_get_parameter():
     :return:
     """
     _rtn = request.json
+
     if _rtn is None:
         _rtn = dict()
+
     return _rtn
 
 
@@ -123,18 +125,18 @@ def allow_cross_domain(fun):
 
 
 class OrcInvoke:
-    """
-    post interface
-    :param p_url:
-    :param p_para:
-    :return:
-    """
 
     def __init__(self):
         pass
 
     def get(self, p_url, p_para=None):
-
+        """
+        :param p_url:
+        :type p_url: str
+        :param p_para:
+        :param p_para: dict
+        :return:
+        """
         return self.__invoke("GET", p_url, p_para)
 
     def post(self, p_url, p_para=None):
@@ -214,6 +216,176 @@ class OrcInvoke:
         return _result.data
 
 
+class OrcResourceBase:
+    """
+    http 服务调用封装为资源
+    """
+    def __init__(self, p_mod):
+
+        mod_list = dict(BatchDef='BATCH',
+                        BatchDet='BATCH',
+                        CaseDef='CASE',
+                        CaseDet='CASE',
+                        StepDef='CASE',
+                        StepDet='CASE',
+                        Item='CASE',
+                        Data='DATA',
+                        PageDef='DRIVER_WEB',
+                        PageDet='DRIVER_WEB',
+                        WindowDef='DRIVER_WEB',
+                        WidgetDef='DRIVER_WEB',
+                        WidgetDet='DRIVER_WEB',
+                        RunDef='RUN',
+                        RunDet='RUN', Run='RUN')
+
+        flag = None if p_mod not in mod_list else mod_list[p_mod]
+
+        self._configer = get_config("network")
+        self._ip = self._configer.get_option(flag, "ip")
+        self._port = self._configer.get_option(flag, "port")
+        self._version = self._configer.get_option(flag, "version")
+        self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, p_mod)
+
+
+class OrcSocketResource(OrcResourceBase):
+
+    def __init__(self, p_mod):
+
+        OrcResourceBase.__init__(self, p_mod)
+
+    def get(self, p_para):
+        """
+        :param p_para:
+        :return:
+        """
+        import time
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self._ip, self._port))
+
+        time.sleep(2)
+        sock.send(json.dumps(p_para))
+        _msg = sock.recv(1024)
+        sock.close()
+
+        return _msg
+
+
+class OrcHttpResource(OrcResourceBase):
+    """
+    http 服务调用封装为资源
+    """
+    def __init__(self, p_mod):
+
+        OrcResourceBase.__init__(self, p_mod)
+
+        self.__back_url = self._url
+
+    def set_id(self, p_id=None):
+
+        if p_id is None:
+            self._url = self.__back_url
+        else:
+            self._url = "%s/%s" % (self.__back_url, p_id)
+
+    def __restore_url(self):
+        if self.__back_url != self._url:
+            self._url = self.__back_url
+
+    def get(self, p_cond=None):
+        """
+        :param p_cond:
+        :param p_cond: dict
+        :return:
+        """
+        if not isinstance(p_cond, dict):
+            p_cond = dict()
+
+        res = self.__invoke("GET", self._url, p_cond)
+        self.__restore_url()
+
+        return res
+
+    def post(self, p_cond=None):
+        """
+        :param p_cond:
+        :rtype: list
+        """
+        if not isinstance(p_cond, dict):
+            p_cond = dict()
+
+        res = self.__invoke("POST", self._url, p_cond)
+        self.__restore_url()
+
+        return res
+
+    def put(self, p_cond=None):
+        """
+        :param p_cond:
+        :return:
+        :rtype: list
+        """
+        if not isinstance(p_cond, dict):
+            p_cond = dict()
+
+        res = self.__invoke("PUT", self._url, p_cond)
+        self.__restore_url()
+
+        return res
+
+    def delete(self, p_cond=None):
+        """
+        :param p_cond:
+        :return:
+        :rtype: list
+        """
+        if not isinstance(p_cond, dict):
+            p_cond = dict()
+
+        res = self.__invoke("DELETE", self._url, p_cond)
+        self.__restore_url()
+
+        return res
+
+    @staticmethod
+    def __invoke(p_flg, p_url, p_para):
+
+        _type = {'content-type': 'application/json'}
+        _para = json.dumps(p_para)
+        _result = None
+
+        try:
+            # 接口调用
+            if "GET" == p_flg:
+                _response = requests.get(p_url, data=_para, headers=_type)
+            elif "POST" == p_flg:
+                _response = requests.post(p_url, data=_para, headers=_type)
+            elif "PUT" == p_flg:
+                _response = requests.put(p_url, data=_para, headers=_type)
+            elif "DELETE" == p_flg:
+                _response = requests.delete(p_url, data=_para, headers=_type)
+            else:
+                _response = requests.get(p_url, data=_para, headers=_type)
+
+            # 调用失败
+            if not _response.ok:
+                _logger.error("Invoke %s failed, parameter is %s, response is %s" % (p_url, _para, _response.ok))
+                return None
+
+            _result = OrcResult(_response.text)
+
+            # 成功返回但结果为 False
+            if not _result.status:
+                _logger.error("Invoke %s failed, parameter is %s, status is %s" % (p_url, _para, _result.status))
+                return None
+
+        except (HTTPError, ValueError, RequestException):
+            _logger.error("Invoke %s failed, parameter is %s, status is %s" % (p_url, _para, _result.status))
+            return None
+
+        return _result.data
+
+
 class OrcResult:
     def __init__(self, p_res=None):
 
@@ -239,13 +411,20 @@ class OrcResult:
         :param p_data:
         :return:
         """
-        if isinstance(p_data, list) \
+        # 数据库对象
+        if isinstance(p_data, orc_db.Model):
+            self.data = p_data.to_json()
+
+        # 数据库对象数组
+        elif isinstance(p_data, list) \
                 and 0 < len(p_data) \
                 and isinstance(p_data[0], orc_db.Model):
 
             self.data = []
             for t_data in p_data:
                 self.data.append(t_data.to_json())
+
+        # 其他数据类型
         else:
             self.data = p_data
 

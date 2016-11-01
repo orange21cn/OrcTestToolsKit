@@ -69,6 +69,9 @@ class PageContainer(QWidget):
         _layout_main.addWidget(self.__wid_search_cond)
         _layout_main.addLayout(_layout_bottom)
 
+        _layout_main.setContentsMargins(0, 0, 0, 0)
+        _layout_main.setSpacing(1)
+
         self.setLayout(_layout_main)
 
         self.__wid_page_def.sig_selected.connect(self.__wid_page_det.set_page_id)

@@ -17,7 +17,7 @@ from PySide.QtCore import Qt
 # app.run()
 
 # from Data.models import OrcBatchDef
-#
+
 # ccc = OrcBatchDef()
 # print ccc.get()
 
@@ -31,40 +31,10 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 OrcData = QApplication(sys.argv)
-_table_def = [{
-        "ID": "id", "NAME": u"ID", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "FALSE", "EDIT": "FALSE",
-        "SEARCH": "FALSE", "ADD": "FALSE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "pid", "NAME": u"父ID", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "FALSE", "EDIT": "FALSE",
-        "SEARCH": "FALSE", "ADD": "FALSE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "batch_no", "NAME": u"批编号", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "TRUE",
-        "SEARCH": "TRUE", "ADD": "TRUE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "batch_name", "NAME": u"批名称", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "TRUE",
-        "SEARCH": "TRUE", "ADD": "TRUE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "batch_desc", "NAME": u"批描述", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "TRUE",
-        "SEARCH": "TRUE", "ADD": "TRUE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "comment", "NAME": u"备注", "TYPE": "TEXT", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "TRUE",
-        "SEARCH": "FALSE", "ADD": "TRUE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "create_time", "NAME": u"创建时间", "TYPE": "DATETIME", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "FALSE",
-        "SEARCH": "FALSE", "ADD": "FALSE", "ESSENTIAL": "FALSE"
-    }, {
-        "ID": "modify_time", "NAME": u"修改时间", "TYPE": "DATETIME", "LENGTH": "16",
-        "DISPLAY": "TRUE", "EDIT": "FALSE",
-        "SEARCH": "FALSE", "ADD": "FALSE", "ESSENTIAL": "FALSE"
-    }]
+
 tp = StartView()
+qss_file = open('Orcview/Style/default.qss').read()
+tp.setStyleSheet(qss_file)
 tp.show()
 
 OrcData.exec_()

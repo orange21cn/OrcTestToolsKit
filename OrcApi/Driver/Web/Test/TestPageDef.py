@@ -1,7 +1,7 @@
 import traceback
 import unittest
 
-from OrcApi.Driver.Web.PageDefModel import PageDefHandle
+from OrcApi.Driver.Web.PageDefModel import PageDefModel
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
 
@@ -17,7 +17,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = PageDefHandle()
+        _handle = PageDefModel()
         _res = _handle.usr_search({"id": "1002"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())

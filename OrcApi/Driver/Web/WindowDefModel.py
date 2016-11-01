@@ -17,38 +17,39 @@ class WindowDefModel:
     def __init__(self):
         pass
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
         查询符合条件的控件
-        :param p_filter:
+        :param p_cond:
         :return:
         """
         # 判断输入参数是否为空
-        _filter = p_filter if p_filter else dict()
+        cond = p_cond if p_cond else dict()
 
         # 查询条件 like
-        _like = lambda p_flag: "%%%s%%" % _filter[p_flag]
+        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
         # db session
-        _search = self.__session.query(WebWindowDef)
+        search = self.__session.query(WebWindowDef)
 
-        if 'id' in _filter:
+        if 'id' in cond:
 
-            if isinstance(_filter["id"], list):
-                _search = _search.filter(WebWindowDef.id.in_(_filter['id']))
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                search = search.filter(WebWindowDef.id.in_(cond['id']))
             else:
-                _search = _search.filter(WebWindowDef.id == _filter['id'])
+                search = search.filter(WebWindowDef.id == cond['id'])
 
-        if 'window_mark' in _filter:
-            _search = _search.filter(WebWindowDef.window_mark.ilike(_like('window_mark')))
+        if 'window_mark' in cond:
+            search = search.filter(WebWindowDef.window_mark.ilike(func_like('window_mark')))
 
-        if 'window_desc' in _filter:
-            _search = _search.filter(WebWindowDef.window_desc.ilike(_like('window_desc')))
+        if 'window_desc' in cond:
+            search = search.filter(WebWindowDef.window_desc.ilike(func_like('window_desc')))
 
-        if 'comment' in _filter:
-            _search = _search.filter(WebWindowDef.comment.ilike(_like('comment')))
+        if 'comment' in cond:
+            search = search.filter(WebWindowDef.comment.ilike(func_like('comment')))
 
-        return _search.all()
+        return search.all()
 
     def usr_add(self, p_data):
         """

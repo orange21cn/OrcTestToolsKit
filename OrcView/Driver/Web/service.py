@@ -3,7 +3,6 @@ from OrcLib import get_config
 from OrcLib.LibNet import orc_invoke
 from OrcLib.LibNet import OrcInvoke
 from OrcLib.LibLog import OrcLog
-from OrcView.Lib.LibDict import LibDict
 
 
 class PageService:
@@ -53,7 +52,7 @@ class WindowService:
         """
         from OrcLib.LibNet import orc_invoke
 
-        _url_window = '%s/api/1.0/windows' % self.__url
+        _url_window = '%s/api/1.0/Window' % self.__url
         _url_widget = '%s/WidgetDef/usr_search' % self.__url
 
         _windows_all = [item["id"] for item in orc_invoke(_url_widget, dict(widget_type="WINDOW"))]
@@ -68,7 +67,7 @@ class WindowService:
         :param p_list:
         :return:
         """
-        _url = '%s/api/1.0/windows' % self.__url
+        _url = '%s/api/1.0/Window' % self.__url
         self.__invoker.delete(_url, p_list)
 
     def usr_update(self, p_data):
@@ -77,7 +76,7 @@ class WindowService:
         :return:
         """
         _id = p_data["id"]
-        _url = '%s/api/1.0/windows/%s' % (self.__url, _id)
+        _url = '%s/api/1.0/Window/%s' % (self.__url, _id)
         self.__invoker.put(_url, p_data)
 
     def usr_search(self, p_cond):
@@ -88,7 +87,7 @@ class WindowService:
         from OrcLib.LibNet import orc_invoke
 
         _cond = p_cond
-        _url_window = '%s/api/1.0/windows' % self.__url
+        _url_window = '%s/api/1.0/Window' % self.__url
         _url_widget = '%s/WidgetDef/usr_search' % self.__url
 
         # 有 window_flag 条件先查 widget
@@ -127,7 +126,7 @@ class WebMainService:
     def __init__(self):
 
         # Log
-        self.__logger = OrcLog("view.driver.web.service.webmain")
+        self.__logger = OrcLog("view.driver.web.service.web_main")
 
         # Get url from configuration
         self.__url = get_config("interface").get_option("DRIVER", "url")

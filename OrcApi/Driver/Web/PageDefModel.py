@@ -8,10 +8,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebPageDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Driver.Web.PageDetModel import PageDetHandle
+from OrcApi.Driver.Web.PageDetModel import PageDetModel
 
 
-class PageDefHandle:
+class PageDefModel:
     """
     Test data management
     """
@@ -19,7 +19,7 @@ class PageDefHandle:
 
     def __init__(self):
 
-        self.child = PageDetHandle()
+        self.child = PageDetModel()
 
     def usr_search(self, p_filter=None):
         """
@@ -90,7 +90,7 @@ class PageDefHandle:
         else:
             return _no
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 

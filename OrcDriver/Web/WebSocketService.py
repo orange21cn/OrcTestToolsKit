@@ -6,7 +6,7 @@ from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import WebWidgetDet
 
 
-class DriverService:
+class WebSocketService:
 
     def __init__(self):
 

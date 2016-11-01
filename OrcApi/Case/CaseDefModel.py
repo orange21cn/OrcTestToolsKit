@@ -8,11 +8,11 @@ from sqlalchemy import func
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Batch.BatchDetModel import BatchDetHandle
-from OrcApi.Case.CaseDetModel import CaseDetHandle
+from OrcApi.Batch.BatchDetModel import BatchDetModel
+from OrcApi.Case.CaseDetModel import CaseDetModel
 
 
-class CaseDefHandle:
+class CaseDefModel:
     """
     Test data management
     """
@@ -20,77 +20,132 @@ class CaseDefHandle:
 
     def __init__(self):
 
-        self.__batch = BatchDetHandle()
-        self.__case_det = CaseDetHandle()
+        self.__batch = BatchDetModel()
+        self.__case_det = CaseDetModel()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        根据条件查询,但不包括子用例和你用例
+        :param p_cond: 条件
+        :type p_cond: dict
         :return:
         """
-        _res_list = []
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 查询条件 like
+        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        if p_filter is None:
-            i_res = self.__session.query(TabCaseDef).all()
+        search = self.__session.query(TabCaseDef)
+
+        if 'id' in p_cond:
+
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                search = search.filter(TabCaseDef.id.in_(cond['id']))
+            else:
+                search = search.filter(TabCaseDef.id == cond['id'])
+
+        if 'pid' in p_cond:
+            search = search.filter(TabCaseDef.pid == cond['pid'])
+
+        if 'case_no' in p_cond:
+            search = search.filter(TabCaseDef.case_no == cond['case_no'])
+
+        if 'case_type' in p_cond:
+            search = search.filter(TabCaseDef.case_type == cond['case_type'])
+
+        if 'case_name' in p_cond:
+            search = search.filter(TabCaseDef.case_name.ilike(func_like('case_name')))
+
+        if 'case_desc' in p_cond:
+            search = search.filter(TabCaseDef.case_desc.ilike(func_like('case_desc')))
+
+        return search.all()
+
+    def usr_search_all(self, p_cond):
+        """
+        查询包含用例的树,追踪到根节点
+        :param p_cond:
+        :type p_cond: dict
+        :return:
+        :rtype: list
+        """
+        result = list()
+
+        for _case in self.usr_search(p_cond):
+
+            if _case not in result:
+
+                # 获取当前用例的根用例组
+                _root = self.__get_root(_case)
+
+                # 获取根用例组的所有子用例
+                _tree = self.__get_tree(_root)
+
+                # 加入结果树
+                result.extend(_tree)
+
+        return result
+
+    def usr_search_tree(self, p_id):
+        """
+        查询用例组及其所有子用例
+        :param p_id:
+        :return:
+        :rtype: list
+        """
+        case = self.usr_search(dict(id=p_id))
+
+        if case:
+            return self.__get_tree(case[0])
         else:
-            i_res = self.__session.query(TabCaseDef)
+            return list()
 
-            if 'id' in p_filter:
-                i_res = i_res.filter(TabCaseDef.id.ilike(f_value('id')))
+    def usr_search_path(self, p_id):
+        """
+        获取CASE的路径
+        :param p_id: case id
+        :return: 10.11.14 ....
+        :rtype: str
+        """
+        case_data = self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_id).first()
 
-            if 'pid' in p_filter:
-                i_res = i_res.filter(TabCaseDef.pid.ilike(f_value('pid')))
+        case_no = case_data.case_no if case_data else None
+        case_pid = case_data.pid if case_data else None
 
-            if 'case_no' in p_filter:
-                i_res = i_res.filter(TabCaseDef.case_no.ilike(f_value('case_no')))
+        if case_pid:
+            return "%s.%s" % (self.usr_get_path(case_pid), case_no)
+        else:
+            return case_no
 
-            if 'case_type' in p_filter:
-                i_res = i_res.filter(TabCaseDef.case_type.ilike(f_value('case_type')))
-
-            if 'case_name' in p_filter:
-                i_res = i_res.filter(TabCaseDef.case_name.ilike(f_value('case_name')))
-
-            if 'case_desc' in p_filter:
-                i_res = i_res.filter(TabCaseDef.case_desc.ilike(f_value('case_desc')))
-
-        # get tree
-        for t_item in i_res:
-
-            if t_item not in _res_list:
-                t_tree = self._get_tree(self._get_root(t_item))
-                _res_list.extend(t_tree)
-
-        return _res_list
-
-    def _get_root(self, p_item):
+    def __get_root(self, p_item):
         """
         :param p_item:
+        :type p_item: TabCaseDef
         :return:
         """
-        if p_item.pid is None:
+        if not p_item or not p_item.pid:
             return p_item
 
-        _res = self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_item.pid).first()
+        res = self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_item.pid).first()
 
-        if _res.pid is None:
-            return _res
+        if res and res.pid is not None:
+            return self.__get_root(res)
         else:
-            return self._get_root(_res)
+            return res
 
-    def _get_tree(self, p_item):
+    def __get_tree(self, p_item):
         """
         :param p_item:
+        :type p_item: TabCaseDef
         :return:
         """
         _tree = [p_item]
         _items = self.__session.query(TabCaseDef).filter(TabCaseDef.pid == p_item.id).all()
 
         for t_item in _items:
-            _tree.extend(self._get_tree(t_item))
+            _tree.extend(self.__get_tree(t_item))
 
         return _tree
 
@@ -114,7 +169,7 @@ class CaseDefHandle:
 
         # case_name
         _node.case_name = p_data['case_name'] if 'case_name' in p_data else ""
-        print "cc"
+
         # case_desc, comment
         _node.case_desc = p_data['case_desc'] if 'case_desc' in p_data else ""
         _node.case_type = p_data['case_type'] if 'case_type' in p_data else ""
@@ -123,15 +178,14 @@ class CaseDefHandle:
         # create_time, modify_time
         _node.create_time = datetime.now()
         _node.modify_time = datetime.now()
-        print _node.to_json()
-        print "KO"
+
         try:
             self.__session.add(_node)
             self.__session.commit()
         except:
             raise OrcDatabaseException
 
-        self.usr_modify({"id": _node.id, "case_path": self.usr_get_path(_node.id)})
+        self.usr_update({"id": _node.id, "case_path": self.usr_get_path(_node.id)})
 
         return {u'id': str(_node.id)}
 
@@ -149,7 +203,7 @@ class CaseDefHandle:
 
         return str(int(_case_no) + 1)
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 
@@ -231,7 +285,11 @@ class CaseDefHandle:
         return _res
 
     def usr_get_path(self, p_id):
-
+        """
+        查询路径,新接口中用 search_path 代替
+        :param p_id:
+        :return:
+        """
         _no = self.__session.query(TabCaseDef.case_no).filter(TabCaseDef.id == p_id).first()
         _pid = self.__session.query(TabCaseDef.pid).filter(TabCaseDef.id == p_id).first()
 
@@ -242,5 +300,4 @@ class CaseDefHandle:
         if _pid is None:
             return _no
         else:
-            _pid = _pid
             return "%s.%s" % (self.usr_get_path(_pid), _no)

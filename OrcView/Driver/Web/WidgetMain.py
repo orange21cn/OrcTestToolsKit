@@ -79,6 +79,9 @@ class WidgetContainer(QWidget):
         _layout_main.addWidget(self.__wid_search_cond)
         _layout_main.addLayout(_layout_bottom)
 
+        _layout_main.setContentsMargins(0, 0, 0, 0)
+        _layout_main.setSpacing(1)
+
         self.setLayout(_layout_main)
 
         self.__wid_widget_def.sig_selected.connect(self.__wid_widget_det.set_widget_id)

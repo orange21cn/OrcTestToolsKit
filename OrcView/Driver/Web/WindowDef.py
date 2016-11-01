@@ -81,8 +81,7 @@ class ViewWindow(QWidget):
             dict(id="delete", name=u"删除")
         ]
         _wid_buttons = ViewButtons(_btn_definition)
-        _wid_buttons.align_front()
-        _wid_buttons.set_no_spacing()
+        _wid_buttons.align_back()
 
         # Layout
         _layout = QVBoxLayout()

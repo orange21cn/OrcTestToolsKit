@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 from OrcLib.LibLog import OrcLog
-from service import DriverService
+from WebSocketService import WebSocketService
 
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcDriver.Web.Widget.WidgetButton import WidgetButton
@@ -18,7 +18,7 @@ class DriverSelenium:
     def __init__(self, p_ip, p_port):
 
         self.__logger = OrcLog("driver.selenium")
-        self.__service = DriverService()
+        self.__service = WebSocketService()
 
         self.__browser = "FIREFOX"  # 浏览器
         self.__env = "TEST"  # 环境

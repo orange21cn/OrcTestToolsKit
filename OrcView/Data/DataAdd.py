@@ -84,5 +84,4 @@ class ViewCommonDataAdd(ViewAdd):
 
     def __save(self, p_data):
         p_data["src_id"] = self.__id
-        print p_data
         orc_invoke(self.__interface['usr_add'], p_data)

@@ -1,6 +1,6 @@
 import unittest
 
-from OrcDriver.Web.WebServer import DriverSelenium
+from OrcDriver.Web.WebSocketServer import DriverSelenium
 from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcLib.LibNet import orc_invoke
 from OrcLib.LibTest import OrcTest

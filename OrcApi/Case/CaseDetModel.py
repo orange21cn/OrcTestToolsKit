@@ -7,10 +7,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabCaseDet
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Case.StepDefModel import StepDefHandle
+from OrcApi.Case.StepDefModel import StepDefModel
 
 
-class CaseDetHandle():
+class CaseDetModel():
     """
     Test data management
     """
@@ -18,7 +18,7 @@ class CaseDetHandle():
 
     def __init__(self):
 
-        self.__step = StepDefHandle()
+        self.__step = StepDefModel()
 
     def usr_search(self, p_filter=None):
         """
@@ -70,7 +70,7 @@ class CaseDetHandle():
 
         return {u'id': str(_case_id)}
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 
@@ -94,15 +94,11 @@ class CaseDetHandle():
             # Delete it from step
             _step_list = self.usr_search({"id": _id})
             _step_ids = dict(list=list(value.step_id for value in _step_list))
-            print "abc"
-            print _step_ids
-            print "def"
 
             self.__step.usr_delete(_step_ids)
 
-        for t_id in p_list["list"]:
-            print "case_det_1"
-            print t_id
+        for t_id in p_list:
+
             # Delete step definition
             _del(t_id)
 

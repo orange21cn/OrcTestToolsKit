@@ -1,7 +1,7 @@
 # coding=utf-8
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
-from OrcDriver.Web.service import DriverService
+from OrcDriver.Web.WebSocketService import WebSocketService
 from OrcLib.LibLog import OrcLog
 
 
@@ -16,7 +16,7 @@ class OrcWidget:
         self._root = p_root
         self._widget = p_root
         self._window = None
-        self.__service = DriverService()
+        self.__service = WebSocketService()
 
         self._def = self.__get_def_info(p_id)
         self._get_widget()

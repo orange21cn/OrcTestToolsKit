@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class DataHandle():
+class DataModel():
     """
     Test data management
     """
@@ -143,7 +143,7 @@ class DataHandle():
 
         return _order
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 

@@ -56,6 +56,9 @@ class ViewWebMain(QWidget):
         _layout.addWidget(_tab)
         _layout.addWidget(self.__test)
 
+        _layout.setStretch(0, 5)
+        _layout.setStretch(1, 1)
+
         self.setLayout(_layout)
 
         # 信号

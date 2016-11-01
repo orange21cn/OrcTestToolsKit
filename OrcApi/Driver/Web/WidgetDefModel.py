@@ -6,10 +6,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Driver.Web.WidgetDetModel import WidgetDetHandle
+from OrcApi.Driver.Web.WidgetDetModel import WidgetDetModel
 
 
-class WidgetDefHandle:
+class WidgetDefModel:
     """
     Test data management
     """
@@ -17,7 +17,7 @@ class WidgetDefHandle:
 
     def __init__(self):
 
-        self.child = WidgetDetHandle()
+        self.child = WidgetDetModel()
 
     def usr_search(self, p_filter=None):
         """
@@ -151,7 +151,7 @@ class WidgetDefHandle:
             raise OrcDatabaseException
 
         # Modify
-        self.usr_modify({"id": _node.id,
+        self.usr_update({"id": _node.id,
                          "widget_path": self.usr_get_path(_node.id)})
 
         return {u'id': str(_node.id)}
@@ -169,7 +169,7 @@ class WidgetDefHandle:
         else:
             return _no
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 

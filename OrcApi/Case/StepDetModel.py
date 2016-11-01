@@ -6,10 +6,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabStepDet
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Case.ItemModel import ItemHandle
+from OrcApi.Case.ItemModel import ItemModel
 
 
-class StepDetHandle():
+class StepDetModel():
     """
     Test data management
     """
@@ -17,7 +17,7 @@ class StepDetHandle():
 
     def __init__(self):
 
-        self.__item = ItemHandle()
+        self.__item = ItemModel()
 
     def usr_search(self, p_filter=None):
         """
@@ -69,7 +69,7 @@ class StepDetHandle():
 
         return {u'id': str(_node.id)}
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 

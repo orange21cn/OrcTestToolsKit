@@ -3,9 +3,9 @@ import logging
 from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
-from OrcApi.Batch.BatchDefModel import BatchDefHandle
-from OrcApi.Batch.BatchDetModel import BatchDetHandle
-from OrcApi.Case.CaseDefModel import CaseDefHandle
+from OrcApi.Batch.BatchDefModel import BatchDefModel
+from OrcApi.Batch.BatchDetModel import BatchDetModel
+from OrcApi.Case.CaseDefModel import CaseDefModel
 from OrcApi import app
 
 
@@ -25,7 +25,7 @@ def batch_search():
 
     api_batch_log.error("kkkk")
 
-    _model = BatchDefHandle()
+    _model = BatchDefModel()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -43,7 +43,7 @@ def batch_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = BatchDefHandle()
+    _model = BatchDefModel()
     _value = _model.usr_add(_parameter)
     _return.set_str_result(_value)
 
@@ -60,7 +60,7 @@ def batch_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = BatchDefHandle()
+    _model = BatchDefModel()
     _model.usr_modify(_parameter)
 
     return _return.get_return()
@@ -76,7 +76,7 @@ def batch_delete():
     i_parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    i_model = BatchDefHandle()
+    i_model = BatchDefModel()
     i_model.usr_delete(i_parameter)
 
     return _return.get_return()
@@ -92,7 +92,7 @@ def batch_get_no():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = BatchDefHandle()
+    _model = BatchDefModel()
     _res = _model.usr_get_value(_parameter)
 
     _return.set_str_result(_res.batch_no)
@@ -111,8 +111,8 @@ def batch_det_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_batch = BatchDetHandle()
-    _model_case = CaseDefHandle()
+    _model_batch = BatchDetModel()
+    _model_case = CaseDefModel()
 
     _cond_batch = {}
     _cond_case = {}
@@ -164,7 +164,7 @@ def batch_det_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = BatchDetHandle()
+    _model = BatchDetModel()
     _value = _model.usr_add(_parameter)
     _return.set_str_result(_value)
 
@@ -181,7 +181,7 @@ def batch_det_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = BatchDetHandle()
+    _model = BatchDetModel()
     _value = _model.usr_delete(_parameter)
     _return.set_str_result(_value)
 

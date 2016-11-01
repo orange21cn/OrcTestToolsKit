@@ -73,6 +73,8 @@ class ViewWidgetDetMag(QWidget):
         _layout.addWidget(_wid_display)
         _layout.addWidget(_wid_buttons)
 
+        _layout.setContentsMargins(0, 0, 0, 0)
+
         self.setLayout(_layout)
 
         # Connection

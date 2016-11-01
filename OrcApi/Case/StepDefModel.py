@@ -7,10 +7,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabStepDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Case.StepDetModel import StepDetHandle
+from OrcApi.Case.StepDetModel import StepDetModel
 
 
-class StepDefHandle:
+class StepDefModel:
     """
     Test data management
     """
@@ -18,7 +18,7 @@ class StepDefHandle:
 
     def __init__(self):
 
-        self.__step_det = StepDetHandle()
+        self.__step_det = StepDetModel()
 
     def usr_search(self, p_filter=None):
         """
@@ -92,7 +92,7 @@ class StepDefHandle:
         else:
             return _no
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 

@@ -2,11 +2,11 @@
 from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
-from OrcApi.Case.CaseDefModel import CaseDefHandle
-from OrcApi.Case.CaseDetModel import CaseDetHandle
-from OrcApi.Case.StepDefModel import StepDefHandle
-from OrcApi.Case.StepDetModel import StepDetHandle
-from OrcApi.Case.ItemModel import ItemHandle
+from OrcApi.Case.CaseDefModel import CaseDefModel
+from OrcApi.Case.CaseDetModel import CaseDetModel
+from OrcApi.Case.StepDefModel import StepDefModel
+from OrcApi.Case.StepDetModel import StepDetModel
+from OrcApi.Case.ItemModel import ItemModel
 from OrcApi import app
 
 
@@ -21,7 +21,7 @@ def case_def_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = CaseDefHandle()
+    _model = CaseDefModel()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -39,7 +39,7 @@ def case_def_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = CaseDefHandle()
+    _model = CaseDefModel()
     _value = _model.usr_add(_parameter)
 
     _return.set_str_result(_value)
@@ -57,8 +57,8 @@ def case_def_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = CaseDefHandle()
-    _model.usr_modify(_parameter)
+    _model = CaseDefModel()
+    _model.usr_update(_parameter)
 
     return _return.get_return()
 
@@ -73,7 +73,7 @@ def case_def_delete():
     i_parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    i_model = CaseDefHandle()
+    i_model = CaseDefModel()
     i_model.usr_delete(i_parameter)
 
     return _return.get_return()
@@ -89,7 +89,7 @@ def case_def_get_path():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = CaseDefHandle()
+    _model = CaseDefModel()
     _path = []
 
     if isinstance(_parameter, list):
@@ -115,8 +115,8 @@ def case_det_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_case = CaseDetHandle()
-    _model_step = StepDefHandle()
+    _model_case = CaseDetModel()
+    _model_step = StepDefModel()
 
     _cond_case = {}
     _cond_step = {}
@@ -155,8 +155,8 @@ def case_det_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_case = CaseDetHandle()
-    _model_step = StepDefHandle()
+    _model_case = CaseDetModel()
+    _model_step = StepDefModel()
 
     # Split condition
     _rtn = _parameter["case_det"]
@@ -186,7 +186,7 @@ def case_det_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_case = CaseDetHandle()
+    _model_case = CaseDetModel()
 
     _list_case_det = _parameter["list"]
 
@@ -209,8 +209,8 @@ def case_det_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_case = CaseDetHandle()
-    _model_step = StepDefHandle()
+    _model_case = CaseDetModel()
+    _model_step = StepDefModel()
 
     _cond_case = dict(id=_parameter["id"])
     _cond_step = _parameter
@@ -220,7 +220,7 @@ def case_det_modify():
     _cond_step["id"] = _step[0].step_id
 
     # Search step detail
-    _model_step.usr_modify(_cond_step)
+    _model_step.usr_update(_cond_step)
 
     # Set return data
     _return.set_str_result("")
@@ -239,8 +239,8 @@ def step_det_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_step = StepDetHandle()
-    _model_item = ItemHandle()
+    _model_step = StepDetModel()
+    _model_item = ItemModel()
 
     _cond = _parameter
 
@@ -267,7 +267,7 @@ def step_det_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_step_det = StepDetHandle()
+    _model_step_det = StepDetModel()
     _cond_step_det = _parameter
 
     # Delete steps
@@ -289,8 +289,8 @@ def step_det_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_step = StepDetHandle()
-    _model_item = ItemHandle()
+    _model_step = StepDetModel()
+    _model_item = ItemModel()
 
     _cond_step = dict(id=_parameter["id"])
     _cond_item = _parameter
@@ -301,7 +301,7 @@ def step_det_modify():
     _cond_item["id"] = _step[0].item_id
 
     # Search step detail
-    _model_item.usr_modify(_cond_item)
+    _model_item.usr_update(_cond_item)
 
     # Set return data
     _return.set_str_result("")
@@ -319,8 +319,8 @@ def step_det_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model_step = StepDetHandle()
-    _model_item = ItemHandle()
+    _model_step = StepDetModel()
+    _model_item = ItemModel()
 
     _cond_step = _parameter
     _cond_item = {}

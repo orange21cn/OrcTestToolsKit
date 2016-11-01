@@ -2,7 +2,7 @@
 from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
-from OrcApi.Data.DataModel import DataHandle
+from OrcApi.Data.DataModel import DataModel
 from OrcApi import app
 
 
@@ -16,7 +16,7 @@ def data_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = DataHandle()
+    _model = DataModel()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -34,7 +34,7 @@ def data_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = DataHandle()
+    _model = DataModel()
     _value = _model.usr_add(_parameter)
 
     _return.set_str_result(_value)
@@ -52,7 +52,7 @@ def data_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = DataHandle()
+    _model = DataModel()
     _value = _model.usr_delete(_parameter)
 
     _return.set_str_result(_value)
@@ -70,8 +70,8 @@ def data_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = DataHandle()
-    _value = _model.usr_modify(_parameter)
+    _model = DataModel()
+    _value = _model.usr_update(_parameter)
 
     _return.set_str_result(_value)
 

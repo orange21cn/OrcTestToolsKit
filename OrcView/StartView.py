@@ -96,11 +96,6 @@ class StartView(QMainWindow):
         self.__wid_center.addTab(_view, _view.title)
         self.__show_dock()
 
-    # def open_page(self):
-    #     _view = PageContainer()
-    #     self.__wid_center.addTab(_view, _view.title)
-    #     self.__show_dock()
-
     def open_web_object(self):
         _view = ViewWebMain()
         self.__wid_center.addTab(_view, _view.title)
@@ -113,6 +108,7 @@ class StartView(QMainWindow):
 
         if not self.__dock_displayed:
 
-            self.addDockWidget(Qt.BottomDockWidgetArea, self.dock_log)
-            self.addDockWidget(Qt.LeftDockWidgetArea, self.dock_category)
-            self.addDockWidget(Qt.RightDockWidgetArea, self.dock_detail)
+            # self.addDockWidget(Qt.BottomDockWidgetArea, self.dock_log)
+            # self.addDockWidget(Qt.LeftDockWidgetArea, self.dock_category)
+            # self.addDockWidget(Qt.RightDockWidgetArea, self.dock_detail)
+            pass

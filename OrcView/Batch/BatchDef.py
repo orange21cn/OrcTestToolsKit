@@ -53,6 +53,8 @@ class ViewBatchDefMag(QWidget):
                  SEARCH=False, ADD=False, ESSENTIAL=False),
             dict(ID="batch_no", NAME=u"批编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=False, ESSENTIAL=False),
+            dict(ID="batch_type", NAME=u"批类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+                 SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="batch_name", NAME=u"批名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="batch_desc", NAME=u"批描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,

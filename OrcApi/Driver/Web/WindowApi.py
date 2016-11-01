@@ -7,7 +7,7 @@ from OrcLib.LibNet import OrcResult
 from WindowDefModel import WindowDefModel
 
 
-class WindowsListAPI(Resource):
+class WindowListAPI(Resource):
 
     def __init__(self):
 
@@ -15,13 +15,7 @@ class WindowsListAPI(Resource):
         self.__model = WindowDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-
-        _method = getattr(self, request.method.lower(), None)
-
-        if _method is None and request.method == 'HEAD':
-            _method = getattr(self, 'get', None)
-
-        return _method(*args, **kwargs)
+        return super(Resource, self).dispatch_request()
 
     def get(self):
         """
@@ -52,7 +46,7 @@ class WindowsListAPI(Resource):
         return _return.get_message()
 
 
-class WindowsAPI(Resource):
+class WindowAPI(Resource):
 
     def __init__(self):
 
@@ -79,7 +73,10 @@ class WindowsAPI(Resource):
 
         _value = self.__model.usr_search(_parameter)
 
-        _return.set_data(_value)
+        if _value:
+            _return.set_data(_value[0])
+        else:
+            _return.set_data(None)
 
         return _return.get_message()
 

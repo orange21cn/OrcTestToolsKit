@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class BatchDefHandle(TabBatchDef):
+class BatchDefModel(TabBatchDef):
     """
     Test data management
     """
@@ -27,48 +27,87 @@ class BatchDefHandle(TabBatchDef):
 
         return _res.first()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        _returns = []
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 查询条件 like
+        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        if p_filter is None:
+        search = self.__session.query(TabBatchDef)
 
-            i_res = self.__session.query(TabBatchDef).all()
+        if 'id' in cond:
+            search = search.filter(TabBatchDef.id == cond['id'])
+
+        if 'pid' in cond:
+            search = search.filter(TabBatchDef.pid == cond('pid'))
+
+        if 'batch_no' in cond:
+            search = search.filter(TabBatchDef.batch_no == cond('batch_no'))
+
+        if 'batch_name' in cond:
+            search = search.filter(TabBatchDef.batch_name.ilike(func_like('batch_name')))
+
+        if 'batch_desc' in cond:
+            search = search.filter(TabBatchDef.batch_desc.ilike(func_like('batch_desc')))
+
+        return search.all()
+
+    def usr_search_all(self, p_cond):
+        """
+        查询 batch 所有节点直至根节点
+        :param p_cond:
+        :return:
+        """
+        result = list()
+
+        for _batch in self.usr_search(p_cond):
+
+            if _batch not in result:
+
+                # 获取当前用例的根用例组
+                _root = self.__get_root(_batch)
+
+                # 获取根用例组的所有子用例
+                _tree = self.__get_tree(_root)
+
+                # 加入结果树
+                result.extend(_tree)
+
+        return result
+
+    def usr_search_tree(self, p_id):
+        """
+        获取节点及其所有子节点
+        :return:
+        """
+        batch = self.usr_search(dict(id=p_id))
+
+        if batch:
+            return self.__get_tree(batch[0])
         else:
-            i_res = self.__session.query(TabBatchDef)
+            return list()
 
-            if 'id' in p_filter:
-                print f_value('id')
-                i_res = i_res.filter(TabBatchDef.id == p_filter['id'])
+    def usr_search_path(self, p_id):
+        """
+        获取路径至根节点
+        :return:
+        """
+        batch_data = self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_id).first()
 
-            if 'pid' in p_filter:
-                i_res = i_res.filter(TabBatchDef.pid.ilike(f_value('pid')))
+        batch_no = batch_data.case_no if batch_data else None
+        batch_pid = batch_data.pid if batch_data else None
 
-            if 'batch_no' in p_filter:
-                i_res = i_res.filter(TabBatchDef.batch_no.ilike(f_value('batch_no')))
+        if batch_pid:
+            return "%s.%s" % (self.usr_get_path(batch_pid), batch_no)
+        else:
+            return batch_no
 
-            if 'batch_name' in p_filter:
-                i_res = i_res.filter(TabBatchDef.batch_name.ilike(f_value('batch_name')))
-
-            if 'batch_desc' in p_filter:
-                i_res = i_res.filter(TabBatchDef.batch_desc.ilike(f_value('batch_desc')))
-
-        # get tree
-        for t_item in i_res:
-            if t_item not in _returns:
-                t_tree = self._get_tree(self._get_root(t_item))
-                _returns.extend(t_tree)
-
-        return _returns
-
-    def _get_root(self, p_item):
+    def __get_root(self, p_item):
         """
         :param p_item:
         :return:
@@ -83,7 +122,7 @@ class BatchDefHandle(TabBatchDef):
         else:
             return self._get_root(_res)
 
-    def _get_tree(self, p_item):
+    def __get_tree(self, p_item):
         """
         :param p_item:
         :return:
@@ -91,8 +130,8 @@ class BatchDefHandle(TabBatchDef):
         _tree = [p_item]
         _items = self.__session.query(TabBatchDef).filter(TabBatchDef.pid == p_item.id).all()
 
-        for t_item in _items:
-            _tree.extend(self._get_tree(t_item))
+        for _item in _items:
+            _tree.extend(self.__get_tree(_item))
 
         return _tree
 
@@ -108,7 +147,10 @@ class BatchDefHandle(TabBatchDef):
         _node.id = gen_id("batch_def")
 
         # batch_no
-        _node.batch_no = self._create_no()
+        _node.batch_no = self.__create_no()
+
+        # batch_type
+        _node.batch_type = p_data['batch_type'] if 'batch_type' in p_data else None
 
         # pid
         _node.pid = p_data['pid'] if 'pid' in p_data else None
@@ -132,7 +174,7 @@ class BatchDefHandle(TabBatchDef):
 
         return {u'id': str(_node.id)}
 
-    def _create_no(self):
+    def __create_no(self):
         """
         Create a no, like batch_no
         :return:
@@ -141,7 +183,7 @@ class BatchDefHandle(TabBatchDef):
         t_item = self.__session.query(TabBatchDef).filter(TabBatchDef.batch_no == _no).first()
 
         if t_item is not None:
-            return self._create_no()
+            return self.__create_no()
         else:
             return _no
 

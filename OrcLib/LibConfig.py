@@ -32,7 +32,7 @@ class OrcConfig:
         """
         获取配置
         :param p_sec: section
-        :return: None is section is not exists
+        :return: None if section is not exists
         """
         try:
             _res = self.__conf.options(p_sec)

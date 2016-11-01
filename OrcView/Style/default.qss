@@ -1,14 +1,139 @@
+QPushButton {
+    background-color: #23C6C8;
+    border: #23C6C8 1px solid;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin 1px;
+}
+
+QPushButton:hover {
+    background-color: #83C6C8;
+    color: black;
+}
+
+QTabWidget::pane {
+    border: none;
+}
+/*
+QWidget {
+    background-color: orange;
+}
+*/
+
 /*tablewidget 样式*/
-QTableView {
-	selection-background-color:#44c767;
+QTableView, QTreeView {
+	selection-background-color: #44c767;
 	background-color:white;/*整个表格的背景色，这里为白色*/
 	border:1px solid #E0DDDC;/*边框为1像素，灰色*/
-	gridline-color:lightgray;/*这个是表格的格子线的颜色，为亮灰*/
+	gridline-color: black;/*这个是表格的格子线的颜色，为亮灰*/
 }
+
 /*这里是表格表头样式*/
 QHeaderView::section{
 	background-color:white;/*背景色 白色*/
-	border:0px solid #E0DDDC;/*先把边框宽度设为0，即隐藏所有表头边框*/
-	border-bottom:1px solid #E0DDDC;/*然后只显示下边框，因为上边框和左右边框是整个Table的边框，都显示会有2px的边框宽度*/
-	height:20px;/*表头高度*/
+	border:0px;
+	border-bottom:1px solid #E0DDDC;
+	padding: 4px;
+	height:24px;/*表头高度*/
+}
+
+/* === QTabBar === */
+QTabBar::tab {
+    color: #BBBBBB;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom: 1px solid #BBBBBB;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+QTabBar::tab:hover {
+    color: black;
+}
+
+QTabBar::tab:selected {
+    background-color: white;
+    border-left: 1px solid #E7EAEC;
+    border-right: 1px solid #E7EAEC;
+    border-top: 1px solid #E7EAEC;
+    border-bottom: none;
+}
+
+/* === QScrollBar:vertical === */
+QScrollBar:vertical {
+    background: #111111;
+    width: 16px;
+    margin: 16px 0 16px 0;
+}
+
+QScrollBar::handle:vertical {
+    background: #555555;
+    min-height: 16px;
+}
+
+QScrollBar::add-line:vertical {
+    background: #444444;
+    height: 16px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    background: #444444;
+    height: 16px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollBar:up-arrow:vertical, QScrollBar:down-arrow:vertical {
+    border: 2px solid #333333;
+    width: 6px;
+    height: 6px;
+    background: #5f5f5f;
+}
+
+/* === QScrollBar:horizontal === */
+QScrollBar:horizontal {
+    background: #111111;
+    height: 16px;
+    margin: 0 16px 0 16px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #555555;
+    min-width: 16px;
+}
+
+QScrollBar::add-line:horizontal {
+    background: #444444;
+    width: 16px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: #444444;
+    width: 16px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
+}
+
+QScrollBar:left-arrow:horizontal, QScrollBar:right-arrow:horizontal {
+    border: 2px solid #333333;
+    width: 6px;
+    height: 6px;
+    background: #5f5f5f;
 }

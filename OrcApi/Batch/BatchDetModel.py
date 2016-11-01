@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class BatchDetHandle(TabBatchDet):
+class BatchDetModel(TabBatchDet):
     """
     Test data management
     """

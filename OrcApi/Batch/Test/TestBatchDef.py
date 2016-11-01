@@ -1,10 +1,11 @@
 import traceback
 import unittest
 
-from OrcApi.Batch.BatchDefModel import BatchDefHandle
+from OrcApi.Batch.BatchDefModel import BatchDefModel
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
+from OrcLib.LibNet import OrcInvoke
 
 from OrcLib.LibTest import OrcTest
 
@@ -18,7 +19,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
         ttt = TabCaseDef()
         ttt.id = '2'
         i = test._get_root(ttt)
@@ -33,7 +34,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
         ttt = TabCaseDef()
         ttt.id = '1'
         i = test._get_tree(ttt)
@@ -49,7 +50,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         for i in test.usr_search():
             OrcTest.test_print_result(i.to_json())
@@ -63,7 +64,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         for i in test.usr_search({'id': '1001000000000003'}):
             OrcTest.test_print_result(i.to_json())
@@ -77,7 +78,7 @@ class TestUserAdd(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         i = test.usr_add({'batch_name': '1', 'batch_desc': '2'})
         OrcTest.test_print_result(i)
@@ -91,7 +92,7 @@ class TestModify(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         test.usr_modify({'id': '1001000000000003', 'pid': '1001000000000001'})
 
@@ -104,7 +105,7 @@ class TestDelete(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         test.usr_delete({"list": ['1001000000000007']})
 
@@ -136,7 +137,7 @@ class TestBatchDef(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefHandle()
+        test = BatchDefModel()
 
         _res = test.usr_get_path("1001000000000003")
 
@@ -158,6 +159,47 @@ class TestFunc(unittest.TestCase):
 
         try:
             result = orc_invoke(i_url, i_para)
+            OrcTest.test_print_result(result, 'result')
+        except OrcPostFailedException:
+            traceback.print_exc()
+
+        OrcTest.test_print_end()
+
+
+class TestBatchDefRest(unittest.TestCase):
+
+    def test_window_post_01(self):
+        """
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _invoke = OrcInvoke()
+
+        _url = 'http://127.0.0.1:5000/api/1.0/BatchDef/171602024'
+        _para = dict(window_mark="TEST_001", window_desc="TEST_DESC_001", comment="TEST_COMMENT_001")
+
+        try:
+            result = _invoke.post(_url, _para)
+            OrcTest.test_print_result(result, 'result')
+        except OrcPostFailedException:
+            traceback.print_exc()
+
+        OrcTest.test_print_end()
+
+    def test_window_get_01(self):
+        """
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        _invoke = OrcInvoke()
+
+        _url = 'http://127.0.0.1:5000/api/1.0/BatchDef/1000000001'
+        _para = None
+
+        try:
+            result = _invoke.get(_url, _para)
             OrcTest.test_print_result(result, 'result')
         except OrcPostFailedException:
             traceback.print_exc()

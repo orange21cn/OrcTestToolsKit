@@ -1,26 +1,33 @@
 # coding=utf-8
+import sys
+import os
 
 
-class Test01:
+class ResBase:
+
+    def __init__(self, p_id):
+
+        self._a = 1
+
+    def get(self, a=None, b=None):
+        print a
+        print b
+
+
+class Ddd(ResBase):
 
     def __init__(self):
-        self.aValue = "TEST_01"
-        self.bValue = "TEST_02"
 
-    def func_01(self):
-        print self.aValue
+        ResBase.__init__(self, 3)
 
-    def func_02(self):
-        print self.bValue
+        self._a = 4
 
+abc = Ddd()
+print abc.a
 
-def ttt(abc):
-    _a = abc()
-    b = _a.func_01
-    c = _a.func_02
+        # _method = getattr(self, request.method.lower(), None)
+        #
+        # if _method is None and request.method == 'HEAD':
+        #     _method = getattr(self, 'get', None)
 
-    b()
-    c()
-
-
-ttt(Test01)
+        # return _method(*args, **kwargs)
