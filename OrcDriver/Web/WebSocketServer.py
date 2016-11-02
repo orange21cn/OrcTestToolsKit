@@ -1,16 +1,15 @@
 # coding=utf-8
-import time
 import json
 import socket
+import time
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
+from OrcDriver.Web.Widget.WidgetButton import WidgetButton
+from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcLib.LibLog import OrcLog
 from WebSocketService import WebSocketService
-
-from OrcDriver.Web.Widget.WidgetInput import WidgetInput
-from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 
 
 class DriverSelenium:

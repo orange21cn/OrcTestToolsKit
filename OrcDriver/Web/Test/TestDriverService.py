@@ -1,8 +1,7 @@
 import unittest
 
-from OrcDriver.Web.WebObject import ObjectMag
+from OrcDriver.Web.WebSocketServer import WebSocketService
 from OrcLib.LibTest import OrcTest
-from OrcDriver.Web.WebSocketService import WebSocketService
 
 
 class TestModel(unittest.TestCase):

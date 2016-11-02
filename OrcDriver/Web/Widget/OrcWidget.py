@@ -1,7 +1,8 @@
 # coding=utf-8
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
-from OrcDriver.Web.WebSocketService import WebSocketService
+from selenium.webdriver.support.ui import WebDriverWait
+
+from OrcDriver.Web import WebSocketService
 from OrcLib.LibLog import OrcLog
 
 

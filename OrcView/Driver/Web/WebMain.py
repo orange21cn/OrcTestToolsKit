@@ -7,7 +7,6 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QFormLayout
 from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
-from PySide.QtGui import QTextEdit
 
 from OrcView.Driver.Web.PageMain import PageContainer
 from OrcView.Driver.Web.WidgetMain import WidgetContainer

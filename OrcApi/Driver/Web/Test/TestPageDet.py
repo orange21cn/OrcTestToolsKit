@@ -1,11 +1,10 @@
 import traceback
 import unittest
 
-from OrcDriver.Web.PageDetModel import PageDetHandle
+from OrcDriver.Web import PageDetHandle
+from OrcLib import OrcTest
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
-
-from OrcLib import OrcTest
 
 
 class TestModel(unittest.TestCase):

@@ -1,4 +1,4 @@
-from OrcDriver.Web.Widget.OrcWidget import OrcWidget
+from OrcDriver.Web import OrcWidget
 
 
 class WidgetButton(OrcWidget):

@@ -1,7 +1,6 @@
 import unittest
 
 from OrcLib.LibTest import OrcTest
-from OrcDriver.Web.WebSocketServer import DriverSelenium
 
 
 class TestWidget(unittest.TestCase):

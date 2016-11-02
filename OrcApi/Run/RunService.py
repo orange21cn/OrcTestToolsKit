@@ -1,4 +1,5 @@
 from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibDatabase import TabItem
 
 
@@ -24,7 +25,7 @@ class RunCoreService:
         item = TabItem(self.__resource_item.get())
 
         if "WEB" == item.item_type:
-            self.__run_web_step
+            self.__resource_web_driver.get()
         else:
             pass
 
