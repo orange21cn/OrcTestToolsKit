@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class DataModel():
+class DataModel:
     """
     Test data management
     """
@@ -91,6 +91,9 @@ class DataModel():
 
         # Create id
         _node.id = gen_id("data")
+
+        # test_env
+        _node.test_env = p_data['test_env'] if 'test_env' in p_data else ""
 
         # src_id
         _node.src_id = p_data['src_id'] if 'src_id' in p_data else ""

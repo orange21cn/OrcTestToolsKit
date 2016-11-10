@@ -6,9 +6,11 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibTree import ModelTree
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import view_widget_def
 
 
 class WidgetDefModel(ModelTree):
@@ -35,43 +37,60 @@ class WidgetDefControl(LibControl):
         LibControl.__init__(self, p_def)
 
 
-class ViewWidgetDefMag(QWidget):
+class ViewWidgetDef(QWidget):
 
     sig_selected = OrcSignal(str)
     sig_search = OrcSignal()
     sig_delete = OrcSignal()
 
-    def __init__(self, p_def):
-
+    def __init__(self, p_type=None):
+        """
+        支持选择类型,选择时按钮/查询条件/查询方式都有不同
+        :param p_type:
+        :return:
+        """
         QWidget.__init__(self)
 
-        _table_def = p_def
+        self.__type = p_type
 
         # Model
         self.__model = WidgetDefModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(view_widget_def)
 
         # Control
-        _control = WidgetDefControl(_table_def)
+        _control = WidgetDefControl(view_widget_def)
+
+        # Search
+        if self.__type is not None:
+            self.__wid_search_cond = ViewSearch(view_widget_def)
+            self.__wid_search_cond.set_col_num(2)
+            self.__wid_search_cond.create()
+        else:
+            self.__wid_search_cond = None
 
         # Data result display widget
         _wid_display = ViewTree()
         _wid_display.set_model(self.__model)
         _wid_display.set_control(_control)
 
-        # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.enable_search()
-        _wid_buttons.create()
+        # Buttons window
+        btn_definition = []
+        if self.__type is None:
+            btn_definition.append(dict(id="add", name=u'增加')),
+            btn_definition.append(dict(id="delete", name=u"删除"))
+            btn_definition.append(dict(id="update", name=u"修改", type="CHECK"))
+        btn_definition.append(dict(id="search", name=u"查询"))
+
+        _wid_buttons = ViewButtons(btn_definition)
+        _wid_buttons.align_back()
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(view_widget_def)
 
         # Layout
         _layout = QVBoxLayout()
+        if self.__type is not None:
+            _layout.addWidget(self.__wid_search_cond)
         _layout.addWidget(_wid_display)
         _layout.addWidget(_wid_buttons)
 
@@ -79,15 +98,36 @@ class ViewWidgetDefMag(QWidget):
 
         self.setLayout(_layout)
 
-        # Connection
-        _wid_buttons.sig_add.connect(self.__win_add.show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_delete.connect(self.sig_delete.emit)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
-        _wid_buttons.sig_search.connect(self.sig_search.emit)
-
+        # connection
         self.__win_add.sig_submit[dict].connect(self.add)
-        _wid_display.clicked[QModelIndex].connect(self.__widget_detail)
+        _wid_buttons.sig_clicked.connect(self.__operate)
+
+        if self.__type is None:
+            _wid_display.clicked[QModelIndex].connect(self.__widget_detail)
+        else:
+            _wid_display.doubleClicked[QModelIndex].connect(self.__widget_detail)
+
+    def __operate(self, p_flg):
+
+        if "add" == p_flg:
+            self.__win_add.show()
+
+        elif "delete" == p_flg:
+            self.__model.usr_delete()
+            self.sig_delete.emit()
+
+        elif "update" == p_flg:
+            self.__model.usr_editable()
+
+        elif "search" == p_flg:
+            if self.__type is None:
+                self.sig_search.emit()
+            else:
+                _cond = self.__wid_search_cond.get_cond()
+                self.search(_cond)
+
+        else:
+            pass
 
     def search(self, p_cond):
         self.__model.usr_search(p_cond)

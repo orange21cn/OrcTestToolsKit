@@ -8,7 +8,7 @@ from RunDef import ViewRunDef
 from RunDet import ViewRunDet
 
 
-class RunMain(QWidget):
+class ViewRunMain(QWidget):
 
     def __init__(self):
 
@@ -37,6 +37,8 @@ class RunMain(QWidget):
                  SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="run_def_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=True, ESSENTIAL=True)]
+
+        self.title = u"执行"
 
         # View RunDef
         self.__wid_run_def = ViewRunDef(_table_def_definition)

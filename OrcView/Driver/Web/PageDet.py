@@ -90,8 +90,8 @@ class ViewPageDetMag(QWidget):
         self.__win_add.sig_submit[dict].connect(self.add)
 
     def __page_select(self, p_index):
-        _id = self.__model.usr_get_data(p_index.row())["id"]
-        self.sig_selected.emit(_id)
+        page_det_id = self.__model.usr_get_data(p_index.row())["id"]
+        self.sig_selected.emit(page_det_id)
 
     def add_show(self):
         if self.__page_id is not None:

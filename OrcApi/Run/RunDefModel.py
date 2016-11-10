@@ -75,7 +75,7 @@ class RunDefModel:
     def usr_add(self, p_cond):
         """
         增加执行目录时 p_test=false, 为 true 时生成结果文件
-        :param p_cond:
+        :param p_cond: {id, run_def_type, result}
         :return:
         :rtype: bool
         """
@@ -104,7 +104,7 @@ class RunDefModel:
             self.__list.search_list(_type, _id)
             self.__list.save_list(res_file)
 
-        return True
+        return _id
 
     def usr_update(self):
         """
@@ -120,10 +120,26 @@ class RunDefModel:
         :type p_list: list
         :return:
         """
-        try:
-            for _item in p_list:
-                os.rmdir("%s/%s" % (self.__home, _item))
-        except OSError:
-            return False
+        delete_list = []
+
+        for _group in os.listdir(self.__home):
+            _id = _group.split("_")[1]
+
+            if _id in p_list:
+                delete_list.append(_group)
+
+            for _item in os.listdir("%s/%s" % (self.__home, _group)):
+
+                if _item in p_list:
+                    delete_list.append("%s/%s" % (_group, _item))
+
+        # try:
+        for _item in delete_list:
+            _folder = "%s/%s" % (self.__home, _item)
+            if os.path.exists(_folder):
+                import shutil
+                shutil.rmtree(_folder)
+        # except OSError:
+        #     return False
 
         return True

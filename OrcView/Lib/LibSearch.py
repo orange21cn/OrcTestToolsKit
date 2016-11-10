@@ -9,7 +9,6 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
 from PySide.QtCore import SIGNAL
 from PySide.QtCore import Signal as OrcSignal
-from PySide.QtCore import QMargins
 
 from OrcView.Lib.LibView import create_editor
 
@@ -119,11 +118,14 @@ class ViewButtons(QWidget):
         """
         QWidget.__init__(self)
 
-        self.__definition = p_def  # 定义
-        self.__direction = p_direction  # 方向
+        # 定义
+        self.__definition = p_def
+
+        # 按钮字典
+        self.__buttons = dict()
 
         # 设置方向
-        if "HORIZON" == self.__direction:
+        if "HORIZON" == p_direction:
             self.__layout = QHBoxLayout()
         else:
             self.__layout = QVBoxLayout()
@@ -134,13 +136,20 @@ class ViewButtons(QWidget):
         # 添加按钮
         for t_def in self.__definition:
 
-            t_id = t_def["id"]
-            t_name = t_def["name"]
+            _id = t_def["id"]
+            _name = t_def["name"]
+            _type = None if "type" not in t_def else t_def["type"]
 
-            t_button = QPushButton(t_name)
-            t_button.clicked.connect(partial(self.sig_clicked.emit, t_id))
+            _button = QPushButton(_name)
 
-            self.__layout.addWidget(t_button)
+            # Toggle button
+            if _type is not None and "CHECK" == _type:
+                _button.setCheckable(True)
+
+            _button.clicked.connect(partial(self.sig_clicked.emit, _id))
+
+            self.__buttons["id"] = _button
+            self.__layout.addWidget(_button)
 
     def align_back(self):
         """
@@ -159,6 +168,24 @@ class ViewButtons(QWidget):
     def set_no_spacing(self):
         self.__layout.setSpacing(0)
 
+    def set_disable(self, p_id):
+        """
+        设置按钮不可用
+        :param p_id:
+        :return:
+        """
+        if p_id in self.__buttons:
+            self.__buttons[p_id].setEnabled(False)
+
+    def set_enable(self, p_id):
+        """
+        设置按钮可用
+        :param p_id:
+        :return:
+        """
+        if p_id in self.__buttons:
+            self.__buttons[p_id].setEnabled(True)
+
 
 class ViewSearch(QWidget):
     """
@@ -172,50 +199,63 @@ class ViewSearch(QWidget):
         """
         QWidget.__init__(self)
 
+        # 控件定义
         self.__fields_def = p_def
 
-        self.__columns = 3
+        # 每行默认控件数
+        self.__columns = 4
+
+        # 控件字典
         self.__inputs = {}
 
+        # 布局
         self.__layout_srh = QGridLayout()
         self.setLayout(self.__layout_srh)
 
     def set_col_num(self, p_num):
+        """
+        设置每行控件数
+        :param p_num:
+        :type p_num: int
+        :return:
+        """
         self.__columns = p_num
 
     def create(self):
 
-        _items = []
+        items = []
 
         for t_def in self.__fields_def:
 
             if not t_def['SEARCH']:
                 continue
 
-            t_label = QLabel(t_def['NAME'] + ":")
+            # 控件标签
+            _label = QLabel(t_def['NAME'] + ":")
+
+            # 控件
             _def = dict(TYPE=t_def["TYPE"],
                         SOURCE="SEARCH",
                         FLAG=t_def["ID"])
             self.__inputs[t_def['ID']] = create_editor(self, _def)
 
-            t_layout = QHBoxLayout()
-            t_layout.addWidget(t_label)
-            t_layout.addWidget(self.__inputs[t_def['ID']])
+            # 控件布局
+            _layout = QHBoxLayout()
+            _layout.addWidget(_label)
+            _layout.addWidget(self.__inputs[t_def['ID']])
 
-            _items.append(t_layout)
+            items.append(_layout)
 
-        for t_index in range(len(_items)):
-            t_row = t_index % self.__columns
-            t_column = t_index / self.__columns
+        # 控件及其 label 加入主布局
+        for _index in range(len(items)):
+            _row = _index % self.__columns
+            _column = _index / self.__columns
 
-            self.__layout_srh.addLayout(_items[t_index], t_column, t_row)
+            self.__layout_srh.addLayout(items[_index], _column, _row)
 
     def get_cond(self):
-
-        _cond = {}
-
-        for t_inp in self.__inputs:
-            t_value = self.__inputs[t_inp].get_data()
-            _cond[t_inp] = t_value
-
-        return _cond
+        """
+        获取 条件
+        :return: {name:value, ...}
+        """
+        return {_inp: self.__inputs[_inp].get_data() for _inp in self.__inputs}

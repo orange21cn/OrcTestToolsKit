@@ -50,7 +50,7 @@ class ViewWidgetSelectMag(QWidget):
                  SEARCH=False, ADD=False, ESSENTIAL=False),
             dict(ID="widget_flag", NAME=u"控件标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="widget_type", NAME=u"控件类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+            dict(ID="widget_type", NAME=u"控件类型", TYPE="SEL_WIDGET", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="widget_desc", NAME=u"控件描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
                  SEARCH=False, ADD=True, ESSENTIAL=False),
@@ -100,5 +100,6 @@ class ViewWidgetSelectMag(QWidget):
         _node = self.__model.usr_get_node(p_index).content
         _id = _node["id"]
         _path = _node["widget_path"]
-        self.sig_selected.emit(dict(id=str(_id), flag=_path))
+        _type = _node["widget_type"]
+        self.sig_selected.emit(dict(id=str(_id), flag=_path, type=_type))
         self.close()

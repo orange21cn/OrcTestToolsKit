@@ -27,7 +27,6 @@ class ListTree:
         """
         获取列表根元素
         :param p_root_id:
-        :param p_list:
         :return:
         """
         for _item in self.list:
@@ -42,6 +41,7 @@ class ListTree:
         :type p_node: dict
         :return:
         """
+
         for _item in self.list:
             _parent_id = p_node["content"]["id"]
             _item_pid = _item["pid"]
@@ -67,7 +67,11 @@ class ListTree:
             self.__tree2list(_item)
 
     def steps(self, p_node=None):
-
+        """
+        形成列表迭代,可能没有用
+        :param p_node:
+        :return:
+        """
         if p_node is None:
             node = self.tree
         else:

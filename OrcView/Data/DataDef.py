@@ -6,48 +6,22 @@ from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButton
 from OrcView.Lib.LibAdd import ViewAdd
+from OrcView.Lib.LibViewDef import view_data_def
 
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibControl import LibControl
 
-
-_data_def = [dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                  SEARCH=False, ADD=False, ESSENTIAL=False),
-             dict(ID="src_type", NAME=u"数据源类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=True, ESSENTIAL=True),
-             dict(ID="src_id", NAME=u"数据源标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=True, ESSENTIAL=True),
-             dict(ID="data_flag", NAME=u"数据标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=True, ESSENTIAL=True),
-             dict(ID="data_order", NAME=u"数据顺序", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=False, ESSENTIAL=False),
-             dict(ID="data_mode", NAME=u"数据类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=True, ESSENTIAL=False),
-             dict(ID="data_value", NAME=u"数据", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                  SEARCH=True, ADD=True, ESSENTIAL=False),
-             dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                  SEARCH=False, ADD=True, ESSENTIAL=False),
-             dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                  SEARCH=False, ADD=False, ESSENTIAL=False),
-             dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                  SEARCH=False, ADD=False, ESSENTIAL=False)]
+from DataService import DataService
 
 
-class DataModel(ModelTable):
+class DataModel(ModelNewTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self)
+        ModelNewTable.__init__(self)
 
-        i_base_url = 'http://localhost:5000/Data'
-        _interface = {
-            'usr_search': '%s/usr_search' % i_base_url,
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        service = DataService()
+        self.usr_set_service(service)
 
 
 class DataControl(LibControl):
@@ -65,19 +39,17 @@ class ViewDataMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = _data_def
-
         self.title = u"数据管理"
 
         # Model
         self.__model = DataModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(view_data_def)
 
         # Control
-        _control = DataControl(_table_def)
+        _control = DataControl(view_data_def)
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(_table_def)
+        self.__wid_search_cond = ViewSearch(view_data_def)
         self.__wid_search_cond.set_col_num(3)
         self.__wid_search_cond.create()
 
@@ -95,7 +67,7 @@ class ViewDataMag(QWidget):
         _wid_buttons.create()
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(view_data_def)
 
         # Layout
         _layout = QVBoxLayout()
@@ -113,8 +85,10 @@ class ViewDataMag(QWidget):
 
         self.__win_add.sig_submit[dict].connect(self.add)
 
-    def search(self):
+        qss_file = open('Orcview/Style/default.qss').read()
+        self.setStyleSheet(qss_file)
 
+    def search(self):
         self.__model.usr_search(self.__wid_search_cond.get_cond())
 
     def add(self, p_data):

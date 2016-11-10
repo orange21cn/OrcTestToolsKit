@@ -24,6 +24,8 @@ class StepContainer(QWidget):
         _layout.addWidget(self._wid_step)
         _layout.addWidget(self._wid_item)
 
+        _layout.setSpacing(1)
+
         self.setLayout(_layout)
 
         self._wid_step.sig_select.connect(self._wid_item.set_step_id)

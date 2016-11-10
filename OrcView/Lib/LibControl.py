@@ -35,3 +35,4 @@ class LibControl(QStyledItemDelegate):
     def setModelData(self, editor, model, index):
         _data = editor.get_data()
         model.setData(index, _data)
+

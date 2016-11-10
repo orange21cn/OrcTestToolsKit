@@ -1,7 +1,7 @@
 # coding=utf-8
 import sys
 
-from OrcApi import orc_api
+from OrcDriver import orc_api
 from OrcDriver import app
 from OrcDriver.DriverApi import DriverAPI
 from OrcLib import get_config

@@ -1,6 +1,6 @@
 import unittest
 
-from OrcDriver.Web.WebSocketServer import WebSocketService
+from OrcDriver.Web.WebDriver import WebDriverService
 from OrcLib.LibTest import OrcTest
 
 
@@ -13,7 +13,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _service = WebSocketService()
+        _service = WebDriverService()
         _res = _service.usr_search()
 
         OrcTest.test_print_result(_res)

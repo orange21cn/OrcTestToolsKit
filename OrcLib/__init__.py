@@ -38,3 +38,4 @@ def init_log():
     _file = "%s/config/log.cfg" % _path
 
     logging.config.fileConfig(_file)
+

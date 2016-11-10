@@ -21,7 +21,7 @@ class WindowModel(ModelNewTable):
         ModelNewTable.__init__(self)
 
         service = WindowService()
-        self.usr_set_interface(service)
+        self.usr_set_service(service)
 
 
 class WindowControl(LibControl):
@@ -70,14 +70,14 @@ class ViewWindow(QWidget):
 
         # Search condition
         self.__wid_search_cond = ViewSearch(_table_def)
-        self.__wid_search_cond.set_col_num(2)
+        self.__wid_search_cond.set_col_num(3)
         self.__wid_search_cond.create()
 
         # Buttons window
         _btn_definition = [
             dict(id="refresh", name=u'刷新'),
             dict(id="search", name=u"查询"),
-            dict(id="update", name=u"修改"),
+            dict(id="update", name=u"修改", type="CHECK"),
             dict(id="delete", name=u"删除")
         ]
         _wid_buttons = ViewButtons(_btn_definition)
@@ -88,6 +88,8 @@ class ViewWindow(QWidget):
         _layout.addWidget(self.__wid_search_cond)
         _layout.addWidget(_wid_display)
         _layout.addWidget(_wid_buttons)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(_layout)
 

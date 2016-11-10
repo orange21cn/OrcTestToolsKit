@@ -15,11 +15,25 @@ class DriverAPI(Resource):
         self.__model = DriverModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
+
+    def put(self):
+        """
+        调试
+        :return:
+        """
+        parameter = orc_get_parameter()
+        rtn = OrcResult()
+
+        value = self.__model.debug(parameter)
+
+        rtn.set_data(value)
+
+        return rtn.get_message()
 
     def post(self):
         """
-        Search
+        执行
         :return:
         """
         parameter = orc_get_parameter()
@@ -33,7 +47,7 @@ class DriverAPI(Resource):
 
     def get(self):
         """
-        Delete
+        获取结果
         :return:
         """
         _return = OrcResult()

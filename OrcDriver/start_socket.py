@@ -1,5 +1,5 @@
 from OrcLib.LibNet import get_config
-from OrcDriver.Web.WebSocketServer import DriverSelenium
+from OrcDriver.Web.WebDriver import DriverSelenium
 
 configer = get_config("network")
 

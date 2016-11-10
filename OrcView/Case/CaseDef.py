@@ -11,7 +11,8 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 
-from OrcView.Data.DataAdd import ViewCommonDataAdd
+from OrcView.Data.DataAdd import ViewDataAdd
+from CaseService import CaseDefService
 
 
 class CaseDefModel(ModelTree):
@@ -70,6 +71,8 @@ class ViewCaseDefMag(QWidget):
 
         self.title = u"用例管理"
 
+        self.__service = CaseDefService()
+
         # Model
         self.__model = CaseDefModel()
         self.__model.usr_set_definition(_table_def)
@@ -90,7 +93,8 @@ class ViewCaseDefMag(QWidget):
         # Context menu
         _menu_def = [dict(NAME=u"增加", STR="sig_add"),
                      dict(NAME=u"删除", STR="sig_del"),
-                     dict(NAME=u"增加数据", STR="sig_data")]
+                     dict(NAME=u"增加数据", STR="sig_data"),
+                     dict(NAME=u"添加至运行", STR="sig_run")]
 
         _wid_display.create_context_menu(_menu_def)
 
@@ -106,7 +110,7 @@ class ViewCaseDefMag(QWidget):
         self.__win_add = ViewAdd(_table_def)
 
         # win add data
-        self.__win_data = ViewCommonDataAdd()
+        self.__win_data = ViewDataAdd()
 
         # Layout
         _layout = QVBoxLayout()
@@ -164,3 +168,8 @@ class ViewCaseDefMag(QWidget):
             self.__win_data.set_type("CASE")
             self.__win_data.set_path(_path)
             self.__win_data.set_id(_id)
+
+        elif "sig_run" == p_flag:
+
+            case_id = self.__model.usr_get_current_data().content["id"]
+            self.__service.add_to_run(case_id)

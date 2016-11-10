@@ -54,7 +54,7 @@ class StepDefAPI(Resource):
         self.__model = StepDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -130,7 +130,7 @@ class StepDetListAPI(Resource):
         self.__model = StepDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -169,7 +169,7 @@ class StepDetAPI(Resource):
         self.__model = StepDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """

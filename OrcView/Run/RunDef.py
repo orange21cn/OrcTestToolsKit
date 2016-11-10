@@ -39,6 +39,7 @@ class ViewRunDef(QWidget):
         self.__table_def = p_def
 
         self.title = u"执行列表"
+        self.__service = RunDefService()
 
         # Model
         self.__model = RunDefModel()
@@ -54,8 +55,9 @@ class ViewRunDef(QWidget):
 
         # Buttons window
         _btn_definition = [
-            dict(id="search", name=u'查询'),
+            dict(id="add", name=u'增加'),
             dict(id="delete", name=u"删除"),
+            dict(id="search", name=u'查询'),
             dict(id="run", name=u"执行")
         ]
         _wid_buttons = ViewButtons(_btn_definition)
@@ -68,6 +70,7 @@ class ViewRunDef(QWidget):
 
         self.setLayout(_layout)
 
+        _wid_display.clicked.connect(self.__model.usr_set_current_data)
         _wid_buttons.sig_clicked.connect(self.__operate)
         _wid_display.clicked.connect(self.select)
 
@@ -94,14 +97,33 @@ class ViewRunDef(QWidget):
 
     def __operate(self, p_flg):
 
-        if "search" == p_flg:
-            self.sig_search.emit()
+        if "add" == p_flg:
+            # {id, run_def_type, result}
+            data = self.__model.usr_get_current_data()
+
+            if data is None:
+                return
+
+            self.__model.usr_add(dict(run_def_type=data.content["run_def_type"]))
 
         elif "delete" == p_flg:
             self.__model.usr_delete()
 
+        elif "search" == p_flg:
+            self.sig_search.emit()
+
         elif "run" == p_flg:
-            pass
+
+            item_data = self.__model.usr_get_current_data()
+
+            if item_data is not None:
+                _id = item_data.content["id"]
+                _pid = item_data.content["pid"]
+
+                if _pid is None:
+                    return
+
+                self.__service.usr_run(_pid, _id)
 
         else:
             pass

@@ -2,7 +2,7 @@
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 
-from OrcDriver.Web import WebSocketService
+from OrcDriver.Web.WebDriverService import WebDriverService
 from OrcLib.LibLog import OrcLog
 
 
@@ -17,7 +17,7 @@ class OrcWidget:
         self._root = p_root
         self._widget = p_root
         self._window = None
-        self.__service = WebSocketService()
+        self.__service = WebDriverService()
 
         self._def = self.__get_def_info(p_id)
         self._get_widget()
@@ -153,3 +153,29 @@ class OrcWidget:
             _displayed = False
 
         return _displayed
+
+    def basic_execute(self, p_para):
+
+        _flag = p_para["OPERATION"]
+
+        if "EXISTS" == _flag:
+            return self.exists()
+
+        elif "CLICK" == _flag:
+            self._widget.click()
+            return True
+
+        elif "GET_ATTR" == _flag:
+            if "FLAG" not in p_para:
+                return ""
+            else:
+                return self._widget.get_attribute(p_para["FLAG"])
+
+        elif "GET_TEXT" == _flag:
+            return self._widget.get_text()
+
+        elif "GET_HTML" == _flag:
+            return self._widget.get_attribute("innerHTML")
+
+        else:
+            return None

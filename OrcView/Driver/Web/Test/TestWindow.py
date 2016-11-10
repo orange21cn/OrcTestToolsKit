@@ -106,3 +106,21 @@ class TestView(unittest.TestCase):
         _view.exec_()
 
         OrcTest.test_print_end()
+
+    def test_widget_def(self):
+        """
+        Test get root
+        :return:
+        """
+        from OrcView.Driver.Web.WidgetDef import ViewWidgetDef
+
+        OrcTest.test_print_begin()
+
+        _view = QApplication(sys.argv)
+
+        tp = ViewWidgetDef()
+        tp.show()
+
+        _view.exec_()
+
+        OrcTest.test_print_end()

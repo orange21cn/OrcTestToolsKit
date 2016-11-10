@@ -17,7 +17,7 @@ class BatchDefListAPI(Resource):
         self.__model = BatchDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -79,7 +79,7 @@ class BatchDefAPI(Resource):
         self.__model = BatchDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -155,7 +155,7 @@ class BatchDetListAPI(Resource):
         self.__model = BatchDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -194,7 +194,7 @@ class BatchDetAPI(Resource):
         self.__model = BatchDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """

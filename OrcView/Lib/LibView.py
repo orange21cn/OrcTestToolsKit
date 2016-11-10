@@ -1,5 +1,6 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
+from PySide.QtGui import QSizePolicy
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QLabel
@@ -10,6 +11,7 @@ from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
 from OrcLib.LibNet import orc_invoke
 from OrcLib.LibException import OrcPostFailedException
+from LibDict import LibDict
 
 
 def clean_layout(p_layout):
@@ -60,6 +62,14 @@ def create_editor(parent, p_type):
         _view.setCurrentIndex(0)
         return _view
 
+    # 选择控件操作类型
+    elif "SEL_WIDGET" == p_type["TYPE"]:
+        _view = SelectWidgetType()
+        if "SEARCH" == p_type["SOURCE"]:
+            _view.insertItem(0, u"所有", "")
+        _view.setCurrentIndex(0)
+        return _view
+
     # 其他
     elif "OPERATE" == p_type["TYPE"]:
         return OrcOperate(parent)
@@ -87,15 +97,21 @@ class OrcLineEdit(QLineEdit):
     """
     单行输入框
     """
+    clicked = OrcSignal()
 
     def __init__(self):
         QLineEdit.__init__(self)
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def get_data(self):
         return self.text()
 
     def set_data(self, p_data):
         return self.setText(p_data)
+
+    def mousePressEvent(self, *args, **kwargs):
+        self.clicked.emit()
 
 
 class OrcTextArea(QTextEdit):
@@ -106,6 +122,8 @@ class OrcTextArea(QTextEdit):
     def __init__(self, parent):
         QTextEdit.__init__(self, parent)
 
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+
     def get_data(self):
         return self.toPlainText()
 
@@ -114,6 +132,7 @@ class OrcTextArea(QTextEdit):
 
 
 class OrcOperate(QLineEdit):
+
     sig_operate = OrcSignal()
 
     def __init__(self, parent):
@@ -122,6 +141,8 @@ class OrcOperate(QLineEdit):
         self.__data = None
 
         self.setReadOnly(True)
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def get_data(self):
         return self.__data
@@ -153,6 +174,8 @@ class OrcSelect(QComboBox):
 
         if p_flag is not None:
             self.set_flag(p_flag)
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def set_flag(self, p_flag):
 
@@ -207,7 +230,7 @@ class OrcSelectBase(QComboBox):
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
-        :param p_flag: 数据库中的标识符
+        :param p_empty: 是否包含空数据
         :return:
         """
         QComboBox.__init__(self)
@@ -217,6 +240,8 @@ class OrcSelectBase(QComboBox):
 
         self.empty = p_empty
 
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+
     def set_item_data(self, p_data=None):
 
         self.clear()
@@ -225,6 +250,8 @@ class OrcSelectBase(QComboBox):
 
         if p_data is None:
             return
+
+        self.clear()
 
         if self.empty:
             self.addItem("", "")
@@ -259,7 +286,7 @@ class SelectWidgetType(OrcSelectBase):
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
-        :param p_flag: 数据库中的标识符
+        :param p_empty: 是否包含空数据
         :return:
         """
         OrcSelectBase.__init__(self, p_empty)
@@ -280,7 +307,7 @@ class SelectWidgetOperation(OrcSelectBase):
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
-        :param p_flag: 数据库中的标识符
+        :param p_empty: 是否包含空值
         :return:
         """
         OrcSelectBase.__init__(self, p_empty)
@@ -289,10 +316,21 @@ class SelectWidgetOperation(OrcSelectBase):
 
         self.__dict = LibDict()
 
-    def set_id(self, p_type_id):
+    def set_type(self, p_type):
+
+        self.clear()
+
+        # 获取当前控件的制作方式,去除不可操作控件
+        if p_type in ("WINDOW", "GROUP"):
+            return
 
         _data = [dict(name=_item.ope_name, text=_item.ope_text)
-                 for _item in self.__dict.get_widget_operation(p_type_id)]
+                 for _item in self.__dict.get_widget_operation(p_type)]
+
+        # 获取基本操作方式
+        if "BLOCK" != p_type:
+            _data.extend([dict(name=_item.ope_name, text=_item.ope_text)
+                         for _item in self.__dict.get_widget_operation("BLOCK")])
 
         self.set_item_data(_data)
 
@@ -305,26 +343,27 @@ def operate_to_str(p_data):
     _widget_get_path = 'http://localhost:5000/WidgetDef/usr_get_path'
     _page_get_flag = 'http://localhost:5000/PageDef/usr_get_flag'
     _get_dict_text = 'http://localhost:5000/Lib/usr_get_dict_text'
+    _dict = LibDict()
 
     _type = p_data["TYPE"]
     _object = p_data["OBJECT"]
 
     if "WIDGET" == _type:
 
-        _operate = p_data["OPERATE"]
+        _operation = p_data["OPERATION"]
 
         try:
             _object = orc_invoke(_widget_get_path, _object)
             if 0 < len(_object):
                 _object = _object[0]["PATH"]
             _type = orc_invoke(_get_dict_text, dict(flag="operate_object_type", value=_type))
-            _operate = orc_invoke(_get_dict_text, dict(flag="widget_operator", value=_operate))
-
+            # _operation = orc_invoke(_get_dict_text, dict(flag="widget_operator", value=_operation))
+            _operation = _dict.get_widget_operation_text(_operation)
         except OrcPostFailedException:
             # Todo
             pass
 
-        return "%s|%s|%s" % (_operate, _type, _object)
+        return "%s|%s|%s" % (_operation, _type, _object)
 
     else:
 
@@ -347,14 +386,14 @@ class ObjectOperator(QVBoxLayout):
         QVBoxLayout.__init__(self)
 
         _label_type = QLabel(u"对象类型:")
-        self.__type = OrcSelect("operate_object_type")
+        self.__type = SelectWidgetType()
 
         _layout_type = QHBoxLayout()
         _layout_type.addWidget(_label_type)
         _layout_type.addWidget(self.__type)
 
         _label_operate = QLabel(u"操作方式:")
-        self.__operate = OrcSelect()
+        self.__operate = SelectWidgetOperation()
 
         _layout_operate = QHBoxLayout()
         _layout_operate.addWidget(_label_operate)
@@ -372,11 +411,11 @@ class ObjectOperator(QVBoxLayout):
         _type = self.__type.get_data()
 
         if "WIDGET" == _type:
-            self.__operate.set_flag("widget_operator")
+            self.__operate.set_type(_type)
         elif "PAGE" == _type:
-            self.__operate.set_flag("page_operator")
+            self.__operate.set_type("page_operator")
         else:
-            self.__operate.set_flag("")
+            self.__operate.set_type("")
 
     def get_data(self):
 

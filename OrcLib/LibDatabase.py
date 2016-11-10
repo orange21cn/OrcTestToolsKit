@@ -278,6 +278,7 @@ class TabData(orc_db.Model):
     __tablename__ = 'tab_data'
 
     id = orc_db.Column(orc_db.Integer, primary_key=True)
+    test_env = orc_db.Column(orc_db.String(16))
     src_id = orc_db.Column(orc_db.Integer)
     src_type = orc_db.Column(orc_db.String(16))
     data_flag = orc_db.Column(orc_db.String(32))
@@ -292,6 +293,7 @@ class TabData(orc_db.Model):
     def __init__(self, p_def=None):
 
         self.id = p_def["id"] if p_def else None
+        self.test_env = p_def["test_env"] if p_def else None
         self.src_id = p_def["src_id"] if p_def else None
         self.src_type = p_def["src_type"] if p_def else None
         self.data_flag = p_def["data_flag"] if p_def else None
@@ -307,6 +309,7 @@ class TabData(orc_db.Model):
 
         return dict(
             id=str(self.id),
+            test_env=self.test_env,
             src_id=str(self.src_id),
             src_type=self.src_type,
             data_flag=self.data_flag,

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
 from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
@@ -22,7 +21,7 @@ class BatchDefModel(TabBatchDef):
     def usr_get_value(self, p_id):
 
         # search
-        _res = self.__session.query(TabBatchDef)\
+        _res = self.__session.query(TabBatchDef) \
             .filter(TabBatchDef.id == p_id)
 
         return _res.first()
@@ -68,7 +67,6 @@ class BatchDefModel(TabBatchDef):
         for _batch in self.usr_search(p_cond):
 
             if _batch not in result:
-
                 # 获取当前用例的根用例组
                 _root = self.__get_root(_batch)
 

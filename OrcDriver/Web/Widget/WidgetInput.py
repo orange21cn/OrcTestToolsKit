@@ -9,21 +9,22 @@ class WidgetInput(OrcWidget):
 
     def execute(self, p_para):
 
+        res = self.basic_execute(p_para)
+
+        if res is not None:
+            return res
+
         _flag = p_para["OPERATION"]
         _data = p_para["DATA"]
 
-        if "EXISTS" == _flag:
-
-            return self.exists()
-
-        elif "INPUT" == _flag:
+        if "INPUT" == _flag:
 
             if self._widget.get_attribute("value") is not None:
                 self._widget.clear()
 
             self._widget.send_keys(_data)
 
-            return None
+            return True
 
         else:
             pass

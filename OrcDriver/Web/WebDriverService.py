@@ -6,7 +6,7 @@ from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import WebWidgetDet
 
 
-class WebSocketService:
+class WebDriverService:
 
     def __init__(self):
 
@@ -16,14 +16,14 @@ class WebSocketService:
         # Get url from configuration
         self.__url = get_config("interface").get_option("DRIVER", "url")
 
-    def page_get_url(self, p_id):
+    def page_get_url(self, p_env, p_id):
         """
         获取页面 url
         :param p_id: page detail id
         :return: url/None
         """
         _url = '%s/PageDet/usr_search' % self.__url
-        _data = orc_invoke(_url, dict(id=p_id))
+        _data = orc_invoke(_url, dict(page_id=p_id, page_env=p_env))
 
         if _data is None or 0 == len(_data):
             return None

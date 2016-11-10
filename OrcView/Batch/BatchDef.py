@@ -11,7 +11,8 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 
-from OrcView.Data.DataAdd import ViewCommonDataAdd
+from OrcView.Data.DataAdd import ViewDataAdd
+from BatchService import BatchDefService
 
 
 class BatchDefModel(ModelTree):
@@ -68,6 +69,8 @@ class ViewBatchDefMag(QWidget):
 
         self.title = u"批管理"
 
+        self.__service = BatchDefService()
+
         # Model
         self.__model = BatchDefModel()
         self.__model.usr_set_definition(_table_def)
@@ -87,7 +90,8 @@ class ViewBatchDefMag(QWidget):
         # Context menu
         _menu_def = [dict(NAME=u"增加", STR="sig_add"),
                      dict(NAME=u"删除", STR="sig_del"),
-                     dict(NAME=u"增加数据", STR="sig_data")]
+                     dict(NAME=u"增加数据", STR="sig_data"),
+                     dict(NAME=u"添加至运行", STR="sig_run")]
 
         _wid_display.create_context_menu(_menu_def)
 
@@ -103,7 +107,7 @@ class ViewBatchDefMag(QWidget):
         self.__win_add = ViewAdd(_table_def)
 
         # win add data
-        self.__win_data = ViewCommonDataAdd()
+        self.__win_data = ViewDataAdd()
 
         # Layout
         _layout = QVBoxLayout()
@@ -145,7 +149,16 @@ class ViewBatchDefMag(QWidget):
 
         if "sig_data" == p_flag:
 
-            _path = self.__model.usr_get_current_data().content["batch_no"]
+            _data = self.__model.usr_get_current_data()
+            _path = _data.content["batch_no"]
+            _id = _data.content["id"]
+
             self.__win_data.show()
             self.__win_data.set_type("BATCH")
-            self.__win_data.set_id(_path)
+            self.__win_data.set_path(_path)
+            self.__win_data.set_id(_id)
+
+        elif "sig_run" == p_flag:
+
+            batch_id = self.__model.usr_get_current_data().content["id"]
+            self.__service.add_to_run(batch_id)

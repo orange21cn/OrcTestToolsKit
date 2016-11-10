@@ -6,10 +6,11 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
+from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcLib.LibLog import OrcLog
-from WebSocketService import WebSocketService
+from WebDriverService import WebDriverService
 
 
 class DriverSelenium:
@@ -17,7 +18,7 @@ class DriverSelenium:
     def __init__(self, p_ip, p_port):
 
         self.__logger = OrcLog("driver.selenium")
-        self.__service = WebSocketService()
+        self.__service = WebDriverService()
 
         self.__browser = "FIREFOX"  # 浏览器
         self.__env = "TEST"  # 环境
@@ -28,7 +29,7 @@ class DriverSelenium:
         self.__objects = {}  # 存储出现过的对象
 
         self.__ip = p_ip
-        self.__port = p_port
+        self.__port = int(p_port)
 
     def start(self):
 
@@ -44,14 +45,15 @@ class DriverSelenium:
                 connection.settimeout(5)
 
                 _cmd = connection.recv(1024)
-                _result = self.__execute(json.loads(json.loads(_cmd)))
+
+                _result = self.__execute(json.loads(_cmd))
 
                 connection.send(str(_result))
 
             except socket.timeout:
                 self.__logger.error("time out")
             except Exception, err:
-                print err
+                self.__logger.error(err)
 
             connection.close()
 
@@ -77,8 +79,7 @@ class DriverSelenium:
 
     def __action(self, p_para):
 
-        _id = p_para["ID"]
-
+        _id = p_para["OBJECT"]
         _definition = self.__service.widget_get_definition(_id)
 
         # 输入框
@@ -93,7 +94,9 @@ class DriverSelenium:
 
         # 自定义控件
         else:
-            pass
+            print "OK"
+            _node = OrcWidget(self.__root, _id)
+            _node.basic_execute(p_para)
 
         return True
 
@@ -105,20 +108,12 @@ class DriverSelenium:
         """
         self.__logger.debug(p_para)
 
-        if "BROWSER" in p_para:
-            self.__browser = p_para["BROWSER"]
-        else:
-            self.__browser = "FIREFOX"
-
-        if "ENV" in p_para:
-            self.__env = p_para["ENV"]
-        else:
-            self.__env = "TEST"
-
-        _page_det_id = p_para["ID"]
+        self.__browser = "FIREFOX" if "BROWSER" not in p_para else p_para["BROWSER"]
+        self.__env = "TEST" if "ENV" not in p_para else p_para["ENV"]
+        _page_det_id = p_para["OBJECT"]
 
         # 获取 url
-        _url = self.__service.page_get_url(_page_det_id)
+        _url = self.__service.page_get_url(self.__env, _page_det_id)
 
         # 打开页面
         if self.__root is None:

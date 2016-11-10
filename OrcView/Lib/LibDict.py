@@ -67,3 +67,19 @@ class LibDict:
             .order_by(LibWidgetOperation.ope_order)
 
         return _res.all()
+
+    def get_widget_operation_text(self, p_ope_name):
+        """
+        :param p_ope_name:
+        :return:
+        """
+        _res = self.__ope\
+            .filter(LibWidgetOperation.ope_name == p_ope_name)\
+            .order_by(LibWidgetOperation.ope_order)
+
+        _ope_value = _res.first()
+
+        if _ope_value:
+            return _ope_value.ope_text
+        else:
+            return None

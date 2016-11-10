@@ -75,13 +75,13 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Run.RunMain import RunMain
+        from OrcView.Run.RunMain import ViewRunMain
 
         OrcTest.test_print_begin()
 
         _view = QApplication(sys.argv)
 
-        tp = RunMain()
+        tp = ViewRunMain()
 
         tp.show()
 

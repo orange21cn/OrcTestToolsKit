@@ -5,7 +5,7 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 
-from OrcView.Driver.Web.WidgetDef import ViewWidgetDefMag
+from OrcView.Driver.Web.WidgetDef import ViewWidgetDef
 from OrcView.Driver.Web.WidgetDet import ViewWidgetDetMag
 from OrcView.Lib.LibSearch import ViewSearch
 
@@ -29,7 +29,7 @@ class WidgetContainer(QWidget):
                  SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="widget_path", NAME=u"控件路径", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
                  SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="widget_type", NAME=u"控件类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+            dict(ID="widget_type", NAME=u"控件类型", TYPE="SEL_WIDGET", DISPLAY=True, EDIT=True,
                  SEARCH=True, ADD=True, ESSENTIAL=True),
             dict(ID="widget_desc", NAME=u"控件描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
                  SEARCH=False, ADD=True, ESSENTIAL=False),
@@ -66,7 +66,7 @@ class WidgetContainer(QWidget):
         self.__wid_search_cond.create()
 
         # Column widget
-        self.__wid_widget_def = ViewWidgetDefMag(_table_widget_def)
+        self.__wid_widget_def = ViewWidgetDef()
         self.__wid_widget_det = ViewWidgetDetMag(_table_widget_det)
 
         # Layout bottom

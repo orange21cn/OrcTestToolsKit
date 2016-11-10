@@ -6,6 +6,7 @@ from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcInvoke
 from OrcLib.LibDataStruct import ListTree
+from RunService import RunCoreService
 
 
 class RunCore(ListTree):
@@ -20,6 +21,8 @@ class RunCore(ListTree):
         self.__logger = OrcLog("view.driver.service.window")
         self.__invoker = OrcInvoke()
 
+        self.__service = RunCoreService()
+
         # Get url from configuration
         _url = get_config("interface").get_option("DRIVER", "url")
         self.__url_list = lambda _mod: "%s/api/1.0/%s" % (_url, _mod)
@@ -29,6 +32,8 @@ class RunCore(ListTree):
 
         self.__list = []  # 列表
         self.__root_id = None  # 根元素 id
+
+        self.__run_list = []  # 执行列表,batch->item,用于查找数据及控件...
 
     def get_home(self):
         return self.__home
@@ -262,14 +267,85 @@ class RunCore(ListTree):
 
     def run_start(self, p_path):
 
-        self.load_list("%s/%s" % (self.__home, p_path))
+        item_pid = p_path["pid"]
+        item_id = p_path["id"]
+        item_path = None
 
-        for step in self.steps():
-            print step
+        for _group in os.listdir(self.__home):
+
+            _group_id = _group.split("_")[1]
+
+            if _group_id == item_pid:
+
+                item_path = "%s/%s" % (self.__home, _group)
+
+        if item_path is not None:
+            item_path = "%s/%s/default.res" % (item_path, item_id)
+
+        self.load_list(item_path)
+        self.run(self.tree)
+
+    def run(self, p_node):
+
+        result = None
+        step_type = p_node["content"]["run_det_type"]
+
+        self.__run_list.append(p_node["content"])
+
+        # 如果是 item 运行步骤
+        if "ITEM" == step_type:
+            result = self.__run_step(self.__run_list)
+
+        # 不是 item,运行子节点
+        else:
+            for _sub_step in p_node["children"]:
+                _result = self.run(_sub_step)
+                if not _result:
+                    result = False
+
+            # update status
+            # Todo
+
+        self.__run_list.pop()
+
+        return result
+
+    def __run_step(self, p_node_list):
+        """
+        {'status': 'WAITING',
+         'flag': '20161028153349',
+         'run_det_type': 'BATCH_GROUP',
+         'pid': None, 'id': '1000000001',
+         'desc': 'BATCH_001'}
+        :param p_node_list:
+        :return:
+        """
+        import json
+
+        # 执行该 list 的最后一项,最后一项为 item, 其他为路径用于数据查找
+        item_id = p_node_list[len(p_node_list)-1]["id"]
+        item = self.__service.get_item(item_id)
+
+        if item is None:
+            return False
+
+        item_operation = json.loads(item.item_operate)
+
+        # 步骤需要数据时读取数据
+        if "DATA" in item_operation:
+            data = self.__service.get_data(self.__run_list, item_operation["OBJECT"])
+            if data:
+                item_operation["DATA"] = data
+
+        if "WEB" == item.item_type:
+            _result = self.__service.run_step(item_operation)
+        else:
+            pass
+
+        return True
 
     def run_get_status(self):
-
-        return "OK"
+        return
 
 
 class RunData:

@@ -2,6 +2,7 @@
 import sys
 
 from OrcLib import init_log
+from OrcLib import get_config
 
 from OrcApi import app
 from OrcApi import orc_api
@@ -28,6 +29,9 @@ from OrcApi.Case.StepApi import StepDetAPI
 from OrcApi.Case.ItemApi import ItemListAPI
 from OrcApi.Case.ItemApi import ItemAPI
 
+from OrcApi.Data.DataApi import DataListAPI
+from OrcApi.Data.DataApi import DataAPI
+
 from OrcApi.Driver.Web.PageApi import PageDefListAPI
 from OrcApi.Driver.Web.PageApi import PageDefAPI
 from OrcApi.Driver.Web.PageApi import PageDetListAPI
@@ -39,8 +43,7 @@ from OrcApi.Driver.Web.WidgetApi import WidgetDefAPI
 from OrcApi.Driver.Web.WidgetApi import WidgetDetListAPI
 from OrcApi.Driver.Web.WidgetApi import WidgetDetAPI
 
-from OrcApi.Run.RunApi import RunDefListAPI
-from OrcApi.Run.RunApi import RunDefAPI
+configer = get_config("network")
 
 # Batch
 orc_api.add_resource(BatchDefListAPI, '/api/1.0/BatchDef', endpoint='BatchDefs')
@@ -64,6 +67,10 @@ orc_api.add_resource(StepDetAPI, '/api/1.0/StepDet/<int:p_id>', endpoint='StepDe
 orc_api.add_resource(ItemListAPI, '/api/1.0/Item', endpoint='Items')
 orc_api.add_resource(ItemAPI, '/api/1.0/Item/<int:p_id>', endpoint='Item')
 
+# Item
+orc_api.add_resource(DataListAPI, '/api/1.0/Data', endpoint='Datas')
+orc_api.add_resource(DataAPI, '/api/1.0/Data/<int:p_id>', endpoint='Data')
+
 # Page
 orc_api.add_resource(PageDefListAPI, '/api/1.0/PageDef', endpoint='PageDefs')
 orc_api.add_resource(PageDefAPI, '/api/1.0/PageDef/<int:p_id>', endpoint='PageDef')
@@ -79,7 +86,9 @@ orc_api.add_resource(WidgetDetAPI, '/api/1.0/WidgetDet/<int:p_id>', endpoint='Wi
 orc_api.add_resource(WindowListAPI, '/api/1.0/Window', endpoint='Windows')
 orc_api.add_resource(WindowAPI, '/api/1.0/Window/<int:p_id>', endpoint='Window')
 
+driver_host = configer.get_option("CASE", "ip")
+driver_port = configer.get_option("CASE", "port")
+
 reload(sys)
 init_log()
-
-app.run(host='localhost')
+app.run(host=driver_host, port=driver_port)

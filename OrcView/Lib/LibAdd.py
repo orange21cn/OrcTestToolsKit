@@ -24,21 +24,22 @@ class ViewAdd(QWidget):
 
         QWidget.__init__(self)
 
-        self.__fields = p_def
-        self.__widgets = dict()
+        self.__fields = p_def  # 控件定义
+        self.__widgets = dict()  # 控件
+
         _lay_inputs = QGridLayout()
 
-        for t_index in range(len(self.__fields)):
+        for _index in range(len(self.__fields)):
 
-            if not self.__fields[t_index]["ADD"]:
+            if not self.__fields[_index]["ADD"]:
                 continue
 
-            _id = self.__fields[t_index]["ID"]
-            _type = self.__fields[t_index]["TYPE"]
-            _name = self.__fields[t_index]["NAME"]
-            _def = dict(TYPE=_type, SOURCE="ADD", FLAG=_id)
-            _ess = self.__fields[t_index]["ESSENTIAL"]
-            _widget = create_editor(self, _def)
+            _id = self.__fields[_index]["ID"]
+            _type = self.__fields[_index]["TYPE"]
+            _name = self.__fields[_index]["NAME"]
+            _ess = self.__fields[_index]["ESSENTIAL"]
+
+            _widget = create_editor(self, dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
             self.__widgets[_id] = dict(
                 TYPE=_type,
@@ -54,8 +55,8 @@ class ViewAdd(QWidget):
             else:
                 _label = QLabel(_name + ":")
 
-            _lay_inputs.addWidget(_label, t_index, 0)
-            _lay_inputs.addWidget(self.__widgets[_id]["WIDGET"], t_index, 1)
+            _lay_inputs.addWidget(_label, _index, 0)
+            _lay_inputs.addWidget(self.__widgets[_id]["WIDGET"], _index, 1)
 
         btn_submit = QPushButton(u"提交")
         btn_cancel = QPushButton(u"取消")
@@ -75,10 +76,30 @@ class ViewAdd(QWidget):
         self.connect(btn_submit, SIGNAL('clicked()'), self.__submit)
 
     def set_data(self, p_id, p_data):
+        """
+        设置数据
+        :param p_id:
+        :param p_data:
+        :return:
+        """
         self.__widgets[p_id]["WIDGET"].set_data(p_data)
 
     def get_data(self, p_id):
+        """
+        获取数据
+        :param p_id:
+        :return:
+        """
         return self.__widgets[p_id]["WIDGET"].get_data()
+
+    def set_enable(self, p_id, p_status):
+        """
+        设置控件可用/不可用
+        :param p_id:
+        :param p_status:
+        :return:
+        """
+        self.__widgets[p_id]["WIDGET"].setEnabled(p_status)
 
     def __submit(self):
 

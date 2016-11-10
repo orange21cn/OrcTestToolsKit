@@ -2,6 +2,7 @@
 from PySide.QtGui import QDockWidget
 from PySide.QtGui import QTextEdit
 from PySide.QtCore import QSize
+from PySide.QtGui import QStyleOptionDockWidget
 
 
 class BaseDock(QDockWidget):
@@ -43,6 +44,11 @@ class DockLog(BaseDock):
 
         self.ttt = QTextEdit()
         self.setWidget(self.ttt)
+
+        tt = QStyleOptionDockWidget()
+        tt.closable = False
+        tt.title = "OMG"
+        self.initStyleOption(tt)
 
     def set_log(self, p_text):
         self.ttt.setText(p_text)

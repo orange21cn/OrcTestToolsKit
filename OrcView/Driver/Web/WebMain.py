@@ -47,6 +47,8 @@ class ViewWebMain(QWidget):
         _tab.addTab(_window, "Window")
         _tab.addTab(_widget, "Widget")
 
+        _tab.setTabPosition(QTabWidget.West)
+
         # 测试区
         self.__test = WidgetTest()
 
@@ -73,16 +75,17 @@ class ViewWebMain(QWidget):
 
     def send(self):
         # Todo 接口调用方式
-        _data = dict(ID=self.__test.id,
+        _data = dict(OBJECT=self.__test.id,
                      TYPE=self.__test.type,
+                     ENV=self.__test.env,
                      OPERATION=self.__test.operation,
                      DATA=self.__test.data)
 
-        _url = "http://localhost:5002/WebServer/run"
+        from OrcLib.LibNet import OrcSocketResource
 
-        from OrcLib.LibNet import orc_invoke
+        _resource = OrcSocketResource("DriverWeb")
 
-        _result = orc_invoke(_url, _data)
+        _result = _resource.get(_data)
         self.__test.set_status(_result)
 
 
@@ -101,6 +104,7 @@ class WidgetTest(QWidget):
         self.type = None
         self.operation = None
         self.data = None
+        self.env = None
 
         # 输入框
         _layout_top = QFormLayout()
@@ -169,7 +173,11 @@ class WidgetTest(QWidget):
 
         if "PAGE" == p_type:
 
-            _page_key = self.__service.get_page_key(p_id)
+            _page_id, _page_flg, _page_env = self.__service.get_page_key(p_id)
+            _page_key = "%s[%s]" % (_page_flg, _page_env)
+
+            self.id = _page_id
+            self.env = _page_env
 
             # 设置页面标识
             self.__edit_flag.set_data(_page_key)
@@ -194,11 +202,10 @@ class WidgetTest(QWidget):
             self.__edit_flag.set_data(_widget_key)
 
             # 设置控件类型
-            print _widget_type
             self.__widget_type.set_data(_widget_type)
 
             # 重置控件操作项并使之可用
-            self.__widget_ope.set_id(_widget_type)
+            self.__widget_ope.set_type(_widget_type)
             self.__widget_ope.setEnabled(True)
 
             # 数据输入框可用
@@ -206,6 +213,9 @@ class WidgetTest(QWidget):
 
         else:
             pass
+
+    def set_env(self, p_env):
+        self.env = p_env
 
     def set_status(self, p_status):
 

@@ -7,7 +7,6 @@ from PySide.QtGui import QPushButton
 from PySide.QtGui import QLabel
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QFormLayout
 from PySide.QtGui import QGridLayout
 
 from OrcView.Lib.LibTable import ViewTable
@@ -17,8 +16,8 @@ from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
-from OrcView.Data.DataAdd import ViewCommonDataAdd
-from OrcView.Lib.LibView import operate_to_str
+from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelectMag
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
 
@@ -109,12 +108,14 @@ class ViewStepDetMag(QWidget):
         self.__win_operate.sig_submit.connect(self.get_operate)
 
         # win add data
-        self.__win_data = ViewCommonDataAdd()
+        self.__win_data = ViewDataAdd()
 
         # Layout
         _layout = QHBoxLayout()
         _layout.addWidget(_wid_display)
         _layout.addWidget(_wid_buttons)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(_layout)
 
@@ -156,17 +157,8 @@ class ViewStepDetMag(QWidget):
 
     def get_operate(self, p_data):
         # self. Todo
+        print p_data
         self.__win_add.set_data("item_operate", p_data)
-
-
-def create_view_item(p_mode):
-
-        if "CHECK" == p_mode:
-            return ViewCheck()
-        elif "OPERATE" == p_mode:
-            return ViewOperate()
-        else:
-            pass
 
 
 class ViewOperate(QWidget):
@@ -196,16 +188,14 @@ class ViewOperate(QWidget):
         _widget_label = QLabel(u"控件")
         self.__widget_input = OrcLineEdit()
         self.__widget_input.setReadOnly(True)
-        self.__widget_button = QPushButton(u"输入")
 
         # 控件输入 layout
         _layout_widget = QHBoxLayout()
         _layout_widget.addWidget(self.__widget_input)
-        _layout_widget.addWidget(self.__widget_button)
 
         # 操作信息输入 layout
         _operate_label = QLabel(u"操作")
-        self.__operate_select = OrcSelect()
+        self.__operate_select = SelectWidgetOperation()
 
         # 按钮
         _button_submit = QPushButton(u"确定")
@@ -230,7 +220,7 @@ class ViewOperate(QWidget):
         # connection
         _button_cancel.clicked.connect(self.close)
         _button_submit.clicked.connect(self.__submit)
-        self.__widget_button.clicked.connect(self.__show_select)
+        self.__widget_input.clicked.connect(self.__show_select)
         self.__view_widget_select.sig_selected[dict].connect(self.__set_widget)
         self.__view_page_select.sig_selected[dict].connect(self.__set_widget)
         self.__type_select.currentIndexChanged.connect(self.__change_type)
@@ -241,14 +231,22 @@ class ViewOperate(QWidget):
                      OBJECT=self.__widget_data["id"])
 
         if self.__operate_select.get_data() is not None:
-            _data["OPERATE"] = self.__operate_select.get_data()
+            _data["OPERATION"] = self.__operate_select.get_data()
 
         self.sig_submit[dict].emit(_data)
         self.close()
 
     def __set_widget(self, p_data):
+        """
+        :param p_data: {'flag': u'dddd', 'type': u'WINDOW', 'id': '3300000002'}
+        :return:
+        """
         self.__widget_data = p_data
         self.__widget_input.set_data(p_data["flag"])
+
+        # 设置操作方式
+        if "type" in p_data:
+            self.__operate_select.set_type(p_data["type"])
 
     def __change_type(self, p_data):
 
@@ -257,11 +255,11 @@ class ViewOperate(QWidget):
         self.__widget_input.clear()
 
         if "WIDGET" == _type:
-            self.__operate_select.set_flag("widget_operator")
+            self.__operate_select.set_type("widget_operator")
         elif"PAGE" == _type:
-            self.__operate_select.set_flag("page_operator")
+            self.__operate_select.set_type("page_operator")
         else:
-            self.__operate_select.set_flag("")
+            self.__operate_select.set_type("")
 
     def __show_select(self):
         """

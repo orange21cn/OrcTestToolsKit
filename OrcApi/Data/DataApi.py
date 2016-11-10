@@ -15,7 +15,7 @@ class DataListAPI(Resource):
         self.__model = DataModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -28,6 +28,21 @@ class DataListAPI(Resource):
         _value = self.__model.usr_search(_parameter)
 
         _return.set_data(_value)
+
+        return _return.get_message()
+
+    def post(self):
+        """
+        Add
+        :param p_id:
+        :return:
+        """
+        _parameter = orc_get_parameter()
+        _return = OrcResult()
+
+        _value = self.__model.usr_add(_parameter)
+
+        _return.set_data(str(_value))
 
         return _return.get_message()
 
@@ -54,7 +69,7 @@ class DataAPI(Resource):
         self.__model = DataModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -71,22 +86,6 @@ class DataAPI(Resource):
             _return.set_data(_value[0])
         else:
             _return.set_data(None)
-
-        return _return.get_message()
-
-    def post(self, p_id):
-        """
-        Add
-        :param p_id:
-        :return:
-        """
-        _parameter = orc_get_parameter()
-        _parameter["id"] = p_id
-        _return = OrcResult()
-
-        _value = self.__model.usr_add(_parameter)
-
-        _return.set_data(str(_value))
 
         return _return.get_message()
 

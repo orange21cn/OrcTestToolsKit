@@ -1,4 +1,4 @@
-from OrcDriver.Web import OrcWidget
+from OrcWidget import OrcWidget
 
 
 class WidgetButton(OrcWidget):
@@ -9,15 +9,7 @@ class WidgetButton(OrcWidget):
 
     def execute(self, p_para):
 
-        _flag = p_para["OPERATION"]
+        res = self.basic_execute(p_para)
 
-        if "EXISTS" == _flag:
-
-            return self.exists()
-
-        elif "CLICK" == _flag:
-
-            self._widget.click()
-
-        else:
-            pass
+        if res is not None:
+            return res

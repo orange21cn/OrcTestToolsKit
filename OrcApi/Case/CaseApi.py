@@ -16,7 +16,7 @@ class CaseDefListAPI(Resource):
         self.__model = CaseDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -78,7 +78,7 @@ class CaseDefAPI(Resource):
         self.__model = CaseDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -154,7 +154,7 @@ class CaseDetListAPI(Resource):
         self.__model = CaseDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -193,7 +193,7 @@ class CaseDetAPI(Resource):
         self.__model = CaseDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """

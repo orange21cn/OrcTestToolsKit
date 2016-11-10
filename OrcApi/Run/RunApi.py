@@ -1,6 +1,5 @@
 # coding=utf-8
 from flask.ext.restful import Resource
-from flask import request
 
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_get_parameter
@@ -18,7 +17,7 @@ class RunDefListAPI(Resource):
         self.__model = RunDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -42,7 +41,8 @@ class RunDefListAPI(Resource):
         _parameter = orc_get_parameter()
         _return = OrcResult()
 
-        _value = self.__model.usr_delete(_parameter)
+        delete_list = _parameter["list"]
+        _value = self.__model.usr_delete(delete_list)
 
         _return.set_data(_value)
 
@@ -57,7 +57,7 @@ class RunDefAPI(Resource):
         self.__model = RunDefModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -117,7 +117,7 @@ class RunDetListAPI(Resource):
         self.__model = RunDetModel()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -142,7 +142,7 @@ class RunAPI(Resource):
         self.__model = RunCore()
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request()
+        return super(Resource, self).dispatch_request(*args, **kwargs)
 
     def get(self):
         """
@@ -164,88 +164,12 @@ class RunAPI(Resource):
         _return = OrcResult()
         _parameter = orc_get_parameter()
 
-        self.__model.run_start(_parameter["path"])
+        self.__model.run_start(_parameter)
 
         return _return.get_message()
 
-
-# class RunDetAPI(Resource):
-#
-#     def __init__(self):
-#
-#         self.__logger = OrcLog("api.run.det")
-#         self.__model = RunDetModel()
-#
-#     def dispatch_request(self, *args, **kwargs):
-#
-#         _method = getattr(self, request.method.lower(), None)
-#
-#         if _method is None and request.method == 'HEAD':
-#             _method = getattr(self, 'get', None)
-#
-#         return _method(*args, **kwargs)
-#
-#     def get(self, p_id):
-#         """
-#         Search
-#         :param p_id:
-#         :return:
-#         """
-#         _parameter = dict(id=p_id)
-#         _return = OrcResult()
-#
-#         _value = self.__model.usr_search(_parameter)
-#
-#         if _value:
-#             _return.set_data(_value[0])
-#         else:
-#             _return.set_data(None)
-#
-#         return _return.get_message()
-#
-#     def post(self, p_id):
-#         """
-#         Add
-#         :param p_id:
-#         :return:
-#         """
-#         _parameter = orc_get_parameter()
-#         _parameter["id"] = p_id
-#         _return = OrcResult()
-#
-#         _value = self.__model.usr_add(_parameter)
-#
-#         _return.set_data(str(_value))
-#
-#         return _return.get_message()
-#
-#     def put(self, p_id):
-#         """
-#         Update
-#         :param p_id:
-#         :return:
-#         """
-#         _parameter = orc_get_parameter()
-#         _parameter["id"] = p_id
-#         _return = OrcResult()
-#
-#         _value = self.__model.usr_update(_parameter)
-#
-#         _return.set_data(_value)
-#
-#         return _return.get_message()
-#
-#     def delete(self, p_id):
-#         """
-#         Delete
-#         :param p_id:
-#         :return:
-#         """
-#         _parameter = p_id
-#         _return = OrcResult()
-#
-#         _value = self.__model.usr_delete(_parameter)
-#
-#         _return.set_data(_value)
-#
-#         return _return.get_message()
+    def post(self):
+        """
+        DEBUG
+        """
+        pass

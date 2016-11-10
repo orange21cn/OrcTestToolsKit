@@ -33,6 +33,8 @@ class ViewTree(QTreeView):
         self.showDropIndicator()
         self.setDragDropMode(QAbstractItemView.InternalMove)
 
+        self.header().setStretchLastSection(True)
+
     def create_context_menu(self, p_def):
         """
         右键菜单
@@ -709,7 +711,7 @@ class ModelNewTree(QAbstractItemModel):
 
     def usr_delete(self):
 
-        _list = {"list": []}
+        _list = dict(list=[])
 
         for t_index in self.__state_check:
             _list["list"].append(self.usr_get_node(t_index).content['id'])
@@ -717,10 +719,11 @@ class ModelNewTree(QAbstractItemModel):
         try:
             self.__service.usr_delete(_list)
 
-            for t_item in self.__state_check:
-                self.__state_check.remove(t_item)
+            while self.__state_check:
+                self.__state_check.pop()
 
             self.usr_refresh()
+
         except Exception:
             # Todo
             pass

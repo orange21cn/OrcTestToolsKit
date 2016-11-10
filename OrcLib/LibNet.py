@@ -230,19 +230,22 @@ class OrcResourceBase:
                         StepDet='CASE',
                         Item='CASE',
                         Data='DATA',
-                        PageDef='DRIVER_WEB',
-                        PageDet='DRIVER_WEB',
-                        WindowDef='DRIVER_WEB',
-                        WidgetDef='DRIVER_WEB',
-                        WidgetDet='DRIVER_WEB',
+                        PageDef='WEB_LIB',
+                        PageDet='WEB_LIB',
+                        WindowDef='WEB_LIB',
+                        WidgetDef='WEB_LIB',
+                        WidgetDet='WEB_LIB',
+                        Driver='DRIVER',
                         RunDef='RUN',
-                        RunDet='RUN', Run='RUN')
+                        RunDet='RUN',
+                        Run='RUN',
+                        DriverWeb='SERVER_WEB_001')
 
         flag = None if p_mod not in mod_list else mod_list[p_mod]
 
         self._configer = get_config("network")
         self._ip = self._configer.get_option(flag, "ip")
-        self._port = self._configer.get_option(flag, "port")
+        self._port = int(self._configer.get_option(flag, "port"))
         self._version = self._configer.get_option(flag, "version")
         self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, p_mod)
 

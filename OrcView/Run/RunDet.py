@@ -18,9 +18,12 @@ class RunDetModel(ModelNewTree):
 
         ModelNewTree.__init__(self)
 
-        service = RunDetService()
-        self.usr_set_service(service)
+        self.__service = RunDetService()
+        self.usr_set_service(self.__service)
         self.usr_chk_able()
+
+    def model_run(self, p_path):
+        self.__service.usr_run(p_path)
 
 
 class RunDetControl(LibControl):
@@ -37,8 +40,6 @@ class ViewRunDet(QWidget):
         QWidget.__init__(self)
 
         self.__table_def = p_def
-        self.__resource_run = OrcHttpResource("Run")
-
         self.__path = None
 
         self.title = u"执行"
@@ -58,17 +59,9 @@ class ViewRunDet(QWidget):
         # 进度条
         self.__progress = QProgressBar()
 
-        # Buttons window
-        _btn_definition = [
-            dict(id="run", name=u'执行')
-        ]
-        _wid_buttons = ViewButtons(_btn_definition)
-        _wid_buttons.align_back()
-
         # 底部按钮及进度条
         _layout_bottom = QHBoxLayout()
         _layout_bottom.addWidget(self.__progress)
-        _layout_bottom.addWidget(_wid_buttons)
 
         # Layout
         _layout = QVBoxLayout()
@@ -76,15 +69,6 @@ class ViewRunDet(QWidget):
         _layout.addLayout(_layout_bottom)
 
         self.setLayout(_layout)
-
-        _wid_buttons.sig_clicked.connect(self.__operate)
-
-    def __operate(self, p_flg):
-
-        if "run" == p_flg:
-            self.__resource_run.put(self.__path)
-        else:
-            pass
 
     def usr_refresh(self, p_path):
 

@@ -10,7 +10,7 @@ from OrcView.Lib.LibSearch import ViewButton
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
 
-from OrcView.Data.DataAdd import ViewCommonDataAdd
+from OrcView.Data.DataAdd import ViewDataAdd
 
 
 class CaseDetModel(ModelTable):
@@ -76,6 +76,9 @@ class ViewCaseDetMag(QWidget):
         _wid_display.set_model(self.__model)
         _wid_display.set_control(_control)
 
+        # 界面列宽自适应
+        _wid_display.resizeColumnsToContents()
+
         # Context menu
         _menu_def = [dict(NAME=u"增加", STR="sig_add"),
                      dict(NAME=u"删除", STR="sig_del"),
@@ -94,12 +97,14 @@ class ViewCaseDetMag(QWidget):
         self.__win_add = ViewAdd(_table_def)
 
         # win add data
-        self.__win_data = ViewCommonDataAdd()
+        self.__win_data = ViewDataAdd()
 
         # Layout
         _layout = QHBoxLayout()
         _layout.addWidget(_wid_display)
         _layout.addWidget(_wid_buttons)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(_layout)
 

@@ -24,8 +24,7 @@ class ViewTable(QTableView):
 
         QTableView.__init__(self)
 
-        self.verticalHeader().setDefaultSectionSize(25)
-        self.setShowGrid(False)
+        self.horizontalHeader().setStretchLastSection(True)
 
     def create_context_menu(self, p_def):
         """
@@ -404,11 +403,12 @@ class ModelNewTable(QAbstractTableModel):
         Delete all checked item
         :return:
         """
+        print self.__state_check
         # Create id list
-        _list = list(item["id"] for item in self.__state_check)
+        _list = list(self.__state_data[_index]["id"] for _index in self.__state_check)
 
         try:
-            self.__service.usr_delete(_list)
+            self.__service.usr_delete(dict(list=_list))
             self.__state_check = []
             self.usr_refresh()
         except OrcPostFailedException:
@@ -442,8 +442,8 @@ class ModelNewTable(QAbstractTableModel):
         self.__state_check = []
         self.reset()
 
-    def usr_set_interface(self, p_interface):
-        self.__service = p_interface
+    def usr_set_service(self, p_service):
+        self.__service = p_service
 
     def usr_set_definition(self, p_def):
         """
