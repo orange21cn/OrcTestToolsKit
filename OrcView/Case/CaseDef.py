@@ -12,6 +12,7 @@ from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 
 from OrcView.Data.DataAdd import ViewDataAdd
+from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from CaseService import CaseDefService
 
 
@@ -109,6 +110,9 @@ class ViewCaseDefMag(QWidget):
         # win add case
         self.__win_add = ViewAdd(_table_def)
 
+        # 选择控件
+        self.__win_widget_select = ViewWidgetSelect()
+
         # win add data
         self.__win_data = ViewDataAdd()
 
@@ -131,6 +135,12 @@ class ViewCaseDefMag(QWidget):
 
         _wid_display.sig_context.connect(self.__context)  # 右键菜单
         _wid_display.clicked.connect(self.__model.usr_set_current_data)
+
+        self.__win_data.widgets["data_flag"]["WIDGET"].clicked.connect(self.__win_widget_select.show)
+        self.__win_widget_select.sig_selected.connect(self.set_widget)
+
+    def set_widget(self, p_data):
+        self.__win_data.set_data("data_flag", p_data["id"])
 
     def search(self):
         """
@@ -168,6 +178,7 @@ class ViewCaseDefMag(QWidget):
             self.__win_data.set_type("CASE")
             self.__win_data.set_path(_path)
             self.__win_data.set_id(_id)
+            # self.__win_data.set_enable("data_flag", False)
 
         elif "sig_run" == p_flag:
 

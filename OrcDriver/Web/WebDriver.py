@@ -17,7 +17,7 @@ class DriverSelenium:
 
     def __init__(self, p_ip, p_port):
 
-        self.__logger = OrcLog("driver.selenium")
+        self.__logger = OrcLog("driver")
         self.__service = WebDriverService()
 
         self.__browser = "FIREFOX"  # 浏览器
@@ -94,7 +94,6 @@ class DriverSelenium:
 
         # 自定义控件
         else:
-            print "OK"
             _node = OrcWidget(self.__root, _id)
             _node.basic_execute(p_para)
 

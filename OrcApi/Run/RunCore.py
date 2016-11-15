@@ -3,6 +3,7 @@ import os
 from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 from OrcLib import get_config
+from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcInvoke
 from OrcLib.LibDataStruct import ListTree
@@ -287,7 +288,7 @@ class RunCore(ListTree):
 
     def run(self, p_node):
 
-        result = None
+        result = True
         step_type = p_node["content"]["run_det_type"]
 
         self.__run_list.append(p_node["content"])
@@ -298,15 +299,38 @@ class RunCore(ListTree):
 
         # 不是 item,运行子节点
         else:
+            if not p_node["children"]:
+                result = None
+
             for _sub_step in p_node["children"]:
                 _result = self.run(_sub_step)
-                if not _result:
-                    result = False
 
-            # update status
-            # Todo
+                if result is None:
+                    result = None
+
+                elif _result is None:
+                    result = None
+
+                else:
+                    result = result and _result
 
         self.__run_list.pop()
+
+        # 转换状态
+        if result is None:
+            status = RunState.state_not_run
+        elif result:
+            status = RunState.state_pass
+        else:
+            status = RunState.state_fail
+
+        # 更新文件状态
+        p_node["content"]["status"] = status
+
+        # 更新界面
+        self.__service.update_status(p_node["content"])
+
+        # 保存文件
 
         return result
 
@@ -322,6 +346,8 @@ class RunCore(ListTree):
         """
         import json
 
+        _result = None
+
         # 执行该 list 的最后一项,最后一项为 item, 其他为路径用于数据查找
         item_id = p_node_list[len(p_node_list)-1]["id"]
         item = self.__service.get_item(item_id)
@@ -334,15 +360,17 @@ class RunCore(ListTree):
         # 步骤需要数据时读取数据
         if "DATA" in item_operation:
             data = self.__service.get_data(self.__run_list, item_operation["OBJECT"])
+
             if data:
                 item_operation["DATA"] = data
 
         if "WEB" == item.item_type:
             _result = self.__service.run_step(item_operation)
+
         else:
             pass
 
-        return True
+        return _result
 
     def run_get_status(self):
         return

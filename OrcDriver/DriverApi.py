@@ -1,6 +1,7 @@
 # coding=utf-8
 from flask.ext.restful import Resource
 
+from OrcLib import init_log
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_get_parameter
 from OrcLib.LibNet import OrcResult
@@ -11,7 +12,9 @@ class DriverAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.run.defs")
+        init_log()
+
+        self.__logger = OrcLog("driver.api")
         self.__model = DriverModel()
 
     def dispatch_request(self, *args, **kwargs):
@@ -37,11 +40,17 @@ class DriverAPI(Resource):
         :return:
         """
         parameter = orc_get_parameter()
+
+        self.__logger.debug("input parameter: %s" % parameter)
+        print parameter
+
         rtn = OrcResult()
 
         value = self.__model.run(parameter)
 
         rtn.set_data(value)
+
+        self.__logger.debug("result: %s" % rtn.get_message())
 
         return rtn.get_message()
 

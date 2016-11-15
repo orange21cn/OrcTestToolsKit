@@ -158,7 +158,7 @@ class OrcOperate(QLineEdit):
 
 class OrcSelect(QComboBox):
     """
-    下拉列表
+    下拉列表, 将被替换
     """
     def __init__(self, p_flag=None):
         """
@@ -225,7 +225,7 @@ class OrcSelect(QComboBox):
 
 class OrcSelectBase(QComboBox):
     """
-    下拉列表
+    下拉列表基础类
     """
     def __init__(self, p_empty=False):
         """
@@ -235,15 +235,24 @@ class OrcSelectBase(QComboBox):
         """
         QComboBox.__init__(self)
 
+        # 显示文字集
         self.__texts = []
+
+        # 属性名称集
         self.__names = []
 
+        # 是否饮食空选项
         self.empty = p_empty
 
+        # 设置在拉伸方式
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
     def set_item_data(self, p_data=None):
-
+        """
+        设置 item
+        :param p_data:
+        :return:
+        """
         self.clear()
         self.__texts = []
         self.__names = []
@@ -251,32 +260,57 @@ class OrcSelectBase(QComboBox):
         if p_data is None:
             return
 
+        # 新建时先清空
         self.clear()
 
+        # 可为空时加空数据
         if self.empty:
             self.addItem("", "")
             self.__texts.append("")
             self.__names.append("")
 
+        # 加入 item
         for _item in p_data:
             self.addItem(_item["text"], _item["name"])
             self.__names.append(_item["name"])
             self.__texts.append(_item["text"])
 
     def get_data(self):
+        """
+        获取属性数据
+        :return:
+        """
         return self.itemData(self.currentIndex())
 
     def get_text(self):
+        """
+        获取显示文字
+        :return:
+        """
         return self.itemText(self.currentIndex())
 
     def set_data(self, p_data):
-
+        """
+        通过属性或显示文字设置数据
+        :param p_data:
+        :return:
+        """
         if p_data in self.__texts:
             self.setCurrentIndex(self.__texts.index(p_data))
         elif p_data in self.__names:
             self.setCurrentIndex(self.__names.index(p_data))
         else:
             pass
+
+
+class SelectDictory(OrcSelectBase):
+    """
+    字典下拉列表
+    """
+    def __init__(self):
+        OrcSelectBase.__init__(self)
+        # Todo
+        pass
 
 
 class SelectWidgetType(OrcSelectBase):
@@ -363,7 +397,7 @@ def operate_to_str(p_data):
             # Todo
             pass
 
-        return "%s|%s|%s" % (_operation, _type, _object)
+        return "%s->%s->%s" % (_operation, _type, _object)
 
     else:
 
@@ -376,7 +410,7 @@ def operate_to_str(p_data):
             # Todo
             pass
 
-        return "%s|%s" % (_type, _object)
+        return "%s->%s" % (_type, _object)
 
 
 class ObjectOperator(QVBoxLayout):

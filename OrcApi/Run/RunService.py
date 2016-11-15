@@ -1,21 +1,23 @@
+# coding=utf-8
 from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibDatabase import TabItem
 
 
 class RunCoreService:
+    """
+    运行核心模块,负责目录管理,list 管理和执行三部分
+    """
     def __init__(self):
 
         self.__resource_web_driver = OrcHttpResource("Driver")
         self.__resource_item = OrcHttpResource("Item")
         self.__resource_data = OrcHttpResource("Data")
-
-        self.__result = RunState.state_waiting
+        self.__resource_view = OrcSocketResource("View")
 
     def run_step(self, p_run_dict):
 
-        _result = self.__resource_web_driver.post(p_run_dict)
-
-        return _result
+        return self.__resource_web_driver.post(p_run_dict)
 
     def get_item(self, p_item_id):
         """
@@ -38,11 +40,9 @@ class RunCoreService:
         :type p_def_list: list
         :return:
         """
-        def_list = p_def_list
-        def_list.reverse()
-        _data = []
+        p_def_list.reverse()
 
-        for _node in def_list:
+        for _node in p_def_list:
 
             _id = _node["id"]
             _type = _node["run_det_type"]
@@ -59,14 +59,17 @@ class RunCoreService:
 
             if _data:
                 break
+        else:
+            return None
+
+        p_def_list.reverse()
 
         return _data[0]["data_value"]
 
-
-class RunState:
-    state_waiting = "WAITING"
-    state_pass = "PASS"
-    state_fail = "FAIL"
-
-    def __init__(self):
-        pass
+    def update_status(self, p_data):
+        """
+        更新界面状态
+        :return:
+        """
+        import json
+        self.__resource_view.get(json.dumps(p_data))

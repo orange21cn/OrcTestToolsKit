@@ -2,6 +2,7 @@
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import Signal as OrcSignal
+from PySide.QtCore import QThread
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewButtons
@@ -40,6 +41,7 @@ class ViewRunDef(QWidget):
 
         self.title = u"执行列表"
         self.__service = RunDefService()
+        self.__threads = []
 
         # Model
         self.__model = RunDefModel()
@@ -123,7 +125,34 @@ class ViewRunDef(QWidget):
                 if _pid is None:
                     return
 
-                self.__service.usr_run(_pid, _id)
+                _thread_run = RunThread()
+                _thread_run.setup(_pid, _id)
+                _thread_run.start()
+
+                self.__threads.append(_thread_run)
+
+                # self.__service.usr_run(_pid, _id)
 
         else:
             pass
+
+
+class RunThread(QThread):
+
+    def __init__(self):
+
+        QThread.__init__(self)
+
+        self.__service = RunDefService()
+
+        self.__pid = None
+        self.__id = None
+
+    def setup(self, p_pid, p_id):
+
+        self.__pid = p_pid
+        self.__id = p_id
+
+    def run(self, *args, **kwargs):
+
+        self.__service.usr_run(self.__pid, self.__id)

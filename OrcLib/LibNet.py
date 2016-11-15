@@ -3,6 +3,9 @@ import json
 import requests
 import subprocess
 import socket
+import SocketServer
+from SocketServer import StreamRequestHandler
+
 from exceptions import ValueError
 from functools import wraps
 from flask import make_response
@@ -239,6 +242,7 @@ class OrcResourceBase:
                         RunDef='RUN',
                         RunDet='RUN',
                         Run='RUN',
+                        View="VIEW",
                         DriverWeb='SERVER_WEB_001')
 
         flag = None if p_mod not in mod_list else mod_list[p_mod]
@@ -439,3 +443,4 @@ class OrcResult:
         _result = dict(STATUS=self.status,
                        DATA=self.data)
         return _result
+

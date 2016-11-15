@@ -25,7 +25,7 @@ class ViewAdd(QWidget):
         QWidget.__init__(self)
 
         self.__fields = p_def  # 控件定义
-        self.__widgets = dict()  # 控件
+        self.widgets = dict()  # 控件
 
         _lay_inputs = QGridLayout()
 
@@ -41,7 +41,7 @@ class ViewAdd(QWidget):
 
             _widget = create_editor(self, dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
-            self.__widgets[_id] = dict(
+            self.widgets[_id] = dict(
                 TYPE=_type,
                 NAME=_name,
                 WIDGET=_widget,
@@ -56,7 +56,7 @@ class ViewAdd(QWidget):
                 _label = QLabel(_name + ":")
 
             _lay_inputs.addWidget(_label, _index, 0)
-            _lay_inputs.addWidget(self.__widgets[_id]["WIDGET"], _index, 1)
+            _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
 
         btn_submit = QPushButton(u"提交")
         btn_cancel = QPushButton(u"取消")
@@ -82,7 +82,7 @@ class ViewAdd(QWidget):
         :param p_data:
         :return:
         """
-        self.__widgets[p_id]["WIDGET"].set_data(p_data)
+        self.widgets[p_id]["WIDGET"].set_data(p_data)
 
     def get_data(self, p_id):
         """
@@ -90,7 +90,7 @@ class ViewAdd(QWidget):
         :param p_id:
         :return:
         """
-        return self.__widgets[p_id]["WIDGET"].get_data()
+        return self.widgets[p_id]["WIDGET"].get_data()
 
     def set_enable(self, p_id, p_status):
         """
@@ -99,20 +99,20 @@ class ViewAdd(QWidget):
         :param p_status:
         :return:
         """
-        self.__widgets[p_id]["WIDGET"].setEnabled(p_status)
+        self.widgets[p_id]["WIDGET"].setEnabled(p_status)
 
     def __submit(self):
 
         _res = dict()
 
-        for t_id in self.__widgets:
+        for t_id in self.widgets:
 
             _res[t_id] = self.get_data(t_id)
 
             # Guarantee input is not null
-            if self.__widgets[t_id]["ESSENTIAL"] and is_null(_res[t_id]):
+            if self.widgets[t_id]["ESSENTIAL"] and is_null(_res[t_id]):
 
-                _message = u"%s不可以为空" % self.__widgets[t_id]["NAME"]
+                _message = u"%s不可以为空" % self.widgets[t_id]["NAME"]
                 _msg_box = QMessageBox(QMessageBox.Warning, "Alert", _message)
                 _msg_box.exec_()
 

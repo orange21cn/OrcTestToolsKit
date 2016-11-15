@@ -1,4 +1,6 @@
 # coding=utf-8
+from PySide.QtCore import Signal as OrcSignal
+
 from OrcView.Lib.LibViewDef import view_data_def
 from OrcView.Lib.LibAdd import ViewAdd
 
@@ -9,6 +11,8 @@ class ViewDataAdd(ViewAdd):
     """
     View of table
     """
+    sig_data_flag = OrcSignal()
+
     def __init__(self):
         """
         :return:
@@ -19,6 +23,11 @@ class ViewDataAdd(ViewAdd):
         self.__id = None
 
         self.sig_submit.connect(self.__save)
+
+        self.widgets["data_flag"]["WIDGET"].clicked.connect(self.test)
+
+    def test(self):
+        print 'OK'
 
     def set_type(self, p_type):
 

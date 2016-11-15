@@ -141,9 +141,10 @@ class TreeNode(object):
         :param child:
         :return:
         """
-        for t_index, item in enumerate(self.children):
+        for _index, item in enumerate(self.children):
             if item == child:
-                return t_index
+                return _index
+
         return -1
 
     def remove_child(self, row):
@@ -782,6 +783,49 @@ class ModelNewTree(QAbstractItemModel):
                     p_node.children.remove(t_node)
                 else:
                     self.usr_remove_children(t_node)
+
+    def usr_set_data(self, p_para, p_list=None):
+        """
+        设置model数据,并重置界面
+        :param p_list:
+        :param p_para:
+        :type p_para: dict
+        :return:
+        """
+        if not isinstance(p_para, dict):
+            import json
+            parameter = json.loads(json.loads(p_para))
+        else:
+            parameter = p_para
+
+        if "id" not in parameter:
+            return
+
+        if p_list is None:
+            node = self.__state_root
+        else:
+            node = p_list
+
+        if (node.content is not None) and \
+           (parameter["id"] == node.content["id"]):
+
+            for name, value in parameter.items():
+
+                if "id" == name:
+                    continue
+
+                if name in node.content:
+                    node.content[name] = value
+
+            print node.content
+
+            self.reset()
+
+        else:
+
+            for _child in node.children:
+
+                self.usr_set_data(parameter, _child)
 
     def usr_create_tree_node(self, p_cont):
         """

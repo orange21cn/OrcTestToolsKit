@@ -35,7 +35,7 @@ class WidgetSelectControl(LibControl):
         LibControl.__init__(self, p_def)
 
 
-class ViewWidgetSelectMag(QWidget):
+class ViewWidgetSelect(QWidget):
 
     sig_selected = OrcSignal(dict)
 

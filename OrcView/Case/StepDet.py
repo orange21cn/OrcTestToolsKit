@@ -18,7 +18,7 @@ from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import SelectWidgetOperation
 from OrcView.Data.DataAdd import ViewDataAdd
-from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelectMag
+from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
 
 
@@ -172,7 +172,7 @@ class ViewOperate(QWidget):
         QWidget.__init__(self)
 
         self.__view_page_select = ViewPageSelectMag()
-        self.__view_widget_select = ViewWidgetSelectMag()
+        self.__view_widget_select = ViewWidgetSelect()
 
         self.__widget_data = dict()
 
@@ -233,6 +233,9 @@ class ViewOperate(QWidget):
         if self.__operate_select.get_data() is not None:
             _data["OPERATION"] = self.__operate_select.get_data()
 
+            if "INPUT" == _data["OPERATION"]:
+                _data["DATA"] = ""
+
         self.sig_submit[dict].emit(_data)
         self.close()
 
@@ -288,3 +291,15 @@ class ViewCheck(QWidget):
         self.setLayout(_layout)
 
         _layout.addWidget(self.__test)
+
+
+class OperationDict:
+    """
+    Todo
+    """
+    def __init__(self):
+
+        self.object = None
+        self.operation = None
+        self.data = None
+        self.attr = None
