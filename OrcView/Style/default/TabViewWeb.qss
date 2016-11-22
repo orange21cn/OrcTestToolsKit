@@ -1,0 +1,43 @@
+QTabWidget::pane {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QTabWidget::tab-bar {
+    color: #CAE8EA;
+    subcontrol-position: center;
+}
+
+QTabBar::tab {
+    color: gray;
+    width: 18px;
+    height: 45px;
+    margin-left: 3px;
+    margin-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-left: 3px solid white;
+    border-top: none;
+    margin-top: 0px;
+
+}
+
+QTabBar::tab:selected {
+    background-color: white;
+    color: black;
+    border-left: 3px solid black;
+}
+
+QTabBar::tab:first {
+    border-top: 1px solid black;
+}
+
+QTabBar::tab:last {
+    border-bottom: 1px solid black;
+}
+
+QTabBar::tab:hover {
+    color: #4f6b72;
+}

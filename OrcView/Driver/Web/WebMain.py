@@ -17,6 +17,7 @@ from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import SelectWidgetType
 from OrcView.Lib.LibView import SelectWidgetOperation
 from OrcView.Lib.LibDict import LibDict
+from OrcView.Lib.LibTheme import get_theme
 
 from service import WebMainService
 
@@ -48,6 +49,7 @@ class ViewWebMain(QWidget):
         _tab.addTab(_widget, "Widget")
 
         _tab.setTabPosition(QTabWidget.West)
+        _tab.setStyleSheet(get_theme("TabViewWeb"))
 
         # 测试区
         self.__test = WidgetTest()

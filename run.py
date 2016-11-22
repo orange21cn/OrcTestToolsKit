@@ -25,6 +25,7 @@ sys.setdefaultencoding('utf-8')
 OrcData = QApplication(sys.argv)
 
 tp = StartView()
+
 tp.show()
 
 OrcData.exec_()

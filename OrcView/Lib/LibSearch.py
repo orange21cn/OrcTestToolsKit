@@ -11,6 +11,7 @@ from PySide.QtCore import SIGNAL
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibView import create_editor
+from OrcView.Lib.LibTheme import get_theme
 
 
 class ViewButton(QWidget):
@@ -150,6 +151,8 @@ class ViewButtons(QWidget):
 
             self.__buttons["id"] = _button
             self.__layout.addWidget(_button)
+
+        self.setStyleSheet(get_theme("Buttons"))
 
     def align_back(self):
         """

@@ -70,7 +70,7 @@ class PageContainer(QWidget):
         _layout_main.addLayout(_layout_bottom)
 
         _layout_main.setContentsMargins(0, 0, 0, 0)
-        _layout_main.setSpacing(1)
+        _layout_main.setSpacing(0)
 
         self.setLayout(_layout_main)
 

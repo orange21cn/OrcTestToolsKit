@@ -15,9 +15,25 @@ class RunCoreService:
         self.__resource_data = OrcHttpResource("Data")
         self.__resource_view = OrcSocketResource("View")
 
-    def run_step(self, p_run_dict):
+    def launch_web_step(self, p_step_info):
+        """
+        WEB 类型用例执行项
+        :param p_step_info:
+        :return:
+        """
+        return self.__resource_web_driver.post(p_step_info)
 
-        return self.__resource_web_driver.post(p_run_dict)
+    def check_web_step(self, p_step_info):
+        """
+        WEB 类型步骤检查项
+        :param p_step_info:
+        :return:
+        """
+        if "DATA" in p_step_info:
+            step_data = p_step_info["DATA"]
+            return self.__resource_web_driver.post(p_step_info) == step_data
+        else:
+            return self.__resource_web_driver.post(p_step_info)
 
     def get_item(self, p_item_id):
         """
@@ -25,7 +41,7 @@ class RunCoreService:
         :return:
         :rtype: TabItem
         """
-        self.__resource_item.set_id(p_item_id)
+        self.__resource_item.set_path(p_item_id)
         item_data = self.__resource_item.get()
 
         if not item_data:

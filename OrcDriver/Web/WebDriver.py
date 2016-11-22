@@ -136,6 +136,7 @@ class DriverSelenium:
         return self.__root is not None
 
     def save_screen(self, p_file):
+
         time.sleep(0.5)
         self.__root.save_screenshot(p_file)
 

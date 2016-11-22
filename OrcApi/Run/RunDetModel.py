@@ -15,7 +15,7 @@ class RunDetModel:
         :type p_path: dict
         :return:
         """
-        res_file = "%s/%s" % (self.__home, p_path["path"])
+        res_file = "%s/%s/default.res" % (self.__home, p_path["path"])
 
         if not os.path.exists(res_file):
             return

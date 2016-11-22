@@ -42,7 +42,6 @@ class DriverAPI(Resource):
         parameter = orc_get_parameter()
 
         self.__logger.debug("input parameter: %s" % parameter)
-        print parameter
 
         rtn = OrcResult()
 

@@ -13,6 +13,7 @@ from PySide.QtGui import QTreeView
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibNet import orc_invoke
+from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibView import get_dict
 
@@ -34,6 +35,10 @@ class ViewTree(QTreeView):
         self.setDragDropMode(QAbstractItemView.InternalMove)
 
         self.header().setStretchLastSection(True)
+
+        self.setFocusPolicy(Qt.NoFocus)
+
+        self.setStyleSheet(get_theme("TreeView"))
 
     def create_context_menu(self, p_def):
         """
@@ -503,7 +508,7 @@ class ModelNewTree(QAbstractItemModel):
 
         self.__state_current_data = None
         self.__state_cond = {}  # now sql condition
-        self.__state_root = TreeNode(None)  # data root
+        self._state_root = TreeNode(None)  # data root
         self.__state_list = []  # data list
         self.__state_check = []  # checked list
 
@@ -693,7 +698,7 @@ class ModelNewTree(QAbstractItemModel):
                     self.__state_edit_fields.append(t_field["ID"])
 
     def usr_get_node(self, p_index):
-        return p_index.internalPointer() if p_index.isValid() else self.__state_root
+        return p_index.internalPointer() if p_index.isValid() else self._state_root
 
     def usr_add(self, p_values):
 
@@ -753,7 +758,7 @@ class ModelNewTree(QAbstractItemModel):
                 self.__state_cond.pop(_key)
 
         # Remove node tree
-        self.usr_remove_children(self.__state_root)
+        self.usr_remove_children(self._state_root)
 
         # Search
         self.__state_list = self.__service.usr_search(self.__state_cond)
@@ -766,7 +771,7 @@ class ModelNewTree(QAbstractItemModel):
             if 'None' == t_item['pid'] or t_item['pid'] is None:
 
                 t_node = self.usr_create_tree_node(t_item)
-                self.__state_root.append_node(t_node)
+                self._state_root.append_node(t_node)
 
         # Clean checked list
         for i in self.__state_check:
@@ -802,7 +807,7 @@ class ModelNewTree(QAbstractItemModel):
             return
 
         if p_list is None:
-            node = self.__state_root
+            node = self._state_root
         else:
             node = p_list
 

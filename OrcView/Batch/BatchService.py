@@ -11,5 +11,5 @@ class BatchDefService:
 
         cond = dict(id=p_id, run_def_type="BATCH")
 
-        self.__resource_run_def.set_id(p_id)
+        self.__resource_run_def.set_path(p_id)
         self.__resource_run_def.post(cond)

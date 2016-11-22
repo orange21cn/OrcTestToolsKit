@@ -7,6 +7,8 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit
+from PySide.QtGui import QProgressBar
+
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
 from OrcLib.LibNet import orc_invoke
@@ -303,7 +305,7 @@ class OrcSelectBase(QComboBox):
             pass
 
 
-class SelectDictory(OrcSelectBase):
+class SelectDictionary(OrcSelectBase):
     """
     字典下拉列表
     """
@@ -459,3 +461,34 @@ class ObjectOperator(QVBoxLayout):
             _data["OPERATE"] = self.__operate.get_data()
 
         return _data
+
+
+class OrcProcess(QProgressBar):
+
+    def __init__(self, p_steps=None):
+
+        QProgressBar.__init__(self)
+
+        self.__steps = 1 if p_steps is None else p_steps
+        self.__length = 100 / self.__steps
+        self.__value = 0
+
+        self.setValue(0)
+
+    def set_steps(self, p_steps):
+
+        self.__steps = p_steps
+
+        self.__length = 100 / self.__steps
+        self.__value = 0
+
+        self.setValue(0)
+
+    def step_forward(self):
+
+        self.__value += self.__length
+
+        if 100 - self.__value <= self.__length:
+            self.__value = 100
+
+        self.setValue(self.__value)

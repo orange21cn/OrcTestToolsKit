@@ -91,4 +91,5 @@ driver_port = configer.get_option("CASE", "port")
 
 reload(sys)
 init_log()
+
 app.run(host=driver_host, port=driver_port)

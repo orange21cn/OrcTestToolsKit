@@ -85,9 +85,6 @@ class ViewDataMag(QWidget):
 
         self.__win_add.sig_submit[dict].connect(self.add)
 
-        qss_file = open('Orcview/Style/default.qss').read()
-        self.setStyleSheet(qss_file)
-
     def search(self):
         self.__model.usr_search(self.__wid_search_cond.get_cond())
 

@@ -32,6 +32,7 @@ class ViewRunDef(QWidget):
 
     sig_search = OrcSignal()
     sig_selected = OrcSignal(str)
+    sig_run = OrcSignal()
 
     def __init__(self, p_def):
 
@@ -90,7 +91,7 @@ class ViewRunDef(QWidget):
         _parent_type = _parent_content["run_def_type"]
         _parent_id = _parent_content["id"]
 
-        _file = "%s_%s/%s/default.res" % (_parent_type, _parent_id, _node_flag)
+        _file = "%s_%s/%s" % (_parent_type, _parent_id, _node_flag)
 
         self.sig_selected.emit(_file)
 
@@ -116,6 +117,8 @@ class ViewRunDef(QWidget):
 
         elif "run" == p_flg:
 
+            self.sig_run.emit()
+
             item_data = self.__model.usr_get_current_data()
 
             if item_data is not None:
@@ -130,8 +133,6 @@ class ViewRunDef(QWidget):
                 _thread_run.start()
 
                 self.__threads.append(_thread_run)
-
-                # self.__service.usr_run(_pid, _id)
 
         else:
             pass

@@ -21,7 +21,7 @@ class RunDefService:
             run_def_type=p_cond["run_def_type"],
             result=True)
 
-        self.__res_run_def.set_id(cond["id"])
+        self.__res_run_def.set_path(cond["id"])
         res = self.__res_run_def.post(cond)
 
         return dict(id=res)

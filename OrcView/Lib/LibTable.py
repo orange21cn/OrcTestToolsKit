@@ -9,9 +9,11 @@ from PySide.QtGui import QTableView
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibCommon import is_null
 from OrcLib.LibNet import orc_invoke
+from OrcLib.LibNet import get_config
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibView import get_dict
 from OrcView.Lib.LibView import operate_to_str
+from OrcView.Lib.LibTheme import get_theme
 
 
 class ViewTable(QTableView):
@@ -24,7 +26,22 @@ class ViewTable(QTableView):
 
         QTableView.__init__(self)
 
+        self.__configer = get_config()
+
+        # 拉申最后一列
         self.horizontalHeader().setStretchLastSection(True)
+
+        # ...
+        self.resizeColumnToContents(True)
+
+        # 不显示格间距
+        self.setShowGrid(False)
+
+        self.alternatingRowColors()
+
+        root_folder = self.__configer.get_option("DEFAULT", "root")
+
+        self.setStyleSheet(get_theme("TableView"))
 
     def create_context_menu(self, p_def):
         """

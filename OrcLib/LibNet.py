@@ -243,7 +243,8 @@ class OrcResourceBase:
                         RunDet='RUN',
                         Run='RUN',
                         View="VIEW",
-                        DriverWeb='SERVER_WEB_001')
+                        DriverWeb='SERVER_WEB_001',
+                        Report="REPORT")
 
         flag = None if p_mod not in mod_list else mod_list[p_mod]
 
@@ -252,6 +253,9 @@ class OrcResourceBase:
         self._port = int(self._configer.get_option(flag, "port"))
         self._version = self._configer.get_option(flag, "version")
         self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, p_mod)
+
+    def get_url(self):
+        return self._url
 
 
 class OrcSocketResource(OrcResourceBase):
@@ -288,7 +292,7 @@ class OrcHttpResource(OrcResourceBase):
 
         self.__back_url = self._url
 
-    def set_id(self, p_id=None):
+    def set_path(self, p_id=None):
 
         if p_id is None:
             self._url = self.__back_url

@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+
 from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 from OrcLib import get_config
@@ -8,6 +9,7 @@ from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcInvoke
 from OrcLib.LibDataStruct import ListTree
 from RunService import RunCoreService
+from RunLog import RunLog
 
 
 class RunCore(ListTree):
@@ -30,11 +32,14 @@ class RunCore(ListTree):
         self.__url = lambda _mod, _id: "%s/%s" % (self.__url_list(_mod), _id)
 
         self.__home = get_config().get_option("RUN", "home")
+        self.__home_run = None  # 运行时目录,为home目录/case(batch)/time
 
         self.__list = []  # 列表
         self.__root_id = None  # 根元素 id
 
         self.__run_list = []  # 执行列表,batch->item,用于查找数据及控件...
+        self.__run_logger = RunLog()
+
 
     def get_home(self):
         return self.__home
@@ -281,10 +286,12 @@ class RunCore(ListTree):
                 item_path = "%s/%s" % (self.__home, _group)
 
         if item_path is not None:
-            item_path = "%s/%s/default.res" % (item_path, item_id)
+            self.__home_run = "%s/%s" % (item_path, item_id)
+            item_path = "%s/default.res" % self.__home_run
 
         self.load_list(item_path)
         self.run(self.tree)
+        self.save_list(item_path)
 
     def run(self, p_node):
 
@@ -292,6 +299,9 @@ class RunCore(ListTree):
         step_type = p_node["content"]["run_det_type"]
 
         self.__run_list.append(p_node["content"])
+
+        self.__run_logger.set_list(self.__home_run, self.__run_list)
+        self.__run_logger.run_begin()
 
         # 如果是 item 运行步骤
         if "ITEM" == step_type:
@@ -314,8 +324,6 @@ class RunCore(ListTree):
                 else:
                     result = result and _result
 
-        self.__run_list.pop()
-
         # 转换状态
         if result is None:
             status = RunState.state_not_run
@@ -324,13 +332,16 @@ class RunCore(ListTree):
         else:
             status = RunState.state_fail
 
+        self.__run_logger.set_list(self.__home_run, self.__run_list)
+        self.__run_logger.run_end(status)
+
+        self.__run_list.pop()
+
         # 更新文件状态
         p_node["content"]["status"] = status
 
         # 更新界面
         self.__service.update_status(p_node["content"])
-
-        # 保存文件
 
         return result
 
@@ -364,16 +375,22 @@ class RunCore(ListTree):
             if data:
                 item_operation["DATA"] = data
 
-        if "WEB" == item.item_type:
-            _result = self.__service.run_step(item_operation)
+        # 执行项
+        if "OPERATE" == item.item_mode:
+            if "WEB" == item.item_type:
+                _result = self.__service.launch_web_step(item_operation)
+
+        # 检查项
+        elif "CHECK" ==item.item_mode:
+            if "WEB" == item.item_type:
+                _result = self.__service.check_web_step(item_operation)
 
         else:
             pass
 
-        return _result
+        self.__run_logger.data("Run message: %s" % item_operation)
 
-    def run_get_status(self):
-        return
+        return _result
 
 
 class RunData:

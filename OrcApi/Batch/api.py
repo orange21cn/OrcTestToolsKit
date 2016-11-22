@@ -23,8 +23,6 @@ def batch_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    api_batch_log.error("kkkk")
-
     _model = BatchDefModel()
     _value = _model.usr_search(_parameter)
 

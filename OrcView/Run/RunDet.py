@@ -8,13 +8,15 @@ from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QProgressBar
 
 from OrcLib import get_config
+from OrcLib.LibLog import OrcLog
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibTree import ModelNewTree
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibView import OrcProcess
+
 from RunDetService import RunDetService
 
 
@@ -30,6 +32,24 @@ class RunDetModel(ModelNewTree):
 
     def model_run(self, p_path):
         self.__service.usr_run(p_path)
+
+    def get_item_nums(self, p_node=None):
+
+        count = 0
+
+        if p_node is None:
+            node = self._state_root
+        else:
+            node = p_node
+
+        if node.content is not None:
+                count = 1
+
+        if node.children:
+            for child in node.children:
+                count += self.get_item_nums(child)
+
+        return count
 
 
 class RunDetControl(LibControl):
@@ -47,6 +67,7 @@ class ViewRunDet(QWidget):
 
         self.__table_def = p_def
         self.__path = None
+        self.__step_length = 0
 
         self.title = u"执行"
 
@@ -63,7 +84,7 @@ class ViewRunDet(QWidget):
         _wid_display.set_control(_control)
 
         # 进度条
-        self.__progress = QProgressBar()
+        self.__progress = OrcProcess()
 
         # 底部按钮及进度条
         _layout_bottom = QHBoxLayout()
@@ -79,15 +100,19 @@ class ViewRunDet(QWidget):
         self.__thread_status = StatusReceiver()
         self.__thread_status.start()
 
-        self.__thread_status.sig_status.connect(self.__model.usr_set_data)
+        self.__thread_status.sig_status.connect(self.update_data)
 
-    def usr_refresh(self, p_path):
+    def update_data(self, p_data):
+        self.__model.usr_set_data(p_data)
+        self.__progress.step_forward()
 
-        self.__path = dict(path=p_path)
+    def usr_refresh(self, p_path=None):
+
+        if p_path is not None:
+            self.__path = dict(path=p_path)
 
         self.__model.usr_search(self.__path)
-
-        self.__progress.setValue(90)
+        self.__progress.set_steps(self.__model.get_item_nums())
 
 
 class StatusReceiver(QThread):
@@ -99,6 +124,7 @@ class StatusReceiver(QThread):
         QThread.__init__(self)
 
         self.__config = get_config("network")
+        self.__logger = OrcLog("view")
 
     def run(self, *args, **kwargs):
 
@@ -124,6 +150,6 @@ class StatusReceiver(QThread):
             except socket.timeout:
                 self.__logger.error("time out")
             except Exception, err:
-                print err
+                self.__logger.error(err)
 
             connection.close()

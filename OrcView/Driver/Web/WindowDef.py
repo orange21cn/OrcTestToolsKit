@@ -1,14 +1,11 @@
 # coding=utf-8
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
-from PySide.QtCore import QModelIndex
-from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
 
 from service import WindowService

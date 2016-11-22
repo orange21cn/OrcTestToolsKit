@@ -1,0 +1,33 @@
+QTabWidget::pane {
+    background-color: #F0F0F0;
+    border-top: 5px solid #F0F0F0;
+}
+
+QTabWidget::tab-bar {
+    color: #CAE8EA;
+    left: 5px; /* move to the right by 5px */
+}
+
+QTabBar::tab {
+    color: gray;
+    height: 28px;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-top: 3px solid white;
+}
+
+QTabBar::tab:selected {
+    background-color: white;
+    color: black;
+    height: 28px;
+    border-top: 3px solid black;
+}
+
+QTabBar::tab:!first {
+
+}
+
+QTabBar::tab:hover {
+    color: #4f6b72;
+}

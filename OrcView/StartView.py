@@ -1,5 +1,4 @@
 # coding=utf-8
-
 from PySide.QtGui import QMainWindow
 from PySide.QtGui import QTabWidget
 from PySide.QtCore import SIGNAL
@@ -8,6 +7,7 @@ from PySide.QtCore import Qt
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
 from OrcView.Lib.LibMain import DockLog
+from OrcView.Lib.LibTheme import get_theme
 from OrcView.Batch.BatchDef import ViewBatchDefMag
 from OrcView.Batch.BatchDet import ViewBatchDetMag
 from OrcView.Case.CaseDef import ViewCaseDefMag
@@ -15,6 +15,7 @@ from OrcView.Case.StepMain import StepContainer
 from OrcView.Data.DataDef import ViewDataMag
 from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Run.RunMain import ViewRunMain
+from OrcView.Run.ReportMain import ViewReportMain
 
 
 class StartView(QMainWindow):
@@ -31,7 +32,6 @@ class StartView(QMainWindow):
 
         self.create = main_menu.addMenu('&Create')
         self.run = main_menu.addMenu('&Run')
-        self.trace = main_menu.addMenu('&Trace')
         self.report = main_menu.addMenu('&Report')
         self.help = main_menu.addMenu('&Help')
 
@@ -41,6 +41,7 @@ class StartView(QMainWindow):
         action_web = self.create.addAction('&Web')
         action_run = self.run.addAction('&Run')
         action_test = self.run.addAction('&Test')
+        action_report = self.report.addAction('&Report')
 
         self.connect(action_batch, SIGNAL('triggered()'), self.open_batch)
         self.connect(action_case, SIGNAL('triggered()'), self.open_case)
@@ -48,6 +49,7 @@ class StartView(QMainWindow):
         self.connect(action_data, SIGNAL('triggered()'), self.open_data)
         self.connect(action_web, SIGNAL('triggered()'), self.open_web_object)
         self.connect(action_run, SIGNAL('triggered()'), self.open_run)
+        self.connect(action_report, SIGNAL('triggered()'), self.open_report)
 
         # Dock
         self.dock_category = DockCategory()  # category widget
@@ -59,6 +61,8 @@ class StartView(QMainWindow):
         # center widget
         self.__wid_center = QTabWidget()
         self.setCentralWidget(self.__wid_center)
+
+        self.__wid_center.setStyleSheet(get_theme("TabViewMain"))
 
         self.__wid_center.setTabsClosable(True)
         self.connect(self.__wid_center, SIGNAL("tabCloseRequested(int)"), self.close_tab)
@@ -95,6 +99,10 @@ class StartView(QMainWindow):
 
     def open_run(self):
         _view = ViewRunMain()
+        self.__add_tab(_view)
+
+    def open_report(self):
+        _view = ViewReportMain()
         self.__add_tab(_view)
 
     def open_test(self):

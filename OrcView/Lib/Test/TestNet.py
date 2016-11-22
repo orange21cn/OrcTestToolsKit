@@ -28,7 +28,7 @@ class TestDict(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _obj = OrcHttpResource('BatchDef')
-        _obj.set_id(1000000001)
+        _obj.set_path(1000000001)
         _res = _obj.get()
 
         OrcTest.test_print_result(_res)

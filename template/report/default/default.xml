@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <xsl:output method="html"  encoding="utf-8" media-type="text/html" />
+
+    <xsl:template match="/">
+        <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+                <title>test</title>
+                <style type="text/css">
+                    body {
+                        font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #4f6b72;
+                        background: #E6EAE9;
+                    }
+                    table {
+                        padding: 0;
+                        margin: 0;
+                        text-align: center;
+                    }
+                    caption {
+                        padding: 0 0 5px 0;
+                        width: 700px;
+                        font: italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        text-align: right;
+                    }
+                    th {
+                        font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #4f6b72;
+                        border-right: 1px solid #C1DAD7;
+                        border-bottom: 1px solid #C1DAD7;
+                        border-top: 1px solid #C1DAD7;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        padding: 6px 6px 6px 12px;
+                        background: #CAE8EA  no-repeat;
+                    }
+                    th.nobg {
+                        border-top: 0;
+                        border-left: 0;
+                        border-right: 1px solid #C1DAD7;
+                        background: none;
+                    }
+
+                    td {
+                        border-right: 1px solid #C1DAD7;
+                        border-bottom: 1px solid #C1DAD7;
+                        background: #fff;
+                        font-size:11px;
+                        padding: 6px 6px 6px 12px;
+                        color: #4f6b72;
+                    }
+                    td.alt {
+                        background: #F5FAFA;
+                        color: #797268;
+                    }
+
+                    th.spec {
+                        border-left: 1px solid #C1DAD7;
+                        border-top: 0;
+                        background: #fff no-repeat;
+                        font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                    }
+
+                    th.specalt {
+                        border-left: 1px solid #C1DAD7;
+                        border-top: 0;
+                        background: #f5fafa no-repeat;
+                        font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #797268;
+                    }
+                </style>
+            </head>
+            <body>
+                <table>
+
+                </table>
+                <table align="Center" width="100%">
+                    <tr>
+                        <th>NO</th>
+                        <th>TYPE</th>
+                        <th>DESCRIPTION</th>
+                        <th>STATUS</th>
+                    </tr>
+                    <xsl:apply-templates select="CASE_GROUP"/>
+                    <xsl:apply-templates select="CASE"/>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+
+    <xsl:template match="CASE_GROUP">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+        <xsl:apply-templates select="CASE_GROUP"/>
+        <xsl:apply-templates select="CASE"/>
+    </xsl:template>
+
+    <xsl:template match="CASE">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+        <xsl:apply-templates select="STEP"/>
+    </xsl:template>
+
+    <xsl:template match="STEP">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+        <xsl:apply-templates select="ITEM"/>
+    </xsl:template>
+
+    <xsl:template match="ITEM">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+    </xsl:template>
+
+</xsl:stylesheet>
