@@ -1,4 +1,4 @@
-from flask.ext.restful import Resource
+from flask_restful import Resource
 from flask import request
 
 from OrcLib.LibLog import OrcLog

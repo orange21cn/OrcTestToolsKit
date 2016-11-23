@@ -111,10 +111,10 @@ class ViewButtons(QWidget):
 
     sig_clicked = OrcSignal(str)
 
-    def __init__(self, p_def, p_direction="HORIZON"):
+    def __init__(self, p_def, p_direction="HOR"):
         """
         生成一个按钮组
-        :param p_def: [{"id": t_id, "name": _name}]
+        :param p_def: [{id, name, type=None}]
         :return: None
         """
         QWidget.__init__(self)
@@ -126,7 +126,7 @@ class ViewButtons(QWidget):
         self.__buttons = dict()
 
         # 设置方向
-        if "HORIZON" == p_direction:
+        if "HOR" == p_direction:
             self.__layout = QHBoxLayout()
         else:
             self.__layout = QVBoxLayout()
@@ -152,6 +152,10 @@ class ViewButtons(QWidget):
             self.__buttons["id"] = _button
             self.__layout.addWidget(_button)
 
+        # 默认向右对齐
+        self.align_back()
+
+        # 设置样式
         self.setStyleSheet(get_theme("Buttons"))
 
     def align_back(self):
@@ -167,9 +171,6 @@ class ViewButtons(QWidget):
         :return:
         """
         self.__layout.addStretch()
-
-    def set_no_spacing(self):
-        self.__layout.setSpacing(0)
 
     def set_disable(self, p_id):
         """

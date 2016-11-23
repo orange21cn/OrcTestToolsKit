@@ -4,9 +4,10 @@ from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelTable
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import def_view_widget_det
 
 
 class WidgetDetModel(ModelTable):
@@ -35,21 +36,19 @@ class WidgetDetControl(LibControl):
 
 class ViewWidgetDetMag(QWidget):
 
-    def __init__(self, p_def):
+    def __init__(self):
 
         QWidget.__init__(self)
-
-        _table_def = p_def
 
         # Current widget id
         self.__widget_id = None
 
         # Model
         self.__model = WidgetDetModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_widget_det)
 
         # Control
-        _control = WidgetDetControl(_table_def)
+        _control = WidgetDetControl(def_view_widget_det)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -57,14 +56,14 @@ class ViewWidgetDetMag(QWidget):
         _wid_display.set_control(_control)
 
         # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK")
+        ])
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_widget_det)
 
         # Layout
         _layout = QVBoxLayout()
@@ -76,9 +75,7 @@ class ViewWidgetDetMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.add_show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
+        _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit[dict].connect(self.add)
 
@@ -99,3 +96,14 @@ class ViewWidgetDetMag(QWidget):
     def clean(self):
         self.__widget_id = None
         self.__model.usr_clean()
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        else:
+            pass

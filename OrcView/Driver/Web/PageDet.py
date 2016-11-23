@@ -6,9 +6,10 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelTable
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import def_view_page_det
 
 
 class PageDetModel(ModelTable):
@@ -41,21 +42,19 @@ class ViewPageDetMag(QWidget):
     """
     sig_selected = OrcSignal(str)
 
-    def __init__(self, p_def):
+    def __init__(self):
 
         QWidget.__init__(self)
-
-        _table_def = p_def
 
         # Current page id
         self.__page_id = None
 
         # Model
         self.__model = PageDetModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_page_det)
 
         # Control
-        _control = PageDetControl(_table_def)
+        _control = PageDetControl(def_view_page_det)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -63,14 +62,14 @@ class ViewPageDetMag(QWidget):
         _wid_display.set_control(_control)
 
         # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK")
+        ])
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_page_det)
 
         # Layout
         _layout = QVBoxLayout()
@@ -82,12 +81,21 @@ class ViewPageDetMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.add_show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
+        _wid_buttons.sig_clicked.connect(self.__operate)
         _wid_display.clicked[QModelIndex].connect(self.__page_select)
 
         self.__win_add.sig_submit[dict].connect(self.add)
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        else:
+            pass
 
     def __page_select(self, p_index):
         page_det_id = self.__model.usr_get_data(p_index.row())["id"]

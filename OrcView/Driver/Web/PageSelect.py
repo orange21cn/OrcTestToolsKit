@@ -4,11 +4,12 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibViewDef import def_view_page_def
 
 
 class PageSelectModel(ModelTable):
@@ -43,31 +44,17 @@ class ViewPageSelectMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="page_flag", NAME=u"页面标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="page_desc", NAME=u"页面描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
-
         self.title = u"用例管理"
 
         # Model
         self.__model = PageSelectModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_page_def)
 
         # Control
-        _control = PageSelectControl(_table_def)
+        _control = PageSelectControl(def_view_page_def)
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(_table_def)
+        self.__wid_search_cond = ViewSearch(def_view_page_def)
         self.__wid_search_cond.set_col_num(2)
         self.__wid_search_cond.create()
 
@@ -77,12 +64,10 @@ class ViewPageSelectMag(QWidget):
         _wid_display.set_control(_control)
 
         # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_search()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([dict(id="search", name=u"查询")])
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_page_def)
 
         # Layout
         _layout = QVBoxLayout()
@@ -93,8 +78,15 @@ class ViewPageSelectMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_search.connect(self.search)
+        _wid_buttons.sig_clicked.connect(self.__operate)
         _wid_display.doubleClicked.connect(self.select)
+
+    def __operate(self, p_flag):
+
+        if "search" == p_flag:
+            self.search()
+        else:
+            pass
 
     def search(self):
         _cond = self.__wid_search_cond.get_cond()

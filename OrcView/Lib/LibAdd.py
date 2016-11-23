@@ -50,10 +50,7 @@ class ViewAdd(QWidget):
             if "OPERATE" == _type:
                 _widget.sig_operate.connect(self.sig_operate.emit)
 
-            if _ess:
-                _label = QLabel("*" + _name + ":")
-            else:
-                _label = QLabel(_name + ":")
+            _label = QLabel(("*" if _ess else " ") + _name + ":")
 
             _lay_inputs.addWidget(_label, _index, 0)
             _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)

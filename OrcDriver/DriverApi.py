@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask.ext.restful import Resource
+from flask_restful import Resource
 
 from OrcLib import init_log
 from OrcLib.LibLog import OrcLog

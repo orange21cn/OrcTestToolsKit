@@ -57,14 +57,12 @@ class ViewRunDef(QWidget):
         _wid_display.set_control(_control)
 
         # Buttons window
-        _btn_definition = [
+        _wid_buttons = ViewButtons([
             dict(id="add", name=u'增加'),
             dict(id="delete", name=u"删除"),
             dict(id="search", name=u'查询'),
             dict(id="run", name=u"执行")
-        ]
-        _wid_buttons = ViewButtons(_btn_definition)
-        _wid_buttons.align_back()
+        ])
 
         # Layout
         _layout = QVBoxLayout()

@@ -10,7 +10,7 @@ from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
-from OrcView.Lib.LibViewDef import view_widget_def
+from OrcView.Lib.LibViewDef import def_view_widget_def
 
 
 class WidgetDefModel(ModelTree):
@@ -55,14 +55,14 @@ class ViewWidgetDef(QWidget):
 
         # Model
         self.__model = WidgetDefModel()
-        self.__model.usr_set_definition(view_widget_def)
+        self.__model.usr_set_definition(def_view_widget_def)
 
         # Control
-        _control = WidgetDefControl(view_widget_def)
+        _control = WidgetDefControl(def_view_widget_def)
 
         # Search
         if self.__type is not None:
-            self.__wid_search_cond = ViewSearch(view_widget_def)
+            self.__wid_search_cond = ViewSearch(def_view_widget_def)
             self.__wid_search_cond.set_col_num(2)
             self.__wid_search_cond.create()
         else:
@@ -85,7 +85,7 @@ class ViewWidgetDef(QWidget):
         _wid_buttons.align_back()
 
         # win_add
-        self.__win_add = ViewAdd(view_widget_def)
+        self.__win_add = ViewAdd(def_view_widget_def)
 
         # Layout
         _layout = QVBoxLayout()

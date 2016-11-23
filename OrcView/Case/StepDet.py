@@ -17,6 +17,7 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcView.Lib.LibViewDef import def_view_step
 from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
@@ -52,36 +53,16 @@ class ViewStepDetMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=False, ESSENTIAL=False),
-            dict(ID="item_type", NAME=u"条目类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="item_mode", NAME=u"条目模式", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="item_operate", NAME=u"条目操作", TYPE="OPERATE", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="item_desc", NAME=u"条目描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
-
         # Current case id
         self.__step_id = None
         self.__win_operate = ViewOperate()
 
         # Model
         self.__model = StepDetModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_step)
 
         # Control
-        _control = StepDetControl(_table_def)
+        _control = StepDetControl(def_view_step)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -103,7 +84,7 @@ class ViewStepDetMag(QWidget):
         _wid_buttons.create()
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_step)
         self.__win_add.sig_operate.connect(self.__win_operate.show)
         self.__win_operate.sig_submit.connect(self.get_operate)
 

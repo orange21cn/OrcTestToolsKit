@@ -1,4 +1,4 @@
-from flask.ext.restful import Resource
+from flask_restful import Resource
 
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_get_parameter

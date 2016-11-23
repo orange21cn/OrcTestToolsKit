@@ -50,7 +50,6 @@ class ViewReportMain(QWidget):
 
         self.__wid_run_def.sig_search.connect(self.search)
         self.__wid_run_def.sig_selected.connect(self.__wid_report_det.usr_refresh)
-        # self.__wid_run_def.sig_run.connect(self.__wid_run_det.usr_refresh)
 
     def search(self):
 

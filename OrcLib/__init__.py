@@ -31,7 +31,6 @@ def get_config(p_file=None):
 def init_log():
     """
     获取配置类
-    :param p_file:
     :return:
     """
     _path = os.path.dirname(os.path.dirname(__file__))

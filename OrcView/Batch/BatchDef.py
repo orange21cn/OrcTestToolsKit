@@ -6,12 +6,13 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
-
+from OrcView.Lib.LibViewDef import def_view_batch_def
 from OrcView.Data.DataAdd import ViewDataAdd
+
 from BatchService import BatchDefService
 
 
@@ -47,39 +48,19 @@ class ViewBatchDefMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="batch_no", NAME=u"批编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=False, ESSENTIAL=False),
-            dict(ID="batch_type", NAME=u"批类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="batch_name", NAME=u"批名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="batch_desc", NAME=u"批描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
-
-        self.title = u"批管理"
+        self.title = u"计划管理"
 
         self.__service = BatchDefService()
 
         # Model
         self.__model = BatchDefModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_batch_def)
 
         # Control
-        _control = BatchDefControl(_table_def)
+        _control = BatchDefControl(def_view_batch_def)
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(_table_def)
+        self.__wid_search_cond = ViewSearch(def_view_batch_def)
         self.__wid_search_cond.create()
 
         # Data result display widget
@@ -88,23 +69,22 @@ class ViewBatchDefMag(QWidget):
         _wid_display.set_control(_control)
 
         # Context menu
-        _menu_def = [dict(NAME=u"增加", STR="sig_add"),
-                     dict(NAME=u"删除", STR="sig_del"),
-                     dict(NAME=u"增加数据", STR="sig_data"),
-                     dict(NAME=u"添加至运行", STR="sig_run")]
-
-        _wid_display.create_context_menu(_menu_def)
+        _wid_display.create_context_menu([
+            dict(NAME=u"增加", STR="sig_add"),
+            dict(NAME=u"删除", STR="sig_del"),
+            dict(NAME=u"增加数据", STR="sig_data"),
+            dict(NAME=u"添加至运行", STR="sig_run")])
 
         # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.enable_search()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK"),
+            dict(id="search", name=u"查询")
+        ])
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_batch_def)
 
         # win add data
         self.__win_data = ViewDataAdd()
@@ -118,10 +98,7 @@ class ViewBatchDefMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.__win_add.show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
-        _wid_buttons.sig_search.connect(self.search)
+        _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit[dict].connect(self.add)
         _wid_display.doubleClicked[QModelIndex].connect(self.__batch_detail)
@@ -134,6 +111,19 @@ class ViewBatchDefMag(QWidget):
 
     def add(self, p_data):
         self.__model.usr_add(p_data)
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        elif "search" == p_flag:
+            self.search()
+        else:
+            pass
 
     def __batch_detail(self, p_index):
 

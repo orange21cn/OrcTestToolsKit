@@ -1,7 +1,126 @@
 # coding=utf-8
 
+
+def_view_batch_def = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+        SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+        SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="batch_no", NAME=u"批编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=False, ESSENTIAL=False),
+    dict(ID="batch_type", NAME=u"批类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="batch_name", NAME=u"批名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="batch_desc", NAME=u"批描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+                 SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_batch_det = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="case_id", NAME=u"用例ID", TYPE="LINETEXT", DISPLAY=False, EDIT=True,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="case_no", NAME=u"用例编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="case_name", NAME=u"用例名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_case_def = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="case_no", NAME=u"用例编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=False, ESSENTIAL=False),
+    dict(ID="case_path", NAME=u"用例路径", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="case_name", NAME=u"用例名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="case_type", NAME=u"用例类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="case_desc", NAME=u"用例描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_case_det = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="step_no", NAME=u"步骤编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=False, ESSENTIAL=True),
+    dict(ID="step_desc", NAME=u"步骤描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_step = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=False, ESSENTIAL=False),
+    dict(ID="item_type", NAME=u"条目类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="item_mode", NAME=u"条目模式", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="item_operate", NAME=u"条目操作", TYPE="OPERATE", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="item_desc", NAME=u"条目描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_page_def = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="page_flag", NAME=u"页面标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="page_desc", NAME=u"页面描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_page_det = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="page_id", NAME=u"页面ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="page_env", NAME=u"环境", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="page_url", NAME=u"URL", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
 # DataDef 界面
-view_data_def = [
+def_view_data = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT",
          DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="test_env", NAME=u"测试环境", TYPE="SELECT",
@@ -26,7 +145,7 @@ view_data_def = [
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # WidgetDef 界面定义
-view_widget_def = [
+def_view_widget_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT",
          DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT",
@@ -45,3 +164,23 @@ view_widget_def = [
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_widget_det = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="widget_id", NAME=u"控件ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="widget_order", NAME=u"属性顺序", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=False, ESSENTIAL=False),
+    dict(ID="widget_attr_type", NAME=u"属性类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="widget_attr_value", NAME=u"属性值", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="widget_desc", NAME=u"属性描述描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]

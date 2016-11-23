@@ -6,13 +6,15 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import def_view_case_def
 
 from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
+
 from CaseService import CaseDefService
 
 
@@ -48,41 +50,19 @@ class ViewCaseDefMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="case_no", NAME=u"用例编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=False, ESSENTIAL=False),
-            dict(ID="case_path", NAME=u"用例路径", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="case_name", NAME=u"用例名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="case_type", NAME=u"用例类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="case_desc", NAME=u"用例描述", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
-
         self.title = u"用例管理"
 
         self.__service = CaseDefService()
 
         # Model
         self.__model = CaseDefModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_case_def)
 
         # Control
-        _control = CaseDefControl(_table_def)
+        _control = CaseDefControl(def_view_case_def)
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(_table_def)
+        self.__wid_search_cond = ViewSearch(def_view_case_def)
         self.__wid_search_cond.set_col_num(2)
         self.__wid_search_cond.create()
 
@@ -92,23 +72,22 @@ class ViewCaseDefMag(QWidget):
         _wid_display.set_control(_control)
 
         # Context menu
-        _menu_def = [dict(NAME=u"增加", STR="sig_add"),
-                     dict(NAME=u"删除", STR="sig_del"),
-                     dict(NAME=u"增加数据", STR="sig_data"),
-                     dict(NAME=u"添加至运行", STR="sig_run")]
-
-        _wid_display.create_context_menu(_menu_def)
+        _wid_display.create_context_menu([
+            dict(NAME=u"增加", STR="sig_add"),
+            dict(NAME=u"删除", STR="sig_del"),
+            dict(NAME=u"增加数据", STR="sig_data"),
+            dict(NAME=u"添加至运行", STR="sig_run")])
 
         # Buttons widget
-        _wid_buttons = ViewButton()
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.enable_search()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK"),
+            dict(id="search", name=u"查询")
+        ])
 
         # win add case
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_case_def)
 
         # 选择控件
         self.__win_widget_select = ViewWidgetSelect()
@@ -125,10 +104,7 @@ class ViewCaseDefMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.__win_add.show)  # 弹出增加用例窗口
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)  # 删除
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)  # 设置可修改
-        _wid_buttons.sig_search.connect(self.search)  # 查询
+        _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit[dict].connect(self.add)  # 增加用例
         _wid_display.doubleClicked[QModelIndex].connect(self.__case_detail)  # 打开用例详情窗
@@ -156,6 +132,19 @@ class ViewCaseDefMag(QWidget):
         :return:
         """
         self.__model.usr_add(p_data)
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        elif "search" == p_flag:
+            self.search()
+        else:
+            pass
 
     def __case_detail(self, p_index):
 

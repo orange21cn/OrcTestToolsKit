@@ -6,10 +6,10 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelTable
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
-
+from OrcView.Lib.LibViewDef import def_view_case_det
 from OrcView.Data.DataAdd import ViewDataAdd
 
 
@@ -47,29 +47,15 @@ class ViewCaseDetMag(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="step_no", NAME=u"步骤编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=False, ESSENTIAL=True),
-            dict(ID="step_desc", NAME=u"步骤描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
-
         self.__case_id = p_id
 
         # Model
         self.__model = CaseDetModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_case_det)
         self.__model.usr_search({"case_id": self.__case_id})
 
         # Control
-        _control = CaseDetControl(_table_def)
+        _control = CaseDetControl(def_view_case_det)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -87,14 +73,14 @@ class ViewCaseDetMag(QWidget):
         _wid_display.create_context_menu(_menu_def)
 
         # Buttons widget
-        _wid_buttons = ViewButton("VER")
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK")
+        ], "VER")
 
         # win_add
-        self.__win_add = ViewAdd(_table_def)
+        self.__win_add = ViewAdd(def_view_case_det)
 
         # win add data
         self.__win_data = ViewDataAdd()
@@ -109,11 +95,7 @@ class ViewCaseDetMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.__win_add.show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_delete.connect(self.sig_delete.emit)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
-        _wid_buttons.sig_search.connect(self.sig_search.emit)
+        _wid_buttons.sig_clicked.connect(self.__operate)
 
         _wid_display.clicked.connect(self.__selected)
         self.__win_add.sig_submit.connect(self.add)
@@ -125,6 +107,18 @@ class ViewCaseDetMag(QWidget):
 
         _data = {"case_det": {"case_id": self.__case_id}, "step": p_data}
         self.__model.usr_add(_data)
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+            self.sig_delete.emit()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        else:
+            pass
 
     def __selected(self, p_index):
 

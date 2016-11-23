@@ -29,10 +29,4 @@ class StepContainer(QWidget):
         self.setLayout(_layout)
 
         self._wid_step.sig_select.connect(self._wid_item.set_step_id)
-        self._wid_step.sig_search.connect(self.search_definition)
         self._wid_step.sig_delete.connect(self._wid_item.clean)
-
-    def search_definition(self):
-        _cond = self.__wid_search_cond.get_cond()
-        self.__wid_widget_def.search(_cond)
-        self.__wid_widget_det.clean()

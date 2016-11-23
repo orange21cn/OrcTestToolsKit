@@ -1,7 +1,7 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
 
-from OrcView.Lib.LibViewDef import view_data_def
+from OrcView.Lib.LibViewDef import def_view_data
 from OrcView.Lib.LibAdd import ViewAdd
 
 from DataService import DataService
@@ -17,7 +17,7 @@ class ViewDataAdd(ViewAdd):
         """
         :return:
         """
-        ViewAdd.__init__(self, view_data_def)
+        ViewAdd.__init__(self, def_view_data)
 
         self.__service = DataService()
         self.__id = None
