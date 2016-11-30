@@ -7,104 +7,10 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
-from PySide.QtCore import SIGNAL
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibView import create_editor
 from OrcView.Lib.LibTheme import get_theme
-
-
-class ViewButton(QWidget):
-    """
-    Add, remove, modify, search button
-    """
-    sig_add = OrcSignal()
-    sig_delete = OrcSignal()
-    sig_modify = OrcSignal()
-    sig_search = OrcSignal()
-    sig_select = OrcSignal()
-    sig_cancel = OrcSignal()
-
-    def __init__(self, p_style="HOR"):
-
-        QWidget.__init__(self)
-
-        # button is disabled by default
-        self.__is_add = False
-        self.__is_delete = False
-        self.__is_modify = False
-        self.__is_search = False
-        self.__is_select = False
-        self.__is_cancel = False
-
-        # layout set
-        if "HOR" == p_style:
-            self.__layout = QHBoxLayout()
-        else:
-            self.__layout = QVBoxLayout()
-
-        self.__layout.addStretch()
-        self.setLayout(self.__layout)
-
-    def enable_add(self):
-        self.__is_add = True
-
-    def enable_delete(self):
-        self.__is_delete = True
-
-    def enable_modify(self):
-        self.__is_modify = True
-
-    def enable_search(self):
-        self.__is_search = True
-
-    def enable_select(self):
-        self.__is_select = True
-
-    def enable_cancel(self):
-        self.__is_cancel = True
-
-    def create(self):
-        """
-        Create buttons and connect signal
-        :return:
-        """
-        if self.__is_add:
-            btn_add = QPushButton(u"增加")
-            self.__layout.addWidget(btn_add)
-
-            self.connect(btn_add, SIGNAL('clicked()'), self.sig_add.emit)
-
-        if self.__is_delete:
-            btn_delete = QPushButton(u"删除")
-            self.__layout.addWidget(btn_delete)
-
-            self.connect(btn_delete, SIGNAL('clicked()'), self.sig_delete.emit)
-
-        if self.__is_modify:
-            btn_modify = QPushButton(u"修改")
-            btn_modify.setCheckable(True)
-            self.__layout.addWidget(btn_modify)
-
-            self.connect(btn_modify, SIGNAL('clicked()'), self.sig_modify.emit)
-
-        if self.__is_search:
-            btn_search = QPushButton(u"查询")
-            self.__layout.addWidget(btn_search)
-
-            self.connect(btn_search, SIGNAL('clicked()'), self.sig_search.emit)
-
-        if self.__is_select:
-            btn_select = QPushButton(u"选择")
-            self.__layout.addWidget(btn_select)
-
-            self.connect(btn_select, SIGNAL('clicked()'), self.sig_select.emit)
-
-        if self.__is_cancel:
-            btn_cancel = QPushButton(u"取消")
-            self.__layout.addWidget(btn_cancel)
-
-            self.connect(btn_cancel, SIGNAL('clicked()'), self.sig_cancel.emit)
 
 
 class ViewButtons(QWidget):
@@ -215,6 +121,8 @@ class ViewSearch(QWidget):
         # 布局
         self.__layout_srh = QGridLayout()
         self.setLayout(self.__layout_srh)
+
+        self.setStyleSheet(get_theme("Input"))
 
     def set_col_num(self, p_num):
         """

@@ -7,8 +7,9 @@ from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import def_view_window_def
 
-from service import WindowService
+from WindowService import WindowDefService
 
 
 class WindowModel(ModelNewTable):
@@ -17,8 +18,7 @@ class WindowModel(ModelNewTable):
 
         ModelNewTable.__init__(self)
 
-        service = WindowService()
-        self.usr_set_service(service)
+        self.usr_set_service(WindowDefService())
 
 
 class WindowControl(LibControl):
@@ -34,31 +34,17 @@ class ViewWindow(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="window_flag", NAME=u"窗口标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="window_mark", NAME=u"标识控件", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="window_desc", NAME=u"窗口描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=False),
-            dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
-                 SEARCH=False, ADD=True, ESSENTIAL=False),
-            dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False)]
+        self.title = u"窗口"
 
         # Current window id
         self.__window_id = None
 
         # Model
         self.__model = WindowModel()
-        self.__model.usr_set_definition(_table_def)
+        self.__model.usr_set_definition(def_view_window_def)
 
         # Control
-        _control = WindowControl(_table_def)
+        _control = WindowControl(def_view_window_def)
 
         # Data result display window
         _wid_display = ViewTable()
@@ -66,7 +52,7 @@ class ViewWindow(QWidget):
         _wid_display.set_control(_control)
 
         # Search condition
-        self.__wid_search_cond = ViewSearch(_table_def)
+        self.__wid_search_cond = ViewSearch(def_view_window_def)
         self.__wid_search_cond.set_col_num(3)
         self.__wid_search_cond.create()
 

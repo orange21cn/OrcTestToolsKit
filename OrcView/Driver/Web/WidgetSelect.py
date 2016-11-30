@@ -4,29 +4,22 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibTree import ModelTree
+from OrcView.Lib.LibTree import ModelNewTree
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_widget_def
 
+from WidgetService import WidgetDefService
 
-class WidgetSelectModel(ModelTree):
+
+class WidgetSelectModel(ModelNewTree):
 
     def __init__(self):
 
-        ModelTree.__init__(self)
+        ModelNewTree.__init__(self)
 
-        i_base_url = 'http://localhost:5000/WidgetDef'
-        _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url,
-            'usr_get_path': '%s/usr_get_path' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        self.usr_set_service(WidgetDefService())
 
 
 class WidgetSelectControl(LibControl):

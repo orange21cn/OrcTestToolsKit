@@ -1,7 +1,7 @@
 import traceback
 import unittest
 
-from OrcApi.Batch.BatchDefModel import BatchDefModel
+from OrcApi.Batch.BatchDefMod import BatchDefMod
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
@@ -19,7 +19,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
         ttt = TabCaseDef()
         ttt.id = '2'
         i = test._get_root(ttt)
@@ -34,7 +34,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
         ttt = TabCaseDef()
         ttt.id = '1'
         i = test._get_tree(ttt)
@@ -50,7 +50,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
         for i in test.usr_search():
             OrcTest.test_print_result(i.to_json())
@@ -64,7 +64,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
         for i in test.usr_search({'id': '1001000000000003'}):
             OrcTest.test_print_result(i.to_json())
@@ -78,7 +78,7 @@ class TestUserAdd(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
         i = test.usr_add({'batch_name': '1', 'batch_desc': '2'})
         OrcTest.test_print_result(i)
@@ -92,9 +92,9 @@ class TestModify(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
-        test.usr_modify({'id': '1001000000000003', 'pid': '1001000000000001'})
+        test.usr_update({'id': '1001000000000003', 'pid': '1001000000000001'})
 
         OrcTest.test_print_end()
 
@@ -105,7 +105,7 @@ class TestDelete(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
         test.usr_delete({"list": ['1001000000000007']})
 
@@ -137,7 +137,7 @@ class TestBatchDef(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = BatchDefModel()
+        test = BatchDefMod()
 
         _res = test.usr_get_path("1001000000000003")
 

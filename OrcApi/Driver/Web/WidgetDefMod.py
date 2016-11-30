@@ -6,10 +6,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Driver.Web.WidgetDetModel import WidgetDetModel
+from OrcApi.Driver.Web.WidgetDetMod import WidgetDetMod
 
 
-class WidgetDefModel:
+class WidgetDefMod:
     """
     Test data management
     """
@@ -17,7 +17,7 @@ class WidgetDefModel:
 
     def __init__(self):
 
-        self.child = WidgetDetModel()
+        self.child = WidgetDetMod()
 
     def usr_search(self, p_filter=None):
         """
@@ -182,46 +182,42 @@ class WidgetDefModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                self.__del_tree(t_id)
-
+        self.__session.query(WebWidgetDef).filter(WebWidgetDef.id == p_id).delete()
         self.__session.commit()
 
-    def __del_tree(self, p_id):
-
-        def _del(_id):
-            """
-            Delete widget detail
-            :param _id:
-            :return:
-            """
-            _widget_det_list = self.child.usr_search({"widget_id": _id})
-            _widget_det_ids = dict(list=list(value.id for value in _widget_det_list))
-
-            self.child.usr_delete(_widget_det_ids)
-
-        try:
-            # Delete children
-            _list = self.__session.query(WebWidgetDef.id).filter(WebWidgetDef.pid == p_id).all()
-
-            for t_id in _list:
-                _del(t_id)  # Delete widget detail
-                self.__del_tree(t_id)  # Delete widget definition
-
-            # Delete current item
-            _del(p_id)  # Delete detail
-            self.__session \
-                .query(WebWidgetDef) \
-                .filter(WebWidgetDef.id == p_id) \
-                .delete()  # Delete widget definition
-
-        except Exception:
-            # Todo
-            self.__session.rollback()
+    # def __del_tree(self, p_id):
+    #
+    #     def _del(_id):
+    #         """
+    #         Delete widget detail
+    #         :param _id:
+    #         :return:
+    #         """
+    #         _widget_det_list = self.child.usr_search({"widget_id": _id})
+    #         _widget_det_ids = dict(list=list(value.id for value in _widget_det_list))
+    #
+    #         self.child.usr_delete(_widget_det_ids)
+    #
+    #     try:
+    #         # Delete children
+    #         _list = self.__session.query(WebWidgetDef.id).filter(WebWidgetDef.pid == p_id).all()
+    #
+    #         for t_id in _list:
+    #             _del(t_id)  # Delete widget detail
+    #             self.__del_tree(t_id)  # Delete widget definition
+    #
+    #         # Delete current item
+    #         _del(p_id)  # Delete detail
+    #         self.__session \
+    #             .query(WebWidgetDef) \
+    #             .filter(WebWidgetDef.id == p_id) \
+    #             .delete()  # Delete widget definition
+    #
+    #     except Exception:
+    #         # Todo
+    #         self.__session.rollback()
 
     def usr_get_path(self, p_id):
 

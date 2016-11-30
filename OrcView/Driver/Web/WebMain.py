@@ -19,7 +19,7 @@ from OrcView.Lib.LibView import SelectWidgetOperation
 from OrcView.Lib.LibDict import LibDict
 from OrcView.Lib.LibTheme import get_theme
 
-from service import WebMainService
+from WebService import WebMainService
 
 
 class ViewWebMain(QWidget):
@@ -44,9 +44,9 @@ class ViewWebMain(QWidget):
 
         # 页面 tab
         _tab = QTabWidget()
-        _tab.addTab(_page, "Page")
-        _tab.addTab(_window, "Window")
-        _tab.addTab(_widget, "Widget")
+        _tab.addTab(_page, _page.title)
+        _tab.addTab(_window, _window.title)
+        _tab.addTab(_widget, _widget.title)
 
         _tab.setTabPosition(QTabWidget.West)
         _tab.setStyleSheet(get_theme("TabViewWeb"))
@@ -136,6 +136,7 @@ class WidgetTest(QWidget):
         _layout_button = QHBoxLayout()
 
         self.__btn_exec = QPushButton(u"执行")
+        self.__btn_exec.setStyleSheet(get_theme("Buttons"))
 
         _layout_button.addStretch()
         _layout_button.addWidget(self.__btn_exec)
@@ -147,6 +148,8 @@ class WidgetTest(QWidget):
         _layout.addLayout(_layout_button)
 
         self.setLayout(_layout)
+
+        self.setStyleSheet(get_theme("Input"))
 
         self.__widget_ope.currentIndexChanged.connect(self.__set_operation)
         self.__widget_data.textChanged.connect(self.__set_data)

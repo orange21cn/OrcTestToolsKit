@@ -7,10 +7,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabCaseDet
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Case.StepDefModel import StepDefModel
+from OrcApi.Case.StepDefMod import StepDefMod
 
 
-class CaseDetModel():
+class CaseDetMod():
     """
     Test data management
     """
@@ -18,7 +18,7 @@ class CaseDetModel():
 
     def __init__(self):
 
-        self.__step = StepDefModel()
+        self.__step = StepDefMod()
 
     def usr_search(self, p_filter=None):
         """
@@ -68,7 +68,7 @@ class CaseDetModel():
 
         self.__session.commit()
 
-        return {u'id': str(_case_id)}
+        return _node
 
     def usr_update(self, p_cond):
 
@@ -83,28 +83,9 @@ class CaseDetModel():
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        def _del(_id):
-            """
-            Delete widget detail
-            :param _id:
-            :return:
-            """
-            # Delete it from step
-            _step_list = self.usr_search({"id": _id})
-            _step_ids = dict(list=list(value.step_id for value in _step_list))
-
-            self.__step.usr_delete(_step_ids)
-
-        for t_id in p_list:
-
-            # Delete step definition
-            _del(t_id)
-
-            # Delete case detail
-            self.__session.query(TabCaseDet).filter(TabCaseDet.id == t_id).delete()
-
+        self.__session.query(TabCaseDet).filter(TabCaseDet.id == p_id).delete()
         self.__session.commit()
 
     def usr_list_search(self, p_id_list):

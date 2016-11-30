@@ -1,8 +1,0 @@
-[2016-09-11 20:45:35 view.test01] INFO This 001!
-[2016-09-11 20:45:35 view.test01] WARNING This 002!
-[2016-09-11 20:45:35 view.test01] ERROR This 003!
-[2016-09-11 20:45:35 view.test01] ERROR None
-
-[2016-09-11 20:45:35 view.test01] CRITICAL This 004!
-[2016-09-11 20:45:35 view.test01] CRITICAL None
-

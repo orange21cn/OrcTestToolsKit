@@ -1,10 +1,10 @@
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcHttpNewResource
 
 
 class DataService:
 
     def __init__(self):
-        self.__resource_data = OrcHttpResource("Data")
+        self.__resource_data = OrcHttpNewResource("Data")
 
     def usr_add(self, p_data):
         return self.__resource_data.post(p_data)

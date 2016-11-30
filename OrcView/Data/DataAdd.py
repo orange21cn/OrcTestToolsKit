@@ -24,11 +24,6 @@ class ViewDataAdd(ViewAdd):
 
         self.sig_submit.connect(self.__save)
 
-        self.widgets["data_flag"]["WIDGET"].clicked.connect(self.test)
-
-    def test(self):
-        print 'OK'
-
     def set_type(self, p_type):
 
         self.set_data("src_type", p_type)

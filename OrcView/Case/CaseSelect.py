@@ -7,23 +7,20 @@ from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibTree import ModelTree
+from OrcView.Lib.LibTree import ModelNewTree
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_case_def
 
+from CaseService import CaseDefService
 
-class CaseSelModel(ModelTree):
+
+class CaseSelModel(ModelNewTree):
 
     def __init__(self):
 
-        ModelTree.__init__(self)
+        ModelNewTree.__init__(self)
 
-        i_base_url = 'http://localhost:5000/CaseDef'
-        _interface = {
-            'usr_search': '%s/usr_search' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        self.usr_set_service(CaseDefService())
 
 
 class CaseSelControl(LibControl):

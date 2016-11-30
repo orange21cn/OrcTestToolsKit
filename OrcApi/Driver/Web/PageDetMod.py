@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class PageDetModel():
+class PageDetMod():
     """
     Test data management
     """
@@ -24,7 +24,7 @@ class PageDetModel():
         :return:
         """
         # search
-
+        print p_filter
         def f_value(p_flag):
             return "%%%s%%" % p_filter[p_flag]
 
@@ -105,16 +105,7 @@ class PageDetModel():
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                try:
-                    # Delete current item
-                    self.__session.query(WebPageDet).filter(WebPageDet.id == t_id).delete()
-                except Exception:
-                    # Todo
-                    self.__session.rollback()
-
+        self.__session.query(WebPageDet).filter(WebPageDet.id == p_id).delete()
         self.__session.commit()

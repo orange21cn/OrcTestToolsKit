@@ -1,7 +1,7 @@
 import traceback
 import unittest
 
-from OrcApi.Driver.Web.WidgetDefModel import WidgetDefModel
+from OrcApi.Driver.Web.WidgetDefMod import WidgetDefMod
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
 
@@ -17,7 +17,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search({"id": "3200000001"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
@@ -31,7 +31,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search({"id": "3200000004"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
@@ -45,7 +45,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search_all({"id": "3200000001"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
@@ -59,7 +59,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search_all({"id": "3200000004"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
@@ -73,7 +73,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search_path("3200000003")
         for i in _res:
             OrcTest.test_print_result(i.to_json())
@@ -87,7 +87,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_search_path("3200000004")
         for i in _res:
             OrcTest.test_print_result(i)
@@ -101,7 +101,7 @@ class TestSearch(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WidgetDefModel()
+        _handle = WidgetDefMod()
         _res = _handle.usr_get_path("120300000000005")
         OrcTest.test_print_result(_res)
 

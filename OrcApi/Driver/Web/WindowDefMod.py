@@ -7,7 +7,7 @@ from OrcLib.LibDatabase import orc_db
 from OrcLib.LibLog import OrcLog
 
 
-class WindowDefModel:
+class WindowDefMod:
     """
     Test data management
     """
@@ -96,18 +96,11 @@ class WindowDefModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_ids):
+    def usr_delete(self, p_id):
         """
         Delete
-        :param p_ids: [IDs] or ID
+        :param p_id:
         :return:
         """
-        if isinstance(p_ids, int):
-            self.__session.query(WebWindowDef).filter(WebWindowDef.id == p_ids).delete()
-        elif isinstance(p_ids, list):
-            for t_id in p_ids:
-                self.__session.query(WebWindowDef).filter(WebWindowDef.id == t_id).delete()
-        else:
-            pass
-
+        self.__session.query(WebWindowDef).filter(WebWindowDef.id == p_id).delete()
         self.__session.commit()

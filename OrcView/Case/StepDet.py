@@ -10,8 +10,8 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QGridLayout
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelTable
-from OrcView.Lib.LibSearch import ViewButton
+from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibView import OrcSelect
@@ -21,23 +21,15 @@ from OrcView.Lib.LibViewDef import def_view_step
 from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
+from StepService import StepService
 
 
-class StepDetModel(ModelTable):
+class StepDetModel(ModelNewTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self)
-
-        i_base_url = 'http://localhost:5000/StepDet'
-        _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        ModelNewTable.__init__(self)
+        self.usr_set_service(StepService())
 
 
 class StepDetControl(LibControl):
@@ -77,11 +69,11 @@ class ViewStepDetMag(QWidget):
         _wid_display.create_context_menu(_menu_def)
 
         # Buttons widget
-        _wid_buttons = ViewButton("VER")
-        _wid_buttons.enable_add()
-        _wid_buttons.enable_delete()
-        _wid_buttons.enable_modify()
-        _wid_buttons.create()
+        _wid_buttons = ViewButtons([
+            dict(id="add", name=u"增加"),
+            dict(id="delete", name=u"删除"),
+            dict(id="update", name=u"修改", type="CHECK")
+        ], "VER")
 
         # win_add
         self.__win_add = ViewAdd(def_view_step)
@@ -101,9 +93,7 @@ class ViewStepDetMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_add.connect(self.add_show)
-        _wid_buttons.sig_delete.connect(self.__model.usr_delete)
-        _wid_buttons.sig_modify.connect(self.__model.usr_editable)
+        _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit.connect(self.add)
 
@@ -126,6 +116,17 @@ class ViewStepDetMag(QWidget):
     def clean(self):
         self.__step_id = None
         self.__model.usr_clean()
+
+    def __operate(self, p_flag):
+
+        if "add" == p_flag:
+            self.__win_add.show()
+        elif "delete" == p_flag:
+            self.__model.usr_delete()
+        elif "update" == p_flag:
+            self.__model.usr_editable()
+        else:
+            pass
 
     def __context(self, p_flag):
 

@@ -10,7 +10,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class ItemModel:
+class ItemMod:
     """
     Test data management
     """
@@ -27,7 +27,10 @@ class ItemModel:
         _res = self.__session.query(TabItem)
 
         if 'id' in p_filter:
-            _res = _res.filter(TabItem.id == p_filter['id'])
+            if isinstance(p_filter["id"], list):
+                _res = _res.filter(TabItem.id.in_(p_filter['id']))
+            else:
+                _res = _res.filter(TabItem.id == p_filter['id'])
 
         return _res.all()
 
@@ -111,20 +114,9 @@ class ItemModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-
-                try:
-                    # Delete current item
-                    self.__session.query(TabItem).filter(TabItem.id == t_id).delete()
-
-                except Exception:
-                    # Todo
-                    self.__session.rollback()
-
+        self.__session.query(TabItem).filter(TabItem.id == p_id).delete()
         self.__session.commit()
 
 

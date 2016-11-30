@@ -32,7 +32,7 @@ class DriverAPI(Resource):
 
         rtn.set_data(value)
 
-        return rtn.get_message()
+        return rtn.rtn()
 
     def post(self):
         """
@@ -49,9 +49,9 @@ class DriverAPI(Resource):
 
         rtn.set_data(value)
 
-        self.__logger.debug("result: %s" % rtn.get_message())
+        self.__logger.debug("result: %s" % rtn.rtn())
 
-        return rtn.get_message()
+        return rtn.rtn()
 
     def get(self):
         """
@@ -64,4 +64,4 @@ class DriverAPI(Resource):
 
         _return.set_data(_value)
 
-        return _return.get_message()
+        return _return.rtn()

@@ -8,6 +8,7 @@ from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibTree import ModelNewTree
 from OrcView.Lib.LibControl import LibControl
+from OrcView.Lib.LibViewDef import def_view_run_def
 from RunDefService import RunDefService
 
 
@@ -34,11 +35,9 @@ class ViewRunDef(QWidget):
     sig_selected = OrcSignal(str)
     sig_run = OrcSignal()
 
-    def __init__(self, p_def):
+    def __init__(self):
 
         QWidget.__init__(self)
-
-        self.__table_def = p_def
 
         self.title = u"执行列表"
         self.__service = RunDefService()
@@ -46,10 +45,10 @@ class ViewRunDef(QWidget):
 
         # Model
         self.__model = RunDefModel()
-        self.__model.usr_set_definition(self.__table_def)
+        self.__model.usr_set_definition(def_view_run_def)
 
         # Control
-        _control = RunDefControl(self.__table_def)
+        _control = RunDefControl(def_view_run_def)
 
         # Data result display widget
         _wid_display = ViewTree()

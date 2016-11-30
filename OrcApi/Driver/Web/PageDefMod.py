@@ -8,10 +8,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebPageDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Driver.Web.PageDetModel import PageDetModel
+from OrcApi.Driver.Web.PageDetMod import PageDetMod
 
 
-class PageDefModel:
+class PageDefMod:
     """
     Test data management
     """
@@ -19,7 +19,7 @@ class PageDefModel:
 
     def __init__(self):
 
-        self.child = PageDetModel()
+        self.child = PageDetMod()
 
     def usr_search(self, p_filter=None):
         """
@@ -103,25 +103,7 @@ class PageDefModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-
-                _page_det_list = self.child.usr_search({"page_id": t_id})
-                _page_det_ids = dict(list=list(value.id for value in _page_det_list))
-
-                self.child.usr_delete(_page_det_ids)
-
-                try:
-                    # Delete current item
-                    self.__session\
-                        .query(WebPageDef)\
-                        .filter(WebPageDef.id == t_id)\
-                        .delete()
-                except Exception:
-                    # Todo
-                    self.__session.rollback()
-
+        self.__session.query(WebPageDef).filter(WebPageDef.id == p_id).delete()
         self.__session.commit()

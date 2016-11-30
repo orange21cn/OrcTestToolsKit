@@ -6,9 +6,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabBatchDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
+from OrcLib.LibLog import OrcLog
 
 
-class BatchDefModel(TabBatchDef):
+class BatchDefMod(TabBatchDef):
     """
     Test data management
     """
@@ -17,6 +18,8 @@ class BatchDefModel(TabBatchDef):
     def __init__(self):
 
         TabBatchDef.__init__(self)
+
+        self.__logger = OrcLog("api.batch.mod.batch_def")
 
     def usr_get_value(self, p_id):
 
@@ -95,7 +98,7 @@ class BatchDefModel(TabBatchDef):
         获取路径至根节点
         :return:
         """
-        batch_data = self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_id).first()
+        batch_data = self.__session.query(TabBatchDef).filter(TabBatchDef.id == p_id).first()
 
         batch_no = batch_data.case_no if batch_data else None
         batch_pid = batch_data.pid if batch_data else None
@@ -170,7 +173,7 @@ class BatchDefModel(TabBatchDef):
         except:
             raise OrcDatabaseException
 
-        return {u'id': str(_node.id)}
+        return _node.to_json()
 
     def __create_no(self):
         """
@@ -185,7 +188,7 @@ class BatchDefModel(TabBatchDef):
         else:
             return _no
 
-    def usr_modify(self, p_cond):
+    def usr_update(self, p_cond):
 
         for t_id in p_cond:
 
@@ -198,28 +201,14 @@ class BatchDefModel(TabBatchDef):
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
-
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                self._del_tree(t_id)
-
+    def usr_delete(self, p_id):
+        """
+        删除
+        :param p_id:
+        :return:
+        """
+        self.__session.query(TabBatchDef).filter(TabBatchDef.id == p_id).delete()
         self.__session.commit()
-
-    def _del_tree(self, p_id):
-
-        try:
-            # Delete child
-            _list = self.__session.query(TabBatchDef).filter(TabBatchDef.pid == p_id)
-            for t_item in _list:
-                self._del_tree(t_item.id)
-
-            # Delete current item
-            self.__session.query(TabBatchDef).filter(TabBatchDef.id == p_id).delete()
-        except Exception:
-            # Todo
-            self.__session.rollback()
 
     def usr_get_path(self, p_id):
 

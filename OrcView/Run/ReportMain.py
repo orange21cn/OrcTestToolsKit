@@ -5,6 +5,7 @@ from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Run.RunDef import ViewRunDef
+from OrcView.Lib.LibViewDef import def_view_run_def
 from ReportDet import ViewReportDet
 
 
@@ -14,26 +15,16 @@ class ViewReportMain(QWidget):
 
         QWidget.__init__(self)
 
-        _table_def_definition = [
-            dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
-                 SEARCH=False, ADD=False, ESSENTIAL=False),
-            dict(ID="run_flag", NAME=u"名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True),
-            dict(ID="run_def_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
-                 SEARCH=True, ADD=True, ESSENTIAL=True)]
-
         self.title = u"执行"
 
         # View RunDef
-        self.__wid_run_def = ViewRunDef(_table_def_definition)
+        self.__wid_run_def = ViewRunDef()
 
         # View ReportDet
         self.__wid_report_det = ViewReportDet()
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(_table_def_definition)
+        self.__wid_search_cond = ViewSearch(def_view_run_def)
         self.__wid_search_cond.create()
 
         # 底部 layout

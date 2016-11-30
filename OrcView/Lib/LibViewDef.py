@@ -184,3 +184,43 @@ def_view_widget_det = [
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_window_def = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="window_flag", NAME=u"窗口标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="window_mark", NAME=u"标识控件", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="window_desc", NAME=u"窗口描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=False),
+    dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
+         SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_run_def = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="run_flag", NAME=u"名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="run_def_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True)]
+
+def_view_run_det = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="flag", NAME=u"名称", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="run_det_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="desc", NAME=u"描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
+    dict(ID="status", NAME=u"状态", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True)]

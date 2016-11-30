@@ -5,29 +5,23 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_case_det
 from OrcView.Data.DataAdd import ViewDataAdd
 
+from CaseService import CaseDetService
 
-class CaseDetModel(ModelTable):
+
+class CaseDetModel(ModelNewTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self)
+        ModelNewTable.__init__(self)
 
-        i_base_url = 'http://localhost:5000/CaseDet'
-        _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        self.usr_set_service(CaseDetService())
 
 
 class CaseDetControl(LibControl):
@@ -63,7 +57,7 @@ class ViewCaseDetMag(QWidget):
         _wid_display.set_control(_control)
 
         # 界面列宽自适应
-        _wid_display.resizeColumnsToContents()
+        # _wid_display.resizeColumnsToContents()
 
         # Context menu
         _menu_def = [dict(NAME=u"增加", STR="sig_add"),
@@ -105,7 +99,8 @@ class ViewCaseDetMag(QWidget):
 
     def add(self, p_data):
 
-        _data = {"case_det": {"case_id": self.__case_id}, "step": p_data}
+        _data = dict(case_det={"case_id": self.__case_id},
+                     step=p_data)
         self.__model.usr_add(_data)
 
     def __operate(self, p_flag):

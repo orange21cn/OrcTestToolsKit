@@ -10,7 +10,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class WidgetDetModel():
+class WidgetDetMod:
     """
     Test data management
     """
@@ -114,17 +114,7 @@ class WidgetDetModel():
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                 try:
-                    # Delete current item
-                    self.__session.query(WebWidgetDet).filter(WebWidgetDet.id == t_id).delete()
-                 except Exception:
-                    # Todo
-                    self.__session.rollback()
-
+        self.__session.query(WebWidgetDet).filter(WebWidgetDet.id == p_id).delete()
         self.__session.commit()
-

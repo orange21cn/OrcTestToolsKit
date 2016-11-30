@@ -10,6 +10,8 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
 from OrcLib.LibCommon import is_null
+from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibView import create_editor
 
 
@@ -55,22 +57,20 @@ class ViewAdd(QWidget):
             _lay_inputs.addWidget(_label, _index, 0)
             _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
 
-        btn_submit = QPushButton(u"提交")
-        btn_cancel = QPushButton(u"取消")
-
-        lay_button = QHBoxLayout()
-        lay_button.addStretch()
-        lay_button.addWidget(btn_submit)
-        lay_button.addWidget(btn_cancel)
+        buttuns = ViewButtons([
+            dict(id="submit", name=u"提交"),
+            dict(id="cancel", name=u"取消")
+        ])
 
         lay_main = QVBoxLayout()
         lay_main.addLayout(_lay_inputs)
-        lay_main.addLayout(lay_button)
+        lay_main.addWidget(buttuns)
 
         self.setLayout(lay_main)
 
-        self.connect(btn_cancel, SIGNAL('clicked()'), self.close)
-        self.connect(btn_submit, SIGNAL('clicked()'), self.__submit)
+        buttuns.sig_clicked.connect(self.__operate)
+
+        self.setStyleSheet(get_theme("Input"))
 
     def set_data(self, p_id, p_data):
         """
@@ -98,6 +98,15 @@ class ViewAdd(QWidget):
         """
         self.widgets[p_id]["WIDGET"].setEnabled(p_status)
 
+    def __operate(self, p_flag):
+
+        if "submit" == p_flag:
+            self.__submit()
+        elif "cancel" == p_flag:
+            self.close()
+        else:
+            pass
+
     def __submit(self):
 
         _res = dict()
@@ -111,6 +120,7 @@ class ViewAdd(QWidget):
 
                 _message = u"%s不可以为空" % self.widgets[t_id]["NAME"]
                 _msg_box = QMessageBox(QMessageBox.Warning, "Alert", _message)
+                _msg_box.setStyleSheet(get_theme("Buttons"))
                 _msg_box.exec_()
 
                 return

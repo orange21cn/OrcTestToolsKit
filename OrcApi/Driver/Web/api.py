@@ -3,11 +3,11 @@ from OrcLib.LibNet import OrcReturn
 from OrcLib.LibNet import allow_cross_domain
 from OrcLib.LibNet import orc_get_parameter
 from OrcLib.LibLog import OrcLog
-from OrcApi.Driver.Web.PageDefModel import PageDefModel
-from OrcApi.Driver.Web.PageDetModel import PageDetModel
-from OrcApi.Driver.Web.WidgetDefModel import WidgetDefModel
-from OrcApi.Driver.Web.WidgetDetModel import WidgetDetModel
-from OrcApi.Driver.Web.WindowDefModel import WindowDefModel
+from OrcApi.Driver.Web.PageDefMod import PageDefMod
+from OrcApi.Driver.Web.PageDetMod import PageDetMod
+from OrcApi.Driver.Web.WidgetDefMod import WidgetDefMod
+from OrcApi.Driver.Web.WidgetDetMod import WidgetDetMod
+from OrcApi.Driver.Web.WindowDefMod import WindowDefMod
 from OrcApi import app
 
 
@@ -25,7 +25,7 @@ def page_def_get_flag():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDefModel()
+    _model = PageDefMod()
     _value = _model.usr_search(_parameter)
 
     if 0 < len(_value):
@@ -48,7 +48,7 @@ def page_def_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDefModel()
+    _model = PageDefMod()
     _value = _model.usr_add(_parameter)
 
     _return.set_str_result(_value)
@@ -66,7 +66,7 @@ def page_def_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDefModel()
+    _model = PageDefMod()
     _value = _model.usr_delete(_parameter)
 
     # 查询控件定义
@@ -88,7 +88,7 @@ def page_def_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDefModel()
+    _model = PageDefMod()
     _value = _model.usr_update(_parameter)
 
     _return.set_db_result(_value)
@@ -106,7 +106,7 @@ def page_def_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDefModel()
+    _model = PageDefMod()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -125,7 +125,7 @@ def page_det_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDetModel()
+    _model = PageDetMod()
     _value = _model.usr_add(_parameter)
 
     _return.set_str_result(_value)
@@ -143,7 +143,7 @@ def page_det_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDetModel()
+    _model = PageDetMod()
     _value = _model.usr_delete(_parameter)
 
     _return.set_db_result(_value)
@@ -161,7 +161,7 @@ def page_det_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDetModel()
+    _model = PageDetMod()
     _value = _model.usr_update(_parameter)
 
     _return.set_db_result(_value)
@@ -179,7 +179,7 @@ def page_det_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = PageDetModel()
+    _model = PageDetMod()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -198,7 +198,7 @@ def widget_def_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -216,7 +216,7 @@ def widget_def_search_all():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_search_all(_parameter)
 
     _return.set_db_result(_value)
@@ -234,7 +234,7 @@ def widget_def_search_tree():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_search_path(_parameter["id"])
 
     _return.set_db_result(_value)
@@ -252,7 +252,7 @@ def widget_def_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_add(_parameter)
     _return.set_str_result(_value)
 
@@ -269,7 +269,7 @@ def widget_def_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_delete(_parameter)
     _return.set_str_result(_value)
 
@@ -286,7 +286,7 @@ def widget_def_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _value = _model.usr_update(_parameter)
     _return.set_str_result(_value)
 
@@ -303,7 +303,7 @@ def widget_def_get_path():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDefModel()
+    _model = WidgetDefMod()
     _path = []
 
     if isinstance(_parameter, list):
@@ -330,7 +330,7 @@ def widget_det_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDetModel()
+    _model = WidgetDetMod()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -348,7 +348,7 @@ def widget_det_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDetModel()
+    _model = WidgetDetMod()
     _value = _model.usr_add(_parameter)
 
     _return.set_str_result(_value)
@@ -366,7 +366,7 @@ def widget_det_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDetModel()
+    _model = WidgetDetMod()
     _value = _model.usr_delete(_parameter)
 
     _return.set_str_result(_value)
@@ -384,7 +384,7 @@ def widget_det_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WidgetDetModel()
+    _model = WidgetDetMod()
     _value = _model.usr_update(_parameter)
     _return.set_str_result(_value)
 
@@ -402,7 +402,7 @@ def window_def_search():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WindowDefModel()
+    _model = WindowDefMod()
     _value = _model.usr_search(_parameter)
 
     _return.set_db_result(_value)
@@ -420,7 +420,7 @@ def window_def_add():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WindowDefModel()
+    _model = WindowDefMod()
     _value = _model.usr_add(_parameter)
 
     _return.set_db_result(_value)
@@ -438,7 +438,7 @@ def window_def_modify():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WindowDefModel()
+    _model = WindowDefMod()
     _value = _model.usr_update(_parameter)
 
     _return.set_db_result(_value)
@@ -456,7 +456,7 @@ def window_def_delete():
     _parameter = orc_get_parameter()
     _return = OrcReturn()
 
-    _model = WindowDefModel()
+    _model = WindowDefMod()
     _value = _model.usr_delete(_parameter)
 
     _return.set_db_result(_value)

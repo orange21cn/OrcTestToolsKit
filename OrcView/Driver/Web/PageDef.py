@@ -7,26 +7,20 @@ from PySide.QtCore import Signal as OrcSignal
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_page_def
 
+from PageService import PageDefService
 
-class PageDefModel(ModelTable):
+
+class PageDefModel(ModelNewTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self)
+        ModelNewTable.__init__(self)
 
-        i_base_url = 'http://localhost:5000/PageDef'
-        _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        self.usr_set_service(PageDefService())
 
 
 class PageDefControl(LibControl):

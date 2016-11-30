@@ -2,9 +2,9 @@ from flask_restful import Resource
 from flask import request
 
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import orc_get_parameter
-from OrcLib.LibNet import OrcResult
-from WindowDefModel import WindowDefModel
+from OrcLib.LibNet import OrcParameter
+
+from WindowBus import WindowDefBus
 
 
 class WindowListAPI(Resource):
@@ -12,38 +12,34 @@ class WindowListAPI(Resource):
     def __init__(self):
 
         self.__logger = OrcLog("api.driver.web.windows")
-        self.__model = WindowDefModel()
+        self.__business = WindowDefBus()
 
     def dispatch_request(self, *args, **kwargs):
         return super(Resource, self).dispatch_request()
 
-    def get(self):
+    def post(self):
         """
-        Search
+        Add
         :return:
         """
-        _parameter = orc_get_parameter()
-        _return = OrcResult()
-
-        _value = self.__model.usr_search(_parameter)
-
-        _return.set_data(_value)
-
-        return _return.get_message()
+        parameter = OrcParameter.receive_para()
+        return self.__business.bus_list_add(parameter)
 
     def delete(self):
         """
         Delete
         :return:
         """
-        _parameter = orc_get_parameter()
-        _return = OrcResult()
+        parameter = OrcParameter.receive_para()
+        return self.__business.bus_list_delete(parameter)
 
-        _value = self.__model.usr_delete(_parameter)
-
-        _return.set_data(_value)
-
-        return _return.get_message()
+    def get(self):
+        """
+        Search
+        :return:
+        """
+        parameter = OrcParameter.receive_para()
+        return self.__business.bus_list_search(parameter)
 
 
 class WindowAPI(Resource):
@@ -51,7 +47,7 @@ class WindowAPI(Resource):
     def __init__(self):
 
         self.__logger = OrcLog("api.driver.web.window")
-        self.__model = WindowDefModel()
+        self.__business = WindowDefBus()
 
     def dispatch_request(self, *args, **kwargs):
 
@@ -62,39 +58,13 @@ class WindowAPI(Resource):
 
         return _method(*args, **kwargs)
 
-    def get(self, p_id):
+    def delete(self, p_id):
         """
-        Search
+        Delete
         :param p_id:
         :return:
         """
-        _parameter = dict(id=p_id)
-        _return = OrcResult()
-
-        _value = self.__model.usr_search(_parameter)
-
-        if _value:
-            _return.set_data(_value[0])
-        else:
-            _return.set_data(None)
-
-        return _return.get_message()
-
-    def post(self, p_id):
-        """
-        Add
-        :param p_id:
-        :return:
-        """
-        _parameter = orc_get_parameter()
-        _parameter["id"] = p_id
-        _return = OrcResult()
-
-        _value = self.__model.usr_add(_parameter)
-
-        _return.set_data(str(_value))
-
-        return _return.get_message()
+        return self.__business.bus_delete(p_id)
 
     def put(self, p_id):
         """
@@ -102,27 +72,13 @@ class WindowAPI(Resource):
         :param p_id:
         :return:
         """
-        _parameter = orc_get_parameter()
-        _parameter["id"] = p_id
-        _return = OrcResult()
+        parameter = OrcParameter.receive_para()
+        return self.__business.bus_update(p_id, parameter)
 
-        _value = self.__model.usr_update(_parameter)
-
-        _return.set_data(_value)
-
-        return _return.get_message()
-
-    def delete(self, p_id):
+    def get(self, p_id):
         """
-        Delete
+        Search
         :param p_id:
         :return:
         """
-        _parameter = p_id
-        _return = OrcResult()
-
-        _value = self.__model.usr_delete(_parameter)
-
-        _return.set_data(_value)
-
-        return _return.get_message()
+        return self.__business.bus_search(p_id)

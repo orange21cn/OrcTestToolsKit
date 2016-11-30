@@ -19,7 +19,7 @@ class WidgetContainer(QWidget):
 
         QWidget.__init__(self)
 
-        self.title = u"控件管理"
+        self.title = u"控件"
 
         # Search condition widget
         self.__wid_search_cond = ViewSearch(def_view_widget_def)

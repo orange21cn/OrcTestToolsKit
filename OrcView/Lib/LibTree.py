@@ -717,22 +717,15 @@ class ModelNewTree(QAbstractItemModel):
 
     def usr_delete(self):
 
-        _list = dict(list=[])
+        del_list = [self.usr_get_node(_index).content['id'] for _index in self.__state_check]
+        self.__service.usr_delete(del_list)
 
-        for t_index in self.__state_check:
-            _list["list"].append(self.usr_get_node(t_index).content['id'])
+        # 清空选取 list
+        while self.__state_check:
+            self.__state_check.pop()
 
-        try:
-            self.__service.usr_delete(_list)
-
-            while self.__state_check:
-                self.__state_check.pop()
-
-            self.usr_refresh()
-
-        except Exception:
-            # Todo
-            pass
+        # 重置界面
+        self.usr_refresh()
 
     def usr_editable(self):
 

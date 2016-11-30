@@ -9,7 +9,7 @@ QHeaderView {
 QHeaderView::section:horizontal {
     background: #F9F9F9;
     border: 1px solid #DDD;
-    border-width: 0 1px 1px 0;
+    border-width: 0 0 1px 0;
     padding-top: 6px;
     padding-bottom: 6px;
     font-size: 12px;
@@ -24,7 +24,6 @@ QTreeView::item {
     padding-bottom: 3px;
     background: white;
     border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
 }
 
 QTreeView::item:selected {

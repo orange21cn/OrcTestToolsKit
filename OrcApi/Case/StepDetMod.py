@@ -6,10 +6,10 @@ from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabStepDet
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Case.ItemModel import ItemModel
+from OrcApi.Case.ItemMod import ItemMod
 
 
-class StepDetModel():
+class StepDetMod():
     """
     Test data management
     """
@@ -17,7 +17,7 @@ class StepDetModel():
 
     def __init__(self):
 
-        self.__item = ItemModel()
+        self.__item = ItemMod()
 
     def usr_search(self, p_filter=None):
         """
@@ -27,7 +27,10 @@ class StepDetModel():
         _res = self.__session.query(TabStepDet)
 
         if 'id' in p_filter:
-            _res = _res.filter(TabStepDet.id == p_filter['id'])
+            if isinstance(p_filter["id"], list):
+                _res = _res.filter(TabStepDet.id.in_(p_filter['id']))
+            else:
+                _res = _res.filter(TabStepDet.id == p_filter['id'])
 
         if 'step_id' in p_filter:
             _res = _res.filter(TabStepDet.step_id == p_filter['step_id'])
@@ -67,7 +70,7 @@ class StepDetModel():
 
         self.__session.commit()
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def usr_update(self, p_cond):
 
@@ -82,31 +85,9 @@ class StepDetModel():
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        def _del(_id):
-            """
-            Delete widget detail
-            :param _id:
-            :return:
-            """
-            # Delete it from batch
-            _item_list = self.__item.usr_search({"id": _id})
-            _item_ids = dict(list=list(value.id for value in _item_list))
-
-            self.__item.usr_delete(_item_ids)
-
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-
-                # Delete it item
-                _item_id = self.__session.query(TabStepDet.item_id).filter(TabStepDet.id == t_id).first()[0]
-                _del(_item_id)
-
-                # Delete step det
-                self.__session.query(TabStepDet).filter(TabStepDet.id == t_id).delete()
-
+        self.__session.query(TabStepDet).filter(TabStepDet.id == p_id).delete()
         self.__session.commit()
 
     def usr_list_search(self, p_list):

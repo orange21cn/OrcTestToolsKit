@@ -25,3 +25,11 @@ class OrcViewException(OrcException):
 
 class OrcValueCantBeNull(OrcViewException):
     pass
+
+
+class OrcApiException(OrcException):
+    pass
+
+
+class OrcApiModelFailException(OrcApiException):
+    pass

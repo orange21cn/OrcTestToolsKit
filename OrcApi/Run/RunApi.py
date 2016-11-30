@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask.ext.restful import Resource
+from flask_restful import Resource
 
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_get_parameter
@@ -31,7 +31,7 @@ class RunDefListAPI(Resource):
 
         rtn.set_data(value)
 
-        return rtn.get_message()
+        return rtn.rtn()
 
     def delete(self):
         """
@@ -46,7 +46,7 @@ class RunDefListAPI(Resource):
 
         _return.set_data(_value)
 
-        return _return.get_message()
+        return _return.rtn()
 
 
 class RunDefAPI(Resource):
@@ -75,7 +75,7 @@ class RunDefAPI(Resource):
         else:
             _return.set_data(None)
 
-        return _return.get_message()
+        return _return.rtn()
 
     def post(self, p_id):
         """
@@ -91,7 +91,7 @@ class RunDefAPI(Resource):
 
         _return.set_data(str(_value))
 
-        return _return.get_message()
+        return _return.rtn()
 
     def delete(self, p_id):
         """
@@ -106,7 +106,7 @@ class RunDefAPI(Resource):
 
         _return.set_data(_value)
 
-        return _return.get_message()
+        return _return.rtn()
 
 
 class RunDetListAPI(Resource):
@@ -131,7 +131,7 @@ class RunDetListAPI(Resource):
 
         _return.set_data(_value)
 
-        return _return.get_message()
+        return _return.rtn()
 
 
 class RunAPI(Resource):
@@ -155,7 +155,7 @@ class RunAPI(Resource):
 
         _return.set_data(_value)
 
-        return _return.get_message()
+        return _return.rtn()
 
     def put(self):
         """
@@ -166,7 +166,7 @@ class RunAPI(Resource):
 
         self.__model.run_start(_parameter)
 
-        return _return.get_message()
+        return _return.rtn()
 
     def post(self):
         """

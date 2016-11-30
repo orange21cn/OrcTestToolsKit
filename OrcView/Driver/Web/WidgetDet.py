@@ -3,28 +3,22 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import ModelNewTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_widget_det
 
+from WidgetService import WidgetDetService
 
-class WidgetDetModel(ModelTable):
+
+class WidgetDetModel(ModelNewTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self)
+        ModelNewTable.__init__(self)
 
-        i_base_url = 'http://localhost:5000/WidgetDet'
-        _interface = {
-            'usr_add': '%s/usr_add' % i_base_url,
-            'usr_delete': '%s/usr_delete' % i_base_url,
-            'usr_modify': '%s/usr_modify' % i_base_url,
-            'usr_search': '%s/usr_search' % i_base_url
-        }
-
-        self.usr_set_interface(_interface)
+        self.usr_set_service(WidgetDetService())
 
 
 class WidgetDetControl(LibControl):

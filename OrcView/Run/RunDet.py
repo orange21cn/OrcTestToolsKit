@@ -16,7 +16,7 @@ from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibTree import ModelNewTree
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibView import OrcProcess
-
+from OrcView.Lib.LibViewDef import def_view_run_det
 from RunDetService import RunDetService
 
 
@@ -61,11 +61,10 @@ class RunDetControl(LibControl):
 
 class ViewRunDet(QWidget):
 
-    def __init__(self, p_def):
+    def __init__(self):
 
         QWidget.__init__(self)
 
-        self.__table_def = p_def
         self.__path = None
         self.__step_length = 0
 
@@ -73,10 +72,10 @@ class ViewRunDet(QWidget):
 
         # Model
         self.__model = RunDetModel()
-        self.__model.usr_set_definition(self.__table_def)
+        self.__model.usr_set_definition(def_view_run_det)
 
         # Control
-        _control = RunDetControl(self.__table_def)
+        _control = RunDetControl(def_view_run_det)
 
         # Data result display widget
         _wid_display = ViewTree()

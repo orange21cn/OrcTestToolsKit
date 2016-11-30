@@ -39,8 +39,6 @@ class ViewTable(QTableView):
 
         self.alternatingRowColors()
 
-        root_folder = self.__configer.get_option("DEFAULT", "root")
-
         self.setStyleSheet(get_theme("TableView"))
 
     def create_context_menu(self, p_def):
@@ -411,8 +409,7 @@ class ModelNewTable(QAbstractTableModel):
         :param p_data: {"id": ""value", ...}
         :return:
         """
-        self.__service.usr_add(p_data)
-
+        self.__state_cond = self.__service.usr_add(p_data)
         self.usr_refresh()
 
     def usr_delete(self):
@@ -420,17 +417,17 @@ class ModelNewTable(QAbstractTableModel):
         Delete all checked item
         :return:
         """
-        print self.__state_check
-        # Create id list
+        # 获取列表
         _list = list(self.__state_data[_index]["id"] for _index in self.__state_check)
 
-        try:
-            self.__service.usr_delete(dict(list=_list))
-            self.__state_check = []
-            self.usr_refresh()
-        except OrcPostFailedException:
-            # Todo
-            pass
+        # 删除
+        self.__service.usr_delete(_list)
+
+        # 清空选取列表
+        self.__state_check = []
+
+        # 重置界面
+        self.usr_refresh()
 
     def usr_refresh(self):
         """

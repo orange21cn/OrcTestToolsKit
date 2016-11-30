@@ -2,7 +2,7 @@
 import traceback
 import unittest
 
-from OrcApi.Driver.Web.WindowDefModel import WindowDefModel
+from OrcApi.Driver.Web.WindowDefMod import WindowDefMod
 
 from OrcLib.LibNet import OrcInvoke
 from OrcLib.LibTest import OrcTest
@@ -18,7 +18,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WindowDefModel()
+        _handle = WindowDefMod()
 
         _data = dict(window_id="1001",
                      window_mark="TEST_001",
@@ -37,7 +37,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WindowDefModel()
+        _handle = WindowDefMod()
 
         _data = dict(id="3200000009",
                      window_mark="TEST_002",
@@ -54,7 +54,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WindowDefModel()
+        _handle = WindowDefMod()
         _cond = dict(id="3200000009")
 
         _res = _handle.usr_search(_cond)
@@ -70,7 +70,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _handle = WindowDefModel()
+        _handle = WindowDefMod()
         _cond = dict(window_desc=u"测试")
 
         _res = _handle.usr_search(_cond)

@@ -7,8 +7,6 @@ from OrcLib import get_config
 from OrcApi import app
 from OrcApi import orc_api
 
-from OrcApi.Batch import api
-from OrcApi.Case import api
 from OrcApi.Data import api
 from OrcApi.Driver.Web import api
 from OrcApi.Lib import api
@@ -83,8 +81,8 @@ orc_api.add_resource(WidgetDefAPI, '/api/1.0/WidgetDef/<int:p_id>', endpoint='Wi
 orc_api.add_resource(WidgetDetListAPI, '/api/1.0/WidgetDet', endpoint='WidgetDets')
 orc_api.add_resource(WidgetDetAPI, '/api/1.0/WidgetDet/<int:p_id>', endpoint='WidgetDet')
 
-orc_api.add_resource(WindowListAPI, '/api/1.0/Window', endpoint='Windows')
-orc_api.add_resource(WindowAPI, '/api/1.0/Window/<int:p_id>', endpoint='Window')
+orc_api.add_resource(WindowListAPI, '/api/1.0/WindowDef', endpoint='Windows')
+orc_api.add_resource(WindowAPI, '/api/1.0/WindowDef/<int:p_id>', endpoint='Window')
 
 driver_host = configer.get_option("CASE", "ip")
 driver_port = configer.get_option("CASE", "port")

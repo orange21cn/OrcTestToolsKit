@@ -9,7 +9,7 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class DataModel:
+class DataMod:
     """
     Test data management
     """
@@ -159,21 +159,7 @@ class DataModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
+    def usr_delete(self, p_id):
 
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                self._delete(t_id)
-
+        self.__session.query(TabData).filter(TabData.id == p_id).delete()
         self.__session.commit()
-
-    def _delete(self, p_id):
-
-        try:
-            # Delete current item
-            self.__session.query(TabData).filter(TabData.id == p_id).delete()
-        except Exception:
-            # Todo
-            self.__session.rollback()
-

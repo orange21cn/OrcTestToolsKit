@@ -376,6 +376,9 @@ def operate_to_str(p_data):
     :param p_data: {'OBJECT': '3200000002', 'OPERATE': u'INPUT', 'TYPE': u'WIDGET'}
     :return:
     """
+    if not p_data:
+        return None
+
     _widget_get_path = 'http://localhost:5000/WidgetDef/usr_get_path'
     _page_get_flag = 'http://localhost:5000/PageDef/usr_get_flag'
     _get_dict_text = 'http://localhost:5000/Lib/usr_get_dict_text'

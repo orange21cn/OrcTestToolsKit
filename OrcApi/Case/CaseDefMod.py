@@ -8,11 +8,11 @@ from sqlalchemy import func
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
-from OrcApi.Batch.BatchDetModel import BatchDetModel
-from OrcApi.Case.CaseDetModel import CaseDetModel
+from OrcApi.Batch.BatchDetMod import BatchDetMod
+from OrcApi.Case.CaseDetMod import CaseDetMod
 
 
-class CaseDefModel:
+class CaseDefMod:
     """
     Test data management
     """
@@ -20,8 +20,8 @@ class CaseDefModel:
 
     def __init__(self):
 
-        self.__batch = BatchDetModel()
-        self.__case_det = CaseDetModel()
+        self.__batch = BatchDetMod()
+        self.__case_det = CaseDetMod()
 
     def usr_search(self, p_cond=None):
         """
@@ -187,7 +187,7 @@ class CaseDefModel:
 
         self.usr_update({"id": _node.id, "case_path": self.usr_get_path(_node.id)})
 
-        return {u'id': str(_node.id)}
+        return _node.to_json()
 
     def _create_no(self, p_id):
         """
@@ -216,50 +216,9 @@ class CaseDefModel:
 
         self.__session.commit()
 
-    def usr_delete(self, p_list):
-
-        if "list" in p_list:
-
-            for t_id in p_list["list"]:
-                self._del_tree(t_id)
-
+    def usr_delete(self, p_id):
+        self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_id).delete()
         self.__session.commit()
-
-    def _del_tree(self, p_id):
-
-        def _del(_id):
-            """
-            Delete widget detail
-            :param _id:
-            :return:
-            """
-            # Delete it from batch
-            _batch_list = self.__batch.usr_search({"case_id": _id})
-            _batch_ids = dict(list=list(value.id for value in _batch_list))
-
-            self.__batch.usr_delete(_batch_ids)
-
-            # Delete case detail
-            _case_det_list = self.__case_det.usr_search({"case_id": _id})
-            _case_det_ids = dict(list=list(value.id for value in _case_det_list))
-
-            self.__case_det.usr_delete(_case_det_ids)
-
-        try:
-            # Delete children
-            _list = self.__session.query(TabCaseDef.id).filter(TabCaseDef.pid == p_id).all()
-
-            for t_id in _list:
-                _del(t_id[0])
-                self._del_tree(t_id[0])
-
-            # Delete current item
-            _del(p_id)
-            self.__session.query(TabCaseDef).filter(TabCaseDef.id == p_id).delete()
-
-        except Exception:
-            # Todo
-            self.__session.rollback()
 
     def usr_list_search(self, p_filter):
         """

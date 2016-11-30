@@ -1,7 +1,7 @@
 import traceback
 import unittest
 
-from OrcApi.Case.CaseDefModel import CaseDefModel
+from OrcApi.Case.CaseDefMod import CaseDefMod
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibNet import orc_invoke
 from OrcLib.LibNet import OrcInvoke
@@ -18,7 +18,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = CaseDefModel()
+        test = CaseDefMod()
         ttt = test.usr_search_path('2000000004')
         OrcTest.test_print_result(ttt)
 
@@ -31,7 +31,7 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = CaseDefModel()
+        test = CaseDefMod()
         ttt = test.usr_get_path('110100000000079')
         OrcTest.test_print_result(ttt)
 
