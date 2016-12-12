@@ -2,7 +2,7 @@
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
@@ -10,11 +10,11 @@ from OrcView.Lib.LibViewDef import def_view_batch_det
 from OrcView.Case.CaseSelect import ViewCaseSelMag
 from BatchService import BatchDetService
 
-class BatchDetModel(ModelNewTable):
+class BatchDetModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self)
+        ModelTable.__init__(self)
 
         self.usr_set_service(BatchDetService())
 

@@ -10,7 +10,7 @@ class ReportDetAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.report.det")
+        self.__logger = OrcLog("resource.report.api.det")
         self.__model = ReportDetModel()
 
     def dispatch_request(self, *args, **kwargs):
@@ -23,11 +23,6 @@ class ReportDetAPI(Resource):
         :param p_id:
         :return:
         """
-        print p_id
-        print p_time
-        _parameter = dict(id=p_id)
-        _return = OrcResult()
-
-        _value = "<html><head></head><body><h1>Hello</h1></body></html>"
+        self.__logger.info("Get report, parameter is: %s, %s" % (p_id, p_time))
 
         return self.__model.usr_get_report(p_id, p_time)

@@ -9,7 +9,7 @@ class WidgetDefService:
 
         # Log
         self.__logger = OrcLog("view.driver.web.service.widget_def")
-        self.__resource_page_def = OrcHttpNewResource("WidgetDef")
+        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
 
     def usr_add(self, p_data):
         """
@@ -17,7 +17,8 @@ class WidgetDefService:
         :param p_data:
         :return:
         """
-        return self.__resource_page_def.post(p_data)
+        widget_data = self.__resource_widget_def.post(p_data)
+        return dict(id=widget_data["id"])
 
     def usr_delete(self, p_list):
         """
@@ -25,7 +26,7 @@ class WidgetDefService:
         :param p_list:
         :return:
         """
-        return self.__resource_page_def.delete(p_list)
+        return self.__resource_widget_def.delete(p_list)
 
     def usr_update(self, p_data):
         """
@@ -33,7 +34,8 @@ class WidgetDefService:
         :param p_data:
         :return:
         """
-        return self.__resource_page_def.put(p_data)
+        self.__resource_widget_def.set_path(p_data["id"])
+        return self.__resource_widget_def.put(p_data)
 
     def usr_search(self, p_cond):
         """
@@ -41,7 +43,10 @@ class WidgetDefService:
         :param p_cond:
         :return:
         """
-        return self.__resource_page_def.get(p_cond)
+        cond = dict(type="all")
+        cond.update(p_cond)
+
+        return self.__resource_widget_def.get(cond)
 
 
 class WidgetDetService:
@@ -58,7 +63,8 @@ class WidgetDetService:
         :param p_data:
         :return:
         """
-        return self.__resource_page_det.post(p_data)
+        widget_det_data = self.__resource_page_det.post(p_data)
+        return dict(widget_id=widget_det_data["widget_id"])
 
     def usr_delete(self, p_list):
         """
@@ -74,6 +80,7 @@ class WidgetDetService:
         :param p_data:
         :return:
         """
+        self.__resource_page_det.set_path(p_data["id"])
         return self.__resource_page_det.put(p_data)
 
     def usr_search(self, p_cond):

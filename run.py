@@ -5,8 +5,6 @@ from PySide.QtGui import QApplication
 import sys
 from OrcView.StartView import StartView
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 OrcData = QApplication(sys.argv)
 

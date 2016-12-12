@@ -10,7 +10,7 @@ class DataListAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.Datas")
+        self.__logger = OrcLog("resource.datas.api")
         self.__model = DataBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -23,6 +23,9 @@ class DataListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Add data, parameter is: %s" % parameter)
+
         return self.__model.bus_list_add(parameter)
 
     @orc_api
@@ -32,6 +35,9 @@ class DataListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search data, parameter is: %s" % parameter)
+
         return self.__model.bus_list_search(parameter)
 
     @orc_api
@@ -41,6 +47,9 @@ class DataListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Delete data, parameter is: %s" % parameter)
+
         return self.__model.bus_list_delete(parameter)
 
 
@@ -48,7 +57,7 @@ class DataAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.data")
+        self.__logger = OrcLog("resource.data.api")
         self.__model = DataBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -61,6 +70,8 @@ class DataAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search data, parameter is: %s" % p_id)
+
         return self.__model.bus_search(p_id)
 
     @orc_api
@@ -71,6 +82,9 @@ class DataAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Update data, parameter is: %s, %s" % (p_id, parameter))
+
         return self.__model.bus_update(p_id, parameter)
 
     @orc_api
@@ -80,4 +94,6 @@ class DataAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Delete data, parameter is: %s" % p_id)
+
         return self.__model.bus_delete(p_id)

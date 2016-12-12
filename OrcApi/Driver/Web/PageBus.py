@@ -69,7 +69,18 @@ class PageDefBus(object):
         :return:
         """
         try:
+            # 查找 page_det_list
+            page_det_list = self.__bus_page_det.bus_list_search(dict(page_id=p_id))
+
+            # 获取 page_det_id_list
+            page_det_id_list = [page_det.id for page_det in page_det_list]
+
+            # 删除 page_dets
+            self.__bus_page_det.bus_list_delete(page_det_id_list)
+
+            # 删除 page_def
             self.__model_page_def.usr_delete(p_id)
+
         except Exception:
             self.__logger.error("Add case error, input: %s" % p_id)
             raise OrcApiModelFailException
@@ -83,7 +94,8 @@ class PageDefBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
         try:
             self.__model_page_def.usr_update(cond)
         except Exception:
@@ -183,7 +195,8 @@ class PageDetBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
         try:
             self.__model_page_det.usr_update(cond)
         except Exception:

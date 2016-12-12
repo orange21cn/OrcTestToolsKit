@@ -6,17 +6,17 @@ from PySide.QtCore import QThread
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewButtons
-from OrcView.Lib.LibTree import ModelNewTree
+from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_run_def
 from RunDefService import RunDefService
 
 
-class RunDefModel(ModelNewTree):
+class RunDefModel(ModelTree):
 
     def __init__(self):
 
-        ModelNewTree.__init__(self)
+        ModelTree.__init__(self)
 
         service = RunDefService()
         self.usr_set_service(service)
@@ -69,6 +69,8 @@ class ViewRunDef(QWidget):
         _layout.addWidget(_wid_buttons)
 
         self.setLayout(_layout)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         _wid_display.clicked.connect(self.__model.usr_set_current_data)
         _wid_buttons.sig_clicked.connect(self.__operate)
@@ -136,7 +138,9 @@ class ViewRunDef(QWidget):
 
 
 class RunThread(QThread):
+    """
 
+    """
     def __init__(self):
 
         QThread.__init__(self)

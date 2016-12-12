@@ -32,17 +32,27 @@ class StepService(object):
     def usr_delete(self, p_list):
         """
         删除
+        :param p_list:
         :return:
         """
-        self.__resource_step_det.delete(p_list)
+        return self.__resource_step_det.delete(p_list)
 
-    def usr_update(self, p_cond):
+    def usr_update(self, p_data):
         """
         更新
-        :param p_cond:
+        :param p_data:
         :return:
         """
-        self.__resource_step_det.put(p_cond)
+        # 获取 item id
+        self.__resource_step_det.set_path(p_data["id"])
+        item_id = self.__resource_step_det.get()["item_id"]
+
+        # 更新数据
+        data = p_data.copy()
+        data["id"] = item_id
+        self.__resource_item.set_path(item_id)
+
+        return self.__resource_item.put(p_data)
 
     def usr_search(self, p_cond):
         """

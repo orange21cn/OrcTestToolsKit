@@ -23,12 +23,13 @@ class WindowDefBus(object):
         :param p_data:
         :return:
         """
+        print p_data
         try:
             result = self.__model_window_def.usr_add(p_data)
         except Exception:
             self.__logger.error("Add case error, input: %s" % p_data)
             raise OrcApiModelFailException
-
+        print result
         return result
 
     def bus_list_delete(self, p_list):
@@ -58,7 +59,7 @@ class WindowDefBus(object):
         except Exception:
             self.__logger.error("Add case error, input: %s" % p_cond)
             raise OrcApiModelFailException
-
+        print result
         return result
 
     def bus_delete(self, p_id):
@@ -82,7 +83,8 @@ class WindowDefBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_window_def.usr_update(cond)

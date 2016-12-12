@@ -1,0 +1,12 @@
+[2016-12-08 17:24:45 basic.lib_net] ERROR Invoke http://localhost:5000/api/1.0/RunTime failed, parameter is {"para": {"data_flag": "env", "module": "test_01"}}, status is False
+[2016-12-08 17:24:45 basic.lib_net] ERROR None
+
+[2016-12-08 17:25:21 basic.lib_net] ERROR Invoke http://localhost:5000/api/1.0/RunTime failed, parameter is {"para": {"data_flag": "env", "module": "test_01"}}, status is False
+[2016-12-08 17:25:21 basic.lib_net] ERROR None
+
+[2016-12-08 17:46:23 basic.lib_net] ERROR Invoke http://localhost:5000/api/1.0/RunTime failed, parameter is {"para": 5}, status is False
+[2016-12-08 17:46:23 basic.lib_net] ERROR None
+
+[2016-12-08 17:46:52 basic.lib_net] ERROR Invoke http://localhost:5000/api/1.0/RunTime failed, parameter is {"para": 5}, status is False
+[2016-12-08 17:46:52 basic.lib_net] ERROR None
+

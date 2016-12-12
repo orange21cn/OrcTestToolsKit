@@ -4,7 +4,6 @@ from PySide.QtCore import Qt
 from PySide.QtGui import QListView
 
 from OrcLib.LibCommon import is_null
-from OrcLib.LibNet import orc_invoke
 from OrcView.Lib.LibView import get_dict
 
 
@@ -62,7 +61,7 @@ class ModelList(QAbstractListModel):
                 self.__state_cond.pop(_key)
 
         # Search
-        self.__state_data = orc_invoke(self.__interface['usr_search'], self.__state_cond)
+        # self.__state_data = orc_invoke(self.__interface['usr_search'], self.__state_cond)
 
         # Clean checked list
         self.__state_check = []

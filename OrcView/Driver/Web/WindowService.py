@@ -1,5 +1,4 @@
 # coding=utf-8
-from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcHttpNewResource
 
@@ -23,7 +22,6 @@ class WindowDefService:
         :return:
         """
         windows_all = [item["id"] for item in self.__resource_widget_def.get(dict(widget_type="WINDOW"))]
-        print self.__resource_widow_def.get()
         windows_exist = [item["id"] for item in self.__resource_widow_def.get()]
 
         if not windows_all:
@@ -32,6 +30,8 @@ class WindowDefService:
         for _id in windows_all:
             if (not windows_exist) or (_id not in windows_exist):
                 self.__resource_widow_def.post(dict(id=_id))
+
+        return dict()
 
     def usr_delete(self, p_list):
         """
@@ -45,6 +45,7 @@ class WindowDefService:
         :param p_data:
         :return:
         """
+        self.__resource_widow_def.set_path(p_data["id"])
         return self.__resource_widow_def.put(p_data)
 
     def usr_search(self, p_cond):

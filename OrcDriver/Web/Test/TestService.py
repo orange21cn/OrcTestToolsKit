@@ -42,7 +42,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = WebDriverService()
-        _res = _service.widget_get_definition_tree("3200000001")
+        _res = _service.widget_get_definition_path("3200000001")
 
         OrcTest.test_print_result(_res, "Widget definition")
 
@@ -56,7 +56,7 @@ class TestService(unittest.TestCase):
         OrcTest.test_print_begin()
 
         _service = WebDriverService()
-        _res = _service.widget_get_definition_tree("3300000001")
+        _res = _service.widget_get_definition_path("3300000001")
 
         OrcTest.test_print_result(_res, "Widget definition")
 

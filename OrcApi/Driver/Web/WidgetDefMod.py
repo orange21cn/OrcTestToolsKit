@@ -19,34 +19,42 @@ class WidgetDefMod:
 
         self.child = WidgetDetMod()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
         查询符合条件的控件
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        if not p_filter:
-            p_filter = dict()
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        _like = lambda p_flag: "%%%s%%" % p_filter[p_flag]
-        _res = self.__session.query(WebWidgetDef)
+        # 查询条件 like
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        if 'id' in p_filter:
-            _res = _res.filter(WebWidgetDef.id == p_filter['id'])
+        # db session
+        result = self.__session.query(WebWidgetDef)
 
-        if 'widget_id' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_id == p_filter['widget_id'])
+        if 'id' in cond:
 
-        if 'widget_type' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_type == p_filter['widget_type'])
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(WebWidgetDef.id.in_(cond['id']))
+            else:
+                result = result.filter(WebWidgetDef.id == cond['id'])
 
-        if 'widget_flag' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_flag.ilike(_like('widget_flag')))
+        if 'widget_id' in cond:
+            result = result.filter(WebWidgetDef.widget_id == cond['widget_id'])
 
-        if 'widget_desc' in p_filter:
-            _res = _res.filter(WebWidgetDef.widget_desc.ilike(_like('widget_desc')))
+        if 'widget_type' in cond:
+            result = result.filter(WebWidgetDef.widget_type == cond['widget_type'])
 
-        return _res.all()
+        if 'widget_flag' in cond:
+            result = result.filter(WebWidgetDef.widget_flag.ilike(_like('widget_flag')))
+
+        if 'widget_desc' in cond:
+            result = result.filter(WebWidgetDef.widget_desc.ilike(_like('widget_desc')))
+
+        return result.all()
 
     def usr_search_all(self, p_filter):
         """
@@ -68,6 +76,19 @@ class WidgetDefMod:
 
         return _res_tree
 
+    def usr_search_tree(self, p_id):
+        """
+        获取节点及其所有子节点
+        :param p_id:
+        :return:
+        """
+        batch = self.usr_search(dict(id=p_id))
+
+        if batch:
+            return self.__get_tree(batch[0])
+        else:
+            return list()
+
     def usr_search_path(self, p_id):
         """
         查询符合条件的控件,并获取其所有父节点
@@ -75,11 +96,7 @@ class WidgetDefMod:
         :return:
         """
         _res_list = []
-
-        _item = self.__session \
-            .query(WebWidgetDef) \
-            .filter(WebWidgetDef.id == p_id) \
-            .first()
+        _item = self.__session.query(WebWidgetDef).filter(WebWidgetDef.id == p_id).first()
 
         if _item is not None:
             _res_list = self.usr_search_path(_item.pid)
@@ -154,7 +171,7 @@ class WidgetDefMod:
         self.usr_update({"id": _node.id,
                          "widget_path": self.usr_get_path(_node.id)})
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def __create_no(self):
         """

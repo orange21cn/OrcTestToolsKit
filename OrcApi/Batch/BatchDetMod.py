@@ -22,23 +22,32 @@ class BatchDetMod(TabBatchDet):
 
         self.__logger = OrcLog("api.batch.mod.batch_det")
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        _res = self.__session.query(TabBatchDet)
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if 'id' in p_filter:
-            _res = _res.filter(TabBatchDet.id == p_filter('id'))
+        # db session
+        result = self.__session.query(TabBatchDet)
 
-        if 'batch_id' in p_filter:
-            _res = _res.filter(TabBatchDet.batch_id == p_filter['batch_id'])
+        if 'id' in p_cond:
 
-        if 'case_id' in p_filter:
-            _res = _res.filter(TabBatchDet.case_id == p_filter['case_id'])
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(TabBatchDet.id.in_(cond['id']))
+            else:
+                result = result.filter(TabBatchDet.id == cond['id'])
 
-        return _res.all()
+        if 'batch_id' in p_cond:
+            result = result.filter(TabBatchDet.batch_id == p_cond['batch_id'])
+
+        if 'case_id' in p_cond:
+            result = result.filter(TabBatchDet.case_id == p_cond['case_id'])
+
+        return result.all()
 
     def usr_add(self, p_data):
         """
@@ -69,7 +78,7 @@ class BatchDetMod(TabBatchDet):
 
         self.__session.commit()
 
-        return _node.to_json()
+        return _node
 
     def usr_modify(self, p_cond):
 

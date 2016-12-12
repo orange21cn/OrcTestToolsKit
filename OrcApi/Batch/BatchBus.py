@@ -1,7 +1,6 @@
 # coding=utf-8
 from OrcLib import init_log
 from OrcLib.LibNet import OrcLog
-from OrcLib.LibApi import connect_list
 from OrcLib.LibException import OrcApiModelFailException
 
 from BatchDefMod import BatchDefMod
@@ -18,9 +17,10 @@ class BatchDefBus(object):
         init_log()
 
         self.__logger = OrcLog("api.batch.bus.batch_def")
+
         self.__model_batch_def = BatchDefMod()
         self.__bus_batch_det = BatchDetBus()
-        self.__bus_case_def = CaseDefBus
+        self.__bus_case_def = CaseDefBus()
 
     def bus_list_add(self, p_cond):
         """
@@ -93,7 +93,8 @@ class BatchDefBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_batch_def.usr_update(cond)
@@ -209,7 +210,8 @@ class BatchDetBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_batch_det.usr_update(cond)

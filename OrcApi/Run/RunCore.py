@@ -1,12 +1,11 @@
 # coding=utf-8
 import os
-
 from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 from OrcLib import get_config
 from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcInvoke
+from OrcLib.LibNet import OrcHttpNewResource
 from OrcLib.LibDataStruct import ListTree
 from RunService import RunCoreService
 from RunLog import RunLog
@@ -16,20 +15,24 @@ class RunCore(ListTree):
     """
     Window service
     """
+
     def __init__(self):
 
         ListTree.__init__(self)
 
         # Log
         self.__logger = OrcLog("view.driver.service.window")
-        self.__invoker = OrcInvoke()
+
+        # Source
+        self.__resource_batch_def = OrcHttpNewResource("BatchDef")
+        self.__resource_batch_det = OrcHttpNewResource("BatchDet")
+        self.__resource_case_def = OrcHttpNewResource("CaseDef")
+        self.__resource_case_det = OrcHttpNewResource("CaseDet")
+        self.__resource_step_def = OrcHttpNewResource("StepDef")
+        self.__resource_step_det = OrcHttpNewResource("StepDet")
+        self.__resource_item = OrcHttpNewResource("Item")
 
         self.__service = RunCoreService()
-
-        # Get url from configuration
-        _url = get_config("interface").get_option("DRIVER", "url")
-        self.__url_list = lambda _mod: "%s/api/1.0/%s" % (_url, _mod)
-        self.__url = lambda _mod, _id: "%s/%s" % (self.__url_list(_mod), _id)
 
         self.__home = get_config().get_option("RUN", "home")
         self.__home_run = None  # 运行时目录,为home目录/case(batch)/time
@@ -39,7 +42,6 @@ class RunCore(ListTree):
 
         self.__run_list = []  # 执行列表,batch->item,用于查找数据及控件...
         self.__run_logger = RunLog()
-
 
     def get_home(self):
         return self.__home
@@ -67,9 +69,7 @@ class RunCore(ListTree):
         :return:
         """
         rtn = list()
-        url = self.__url_list("BatchDef")
-        cond = dict(id=p_id, type="tree")
-        batches = self.__invoker.get(url, cond)
+        batches = self.__resource_batch_def.get(dict(id=p_id, type="tree"))
 
         if not batches:
             return None
@@ -83,9 +83,7 @@ class RunCore(ListTree):
 
             if "BATCH" == _type:
 
-                url_det = self.__url_list("BatchDet")
-                cond_det = dict(batch_id=_batch_id)
-                cases = self.__invoker.get(url_det, cond_det)
+                cases = self.__resource_batch_det.get(dict(batch_id=_batch_id))
 
                 for _case in cases:
                     _case_id = _case["case_id"]
@@ -104,9 +102,7 @@ class RunCore(ListTree):
         :rtype: list
         """
         rtn = list()
-        url = self.__url_list("CaseDef")
-        cond = dict(id=p_id, type="tree")
-        cases = self.__invoker.get(url, cond)
+        cases = self.__resource_case_def.get(dict(id=p_id, type="tree"))
 
         if not cases:
             return None
@@ -133,10 +129,7 @@ class RunCore(ListTree):
         """
         rtn = list()
 
-        url_case_det = self.__url_list("CaseDet")
-        cond_case_det = dict(case_id=p_id)
-
-        case_dets = self.__invoker.get(url_case_det, cond_case_det)
+        case_dets = self.__resource_case_det.get(dict(case_id=p_id))
 
         if not case_dets:
             return []
@@ -144,9 +137,9 @@ class RunCore(ListTree):
         for _step_info in case_dets:
             _step_id = _step_info["step_id"]
             _case_id = _step_info["case_id"]
-            _url_step_def = self.__url("StepDef", _step_id)
 
-            _step = self.__invoker.get(_url_step_def)
+            self.__resource_step_def.set_path(_step_id)
+            _step = self.__resource_step_def.get()
 
             rtn.append(RunData("StepDef", _step, _case_id).__dict__)
             rtn.extend(self.__get_item_list(_step_id))
@@ -161,11 +154,7 @@ class RunCore(ListTree):
         :rtype: list
         """
         rtn = list()
-
-        url_step_det = self.__url_list("StepDet")
-        cond_step_det = dict(step_id=p_id)
-
-        step_dets = self.__invoker.get(url_step_det, cond_step_det)
+        step_dets = self.__resource_step_det.get(dict(step_id=p_id))
 
         if not step_dets:
             return []
@@ -174,8 +163,8 @@ class RunCore(ListTree):
             _item_id = _item_info["item_id"]
             _step_id = _item_info["step_id"]
 
-            _url_item = self.__url("Item", _item_id)
-            _item = self.__invoker.get(_url_item)
+            self.__resource_item.set_path(_item_id)
+            _item = self.__resource_item.get()
 
             rtn.append(RunData("Item", _item, _step_id).__dict__)
 
@@ -205,11 +194,11 @@ class RunCore(ListTree):
                 for i in xrange(_len):
 
                     _element = p_elem[i]
-                    indent(p_elem[i], p_level+1)
+                    indent(p_elem[i], p_level + 1)
 
                     if not _element.tail or not _element.tail.strip():
 
-                        if i != _len-1:
+                        if i != _len - 1:
                             _element.tail = _symbol + "    "
                         else:
                             _element.tail = _symbol
@@ -272,7 +261,11 @@ class RunCore(ListTree):
         return res
 
     def run_start(self, p_path):
+        """
 
+        :param p_path:
+        :return:
+        """
         item_pid = p_path["pid"]
         item_id = p_path["id"]
         item_path = None
@@ -282,7 +275,6 @@ class RunCore(ListTree):
             _group_id = _group.split("_")[1]
 
             if _group_id == item_pid:
-
                 item_path = "%s/%s" % (self.__home, _group)
 
         if item_path is not None:
@@ -294,7 +286,11 @@ class RunCore(ListTree):
         self.save_list(item_path)
 
     def run(self, p_node):
+        """
 
+        :param p_node:
+        :return:
+        """
         result = True
         step_type = p_node["content"]["run_det_type"]
 
@@ -313,8 +309,14 @@ class RunCore(ListTree):
                 result = None
 
             for _sub_step in p_node["children"]:
+
                 _result = self.run(_sub_step)
 
+                # 如果有一个步骤没有通过,忽略剩余的步骤
+                if "STEP" == step_type and not _result:
+                    break
+
+                # 更新状态
                 if result is None:
                     result = None
 
@@ -360,7 +362,7 @@ class RunCore(ListTree):
         _result = None
 
         # 执行该 list 的最后一项,最后一项为 item, 其他为路径用于数据查找
-        item_id = p_node_list[len(p_node_list)-1]["id"]
+        item_id = p_node_list[len(p_node_list) - 1]["id"]
         item = self.__service.get_item(item_id)
 
         if item is None:
@@ -374,19 +376,23 @@ class RunCore(ListTree):
 
             if data:
                 item_operation["DATA"] = data
+            else:
+                self.__run_logger.data("Run message: %s data is not found" % item_operation)
+                return False
 
-        # 执行项
-        if "OPERATE" == item.item_mode:
-            if "WEB" == item.item_type:
+        # Web 步骤
+        if "WEB" == item.item_type:
+
+            # 执行项
+            if "OPERATE" == item.item_mode:
                 _result = self.__service.launch_web_step(item_operation)
 
-        # 检查项
-        elif "CHECK" ==item.item_mode:
-            if "WEB" == item.item_type:
+            # 检查项
+            elif "CHECK" == item.item_mode:
                 _result = self.__service.check_web_step(item_operation)
 
-        else:
-            pass
+            else:
+                pass
 
         self.__run_logger.data("Run message: %s" % item_operation)
 
@@ -397,7 +403,6 @@ class RunData:
     """
     用例数据类型与界面类型转换
     """
-
     def __init__(self, p_type, p_data, p_pid=None):
 
         self.id = None

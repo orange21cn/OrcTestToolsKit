@@ -1,6 +1,5 @@
 # coding=utf-8
-from OrcLib import get_config
-from OrcLib.LibNet import orc_invoke
+from OrcLib.LibNet import OrcHttpNewResource
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import WebWidgetDet
@@ -13,50 +12,39 @@ class WebDriverService:
         # Log
         self.__logger = OrcLog("api.driver.service")
 
-        # Get url from configuration
-        self.__url = get_config("interface").get_option("DRIVER", "url")
+        self.__resource_page_def = OrcHttpNewResource("PageDef")
+        self.__resource_page_det = OrcHttpNewResource("PageDet")
+        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
+        self.__resource_widget_det = OrcHttpNewResource("WidgetDet")
 
     def page_get_url(self, p_env, p_id):
         """
         获取页面 url
-        :param p_id: page detail id
+        :param p_env:
+        :param p_id: page id
         :return: url/None
         """
-        _url = '%s/PageDet/usr_search' % self.__url
-        _data = orc_invoke(_url, dict(page_id=p_id, page_env=p_env))
-
-        if _data is None or 0 == len(_data):
-            return None
-        else:
-            return _data[0]["page_url"]
+        page_det_datas = self.__resource_page_det.get(dict(page_id=p_id, page_env=p_env))
+        return None if not page_det_datas else page_det_datas[0]["page_url"]
 
     def widget_get_definition(self, p_id):
         """
-        获取控件定义
+        获取单个控件定义
         :param p_id:
         :return: definition list or None
         """
-        _url = '%s/WidgetDef/usr_search' % self.__url
-        _data = orc_invoke(_url, dict(id=p_id))
+        self.__resource_widget_def.set_path(p_id)
+        widget_def_data = self.__resource_widget_def.get()
+        return None if not widget_def_data else WebWidgetDef(widget_def_data)
 
-        if _data is None or 0 == len(_data):
-            return None
-        else:
-            return WebWidgetDef(_data[0])
-
-    def widget_get_definition_tree(self, p_id):
+    def widget_get_definition_path(self, p_id):
         """
-        获取控件定义
+        获取控件定义树
         :param p_id:
         :return: definition list or None
         """
-        _url = '%s/WidgetDef/usr_search_tree' % self.__url
-        _data = orc_invoke(_url, dict(id=p_id))
-
-        if _data is None or 0 == len(_data):
-            return None
-        else:
-            return [WebWidgetDef(_item) for _item in _data]
+        widget_def_datas = self.__resource_widget_def.get(dict(type="path", id=p_id))
+        return None if not widget_def_datas else [WebWidgetDef(item) for item in widget_def_datas]
 
     def widget_get_detail(self, p_id):
         """
@@ -64,10 +52,5 @@ class WebDriverService:
         :param p_id: widget definition id (not detail id)
         :return:
         """
-        _url = '%s/WidgetDet/usr_search' % self.__url
-        _data = orc_invoke(_url, dict(widget_id=p_id))
-
-        if _data is None or 0 == len(_data):
-            return None
-        else:
-            return [WebWidgetDet(_item) for _item in _data]
+        widget_det_data = self.__resource_widget_det.get(dict(widget_id=p_id))
+        return None if not widget_det_data else [WebWidgetDet(_item) for _item in widget_det_data]

@@ -3,7 +3,7 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibControl import LibControl
@@ -12,11 +12,11 @@ from OrcView.Lib.LibViewDef import def_view_window_def
 from WindowService import WindowDefService
 
 
-class WindowModel(ModelNewTable):
+class WindowModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self)
+        ModelTable.__init__(self)
 
         self.usr_set_service(WindowDefService())
 

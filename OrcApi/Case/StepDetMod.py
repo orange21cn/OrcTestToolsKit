@@ -19,24 +19,30 @@ class StepDetMod():
 
         self.__item = ItemMod()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
+
+        # db session
         _res = self.__session.query(TabStepDet)
 
-        if 'id' in p_filter:
-            if isinstance(p_filter["id"], list):
-                _res = _res.filter(TabStepDet.id.in_(p_filter['id']))
+        if 'id' in cond:
+
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                _res = _res.filter(TabStepDet.id.in_(cond['id']))
             else:
-                _res = _res.filter(TabStepDet.id == p_filter['id'])
+                _res = _res.filter(TabStepDet.id == cond['id'])
 
-        if 'step_id' in p_filter:
-            _res = _res.filter(TabStepDet.step_id == p_filter['step_id'])
+        if 'step_id' in cond:
+            _res = _res.filter(TabStepDet.step_id == cond['step_id'])
 
-        if 'item_id' in p_filter:
-            _res = _res.filter(TabStepDet.item_id == p_filter['item_id'])
+        if 'item_id' in cond:
+            _res = _res.filter(TabStepDet.item_id == cond['item_id'])
 
         return _res.all()
 

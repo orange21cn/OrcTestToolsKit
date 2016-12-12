@@ -1,7 +1,6 @@
 import unittest
 
-from OrcDriver.Web import DriverSelenium
-from OrcLib.LibNet import orc_invoke
+from OrcDriver.Web.WebDriver import DriverSelenium
 from OrcLib.LibTest import OrcTest
 
 
@@ -16,9 +15,9 @@ class TestSelenium(unittest.TestCase):
 
         _data = dict(TYPE="PAGE", BROWSER="FIREFOX", ENV="TESTa", ID="3000000001")
         _url = "http://localhost:5002/WebServer/run"
-        _res = orc_invoke(_url, _data)
+        pass
 
-        OrcTest.test_print_result(_res)
+        OrcTest.test_print_result()
         OrcTest.test_print_end()
 
     def test_get_widget(self):
@@ -30,9 +29,9 @@ class TestSelenium(unittest.TestCase):
 
         _data = dict(TYPE="WIDGET", ID="3300000005", OPERATION="CLICK")
         _url = "http://localhost:5002/WebServer/run"
-        _res = orc_invoke(_url, _data)
+        pass
 
-        OrcTest.test_print_result(_res)
+        OrcTest.test_print_result()
         OrcTest.test_print_end()
 
     def test_widget_definition_02(self):

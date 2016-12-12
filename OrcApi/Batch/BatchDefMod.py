@@ -21,14 +21,6 @@ class BatchDefMod(TabBatchDef):
 
         self.__logger = OrcLog("api.batch.mod.batch_def")
 
-    def usr_get_value(self, p_id):
-
-        # search
-        _res = self.__session.query(TabBatchDef) \
-            .filter(TabBatchDef.id == p_id)
-
-        return _res.first()
-
     def usr_search(self, p_cond=None):
         """
         :param p_cond:
@@ -38,26 +30,32 @@ class BatchDefMod(TabBatchDef):
         cond = p_cond if p_cond else dict()
 
         # 查询条件 like
-        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        search = self.__session.query(TabBatchDef)
+        # db session
+        result = self.__session.query(TabBatchDef)
 
         if 'id' in cond:
-            search = search.filter(TabBatchDef.id == cond['id'])
+
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(TabBatchDef.id.in_(cond['id']))
+            else:
+                result = result.filter(TabBatchDef.id == cond['id'])
 
         if 'pid' in cond:
-            search = search.filter(TabBatchDef.pid == cond('pid'))
+            result = result.filter(TabBatchDef.pid == cond('pid'))
 
         if 'batch_no' in cond:
-            search = search.filter(TabBatchDef.batch_no == cond('batch_no'))
+            result = result.filter(TabBatchDef.batch_no == cond('batch_no'))
 
         if 'batch_name' in cond:
-            search = search.filter(TabBatchDef.batch_name.ilike(func_like('batch_name')))
+            result = result.filter(TabBatchDef.batch_name.ilike(_like('batch_name')))
 
         if 'batch_desc' in cond:
-            search = search.filter(TabBatchDef.batch_desc.ilike(func_like('batch_desc')))
+            result = result.filter(TabBatchDef.batch_desc.ilike(_like('batch_desc')))
 
-        return search.all()
+        return result.all()
 
     def usr_search_all(self, p_cond):
         """
@@ -84,6 +82,7 @@ class BatchDefMod(TabBatchDef):
     def usr_search_tree(self, p_id):
         """
         获取节点及其所有子节点
+        :param p_id:
         :return:
         """
         batch = self.usr_search(dict(id=p_id))
@@ -138,7 +137,7 @@ class BatchDefMod(TabBatchDef):
 
     def usr_add(self, p_data):
         """
-
+        新增
         :param p_data:
         :return:
         """
@@ -173,7 +172,7 @@ class BatchDefMod(TabBatchDef):
         except:
             raise OrcDatabaseException
 
-        return _node.to_json()
+        return _node
 
     def __create_no(self):
         """

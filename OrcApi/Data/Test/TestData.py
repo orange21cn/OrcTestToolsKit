@@ -1,8 +1,7 @@
 import unittest
 
-from OrcData.DataModel import DataHandle
-
-from OrcLib import OrcTest
+from OrcLib.LibTest import OrcTest
+from OrcLib.LibNet import OrcHttpNewResource
 
 
 class TestData(unittest.TestCase):
@@ -11,10 +10,9 @@ class TestData(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = DataHandle()
-        _res = test.usr_search()
-        for i in _res:
-            OrcTest.test_print_result(i.to_json())
+        test = OrcHttpNewResource("Data")
+        result = test.get({"src_type": "CASE", "data_flag": "3300000019", "src_id": "2000000003"})
+        OrcTest.test_print_result(result)
 
         OrcTest.test_print_end()
 
@@ -22,10 +20,6 @@ class TestData(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = DataHandle()
-        _res = test.usr_add()
-
-        for i in _res:
-            OrcTest.test_print_result(_res[i])
+        pass
 
         OrcTest.test_print_end()

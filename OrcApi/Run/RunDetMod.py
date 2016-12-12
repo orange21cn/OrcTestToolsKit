@@ -2,7 +2,7 @@ import os
 from RunCore import RunCore
 
 
-class RunDetModel:
+class RunDetMod:
 
     def __init__(self):
 

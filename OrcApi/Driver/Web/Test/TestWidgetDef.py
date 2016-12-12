@@ -3,7 +3,6 @@ import unittest
 
 from OrcApi.Driver.Web.WidgetDefMod import WidgetDefMod
 from OrcLib.LibException import OrcPostFailedException
-from OrcLib.LibNet import orc_invoke
 
 from OrcLib.LibTest import OrcTest
 
@@ -119,11 +118,7 @@ class TestApi(unittest.TestCase):
         i_para = {'id': '1004'}
         i_url = 'http://127.0.0.1:5000/WidgetDef/usr_search'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()
 
@@ -136,11 +131,7 @@ class TestApi(unittest.TestCase):
         i_para = ["120300000000005", "120300000000003"]
         i_url = 'http://127.0.0.1:5000/WidgetDef/usr_get_path'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()
 
@@ -153,10 +144,6 @@ class TestApi(unittest.TestCase):
         i_para = "120300000000005"
         i_url = 'http://127.0.0.1:5000/WidgetDef/usr_get_path'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
-from flask.ext.restful import Api
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
 
 from OrcLib import get_config
 

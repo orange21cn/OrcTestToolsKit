@@ -20,23 +20,32 @@ class CaseDetMod():
 
         self.__step = StepDefMod()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        _res = self.__session.query(TabCaseDet)
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if 'id' in p_filter:
-            _res = _res.filter(TabCaseDet.id == p_filter['id'])
+        # db session
+        result = self.__session.query(TabCaseDet)
 
-        if 'case_id' in p_filter:
-            _res = _res.filter(TabCaseDet.case_id == p_filter['case_id'])
+        if 'id' in cond:
 
-        if 'step_id' in p_filter:
-            _res = _res.filter(TabCaseDet.step_id == p_filter['step_id'])
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(TabCaseDet.id.in_(cond['id']))
+            else:
+                result = result.filter(TabCaseDet.id == cond['id'])
 
-        return _res.all()
+        if 'case_id' in cond:
+            result = result.filter(TabCaseDet.case_id == cond['case_id'])
+
+        if 'step_id' in cond:
+            result = result.filter(TabCaseDet.step_id == cond['step_id'])
+
+        return result.all()
 
     def usr_add(self, p_data):
         """

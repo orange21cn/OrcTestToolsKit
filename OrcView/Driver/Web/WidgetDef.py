@@ -5,7 +5,7 @@ from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibTree import ModelNewTree
+from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibAdd import ViewAdd
@@ -15,11 +15,11 @@ from OrcView.Lib.LibViewDef import def_view_widget_def
 from WidgetService import WidgetDefService
 
 
-class WidgetDefModel(ModelNewTree):
+class WidgetDefModel(ModelTree):
 
     def __init__(self):
 
-        ModelNewTree.__init__(self)
+        ModelTree.__init__(self)
 
         self.usr_set_service(WidgetDefService())
 

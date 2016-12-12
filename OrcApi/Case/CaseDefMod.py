@@ -34,34 +34,35 @@ class CaseDefMod:
         cond = p_cond if p_cond else dict()
 
         # 查询条件 like
-        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        search = self.__session.query(TabCaseDef)
+        # db session
+        result = self.__session.query(TabCaseDef)
 
         if 'id' in p_cond:
 
             # 查询支持多 id
             if isinstance(cond["id"], list):
-                search = search.filter(TabCaseDef.id.in_(cond['id']))
+                result = result.filter(TabCaseDef.id.in_(cond['id']))
             else:
-                search = search.filter(TabCaseDef.id == cond['id'])
+                result = result.filter(TabCaseDef.id == cond['id'])
 
         if 'pid' in p_cond:
-            search = search.filter(TabCaseDef.pid == cond['pid'])
+            result = result.filter(TabCaseDef.pid == cond['pid'])
 
         if 'case_no' in p_cond:
-            search = search.filter(TabCaseDef.case_no == cond['case_no'])
+            result = result.filter(TabCaseDef.case_no == cond['case_no'])
 
         if 'case_type' in p_cond:
-            search = search.filter(TabCaseDef.case_type == cond['case_type'])
+            result = result.filter(TabCaseDef.case_type == cond['case_type'])
 
         if 'case_name' in p_cond:
-            search = search.filter(TabCaseDef.case_name.ilike(func_like('case_name')))
+            result = result.filter(TabCaseDef.case_name.ilike(_like('case_name')))
 
         if 'case_desc' in p_cond:
-            search = search.filter(TabCaseDef.case_desc.ilike(func_like('case_desc')))
+            result = result.filter(TabCaseDef.case_desc.ilike(_like('case_desc')))
 
-        return search.all()
+        return result.all()
 
     def usr_search_all(self, p_cond):
         """
@@ -187,7 +188,7 @@ class CaseDefMod:
 
         self.usr_update({"id": _node.id, "case_path": self.usr_get_path(_node.id)})
 
-        return _node.to_json()
+        return _node
 
     def _create_no(self, p_id):
         """

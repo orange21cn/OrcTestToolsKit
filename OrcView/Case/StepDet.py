@@ -10,7 +10,7 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QGridLayout
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
@@ -24,11 +24,11 @@ from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
 from StepService import StepService
 
 
-class StepDetModel(ModelNewTable):
+class StepDetModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self)
+        ModelTable.__init__(self)
         self.usr_set_service(StepService())
 
 
@@ -139,7 +139,6 @@ class ViewStepDetMag(QWidget):
 
     def get_operate(self, p_data):
         # self. Todo
-        print p_data
         self.__win_add.set_data("item_operate", p_data)
 
 
@@ -171,10 +170,6 @@ class ViewOperate(QWidget):
         self.__widget_input = OrcLineEdit()
         self.__widget_input.setReadOnly(True)
 
-        # 控件输入 layout
-        _layout_widget = QHBoxLayout()
-        _layout_widget.addWidget(self.__widget_input)
-
         # 操作信息输入 layout
         _operate_label = QLabel(u"操作")
         self.__operate_select = SelectWidgetOperation()
@@ -192,12 +187,12 @@ class ViewOperate(QWidget):
         _layout.addWidget(_type_label, 0, 0)
         _layout.addWidget(self.__type_select, 0, 1)
         _layout.addWidget(_widget_label, 1, 0)
-        _layout.addLayout(_layout_widget, 1, 1)
+        _layout.addWidget(self.__widget_input, 1, 1)
         _layout.addWidget(_operate_label, 2, 0)
         _layout.addWidget(self.__operate_select, 2, 1)
         _layout.addLayout(_layout_button, 3, 1)
 
-        self.__change_type(0)
+        self.__change_type("PAGE")
 
         # connection
         _button_cancel.clicked.connect(self.close)
@@ -236,13 +231,13 @@ class ViewOperate(QWidget):
     def __change_type(self, p_data):
 
         _type = self.__type_select.get_data()
-
+        print "--->", _type
         self.__widget_input.clear()
 
         if "WIDGET" == _type:
-            self.__operate_select.set_type("widget_operator")
+            self.__operate_select.set_type(_type)
         elif"PAGE" == _type:
-            self.__operate_select.set_type("page_operator")
+            self.__operate_select.set_type("PAGE")
         else:
             self.__operate_select.set_type("")
 

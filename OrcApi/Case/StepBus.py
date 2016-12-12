@@ -97,7 +97,8 @@ class StepDefBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_step_def.usr_update(cond)
@@ -213,7 +214,8 @@ class StepDetBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_step_det.usr_update(cond)

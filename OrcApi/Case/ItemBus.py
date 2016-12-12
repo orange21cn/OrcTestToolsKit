@@ -81,7 +81,8 @@ class ItemBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_item.usr_update(cond)
@@ -97,11 +98,14 @@ class ItemBus(object):
         :param p_id:
         :return:
         """
+        print "DDDD"
+        print p_id
+        print "DDD"
         try:
             result = self.__model_item.usr_search(dict(id=p_id))
             result = None if not result else result[0]
         except Exception:
-            self.__logger.error("Add case error, input: %s" % p_id)
+            self.__logger.error("Search item error, input: %s" % p_id)
             raise OrcApiModelFailException
 
         return result

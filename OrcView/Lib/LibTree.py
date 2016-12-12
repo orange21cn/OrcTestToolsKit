@@ -12,7 +12,7 @@ from PySide.QtGui import QAbstractItemView
 from PySide.QtGui import QTreeView
 
 from OrcLib.LibCommon import is_null
-from OrcLib.LibNet import orc_invoke
+# from OrcLib.LibNet import orc_invoke
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibView import get_dict
@@ -177,333 +177,6 @@ class ModelTree(QAbstractItemModel):
         """
         QAbstractItemModel.__init__(self)
 
-        self.__state_current_data = None
-        self.__state_cond = {}  # now sql condition
-        self.__state_root = TreeNode(None)  # data root
-        self.__state_list = []  # data list
-        self.__state_check = []  # checked list
-
-        self.__state_fields_name = []  # fields CN name
-        self.__state_fields_id = []  # data table field name
-        self.__state_edit_fields = []
-        self.__state_select = {}
-
-        self.__state_editable = False
-        self.__state_chk_able = True
-
-        self.__interface = {}
-
-    def supportedDropActions(self):
-        return Qt.CopyAction | Qt.MoveAction
-
-    def flags(self, index):
-
-        i_flag = QAbstractItemModel.flags(self, index)
-
-        if index.isValid():
-            if self.__state_editable and \
-               self.__state_fields_id[index.column()] in self.__state_edit_fields:
-                i_flag |= Qt.ItemIsEditable
-            i_flag |= Qt.ItemIsDragEnabled
-            i_flag |= Qt.ItemIsDropEnabled
-            i_flag |= Qt.ItemIsEnabled
-            i_flag |= Qt.ItemIsSelectable
-        else:
-            i_flag |= Qt.ItemIsDropEnabled
-
-        if index.column() == 0 and self.__state_chk_able:
-            i_flag |= Qt.ItemIsUserCheckable
-
-        return i_flag
-
-    def headerData(self, section, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return self.__state_fields_name[section]
-        return None
-
-    def mimeTypes(self):
-        types = ['application/x-ets-qt4-instance']
-        return types
-
-    def mimeData(self, index):
-        node = self.usr_get_node(index[0])
-        mine_data = OrcMimeData(node)
-        return mine_data
-
-    def dropMimeData(self, p_mime_data, action, row, column, p_parent_index):
-
-        _cond = {}
-
-        if action == Qt.IgnoreAction:
-            return True
-
-        i_drag_node = p_mime_data.instance()
-        i_parent_node = self.usr_get_node(p_parent_index)
-
-        _cond['id'] = i_drag_node.content['id']
-        if i_parent_node.content is None:
-            _cond['pid'] = ""
-        else:
-            _cond['pid'] = i_parent_node.content['id']
-
-        orc_invoke(self.__interface['usr_modify'], _cond)
-
-        self.usr_refresh()
-
-        return True
-
-    def index(self, row, column, parent):
-        node = self.usr_get_node(parent)
-        return self.createIndex(row, column, node.get_child(row))
-
-    def data(self, index, role):
-
-        item = index.internalPointer()
-
-        if role == Qt.CheckStateRole and \
-           index.column() == 0 and \
-           self.__state_chk_able:
-
-            _state = Qt.Unchecked
-            for x in self.__state_check:
-                if x == index:
-                    _state = Qt.Checked
-                    break
-
-            return _state
-
-        if role == Qt.DisplayRole:
-
-            _id = self.__state_fields_id[index.column()]
-            _value = item.content[_id]
-
-            if _id in self.__state_select:
-                return self.__state_select[_id][_value]
-            else:
-                return _value
-
-        return None
-
-    def setData(self, index, value, role=Qt.EditRole):
-
-        if role == Qt.EditRole:
-
-            _cond = {}
-            _field = self.__state_fields_id[index.column()]
-
-            _cond["id"] = self.usr_get_node(index).content["id"]
-            _cond[_field] = value
-
-            try:
-                orc_invoke(self.__interface['usr_modify'], _cond)
-                self.usr_get_node(index).content[_field] = value
-            except Exception:
-                # Todo
-                pass
-
-            return value
-
-        if role == Qt.CheckStateRole and 0 == index.column():
-
-            if value == Qt.Unchecked:
-                self.__state_check.remove(index)
-            else:
-                self.__state_check.append(index)
-
-            return True
-
-    def columnCount(self, parent):
-        return len(self.__state_fields_name)
-
-    def rowCount(self, parent):
-        node = self.usr_get_node(parent)
-        if node is None:
-            return 0
-        return len(node)
-
-    def parent(self, p_index):
-
-        if not p_index.isValid():
-            return QModelIndex()
-
-        node = self.usr_get_node(p_index)
-
-        if node is None:
-            return QModelIndex()
-
-        parent = node.parent
-
-        if parent is None:
-            return QModelIndex()
-
-        grandparent = parent.parent
-        if grandparent is None:
-            return QModelIndex()
-
-        row = grandparent.get_index(parent)
-
-        return self.createIndex(row, 0, parent)
-
-    def usr_set_definition(self, p_def):
-        """
-        Init definition
-        :param p_def:
-        :return:
-        """
-        for t_field in p_def:
-
-            if t_field["DISPLAY"]:
-
-                self.__state_fields_name.append(t_field["NAME"])
-                self.__state_fields_id.append(t_field["ID"])
-
-                if "SELECT" == t_field["TYPE"]:
-                    _res = get_dict(t_field["ID"])
-                    self.__state_select[t_field["ID"]] = {}
-
-                    for t_couple in _res:
-                        self.__state_select[t_field["ID"]][t_couple.dict_value] = t_couple.dict_text
-
-                if t_field["EDIT"]:
-                    self.__state_edit_fields.append(t_field["ID"])
-
-    def usr_get_node(self, p_index):
-        return p_index.internalPointer() if p_index.isValid() else self.__state_root
-
-    def usr_add(self, p_values):
-
-        _pid = None
-        _values = p_values
-
-        if 1 == len(self.__state_check):
-            _pid = self.usr_get_node(self.__state_check[0]).content['id']
-
-        if _pid is not None:
-            _values['pid'] = _pid
-
-        self.__state_cond = orc_invoke(self.__interface['usr_add'], _values)
-
-        self.usr_refresh()
-
-    def usr_delete(self):
-
-        _list = {"list": []}
-
-        for t_index in self.__state_check:
-            _list["list"].append(self.usr_get_node(t_index).content['id'])
-
-        try:
-            orc_invoke(self.__interface['usr_delete'], _list)
-
-            for t_item in self.__state_check:
-                self.__state_check.remove(t_item)
-
-            self.usr_refresh()
-        except Exception:
-            # Todo
-            pass
-
-    def usr_editable(self):
-
-        self.__state_editable = not self.__state_editable
-
-    def usr_chk_able(self):
-
-        self.__state_chk_able = not self.__state_chk_able
-
-    def usr_search(self, p_cond):
-
-        # Get condition
-        self.__state_cond = p_cond
-
-        # Refresh
-        self.usr_refresh()
-
-    def usr_refresh(self):
-
-        # Clean condition
-        for _key, value in self.__state_cond.items():
-            if is_null(value):
-                self.__state_cond.pop(_key)
-
-        # Remove node tree
-        self.usr_remove_children(self.__state_root)
-
-        # Search
-        self.__state_list = orc_invoke(self.__interface['usr_search'], self.__state_cond)
-
-        for t_item in self.__state_list:
-
-            if 'None' == t_item['pid']:
-
-                t_node = self.usr_create_tree_node(t_item)
-                self.__state_root.append_node(t_node)
-
-        # Clean checked list
-        for i in self.__state_check:
-            self.__state_check.remove(i)
-
-        self.reset()
-
-    def usr_remove_children(self, p_node):
-
-        while 0 != len(p_node.children):
-
-            for t_node in p_node.children:
-                if 0 == len(t_node.children):
-                    p_node.children.remove(t_node)
-                else:
-                    self.usr_remove_children(t_node)
-
-    def usr_create_tree_node(self, p_cont):
-        """
-        Add all data to root node
-        :param p_cont:
-        :return:
-        """
-        _node = TreeNode(p_cont)
-
-        for i in self.__state_list:
-
-            if p_cont['id'] == i['pid']:
-
-                t_node = self.usr_create_tree_node(i)
-                _node.append_node(t_node)
-
-        return _node
-
-    def usr_set_interface(self, p_interface):
-        self.__interface = p_interface
-
-    def usr_get_checked(self):
-
-        _checked = []
-
-        for t_index in self.__state_check:
-            _checked.append(self.usr_get_node(t_index).content["id"])
-
-        return _checked
-
-    def usr_get_editable(self):
-        return self.__state_editable
-
-    def usr_set_current_data(self, p_index):
-        self.__state_current_data = self.usr_get_node(p_index)
-
-    def usr_get_current_data(self):
-        return self.__state_current_data
-
-
-class ModelNewTree(QAbstractItemModel):
-    """
-    Model
-    """
-    def __init__(self):
-        """
-        :return:
-        """
-        QAbstractItemModel.__init__(self)
-
         self.__service = None
 
         self.__state_current_data = None
@@ -544,8 +217,13 @@ class ModelNewTree(QAbstractItemModel):
         return _flag
 
     def headerData(self, section, orientation, role):
+
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self.__state_fields_name[section]
+
+        if orientation == Qt.Horizontal and role == Qt.TextAlignmentRole:
+            return Qt.AlignHCenter
+
         return None
 
     def mimeTypes(self):
@@ -608,6 +286,9 @@ class ModelNewTree(QAbstractItemModel):
                 return self.__state_select[_id][_value]
             else:
                 return _value
+
+        if role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
 
         return None
 

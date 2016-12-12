@@ -17,7 +17,8 @@ class PageDefService:
         :param p_data:
         :return:
         """
-        return self.__resource_page_def.post(p_data)
+        page_data = self.__resource_page_def.post(p_data)
+        return dict(id=page_data["id"])
 
     def usr_delete(self, p_list):
         """
@@ -33,6 +34,7 @@ class PageDefService:
         :param p_data:
         :return:
         """
+        self.__resource_case_def.set_path(p_data["id"])
         return self.__resource_page_def.put(p_data)
 
     def usr_search(self, p_cond):
@@ -58,7 +60,8 @@ class PageDetService:
         :param p_data:
         :return:
         """
-        return self.__resource_page_det.post(p_data)
+        page_det_data = self.__resource_page_det.post(p_data)
+        return dict(page_id=page_det_data["page_id"])
 
     def usr_delete(self, p_list):
         """
@@ -74,6 +77,7 @@ class PageDetService:
         :param p_data:
         :return:
         """
+        self.__resource_case_def.set_path(p_data["id"])
         return self.__resource_page_det.put(p_data)
 
     def usr_search(self, p_cond):
@@ -84,13 +88,13 @@ class PageDetService:
         """
         return self.__resource_page_det.get(p_cond)
 
-    def page_get_url(self, p_id):
-        """
-        获取页面 url
-        :param p_id: page detail id
-        :return: url/None
-        """
-        self.__resource_page_det.set_path(p_id)
-        page_det_data = self.__resource_page_det.get()
-
-        return None if not page_det_data else page_det_data["page_url"]
+    # def page_get_url(self, p_id):
+    #     """
+    #     获取页面 url
+    #     :param p_id: page detail id
+    #     :return: url/None
+    #     """
+    #     self.__resource_page_det.set_path(p_id)
+    #     page_det_data = self.__resource_page_det.get()
+    #
+    #     return None if not page_det_data else page_det_data["page_url"]

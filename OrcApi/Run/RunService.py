@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcHttpNewResource
 from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibDatabase import TabItem
 
@@ -10,9 +10,9 @@ class RunCoreService:
     """
     def __init__(self):
 
-        self.__resource_web_driver = OrcHttpResource("Driver")
-        self.__resource_item = OrcHttpResource("Item")
-        self.__resource_data = OrcHttpResource("Data")
+        self.__resource_web_driver = OrcHttpNewResource("Driver")
+        self.__resource_item = OrcHttpNewResource("Item")
+        self.__resource_data = OrcHttpNewResource("Data")
         self.__resource_view = OrcSocketResource("View")
 
     def launch_web_step(self, p_step_info):
@@ -85,6 +85,7 @@ class RunCoreService:
     def update_status(self, p_data):
         """
         更新界面状态
+        :param p_data:
         :return:
         """
         import json

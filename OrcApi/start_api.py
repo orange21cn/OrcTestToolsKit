@@ -7,10 +7,6 @@ from OrcLib import get_config
 from OrcApi import app
 from OrcApi import orc_api
 
-from OrcApi.Data import api
-from OrcApi.Driver.Web import api
-from OrcApi.Lib import api
-
 from OrcApi.Batch.BatchApi import BatchDefListAPI
 from OrcApi.Batch.BatchApi import BatchDefAPI
 from OrcApi.Batch.BatchApi import BatchDetListAPI
@@ -40,6 +36,12 @@ from OrcApi.Driver.Web.WidgetApi import WidgetDefListAPI
 from OrcApi.Driver.Web.WidgetApi import WidgetDefAPI
 from OrcApi.Driver.Web.WidgetApi import WidgetDetListAPI
 from OrcApi.Driver.Web.WidgetApi import WidgetDetAPI
+
+from OrcApi.RunTime.RunTimeApi import RunTimeListAPI
+from OrcApi.RunTime.RunTimeApi import RunTimeAPI
+
+from OrcApi.Lib.DictApi import DictListAPI
+from OrcApi.Lib.DictApi import DictAPI
 
 configer = get_config("network")
 
@@ -81,9 +83,19 @@ orc_api.add_resource(WidgetDefAPI, '/api/1.0/WidgetDef/<int:p_id>', endpoint='Wi
 orc_api.add_resource(WidgetDetListAPI, '/api/1.0/WidgetDet', endpoint='WidgetDets')
 orc_api.add_resource(WidgetDetAPI, '/api/1.0/WidgetDet/<int:p_id>', endpoint='WidgetDet')
 
+# Window
 orc_api.add_resource(WindowListAPI, '/api/1.0/WindowDef', endpoint='Windows')
 orc_api.add_resource(WindowAPI, '/api/1.0/WindowDef/<int:p_id>', endpoint='Window')
 
+# RunTime
+orc_api.add_resource(RunTimeListAPI, '/api/1.0/RunTime', endpoint='RunTimes')
+orc_api.add_resource(RunTimeAPI, '/api/1.0/RunTime/<int:p_id>', endpoint='RunTime')
+
+# Dict
+orc_api.add_resource(DictListAPI, '/api/1.0/Dict', endpoint='Dicts')
+orc_api.add_resource(DictAPI, '/api/1.0/Dict/<int:p_id>', endpoint='Dict')
+
+# config
 driver_host = configer.get_option("CASE", "ip")
 driver_port = configer.get_option("CASE", "port")
 

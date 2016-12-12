@@ -12,7 +12,7 @@ class WidgetDefListAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.widget.defs")
+        self.__logger = OrcLog("resource.widgets.api.def")
         self.__business = WidgetDefBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -25,6 +25,9 @@ class WidgetDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Add widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_add(parameter)
 
     @orc_api
@@ -34,6 +37,9 @@ class WidgetDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Delete widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_delete(parameter)
 
     @orc_api
@@ -43,6 +49,9 @@ class WidgetDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_search(parameter)
 
 
@@ -50,7 +59,7 @@ class WidgetDefAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.widget.def")
+        self.__logger = OrcLog("resource.widget.def")
         self.__business = WidgetDefBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -63,6 +72,8 @@ class WidgetDefAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search widget, parameter is: %s" % p_id)
+
         return self.__business.bus_search(p_id)
 
     @orc_api
@@ -73,6 +84,9 @@ class WidgetDefAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Update widget, parameter is: %s, %s" % (p_id, parameter))
+
         return self.__business.bus_update(p_id, parameter)
 
     @orc_api
@@ -82,6 +96,8 @@ class WidgetDefAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Delete widget, parameter is: %s" % p_id)
+
         return self.__business.bus_delete(p_id)
 
 
@@ -89,7 +105,7 @@ class WidgetDetListAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.widget.dets")
+        self.__logger = OrcLog("resource.widgets.api.det")
         self.__business = WidgetDetBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -102,6 +118,9 @@ class WidgetDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Add widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_add(parameter)
 
     @orc_api
@@ -111,6 +130,9 @@ class WidgetDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Delete widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_delete(parameter)
 
     @orc_api
@@ -120,6 +142,9 @@ class WidgetDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search widget, parameter is: %s" % parameter)
+
         return self.__business.bus_list_search(parameter)
 
 
@@ -127,7 +152,7 @@ class WidgetDetAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.widget.det")
+        self.__logger = OrcLog("resource.widget.api.det")
         self.__business = WidgetDetBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -140,6 +165,8 @@ class WidgetDetAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search widget, parameter is: %s" % p_id)
+
         return self.__business.bus_search(p_id)
 
     @orc_api
@@ -150,6 +177,9 @@ class WidgetDetAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Update widget, parameter is: %s, %s" % (p_id, parameter))
+
         return self.__business.bus_update(p_id, parameter)
 
     @orc_api
@@ -159,4 +189,6 @@ class WidgetDetAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Delete widget, parameter is: %s" % p_id)
+
         return self.__business.bus_delete(p_id)

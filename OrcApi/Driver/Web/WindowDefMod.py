@@ -27,29 +27,29 @@ class WindowDefMod:
         cond = p_cond if p_cond else dict()
 
         # 查询条件 like
-        func_like = lambda p_flag: "%%%s%%" % cond[p_flag]
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
         # db session
-        search = self.__session.query(WebWindowDef)
+        result = self.__session.query(WebWindowDef)
 
         if 'id' in cond:
 
             # 查询支持多 id
             if isinstance(cond["id"], list):
-                search = search.filter(WebWindowDef.id.in_(cond['id']))
+                result = result.filter(WebWindowDef.id.in_(cond['id']))
             else:
-                search = search.filter(WebWindowDef.id == cond['id'])
+                result = result.filter(WebWindowDef.id == cond['id'])
 
         if 'window_mark' in cond:
-            search = search.filter(WebWindowDef.window_mark.ilike(func_like('window_mark')))
+            result = result.filter(WebWindowDef.window_mark.ilike(_like('window_mark')))
 
         if 'window_desc' in cond:
-            search = search.filter(WebWindowDef.window_desc.ilike(func_like('window_desc')))
+            result = result.filter(WebWindowDef.window_desc.ilike(_like('window_desc')))
 
         if 'comment' in cond:
-            search = search.filter(WebWindowDef.comment.ilike(func_like('comment')))
+            result = result.filter(WebWindowDef.comment.ilike(_like('comment')))
 
-        return search.all()
+        return result.all()
 
     def usr_add(self, p_data):
         """
@@ -81,7 +81,7 @@ class WindowDefMod:
             self.__logger.error("")
             raise OrcDatabaseException
 
-        return dict(id=str(_node.id))
+        return _node
 
     def usr_update(self, p_cond):
 

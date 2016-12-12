@@ -20,36 +20,38 @@ class StepDefMod:
 
         self.__step_det = StepDetMod()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if p_filter is None:
-            _res = self.__session.query(TabStepDef).all()
-        else:
-            _res = self.__session.query(TabStepDef)
+        # 查询条件 like
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-            if 'id' in p_filter:
-                if isinstance(p_filter["id"], list):
-                    _res = _res.filter(TabStepDef.id.in_(p_filter['id']))
-                else:
-                    _res = _res.filter(TabStepDef.id == p_filter['id'])
+        # db session
+        result = self.__session.query(TabStepDef)
 
-            if 'pid' in p_filter:
-                _res = _res.filter(TabStepDef.pid == p_filter['pid'])
+        if 'id' in p_cond:
 
-            if 'step_no' in p_filter:
-                _res = _res.filter(TabStepDef.step_no.ilike(f_value('step_no')))
+            # 查询支持多 id
+            if isinstance(p_cond["id"], list):
+                result = result.filter(TabStepDef.id.in_(p_cond['id']))
+            else:
+                result = result.filter(TabStepDef.id == p_cond['id'])
 
-            if 'step_desc' in p_filter:
-                _res = _res.filter(TabStepDef.step_desc.ilike(f_value('step_desc')))
+        if 'pid' in p_cond:
+            result = result.filter(TabStepDef.pid == p_cond['pid'])
 
-        return _res.all()
+        if 'step_no' in p_cond:
+            result = result.filter(TabStepDef.step_no.ilike(_like('step_no')))
+
+        if 'step_desc' in p_cond:
+            result = result.filter(TabStepDef.step_desc.ilike(_like('step_desc')))
+
+        return result.all()
 
     def usr_add(self, p_data):
         """

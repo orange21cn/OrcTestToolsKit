@@ -18,13 +18,6 @@ class DriverModel:
         """
         return self.__service.run(p_cmd)
 
-    def get_status(self):
-        """
-        获取执行完成列表
-        :return:
-        """
-        return 1
-
     def debug(self, p_cmd):
         """
         调试

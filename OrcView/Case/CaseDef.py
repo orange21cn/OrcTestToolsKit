@@ -8,7 +8,7 @@ from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibTree import ModelNewTree
+from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibViewDef import def_view_case_def
 
@@ -18,11 +18,11 @@ from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from CaseService import CaseDefService
 
 
-class CaseDefModel(ModelNewTree):
+class CaseDefModel(ModelTree):
 
     def __init__(self):
 
-        ModelNewTree.__init__(self)
+        ModelTree.__init__(self)
         self.usr_set_service(CaseDefService())
 
 

@@ -21,30 +21,35 @@ class PageDefMod:
 
         self.child = PageDetMod()
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if p_filter is None:
-            _res = self.__session.query(WebPageDef).all()
-        else:
-            _res = self.__session.query(WebPageDef)
+        # 查询条件 like
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-            if 'id' in p_filter:
-                _res = _res.filter(WebPageDef.id == p_filter['id'])
+        # db session
+        result = self.__session.query(WebPageDef)
 
-            if 'page_flag' in p_filter:
-                _res = _res.filter(WebPageDef.page_flag.ilike(f_value('page_flag')))
+        if 'id' in cond:
 
-            if 'page_desc' in p_filter:
-                _res = _res.filter(WebPageDef.page_desc.ilike(f_value('page_desc')))
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(WebPageDef.id.in_(cond['id']))
+            else:
+                result = result.filter(WebPageDef.id == cond['id'])
 
-        return _res.all()
+        if 'page_flag' in cond:
+            result = result.filter(WebPageDef.page_flag.ilike(_like('page_flag')))
+
+        if 'page_desc' in cond:
+            result = result.filter(WebPageDef.page_desc.ilike(_like('page_desc')))
+
+        return result.all()
 
     def usr_add(self, p_data):
         """
@@ -75,7 +80,7 @@ class PageDefMod:
         except:
             raise OrcDatabaseException
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def _create_no(self):
         """

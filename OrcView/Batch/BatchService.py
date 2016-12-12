@@ -35,6 +35,7 @@ class BatchDefService(object):
         :param p_data:
         :return:
         """
+        self.__resource_batch_def.set_path(p_data["id"])
         return self.__resource_batch_def.put(p_data)
 
     def usr_search(self, p_cond):
@@ -91,6 +92,7 @@ class BatchDetService(object):
         :param p_data:
         :return:
         """
+        self.__resource_batch_det.set_path(p_data["id"])
         return self.__resource_batch_det.put(p_data)
 
     def usr_search(self, p_cond):

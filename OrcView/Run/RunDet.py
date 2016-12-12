@@ -13,18 +13,18 @@ from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 
 from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibTree import ModelNewTree
+from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibView import OrcProcess
 from OrcView.Lib.LibViewDef import def_view_run_det
 from RunDetService import RunDetService
 
 
-class RunDetModel(ModelNewTree):
+class RunDetModel(ModelTree):
 
     def __init__(self):
 
-        ModelNewTree.__init__(self)
+        ModelTree.__init__(self)
 
         self.__service = RunDetService()
         self.usr_set_service(self.__service)
@@ -43,7 +43,7 @@ class RunDetModel(ModelNewTree):
             node = p_node
 
         if node.content is not None:
-                count = 1
+            count = 1
 
         if node.children:
             for child in node.children:

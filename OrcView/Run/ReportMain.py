@@ -2,6 +2,7 @@
 from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QSplitter
 
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Run.RunDef import ViewRunDef
@@ -28,14 +29,16 @@ class ViewReportMain(QWidget):
         self.__wid_search_cond.create()
 
         # 底部 layout
-        _layout_bottom = QHBoxLayout()
+        _layout_bottom = QSplitter()
         _layout_bottom.addWidget(self.__wid_run_def)
         _layout_bottom.addWidget(self.__wid_report_det)
 
         # main layout
         _layout = QVBoxLayout()
         _layout.addWidget(self.__wid_search_cond)
-        _layout.addLayout(_layout_bottom)
+        _layout.addWidget(_layout_bottom)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(_layout)
 

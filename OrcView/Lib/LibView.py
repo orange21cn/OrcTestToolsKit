@@ -11,7 +11,7 @@ from PySide.QtGui import QProgressBar
 
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
-from OrcLib.LibNet import orc_invoke
+from OrcLib.LibNet import OrcHttpNewResource
 from OrcLib.LibException import OrcPostFailedException
 from LibDict import LibDict
 
@@ -104,7 +104,7 @@ class OrcLineEdit(QLineEdit):
     def __init__(self):
         QLineEdit.__init__(self)
 
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
     def get_data(self):
         return self.text()
@@ -124,7 +124,7 @@ class OrcTextArea(QTextEdit):
     def __init__(self, parent):
         QTextEdit.__init__(self, parent)
 
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     def get_data(self):
         return self.toPlainText()
@@ -177,7 +177,7 @@ class OrcSelect(QComboBox):
         if p_flag is not None:
             self.set_flag(p_flag)
 
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
     def set_flag(self, p_flag):
 
@@ -247,7 +247,7 @@ class OrcSelectBase(QComboBox):
         self.empty = p_empty
 
         # 设置在拉伸方式
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
     def set_item_data(self, p_data=None):
         """
@@ -362,9 +362,12 @@ class SelectWidgetOperation(OrcSelectBase):
 
         _data = [dict(name=_item.ope_name, text=_item.ope_text)
                  for _item in self.__dict.get_widget_operation(p_type)]
+        print _data
 
         # 获取基本操作方式
-        if "BLOCK" != p_type:
+        if p_type not in ("PAGE", "BLOCK"):
+            print p_type
+            print "OOOOOOOOOOOOOOO"
             _data.extend([dict(name=_item.ope_name, text=_item.ope_text)
                          for _item in self.__dict.get_widget_operation("BLOCK")])
 
@@ -379,9 +382,44 @@ def operate_to_str(p_data):
     if not p_data:
         return None
 
-    _widget_get_path = 'http://localhost:5000/WidgetDef/usr_get_path'
-    _page_get_flag = 'http://localhost:5000/PageDef/usr_get_flag'
-    _get_dict_text = 'http://localhost:5000/Lib/usr_get_dict_text'
+    def get_widget_def_path(p_id):
+        """
+        获取控件路径
+        :param p_id:
+        :return:
+        """
+        resource_widget_def = OrcHttpNewResource("WidgetDef")
+        resource_widget_def.set_path(p_id)
+
+        widget_def_data = resource_widget_def.get()
+
+        return None if not resource_widget_def else widget_def_data["widget_path"]
+
+    def get_page_def_flag(p_id):
+        """
+        获取页面标识
+        :param p_id:
+        :return:
+        """
+        resource_page_def = OrcHttpNewResource("PageDef")
+        resource_page_def.set_path(p_id)
+
+        page_def_data = resource_page_def.get()
+
+        return None if not page_def_data else page_def_data["page_flag"]
+
+    def get_lib_dict_text(p_flag, p_value):
+        """
+        获取操作文字
+        :param p_value:
+        :param p_flag:
+        :return:
+        """
+        resource_dict = OrcHttpNewResource("Dict")
+        dict_data = resource_dict.get(dict(dict_flag=p_flag, dict_value=p_value))
+
+        return None if not dict_data else dict_data[0]["dict_text"]
+
     _dict = LibDict()
 
     _type = p_data["TYPE"]
@@ -392,12 +430,11 @@ def operate_to_str(p_data):
         _operation = p_data["OPERATION"]
 
         try:
-            _object = orc_invoke(_widget_get_path, _object)
-            if 0 < len(_object):
-                _object = _object[0]["PATH"]
-            _type = orc_invoke(_get_dict_text, dict(flag="operate_object_type", value=_type))
-            # _operation = orc_invoke(_get_dict_text, dict(flag="widget_operator", value=_operation))
+            _object = get_widget_def_path(_object)
+            _type = get_lib_dict_text("operate_object_type", _type)
+
             _operation = _dict.get_widget_operation_text(_operation)
+
         except OrcPostFailedException:
             # Todo
             pass
@@ -405,12 +442,9 @@ def operate_to_str(p_data):
         return "%s->%s->%s" % (_operation, _type, _object)
 
     else:
-
         try:
-            _object = orc_invoke(_page_get_flag, _object)
-            if 0 < len(_object):
-                _object = _object
-            _type = orc_invoke(_get_dict_text, dict(flag="operate_object_type", value=_type))
+            _object = get_page_def_flag(_object)
+            _type = get_lib_dict_text("operate_object_type", _type)
         except OrcPostFailedException:
             # Todo
             pass

@@ -5,7 +5,7 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
@@ -15,11 +15,11 @@ from OrcView.Data.DataAdd import ViewDataAdd
 from CaseService import CaseDetService
 
 
-class CaseDetModel(ModelNewTable):
+class CaseDetModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self)
+        ModelTable.__init__(self)
 
         self.usr_set_service(CaseDetService())
 

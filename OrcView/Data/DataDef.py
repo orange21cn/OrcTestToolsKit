@@ -8,17 +8,17 @@ from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_data
 
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibControl import LibControl
 
 from DataService import DataService
 
 
-class DataModel(ModelNewTable):
+class DataModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self)
+        ModelTable.__init__(self)
 
         service = DataService()
         self.usr_set_service(service)

@@ -19,33 +19,26 @@ class ItemMod:
     def __init__(self):
         pass
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        _res = self.__session.query(TabItem)
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if 'id' in p_filter:
-            if isinstance(p_filter["id"], list):
-                _res = _res.filter(TabItem.id.in_(p_filter['id']))
+        # db session
+        result = self.__session.query(TabItem)
+
+        if 'id' in cond:
+
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(TabItem.id.in_(cond['id']))
             else:
-                _res = _res.filter(TabItem.id == p_filter['id'])
+                result = result.filter(TabItem.id == cond['id'])
 
-        return _res.all()
-
-    def usr_list_search(self, p_filter):
-        """
-        :param p_filter:
-        :return:
-        """
-        # search
-        _res = self.__session.query(TabItem)
-
-        if 'id' in p_filter:
-            _res = _res.filter(TabItem.id.in_(p_filter['id']))
-
-        return _res.all()
+        return result.all()
 
     def usr_add(self, p_data):
         """
@@ -86,7 +79,7 @@ class ItemMod:
         except:
             raise OrcDatabaseException
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def _create_no(self):
         """

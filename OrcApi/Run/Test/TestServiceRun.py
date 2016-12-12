@@ -1,7 +1,7 @@
 import unittest
 
 from OrcLib.LibTest import OrcTest
-from OrcApi.Run.RunDefModel import RunCore
+from OrcApi.Run.RunDefMod import RunCore
 
 
 class TestService(unittest.TestCase):

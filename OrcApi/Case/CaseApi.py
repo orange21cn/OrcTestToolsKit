@@ -12,7 +12,7 @@ class CaseDefListAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.case.defs")
+        self.__logger = OrcLog("resource.cases.api.def")
         self.__business = CaseDefBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -25,6 +25,9 @@ class CaseDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Add case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_add(parameter)
 
     @orc_api
@@ -34,6 +37,9 @@ class CaseDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_search(parameter)
 
     @orc_api
@@ -43,6 +49,9 @@ class CaseDefListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Delete case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_delete(parameter)
 
 
@@ -50,7 +59,7 @@ class CaseDefAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.case.def")
+        self.__logger = OrcLog("resource.case.api.def")
         self.__business = CaseDefBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -63,6 +72,8 @@ class CaseDefAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search case, parameter is: %s" % p_id)
+
         return self.__business.bus_search(p_id)
 
     @orc_api
@@ -73,6 +84,9 @@ class CaseDefAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Update case, parameter is: %s, %s" % (p_id, parameter))
+
         return self.__business.bus_update(p_id, parameter)
 
     @orc_api
@@ -82,6 +96,8 @@ class CaseDefAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Delete case, parameter is: %s" % p_id)
+
         return self.__business.bus_delete(p_id)
 
 
@@ -89,7 +105,7 @@ class CaseDetListAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.case.dets")
+        self.__logger = OrcLog("resource.cases.api.det")
         self.__business = CaseDetBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -102,6 +118,9 @@ class CaseDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Add case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_add(parameter)
 
     @orc_api
@@ -111,6 +130,9 @@ class CaseDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Delete case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_delete(parameter)
 
     @orc_api
@@ -120,6 +142,9 @@ class CaseDetListAPI(Resource):
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search case, parameter is: %s" % parameter)
+
         return self.__business.bus_list_search(parameter)
 
 
@@ -127,7 +152,7 @@ class CaseDetAPI(Resource):
 
     def __init__(self):
 
-        self.__logger = OrcLog("api.case.det")
+        self.__logger = OrcLog("resource.case.api.det")
         self.__business = CaseDetBus()
 
     def dispatch_request(self, *args, **kwargs):
@@ -140,17 +165,21 @@ class CaseDetAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search case, parameter is: %s" % p_id)
+
         return self.__business.bus_search(p_id)
 
     @orc_api
     def put(self, p_id):
         """
         Update
-        :param p_data:
         :param p_id:
         :return:
         """
         parameter = OrcParameter.receive_para()
+
+        self.__logger.info("Search case, parameter is: %s, %s" % (p_id, parameter))
+
         return self.__business.bus_update(p_id, parameter)
 
     @orc_api
@@ -160,4 +189,6 @@ class CaseDetAPI(Resource):
         :param p_id:
         :return:
         """
+        self.__logger.info("Search case, parameter is: %s" % p_id)
+
         return self.__business.bus_delete(p_id)

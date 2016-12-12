@@ -1,11 +1,11 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
+from PySide.QtGui import QLabel
 from PySide.QtGui import QTabWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QFormLayout
-from PySide.QtGui import QLabel
+from PySide.QtGui import QGridLayout
 from PySide.QtGui import QPushButton
 
 from OrcView.Driver.Web.PageMain import PageContainer
@@ -14,6 +14,7 @@ from OrcView.Driver.Web.WindowDef import ViewWindow
 
 from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
+from OrcView.Lib.LibView import OrcTextArea
 from OrcView.Lib.LibView import SelectWidgetType
 from OrcView.Lib.LibView import SelectWidgetOperation
 from OrcView.Lib.LibDict import LibDict
@@ -53,6 +54,7 @@ class ViewWebMain(QWidget):
 
         # 测试区
         self.__test = WidgetTest()
+        self.__test.setStyleSheet(get_theme("TestWidget"))
 
         # 主layout
         _layout = QHBoxLayout()
@@ -61,6 +63,9 @@ class ViewWebMain(QWidget):
 
         _layout.setStretch(0, 5)
         _layout.setStretch(1, 1)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
+        _layout.setSpacing(0)
 
         self.setLayout(_layout)
 
@@ -109,7 +114,7 @@ class WidgetTest(QWidget):
         self.env = None
 
         # 输入框
-        _layout_top = QFormLayout()
+        _layout_top = QGridLayout()
 
         self.__edit_type = OrcSelect()  # 类型,页面或者控件
         self.__edit_flag = OrcLineEdit()  # 标识符
@@ -124,13 +129,19 @@ class WidgetTest(QWidget):
         self.__widget_type.setEnabled(False)
         self.__widget_data.setEnabled(False)
 
-        _layout_top.addRow(u"类型", self.__edit_type)
-        _layout_top.addRow(u"标识", self.__edit_flag)
-        _layout_top.addRow(u"控件", self.__widget_type)
-        _layout_top.addRow(u"操作", self.__widget_ope)
-        _layout_top.addRow(u"数据", self.__widget_data)
+        _layout_top.addWidget(QLabel(u"类型:"), 0, 0)
+        _layout_top.addWidget(self.__edit_type, 0, 1)
+        _layout_top.addWidget(QLabel(u"标识:"), 1, 0)
+        _layout_top.addWidget(self.__edit_flag, 1, 1)
+        _layout_top.addWidget(QLabel(u"控件:"), 2, 0)
+        _layout_top.addWidget(self.__widget_type, 2, 1)
+        _layout_top.addWidget(QLabel(u"操作:"), 3, 0)
+        _layout_top.addWidget(self.__widget_ope, 3, 1)
+        _layout_top.addWidget(QLabel(u"数据:"), 4, 0)
+        _layout_top.addWidget(self.__widget_data, 4, 1)
 
-        self.__edit_status = QLabel()
+        self.__edit_status = OrcTextArea(self)
+        self.__edit_status.setReadOnly(True)
 
         # 按钮
         _layout_button = QHBoxLayout()
@@ -148,8 +159,6 @@ class WidgetTest(QWidget):
         _layout.addLayout(_layout_button)
 
         self.setLayout(_layout)
-
-        self.setStyleSheet(get_theme("Input"))
 
         self.__widget_ope.currentIndexChanged.connect(self.__set_operation)
         self.__widget_data.textChanged.connect(self.__set_data)
@@ -190,9 +199,9 @@ class WidgetTest(QWidget):
             # 禁用控件类型
             self.__widget_type.set_data("")
 
-            # 禁用控件操作
-            self.__widget_ope.set_item_data()
-            self.__widget_ope.setEnabled(False)
+            # 页面操作项
+            self.__widget_ope.set_type("PAGE")
+            # self.__widget_ope.setEnabled(False)
 
             # 禁止输入数据
             self.__widget_data.clear()
@@ -209,9 +218,9 @@ class WidgetTest(QWidget):
             # 设置控件类型
             self.__widget_type.set_data(_widget_type)
 
-            # 重置控件操作项并使之可用
+            # 重置控件操作项
             self.__widget_ope.set_type(_widget_type)
-            self.__widget_ope.setEnabled(True)
+            # self.__widget_ope.setEnabled(True)
 
             # 数据输入框可用
             self.__widget_data.setEnabled(True)

@@ -22,6 +22,37 @@ def gen_id(p_name):
     return _seq.field_seq
 
 
+class TabRunTime(orc_db.Model):
+    """
+    Table tab_run_time
+    """
+    __tablename__ = 'tab_run_time'
+
+    id = orc_db.Column(orc_db.Integer, autoincrement=True, primary_key=True)
+    module = orc_db.Column(orc_db.String(16))
+    data_flag = orc_db.Column(orc_db.String(16))
+    data_index = orc_db.Column(orc_db.Integer)
+    data_value = orc_db.Column(orc_db.String(128))
+
+    def __init__(self, p_def=None):
+
+        self.id = p_def["id"] if p_def else None
+        self.module = p_def["module"] if p_def else None
+        self.data_flag = p_def["data_flag"] if p_def else None
+        self.data_index = p_def["data_flag"] if p_def else None
+        self.data_value = p_def["data_flag"] if p_def else None
+
+    def to_json(self):
+
+        return dict(
+            id=self.id,
+            module=self.module,
+            data_flag=self.data_flag,
+            data_index=self.data_index,
+            data_value=self.data_value
+        )
+
+
 class TabBatchDef(orc_db.Model):
     """
     Table orc_batch_def
@@ -31,7 +62,7 @@ class TabBatchDef(orc_db.Model):
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     pid = orc_db.Column(orc_db.Integer)
     batch_no = orc_db.Column(orc_db.String(16))
-    batch_type  = orc_db.Column(orc_db.String(8))
+    batch_type = orc_db.Column(orc_db.String(8))
     batch_name = orc_db.Column(orc_db.String(32))
     batch_desc = orc_db.Column(orc_db.String(512))
     comment = orc_db.Column(orc_db.String(1024))

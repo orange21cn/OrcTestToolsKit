@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import codecs
 
 
 class RunLog:
@@ -32,19 +33,24 @@ class RunLog:
 
             path_list.append(item)
 
+        # path_list.reverse()
+
         # 运行目录
-        self.__run_folder = "%s/%s" %\
-                            (self.__home, "/".join(["%s_%s" % (item["run_det_type"], item["flag"]) for item in path_list]))
+        self.__run_folder = "%s/%s" % \
+                            (self.__home,
+                             "/".join(["%s_%s" % (item["run_det_type"], item["flag"]) for item in path_list]))
         if not os.path.exists(self.__run_folder):
             os.mkdir(self.__run_folder)
 
         # log 文件, 确保只在 case 下建文件
-        self.__current_content = p_list[len(p_list)-1]
+        self.__current_content = p_list[len(p_list) - 1]
 
         if self.__current_content["run_det_type"] == 'CASE':
-            self.__log_file = open("%s/default.log" % self.__run_folder, "a+")
+            self.__log_file = codecs.open("%s/default.log" % self.__run_folder, "a+")
         elif self.__current_content["run_det_type"] in ("STEP", "ITEM"):
-            self.__log_file = open("%s/default.log" % self.__run_folder, "a+")
+            self.__log_file = codecs.open("%s/default.log" % self.__run_folder, "a+")
+        else:
+            pass
 
     def run_begin(self):
 
@@ -57,7 +63,8 @@ class RunLog:
             self.__log_file.write("---> Begin step %s %s ----\n" %
                                   (self.__current_content["flag"], self.__current_content["desc"].encode('utf-8')))
         elif "ITEM" == run_flag:
-            self.__log_file.write("  -> Item %s -- %s\n" % (self.__current_content["flag"], self.__current_content["desc"]))
+            self.__log_file.write(
+                u"  -> Item %s -- %s\n" % (self.__current_content["flag"], "abc"))
         else:
             pass
 
@@ -85,4 +92,3 @@ class RunLog:
 
         if self.__log_file is not None:
             self.__log_file.close()
-

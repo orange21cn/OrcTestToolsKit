@@ -3,8 +3,6 @@ import unittest
 
 from OrcApi.Case.CaseDefMod import CaseDefMod
 from OrcLib.LibException import OrcPostFailedException
-from OrcLib.LibNet import orc_invoke
-from OrcLib.LibNet import OrcInvoke
 
 from OrcLib.LibTest import OrcTest
 
@@ -50,11 +48,7 @@ class TestApi(unittest.TestCase):
         i_para = '2000000001'
         i_url = 'http://127.0.0.1:5000/CaseDef/usr_get_path'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()
 
@@ -68,11 +62,7 @@ class TestApi(unittest.TestCase):
         i_para = ['110100000000079', '110100000000078']
         i_url = 'http://127.0.0.1:5000/CaseDef/usr_get_path'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()
 
@@ -83,14 +73,6 @@ class TestApi(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        para = dict(id=2000000002)
-        url = 'http://127.0.0.1:5000/api/1.0/CaseDef'
-        invoker = OrcInvoke()
-
-        try:
-            result = invoker.get(url, para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
 
         OrcTest.test_print_end()

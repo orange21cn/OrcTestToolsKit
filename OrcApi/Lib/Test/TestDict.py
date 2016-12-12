@@ -1,10 +1,9 @@
 import traceback
 import unittest
 
-from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibException import OrcPostFailedException
-from OrcLib.LibNet import orc_invoke
 from OrcLib.LibTest import OrcTest
+from OrcLib.LibNet import OrcHttpNewResource
 
 from OrcApi.Lib.Dictionory import DictHandle
 
@@ -35,10 +34,46 @@ class TestApi(unittest.TestCase):
         i_para = dict(flag="case_type", value="CASE")
         i_url = 'http://127.0.0.1:5000/Lib/get_dict_text'
 
-        try:
-            result = orc_invoke(i_url, i_para)
-            OrcTest.test_print_result(result, 'result')
-        except OrcPostFailedException:
-            traceback.print_exc()
+        pass
+
+        OrcTest.test_print_end()
+
+
+class TestDict(unittest.TestCase):
+
+    def test_api_list_get(self):
+
+        OrcTest.test_print_begin()
+
+        resource = OrcHttpNewResource("Dict")
+        OrcTest.test_print_result(resource.get(dict(id=10001)))
+
+        OrcTest.test_print_end()
+
+    def test_api_list_post(self):
+
+        OrcTest.test_print_begin()
+
+        resource = OrcHttpNewResource("Dict")
+        OrcTest.test_print_result(resource.post(dict(dict_flag="test_dict", dict_order=1)))
+
+        OrcTest.test_print_end()
+
+    def test_api_list_delete(self):
+
+        OrcTest.test_print_begin()
+
+        resource = OrcHttpNewResource("Dict")
+        OrcTest.test_print_result(resource.delete([20001]))
+
+        OrcTest.test_print_end()
+
+    def test_api_update(self):
+
+        OrcTest.test_print_begin()
+
+        resource = OrcHttpNewResource("Dict")
+        resource.set_path(20003)
+        OrcTest.test_print_result(resource.put(dict(dict_flag="update")))
 
         OrcTest.test_print_end()

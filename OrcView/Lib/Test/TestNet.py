@@ -1,7 +1,7 @@
 import unittest
 
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcHttpNewResource
 
 
 class TestDict(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestDict(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _obj = OrcHttpResource('BatchDef')
+        _obj = OrcHttpNewResource('BatchDef')
         _res = _obj.get()
 
         OrcTest.test_print_result(_res)
@@ -27,7 +27,7 @@ class TestDict(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _obj = OrcHttpResource('BatchDef')
+        _obj = OrcHttpNewResource('BatchDef')
         _obj.set_path(1000000001)
         _res = _obj.get()
 

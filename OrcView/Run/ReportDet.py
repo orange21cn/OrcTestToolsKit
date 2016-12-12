@@ -22,7 +22,6 @@ class ViewReportDet(QWidget):
 
         # report view
         self.__wid_display = QWebView()
-        self.__wid_display.load("http://localhost:8001/api/1.0/Report/a/b")
 
         # buttons
         _wid_buttons = ViewButtons([
@@ -37,6 +36,8 @@ class ViewReportDet(QWidget):
         _layout.addWidget(_wid_buttons)
 
         self.setLayout(_layout)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
 
         # connection
 

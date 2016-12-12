@@ -1,5 +1,7 @@
+# coding=utf-8
 import sys
 from OrcLib import init_log
+
 
 class OrcTest:
 

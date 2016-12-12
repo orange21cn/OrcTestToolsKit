@@ -14,5 +14,5 @@ class WebDriverService:
         :param p_cmd:
         :return:
         """
-        import json
+        print "-->", p_cmd
         return self.__resource_socket.get(p_cmd)

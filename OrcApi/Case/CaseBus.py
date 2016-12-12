@@ -8,6 +8,7 @@ from StepBus import StepDefBus
 
 
 class CaseDefBus(object):
+
     def __init__(self):
 
         object.__init__(self)
@@ -120,7 +121,8 @@ class CaseDefBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_case_def.usr_update(cond)
@@ -231,12 +233,13 @@ class CaseDetBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
 
         try:
             self.__model_case_det.usr_update(cond)
         except Exception:
-            self.__logger.error("Del case from batch error, input: %s" % cond)
+            self.__logger.error("Update case error, input: %s" % cond)
             raise OrcApiModelFailException
 
         return True

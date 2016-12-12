@@ -19,33 +19,38 @@ class WidgetDetMod:
     def __init__(self):
         pass
 
-    def usr_search(self, p_filter=None):
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        if not p_filter:
-            p_filter = dict()
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 查询条件 like
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-        _res = self.__session.query(WebWidgetDet)
+        # db session
+        result = self.__session.query(WebWidgetDet)
 
-        if 'id' in p_filter:
-            _res = _res.filter(WebWidgetDet.id.ilike(f_value('id')))
+        if 'id' in cond:
 
-        if 'widget_id' in p_filter:
-            _res = _res.filter(WebWidgetDet.widget_id == p_filter['widget_id'])
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(WebWidgetDet.id.in_(cond['id']))
+            else:
+                result = result.filter(WebWidgetDet.id == cond['id'])
 
-        if 'widget_env' in p_filter:
-            _res = _res.filter(WebWidgetDet.widget_env.ilike(f_value('widget_env')))
+        if 'widget_id' in cond:
+            result = result.filter(WebWidgetDet.widget_id == cond['widget_id'])
+
+        if 'widget_env' in cond:
+            result = result.filter(WebWidgetDet.widget_env.ilike(_like('widget_env')))
 
         # add order
-        _res = _res.order_by(asc(WebWidgetDet.widget_order))
+        result = result.order_by(asc(WebWidgetDet.widget_order))
 
-        return _res.all()
+        return result.all()
 
     def usr_add(self, p_data):
         """
@@ -86,7 +91,7 @@ class WidgetDetMod:
         except:
             raise OrcDatabaseException
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def _create_no(self):
         """

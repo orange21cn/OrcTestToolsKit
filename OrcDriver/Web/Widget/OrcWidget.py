@@ -1,9 +1,12 @@
 # coding=utf-8
 from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 
 from OrcDriver.Web.WebDriverService import WebDriverService
 from OrcLib.LibLog import OrcLog
+from OrcLib.LibRunTime import Runtime
 
 
 class OrcWidget:
@@ -16,11 +19,33 @@ class OrcWidget:
 
         self._root = p_root
         self._widget = p_root
-        self._window = None
+
+        # 是否遇到 frame,下一步将执行 switch_to
+        self.__meet_frame = False
+
         self.__service = WebDriverService()
+        self.__runtime = Runtime("widget")
 
         self._def = self.__get_def_info(p_id)
         self._get_widget()
+
+    # 标识当前的 frame id
+    @property
+    def frame(self):
+        return self.__runtime.get_value("frame")
+
+    @frame.setter
+    def frame(self, p_value):
+        self.__runtime.set_value("frame", p_value)
+
+    # 标识当前的 window id
+    @property
+    def window(self):
+        return self.__runtime.get_value("window")
+
+    @window.setter
+    def window(self, p_value):
+        self.__runtime.set_value("window", p_value)
 
     def __get_def_info(self, p_id):
         """
@@ -32,22 +57,30 @@ class OrcWidget:
         _definition = list()
 
         # Get definition
-        _widget_def = self.__service.widget_get_definition_tree(p_id)
+        _widget_def = self.__service.widget_get_definition_path(p_id)
 
         if _widget_def is None:
             return None
 
         # Get detail
         for t_def in _widget_def:
-
             _widget_det = self.__service.widget_get_detail(t_def.id)
             _definition.append(dict(DEF=t_def, DET=_widget_det))
 
         return _definition
 
     def exists(self):
-        # todo None AttributeError
-        return self._widget.is_displayed()
+        """
+        检查控件是否显示
+        :return:
+        """
+        if self._widget is None:
+            return False
+
+        try:
+            self._widget.is_displayed()
+        except NoSuchElementException:
+            return False
 
     def _get_widget(self):
         """
@@ -57,23 +90,48 @@ class OrcWidget:
         if self._root is None or self._def is None:
             return None
 
+        self._root.switch_to_default_content()
         self._widget = self._root
+
+        # 检查 frame,如查使用相同的 frame 不再跳转
+        # Todo
 
         for t_def in self._def:
 
             _definition = t_def["DEF"]
             _detail = t_def["DET"]
 
-            if "FRAME" == _definition.widget_type:
-                self._get_object(_detail)
-                self._root.switch_to_default_content()
+            if _detail is None:
+                continue
+
+            # 上一级是 frame,首先进行跳转
+            if self.__meet_frame:
+
                 self._root.switch_to.frame(self._widget)
                 self._widget = self._root
 
+                self.__meet_frame = False
+                self.frame = self.__meet_frame
+
+            if "FRAME" == _definition.widget_type:
+                self._get_object(_detail)
+                self.__meet_frame = _definition["id"]
+
             elif "WINDOW" == _definition.widget_type:
-                # Todo 处理当前 window 未变放到这里
-                # self.__switch_window(_detail)
-                pass
+
+                _window_id = _definition["id"]
+
+                # 还没有当前 window
+                if not self.window:
+                    self.window = _window_id
+                    continue
+
+                # 检查是否当前 window
+                if self.window == _window_id:
+                    continue
+
+                # 如果不是,切换 window
+                self.__switch_window(_definition)
 
             else:
                 self._get_object(_detail)
@@ -100,45 +158,70 @@ class OrcWidget:
                 self._widget = self._widget.find_element_by_tag_name(_attr)
             elif "XPATH" == _type:
                 self._widget = self._widget.find_element_by_xpath(_attr)
+            elif "LINK_TEXT" == _type:
+                self._widget = self._widget.find_element_by_link_text(_attr)
+            elif "CSS" == _type:
+                self._widget = self._widget.find_element_by_css_selector(_attr)
             else:
                 pass
 
     def __switch_window(self, p_def):
         """
+        切换窗口
         :param p_def:
         :return:
         """
-        _current_window = self._window
+        founded = False
 
-        _definition = p_def["DEF"]
-        _detail = p_def["DET"]
+        # 保存当前数据,未找到时恢复
+        current_id = self.window
+        current_handle = self._widget.current_window_handle
 
-        if _definition.id != self._window:
+        # 当前 window 置为目标 id
+        self.window = p_def["id"]
 
-            self._window = _definition.id
+        # 切换
+        for _handle in self.window.window_handles:
 
-            _founded = False
-            _current_handle = self._widget.current_window_handle
-            _all_handles = self._widget.window_handles
+            if _handle == current_handle:
+                continue
 
-            for t_handle in _all_handles:
+            self._widget.switch_to.window(_handle)
+            founded = self.__check_window_handle(p_def["window_flag"])
 
-                if t_handle != _current_handle:
+            if founded:
+                self._root.switch_to_window(_handle)
+                break
 
-                    self._widget.switch_to_window(t_handle)
-                    self._root.switch_to_window(t_handle)
+        if not founded:
+            self._widget = None
+            self.window = current_id
 
-                    _founded = self.__check_object(_detail)
-                    if _founded:
-                        break
+        return founded
 
-            if not _founded:
-                self.__window = _current_window
+    def __check_window_handle(self, p_flags):
+        """
+        检查当前window是否所需window
+        :param p_flags:[{TYPE, DATA}, ...]
+        :return:
+        """
+        status = True
 
-    def __check_object(self, p_def, p_time=20):
+        for _flg in p_flags:
+
+            if "TITLE" == _flg["TYPE"]:
+                status = _flg["DATA"] != self._widget.title
+
+            elif "WIDGET" == _flg["TYPE"]:
+                status = OrcWidget(self._widget, _flg["DATA"]).exists()
+            else:
+                status = False
+
+        return status
+
+    def __check_object(self, p_time=20):
         """
         加载判断函数，加载页面直至 p_item_id 控件出现
-        :param p_def:
         :param p_time:
         :return:
         """
@@ -155,27 +238,43 @@ class OrcWidget:
         return _displayed
 
     def basic_execute(self, p_para):
-
+        """
+        基本控件操作
+        :param p_para:
+        :return:
+        """
         _flag = p_para["OPERATION"]
 
+        # 判断存在
         if "EXISTS" == _flag:
             return self.exists()
 
+        # 点击
         elif "CLICK" == _flag:
-            self._widget.click()
+            try:
+                self._widget.click()
+            except TimeoutException:
+                self._root.execute_script('window.stop()')
             return True
 
+        # 获取属性
         elif "GET_ATTR" == _flag:
             if "FLAG" not in p_para:
                 return ""
             else:
                 return self._widget.get_attribute(p_para["FLAG"])
 
+        # 获取内容
         elif "GET_TEXT" == _flag:
             return self._widget.get_text()
 
+        # 获取HTML
         elif "GET_HTML" == _flag:
             return self._widget.get_attribute("innerHTML")
+
+        # 检查控件存在
+        elif "DISPLAY" == _flag:
+            return self.__check_object()
 
         else:
             return None

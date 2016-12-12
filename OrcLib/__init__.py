@@ -19,22 +19,30 @@ def get_config(p_file=None):
 
     _file = "%s/config/%s.cfg" % (_path, _name)
 
-    if not os.path.exists(_file):
-        return None
-    else:
+    if os.path.exists(_file):
+
         _cfg = OrcConfig(_file)
         _cfg.set_option("DEFAULT", "root", _path)
 
         return _cfg
 
+    else:
+        return None
+
 
 def init_log():
     """
     获取配置类
+    :param p_name:
     :return:
     """
     _path = os.path.dirname(os.path.dirname(__file__))
     _file = "%s/config/log.cfg" % _path
+
+    if os.path.exists(_file):
+
+        _cfg = OrcConfig(_file)
+        _cfg.set_option("DEFAULT", "root", _path)
 
     logging.config.fileConfig(_file)
 

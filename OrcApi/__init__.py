@@ -9,7 +9,7 @@ app = Flask(__name__)
 orc_api = Api(app)
 
 _config = get_config()
-print _config
+
 _data_str = _config.get_option("DATABASE", "DATA_STR")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True

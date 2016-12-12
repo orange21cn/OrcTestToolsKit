@@ -2,11 +2,11 @@
 import os
 import re
 from OrcLib import get_config
-from OrcLib.LibNet import OrcInvoke
+from OrcLib.LibNet import OrcHttpNewResource
 from RunCore import RunCore
 
 
-class RunDefModel:
+class RunDefMod:
     """
     运行列表管理,操作目录,目录名为 [类型]_[id],目录内含有 result.res 的属于执行过的, result.res 是一个xml文件
     """
@@ -14,11 +14,8 @@ class RunDefModel:
     def __init__(self):
 
         self.__config = get_config()
-        self.__invoker = OrcInvoke()
-
-        # Get url from configuration
-        _url = get_config("interface").get_option("DRIVER", "url")
-        self.__url = lambda _mod, _id: "%s/api/1.0/%s/%s" % (_url, _mod, _id)
+        self.__resource_batch_def = OrcHttpNewResource("BatchDef")
+        self.__resource_case_def = OrcHttpNewResource("CaseDef")
 
         self.__list = RunCore()
         self.__home = self.__list.get_home()
@@ -43,11 +40,14 @@ class RunDefModel:
 
             # 查找 flag, batch 为 batch_no, case 为 case path
             if "BATCH" == _type:
-                _batch = self.__invoker.get(self.__url("BatchDef", _id))
-                _flag = _batch["batch_no"] if _batch is not None else ""
+                self.__resource_batch_def.set_path(_id)
+                _batch = self.__resource_batch_def.get()
+                _flag = _id if not _batch else _batch["batch_no"]
+
             else:
-                _case = self.__invoker.get(self.__url("CaseDef", _id))
-                _flag = _case["case_path"] if _case is not None else ""
+                self.__resource_case_def.set_path(_id)
+                _case = self.__resource_case_def.get()
+                _flag = _id if not _case else _case["case_path"]
 
             # 有条件时进行查找,无条件使使用全部数据
             if p_cond is not None:
@@ -72,16 +72,16 @@ class RunDefModel:
 
         return rtn
 
-    def usr_add(self, p_cond):
+    def usr_add(self, p_data):
         """
         增加执行目录时 p_test=false, 为 true 时生成结果文件
-        :param p_cond: {id, run_def_type, result}
+        :param p_data: {id, run_def_type, result}
         :return:
         :rtype: bool
         """
-        _type = p_cond["run_def_type"]
-        _id = p_cond["id"]
-        _result = p_cond["result"] if "result" in p_cond else False
+        _type = p_data["run_def_type"]
+        _id = p_data["id"]
+        _result = p_data["result"] if "result" in p_data else False
 
         # 生成目录名称
         folder_root = "%s/%s_%s" % (self.__home, _type, _id)
@@ -102,16 +102,10 @@ class RunDefModel:
                 os.mkdir(res_folder)
 
             self.__list.search_list(_type, _id)
+
             self.__list.save_list(res_file)
 
         return _id
-
-    def usr_update(self):
-        """
-        修改,暂无需求
-        :return:
-        """
-        pass
 
     def usr_delete(self, p_list):
         """
@@ -139,7 +133,5 @@ class RunDefModel:
             if os.path.exists(_folder):
                 import shutil
                 shutil.rmtree(_folder)
-        # except OSError:
-        #     return False
 
         return True

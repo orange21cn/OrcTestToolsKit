@@ -41,7 +41,7 @@ class ListTree:
         :type p_node: dict
         :return:
         """
-
+        print "--->", p_node["content"]["pid"], p_node["content"]["id"], p_node["children"]
         for _item in self.list:
             _parent_id = p_node["content"]["id"]
             _item_pid = _item["pid"]

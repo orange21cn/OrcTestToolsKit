@@ -9,49 +9,54 @@ from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
 
 
-class DataMod:
+class DataMod(object):
     """
     Test data management
     """
     __session = orc_db.session
 
     def __init__(self):
-        pass
 
-    def usr_search(self, p_filter=None):
+        object.__init__(self)
+
+    def usr_search(self, p_cond=None):
         """
-        :param p_filter:
+        :param p_cond:
         :return:
         """
-        # search
-        def f_value(p_flag):
-            return "%%%s%%" % p_filter[p_flag]
+        # 判断输入参数是否为空
+        cond = p_cond if p_cond else dict()
 
-        if p_filter is None:
-            _res_list = self.__session.query(TabData).all()
-        else:
-            _res_list = self.__session.query(TabData)
+        # 查询条件 like
+        _like = lambda p_flag: "%%%s%%" % cond[p_flag]
 
-            if 'id' in p_filter:
-                _res_list = _res_list.filter(TabData.id.ilike(f_value('id')))
+        # db session
+        result = self.__session.query(TabData)
 
-            if 'src_id' in p_filter:
-                _res_list = _res_list.filter(TabData.src_id.ilike(f_value('src_id')))
+        if 'id' in cond:
 
-            if 'src_type' in p_filter:
-                _res_list = _res_list.filter(TabData.src_type.ilike(f_value('src_type')))
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(TabData.id.in_(cond['id']))
+            else:
+                result = result.filter(TabData.id == cond['id'])
 
-            if 'data_flag' in p_filter:
-                _res_list = _res_list.filter(TabData.data_flag.ilike(f_value('data_flag')))
+        if 'src_id' in cond:
+            result = result.filter(TabData.src_id.ilike(_like('src_id')))
 
-            if 'data_mode' in p_filter:
-                print f_value('data_mode')
-                _res_list = _res_list.filter(TabData.data_mode.ilike(f_value('data_mode')))
+        if 'src_type' in cond:
+            result = result.filter(TabData.src_type.ilike(_like('src_type')))
 
-            if 'data_type' in p_filter:
-                _res_list = _res_list.filter(TabData.data_type.ilike(f_value('data_type')))
+        if 'data_flag' in cond:
+            result = result.filter(TabData.data_flag.ilike(_like('data_flag')))
 
-        return _res_list.all()
+        if 'data_mode' in cond:
+            result = result.filter(TabData.data_mode.ilike(_like('data_mode')))
+
+        if 'data_type' in cond:
+            result = result.filter(TabData.data_type.ilike(_like('data_type')))
+
+        return result.all()
 
     def _get_root(self, p_item):
         """
@@ -129,7 +134,7 @@ class DataMod:
         except:
             raise OrcDatabaseException
 
-        return {u'id': str(_node.id)}
+        return _node
 
     def _create_order(self, p_id, p_flg):
         """

@@ -1,6 +1,7 @@
 QTabWidget::pane {
     background-color: #F5F5F5;
     border-top: 3px solid #E0E0E0;
+    padding: 10px;
 }
 
 QTabWidget::tab-bar {

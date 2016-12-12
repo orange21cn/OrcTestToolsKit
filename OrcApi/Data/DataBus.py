@@ -80,7 +80,9 @@ class DataBus(object):
         :param p_id:
         :return:
         """
-        cond = dict(id=p_id).update(p_cond)
+        cond = dict(id=p_id)
+        cond.update(p_cond)
+
         try:
             self.__model_data.usr_update(cond)
         except Exception:

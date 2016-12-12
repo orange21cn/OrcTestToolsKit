@@ -10,27 +10,51 @@ class CaseDefService(object):
         object.__init__(self)
 
         self.__resource_case_def = OrcHttpNewResource("CaseDef")
-        self.__resource_run_def = OrcHttpNewResource("Run")
+        self.__resource_run_def = OrcHttpNewResource("RunDef")
 
     def usr_add(self, p_data):
-        return self.__resource_case_def.post(p_data)
+        """
+        新增
+        :param p_data:
+        :return:
+        """
+        case_def_data = self.__resource_case_def.post(p_data)
+        return dict(id=case_def_data["id"])
 
     def usr_delete(self, p_list):
+        """
+        删除
+        :param p_list:
+        :return:
+        """
         return self.__resource_case_def.delete(p_list)
 
     def usr_update(self, p_data):
+        """
+        更新
+        :param p_data:
+        :return:
+        """
+        self.__resource_case_def.set_path(p_data["id"])
         return self.__resource_case_def.put(p_data)
 
     def usr_search(self, p_cond):
+        """
+        查询
+        :param p_cond:
+        :return:
+        """
         cond = dict(type="all")
         cond.update(p_cond)
         return self.__resource_case_def.get(cond)
 
     def add_to_run(self, p_id):
-
+        """
+        加入运行
+        :param p_id:
+        :return:
+        """
         cond = dict(id=p_id, run_def_type="CASE")
-
-        self.__resource_run_def.set_path(p_id)
         self.__resource_run_def.post(cond)
 
 
@@ -44,7 +68,11 @@ class CaseDetService(object):
         self.__resource_step = OrcHttpNewResource("StepDef")
 
     def usr_add(self, p_data):
-
+        """
+        新增
+        :param p_data:
+        :return:
+        """
         # 增加步骤
         step_info = p_data["step"]
         step_det = self.__resource_step.post(step_info)
@@ -58,10 +86,29 @@ class CaseDetService(object):
         return dict(case_id=case_det["case_id"])
 
     def usr_delete(self, p_list):
+        """
+        删除
+        :param p_list:
+        :return:
+        """
         return self.__resource_case_det.delete(p_list)
 
     def usr_update(self, p_data):
-        return self.__resource_case_det.put(p_data)
+        """
+        更新
+        :param p_data:
+        :return:
+        """
+        # 获取 step id
+        self.__resource_case_det.set_path(p_data["id"])
+        step_id = self.__resource_case_det.get()["step_id"]
+
+        # 更新数据
+        data = p_data.copy()
+        data["id"] = step_id
+        self.__resource_step.set_path(step_id)
+
+        return self.__resource_step.put(data)
 
     def usr_search(self, p_cond):
         """

@@ -1,13 +1,13 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcHttpNewResource
 
 
 class RunDetService():
 
     def __init__(self):
 
-        self.__resource_run_det = OrcHttpResource("RunDet")
-        self.__resource_run = OrcHttpResource("Run")
+        self.__resource_run_det = OrcHttpNewResource("RunDet")
+        self.__resource_run = OrcHttpNewResource("Run")
 
     def usr_search(self, p_path):
 
