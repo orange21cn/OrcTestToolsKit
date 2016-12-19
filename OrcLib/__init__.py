@@ -33,7 +33,6 @@ def get_config(p_file=None):
 def init_log():
     """
     获取配置类
-    :param p_name:
     :return:
     """
     _path = os.path.dirname(os.path.dirname(__file__))
@@ -45,4 +44,3 @@ def init_log():
         _cfg.set_option("DEFAULT", "root", _path)
 
     logging.config.fileConfig(_file)
-

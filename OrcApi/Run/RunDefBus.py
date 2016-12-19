@@ -25,6 +25,8 @@ class RunDefBus(object):
             self.__logger.error("Add run error, input: %s" % p_data)
             raise OrcApiModelFailException
 
+        self.__logger.debug("function %s return %s" % ("bus_list_add", result))
+
         return result
 
     def bus_list_delete(self, p_list):
