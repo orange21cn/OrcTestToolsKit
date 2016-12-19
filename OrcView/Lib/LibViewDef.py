@@ -55,11 +55,13 @@ def_view_case_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_case_det = [
+def_view_step = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="step_no", NAME=u"步骤编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=False, ESSENTIAL=True),
+    dict(ID="step_type", NAME=u"步骤类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
+         SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="step_desc", NAME=u"步骤描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
@@ -69,7 +71,7 @@ def_view_case_det = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_step = [
+def_view_item = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,

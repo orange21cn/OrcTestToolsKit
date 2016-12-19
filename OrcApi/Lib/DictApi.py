@@ -4,7 +4,7 @@ from flask_restful import Resource
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcParameter
 from OrcLib.LibNet import orc_api
-from DictBus import DictListBus
+from DictBus import DictBus
 from DictBus import DictBus
 
 
@@ -13,7 +13,7 @@ class DictListAPI(Resource):
     def __init__(self):
 
         self.__logger = OrcLog("resource.lib.dicts")
-        self.__business = DictListBus()
+        self.__business = DictBus()
 
     def dispatch_request(self, *args, **kwargs):
         return super(Resource, self).dispatch_request(*args, **kwargs)

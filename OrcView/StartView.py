@@ -10,7 +10,7 @@ from OrcView.Lib.LibMain import DockBottom
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Batch.BatchDef import ViewBatchDefMag
 from OrcView.Batch.BatchDet import ViewBatchDetMag
-from OrcView.Case.CaseDef import ViewCaseDefMag
+from OrcView.Case.Case import ViewCaseDefMag
 from OrcView.Case.StepMain import StepContainer
 from OrcView.Data.DataDef import ViewDataMag
 from OrcView.Driver.Web.WebMain import ViewWebMain

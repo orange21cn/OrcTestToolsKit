@@ -9,13 +9,13 @@ from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import LibControl
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibViewDef import def_view_case_det
+from OrcView.Lib.LibViewDef import def_view_step
 from OrcView.Data.DataAdd import ViewDataAdd
 
 from CaseService import CaseDetService
 
 
-class CaseDetModel(ModelTable):
+class StepModel(ModelTable):
 
     def __init__(self):
 
@@ -24,14 +24,14 @@ class CaseDetModel(ModelTable):
         self.usr_set_service(CaseDetService())
 
 
-class CaseDetControl(LibControl):
+class StepControl(LibControl):
 
     def __init__(self, p_def):
 
         LibControl.__init__(self, p_def)
 
 
-class ViewCaseDetMag(QWidget):
+class StepView(QWidget):
 
     sig_select = OrcSignal(str)
     sig_search = OrcSignal()
@@ -44,12 +44,12 @@ class ViewCaseDetMag(QWidget):
         self.__case_id = p_id
 
         # Model
-        self.__model = CaseDetModel()
-        self.__model.usr_set_definition(def_view_case_det)
+        self.__model = StepModel()
+        self.__model.usr_set_definition(def_view_step)
         self.__model.usr_search({"case_id": self.__case_id})
 
         # Control
-        _control = CaseDetControl(def_view_case_det)
+        _control = StepControl(def_view_step)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -74,7 +74,7 @@ class ViewCaseDetMag(QWidget):
         ], "VER")
 
         # win_add
-        self.__win_add = ViewAdd(def_view_case_det)
+        self.__win_add = ViewAdd(def_view_step)
 
         # win add data
         self.__win_data = ViewDataAdd()
@@ -120,7 +120,7 @@ class ViewCaseDetMag(QWidget):
         _index = p_index.row()
         _step_id = self.__model.usr_get_data(_index)["step_id"]
 
-        self.sig_select.emit(str(_step_id))
+        self.sig_select.emit(_step_id)
 
     def __context(self, p_flag):
 

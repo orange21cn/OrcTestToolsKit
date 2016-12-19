@@ -9,13 +9,14 @@ from selenium import webdriver
 # for handle in driver.window_handles:
 #     driver.switch_to.window(handle)
 #     print driver.title
+#!/usr/bin/python
 
+from selenium import webdriver
 
-a = [1, 2, 3]
+driver = webdriver.Firefox()
 
-for i in a:
-    print i
-    print "OK"
-else:
-    print i
-    print "NOK"
+driver.get("...")
+
+driver.find_element_by_id("account").sendkeys("testaccount")
+driver.find_element_by_id("passwd").sendkeys("password")
+driver.find_element_by_id("submit").submit()

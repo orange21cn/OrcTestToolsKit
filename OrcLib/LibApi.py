@@ -1,10 +1,117 @@
 # coding=utf-8
 
+# coding=utf-8
+from OrcLib import init_log
+from OrcLib.LibNet import OrcLog
+from OrcLib.LibException import OrcApiModelFailException
+
+
+class OrcBus(object):
+
+    def __init__(self, p_flag, p_model):
+
+        object.__init__(self)
+
+        init_log()
+
+        self._flag = p_flag
+        self._model = p_model()
+        self._logger = OrcLog("resource.%s.bus" % self._flag)
+
+    def bus_list_add(self, p_cond):
+        """
+        新增
+        :param p_cond:
+        :return:
+        """
+        try:
+            result = self._model.usr_add(p_cond)
+        except Exception:
+            self._logger.error("Add %s error, input: %s" % (self._flag, p_cond))
+            raise OrcApiModelFailException
+
+        return result
+
+    def bus_list_delete(self, p_list):
+        """
+        删除 list, 调用单个删除函数
+        :param p_list:
+        :return:
+        """
+        try:
+            for _id in p_list:
+                self.bus_delete(_id)
+        except Exception:
+            self._logger.error("Delete %s error, input: %s" % (self._flag, p_list))
+            raise OrcApiModelFailException
+
+        return True
+
+    def bus_list_search(self, p_cond):
+        """
+        查询 list
+        :param p_cond:
+        :return:
+        """
+        try:
+            result = self._model.usr_search(p_cond)
+        except Exception:
+            self._logger.error("Search %s error, input: %s" % (self._flag, p_cond))
+            raise OrcApiModelFailException
+
+        return result
+
+    def bus_update(self, p_id, p_cond):
+        """
+        更新一条
+        :param p_id:
+        :param p_cond:
+        :return:
+        """
+        cond = dict(id=p_id)
+        cond.update(p_cond)
+
+        try:
+            self._model.usr_update(cond)
+        except Exception:
+            self._logger.error("Update %s error, input: %s" % (self._flag, p_cond))
+            raise OrcApiModelFailException
+
+        return True
+
+    def bus_delete(self, p_id):
+        """
+        删除一条
+        :param p_id:
+        :return:
+        """
+        try:
+            self._model.usr_delete(p_id)
+        except Exception:
+            self._logger.error("Delete %s error, input: %s" % (self._flag, p_id))
+            raise OrcApiModelFailException
+
+        return True
+
+    def bus_search(self, p_id):
+        """
+        查询一条
+        :param p_id:
+        :return:
+        """
+        try:
+            result = self._model.usr_search(dict(id=p_id))
+            result = None if not result else result[0]
+        except Exception:
+            self._logger.error("Search %s error, input: %s" % (self._flag, p_id))
+            raise OrcApiModelFailException
+
+        return result
+
 
 def connect_list(p_lists, p_detail, p_flag):
     """
     连接两个数组
-    :param self:
     :param p_lists: list 1
     :type p_lists: list
     :param p_detail: list 2
@@ -16,7 +123,7 @@ def connect_list(p_lists, p_detail, p_flag):
     """
     result = []
 
-    if 0 == len(p_detail):
+    if not p_detail:
         return result
 
     for _item in p_lists:

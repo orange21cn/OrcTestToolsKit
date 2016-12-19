@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import func
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
@@ -10,13 +11,15 @@ from OrcLib.LibDatabase import orc_db
 from OrcApi.Case.StepDefMod import StepDefMod
 
 
-class CaseDetMod():
+class CaseDetMod(object):
     """
     Test data management
     """
     __session = orc_db.session
 
     def __init__(self):
+
+        object.__init__(self)
 
         self.__step = StepDefMod()
 
@@ -67,6 +70,9 @@ class CaseDetMod():
         # step_id
         _node.step_id = _step_id
 
+        # step_no
+        _node.step_no = self.__create_no(_case_id)
+
         # create_time, modify_time
         _node.create_time = datetime.now()
 
@@ -80,7 +86,11 @@ class CaseDetMod():
         return _node
 
     def usr_update(self, p_cond):
-
+        """
+        更新
+        :param p_cond:
+        :return:
+        """
         for t_id in p_cond:
 
             if "id" == t_id:
@@ -93,11 +103,26 @@ class CaseDetMod():
         self.__session.commit()
 
     def usr_delete(self, p_id):
-
+        """
+        删除
+        :param p_id:
+        :return:
+        """
         self.__session.query(TabCaseDet).filter(TabCaseDet.id == p_id).delete()
         self.__session.commit()
 
-    def usr_list_search(self, p_id_list):
+    def __create_no(self, p_case_id):
+        """
+        创建 case no
+        :param p_case_id:
+        :return:
+        """
+        case_no = self.__session\
+            .query(func.max(TabCaseDet.step_no))\
+            .filter(p_case_id == TabCaseDet.case_id)\
+            .first()[0]
 
-        _res = self.__session.query(TabCaseDet).filter(TabCaseDet.id.in_(p_id_list))
-        return _res.all()
+        if case_no is None:
+            case_no = 9
+
+        return str(int(case_no) + 1)

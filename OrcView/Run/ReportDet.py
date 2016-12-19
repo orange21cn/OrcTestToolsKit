@@ -47,5 +47,4 @@ class ViewReportDet(QWidget):
             self.__path = dict(path=p_path)
 
         report_path = self.__service.get_report_path(self.__path)
-
-        self.__wid_display.load(report_path)
+        self.__wid_display.setHtml(report_path)

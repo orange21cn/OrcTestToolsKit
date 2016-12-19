@@ -29,15 +29,25 @@ class ViewTree(QTreeView):
         QTreeView.__init__(self)
 
         # MVC
+        # 可拖拽
         self.dragEnabled()
+
+        # 可释放
         self.acceptDrops()
+
+        # 拖拽  indicator
         self.showDropIndicator()
+
+        # 拖拽模式
         self.setDragDropMode(QAbstractItemView.InternalMove)
 
+        # 标题拉伸最后一列
         self.header().setStretchLastSection(True)
 
+        # 无 focus, 去掉蓝框
         self.setFocusPolicy(Qt.NoFocus)
 
+        # 设置样式
         self.setStyleSheet(get_theme("TreeView"))
 
     def create_context_menu(self, p_def):
@@ -46,17 +56,28 @@ class ViewTree(QTreeView):
         :param p_def:
         :return:
         """
-        _context_menu = ViewContextMenu(p_def)
+        context_menu = ViewContextMenu(p_def)
 
         self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(_context_menu.show_menu)
 
-        _context_menu.sig_clicked.connect(self.sig_context.emit)
+        # 连接
+        self.customContextMenuRequested.connect(context_menu.show_menu)
+        context_menu.sig_clicked.connect(self.sig_context.emit)
 
     def set_model(self, p_model):
+        """
+        设置模型
+        :param p_model:
+        :return:
+        """
         self.setModel(p_model)
 
     def set_control(self, p_control):
+        """
+        设置 Control
+        :param p_control:
+        :return:
+        """
         self.setItemDelegate(p_control)
 
 
@@ -79,7 +100,7 @@ class OrcMimeData(QMimeData):
             # We may not be able to pickle the data.
             try:
                 p_data = dumps(p_data)
-            except:
+            except Exception:
                 return
 
             self.setData(self.MIME_TYPE, dumps(p_data.__class__) + p_data)
@@ -231,8 +252,10 @@ class ModelTree(QAbstractItemModel):
         return types
 
     def mimeData(self, index):
+
         node = self.usr_get_node(index[0])
         mine_data = OrcMimeData(node)
+
         return mine_data
 
     def dropMimeData(self, p_mime_data, action, row, column, p_parent_index):
@@ -242,14 +265,14 @@ class ModelTree(QAbstractItemModel):
         if action == Qt.IgnoreAction:
             return True
 
-        i_drag_node = p_mime_data.instance()
-        i_parent_node = self.usr_get_node(p_parent_index)
+        drag_node = p_mime_data.instance()
+        parent_node = self.usr_get_node(p_parent_index)
 
-        _cond['id'] = i_drag_node.content['id']
-        if i_parent_node.content is None:
+        _cond['id'] = drag_node.content['id']
+        if parent_node.content is None:
             _cond['pid'] = ""
         else:
-            _cond['pid'] = i_parent_node.content['id']
+            _cond['pid'] = parent_node.content['id']
 
         self.__service.usr_update(_cond)
 
@@ -302,12 +325,8 @@ class ModelTree(QAbstractItemModel):
             _cond["id"] = self.usr_get_node(index).content["id"]
             _cond[_field] = value
 
-            try:
-                self.__service.usr_update(_cond)
-                self.usr_get_node(index).content[_field] = value
-            except Exception:
-                # Todo
-                pass
+            self.__service.usr_update(_cond)
+            self.usr_get_node(index).content[_field] = value
 
             return value
 
@@ -382,7 +401,11 @@ class ModelTree(QAbstractItemModel):
         return p_index.internalPointer() if p_index.isValid() else self._state_root
 
     def usr_add(self, p_values):
+        """
 
+        :param p_values:
+        :return:
+        """
         _pid = None
         _values = p_values
 
@@ -397,7 +420,10 @@ class ModelTree(QAbstractItemModel):
         self.usr_refresh()
 
     def usr_delete(self):
+        """
 
+        :return:
+        """
         del_list = [self.usr_get_node(_index).content['id'] for _index in self.__state_check]
         self.__service.usr_delete(del_list)
 

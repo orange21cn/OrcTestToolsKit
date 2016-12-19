@@ -1,6 +1,4 @@
 # coding=utf-8
-import json
-
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QPushButton
@@ -17,44 +15,49 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import SelectWidgetOperation
-from OrcView.Lib.LibViewDef import def_view_step
+from OrcView.Lib.LibViewDef import def_view_item
 from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
+from StepService import ItemService
 from StepService import StepService
+from CaseSelect import ViewCaseSelMag
 
 
-class StepDetModel(ModelTable):
+class ItemModel(ModelTable):
 
     def __init__(self):
 
         ModelTable.__init__(self)
-        self.usr_set_service(StepService())
+        self.usr_set_service(ItemService())
 
 
-class StepDetControl(LibControl):
+class ItemControl(LibControl):
 
     def __init__(self, p_def):
 
         LibControl.__init__(self, p_def)
 
 
-class ViewStepDetMag(QWidget):
+class ItemView(QWidget):
 
     def __init__(self):
 
         QWidget.__init__(self)
 
-        # Current case id
         self.__step_id = None
+        self.__service_step_def = StepService()
+
+        # Current case id
+        self.__step_type = None
         self.__win_operate = ViewOperate()
 
         # Model
-        self.__model = StepDetModel()
-        self.__model.usr_set_definition(def_view_step)
+        self.__model = ItemModel()
+        self.__model.usr_set_definition(def_view_item)
 
         # Control
-        _control = StepDetControl(def_view_step)
+        _control = ItemControl(def_view_item)
 
         # Data result display widget
         _wid_display = ViewTable()
@@ -75,10 +78,11 @@ class ViewStepDetMag(QWidget):
             dict(id="update", name=u"修改", type="CHECK")
         ], "VER")
 
-        # win_add
-        self.__win_add = ViewAdd(def_view_step)
-        self.__win_add.sig_operate.connect(self.__win_operate.show)
-        self.__win_operate.sig_submit.connect(self.get_operate)
+        # 新增 item 窗口
+        self.__win_add_item = ViewAdd(def_view_item)
+
+        # 新增 func 窗口
+        self.__win_add_func = ViewCaseSelMag("SINGLE")
 
         # win add data
         self.__win_data = ViewDataAdd()
@@ -93,23 +97,47 @@ class ViewStepDetMag(QWidget):
         self.setLayout(_layout)
 
         # Connection
-        _wid_buttons.sig_clicked.connect(self.__operate)
-
-        self.__win_add.sig_submit.connect(self.add)
-
+        self.__win_add_item.sig_operate.connect(self.__win_operate.show)  # 显示操作选择框
+        self.__win_add_item.sig_submit.connect(self.add_item)  # 新增
+        self.__win_add_func.sig_selected.connect(self.add_func)  # 新增
+        self.__win_operate.sig_submit.connect(self.get_operate)
+        _wid_buttons.sig_clicked.connect(self.__operate)  # 按钮点击
         _wid_display.sig_context.connect(self.__context)  # 右键菜单
-        _wid_display.clicked.connect(self.__model.usr_set_current_data)
+        _wid_display.clicked.connect(self.__model.usr_set_current_data)  # 单击
 
     def add_show(self):
-        if self.__step_id is not None:
-            self.__win_add.show()
 
-    def add(self, p_data):
-        _data = p_data
-        _data["step_id"] = self.__step_id
+        if self.__step_id is not None:
+
+            _type = self.__service_step_def.view_get_step_type(self.__step_id)
+
+            if "FUNC" == _type:
+                self.__win_add_func.show()
+            elif "NORMAL" == _type:
+                self.__win_add_item.show()
+            else:
+                pass
+
+    def add_item(self, p_data):
+
+        _data = dict(
+            type="ITEM",
+            step_id=self.__step_id,
+            data=p_data
+        )
+        self.__model.usr_add(_data)
+
+    def add_func(self, p_data):
+
+        _data = dict(
+            type="FUNC",
+            step_id=self.__step_id,
+            data=p_data[0],
+        )
         self.__model.usr_add(_data)
 
     def set_step_id(self, p_step_id):
+
         self.__step_id = p_step_id
         self.__model.usr_search({"step_id": self.__step_id})
 
@@ -120,7 +148,7 @@ class ViewStepDetMag(QWidget):
     def __operate(self, p_flag):
 
         if "add" == p_flag:
-            self.__win_add.show()
+            self.add_show()
         elif "delete" == p_flag:
             self.__model.usr_delete()
         elif "update" == p_flag:
@@ -139,7 +167,7 @@ class ViewStepDetMag(QWidget):
 
     def get_operate(self, p_data):
         # self. Todo
-        self.__win_add.set_data("item_operate", p_data)
+        self.__win_add_item.set_data("item_operate", p_data)
 
 
 class ViewOperate(QWidget):
@@ -231,7 +259,7 @@ class ViewOperate(QWidget):
     def __change_type(self, p_data):
 
         _type = self.__type_select.get_data()
-        print "--->", _type
+
         self.__widget_input.clear()
 
         if "WIDGET" == _type:

@@ -51,9 +51,6 @@ class ItemMod:
         # Create id
         _node.id = gen_id("item")
 
-        # case_no
-        _node.item_no = self._create_no()
-
         # item_type
         _node.item_type = p_data['item_type'] if 'item_type' in p_data else ""
 
@@ -81,21 +78,12 @@ class ItemMod:
 
         return _node
 
-    def _create_no(self):
+    def usr_update(self, p_cond):
         """
-        Create a no, like case_no
+
+        :param p_cond:
         :return:
         """
-        _no = gen_date_str()
-        t_item = self.__session.query(TabItem).filter(TabItem.item_no == _no).first()
-
-        if t_item is not None:
-            return self._create_no()
-        else:
-            return _no
-
-    def usr_update(self, p_cond):
-
         for t_id in p_cond:
 
             if "id" == t_id:
@@ -108,9 +96,10 @@ class ItemMod:
         self.__session.commit()
 
     def usr_delete(self, p_id):
+        """
 
+        :param p_id:
+        :return:
+        """
         self.__session.query(TabItem).filter(TabItem.id == p_id).delete()
         self.__session.commit()
-
-
-

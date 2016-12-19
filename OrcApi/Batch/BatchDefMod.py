@@ -95,6 +95,7 @@ class BatchDefMod(TabBatchDef):
     def usr_search_path(self, p_id):
         """
         获取路径至根节点
+        :param p_id:
         :return:
         """
         batch_data = self.__session.query(TabBatchDef).filter(TabBatchDef.id == p_id).first()
@@ -176,16 +177,24 @@ class BatchDefMod(TabBatchDef):
 
     def __create_no(self):
         """
-        Create a no, like batch_no
+        Create a no
         :return:
         """
-        _no = gen_date_str()
-        t_item = self.__session.query(TabBatchDef).filter(TabBatchDef.batch_no == _no).first()
+        base_no = gen_date_str()
 
-        if t_item is not None:
-            return self.__create_no()
-        else:
-            return _no
+        for _index in range(100):
+
+            if 10 < _index:
+                batch_no = "%s%s" % (base_no, _index + 1)
+            else:
+                batch_no = "%s0%s" % (base_no, _index + 1)
+
+            _item = self.__session.query(TabBatchDef).filter(TabBatchDef.batch_no == batch_no).first()
+
+            if _item is None:
+                return batch_no
+
+        return 1
 
     def usr_update(self, p_cond):
 

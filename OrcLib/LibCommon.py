@@ -53,7 +53,7 @@ def is_null(p_str):
 
 
 def gen_date_str():
-    return time.strftime("%Y%m%d%H%M%S")
+    return time.strftime("%Y%m%d")
 
 
 # def get_parent_no(p_no):

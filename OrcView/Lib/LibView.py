@@ -366,8 +366,6 @@ class SelectWidgetOperation(OrcSelectBase):
 
         # 获取基本操作方式
         if p_type not in ("PAGE", "BLOCK"):
-            print p_type
-            print "OOOOOOOOOOOOOOO"
             _data.extend([dict(name=_item.ope_name, text=_item.ope_text)
                          for _item in self.__dict.get_widget_operation("BLOCK")])
 
@@ -379,8 +377,8 @@ def operate_to_str(p_data):
     :param p_data: {'OBJECT': '3200000002', 'OPERATE': u'INPUT', 'TYPE': u'WIDGET'}
     :return:
     """
-    if not p_data:
-        return None
+    if not isinstance(p_data, dict):
+        return p_data
 
     def get_widget_def_path(p_id):
         """

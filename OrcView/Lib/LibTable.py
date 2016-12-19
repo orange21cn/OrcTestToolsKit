@@ -6,7 +6,6 @@ from PySide.QtCore import Qt
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QTableView
 
-from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibCommon import is_null
 from OrcLib.LibNet import get_config
 from OrcView.Lib.LibContextMenu import ViewContextMenu
@@ -47,10 +46,10 @@ class ViewTable(QTableView):
         :return:
         """
         _context_menu = ViewContextMenu(p_def)
-
         self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(_context_menu.show_menu)
 
+        # connection
+        self.customContextMenuRequested.connect(_context_menu.show_menu)
         _context_menu.sig_clicked.connect(self.sig_context.emit)
 
     def set_model(self, p_model):
@@ -167,12 +166,8 @@ class ModelTable(QAbstractTableModel):
             _cond["id"] = self.__state_data[index.row()]["id"]
             _cond[_field] = value
 
-            try:
-                self.__service.usr_update(_cond)
-                self.__state_data[index.row()][_field] = value
-            except OrcPostFailedException:
-                # Todo
-                pass
+            self.__service.usr_update(_cond)
+            self.__state_data[index.row()][_field] = value
 
             return value
 
@@ -246,6 +241,11 @@ class ModelTable(QAbstractTableModel):
         self.reset()
 
     def usr_set_service(self, p_service):
+        """
+
+        :param p_service:
+        :return:
+        """
         self.__service = p_service
 
     def usr_set_definition(self, p_def):
@@ -271,10 +271,24 @@ class ModelTable(QAbstractTableModel):
                     self.__state_edit_fields.append(t_field["ID"])
 
     def usr_get_data(self, p_row):
+        """
+
+        :param p_row:
+        :return:
+        """
         return self.__state_data[p_row]
 
     def usr_set_current_data(self, p_index):
+        """
+
+        :param p_index:
+        :return:
+        """
         self.__state_current_data = self.usr_get_data(p_index.row())
 
     def usr_get_current_data(self):
+        """
+
+        :return:
+        """
         return self.__state_current_data

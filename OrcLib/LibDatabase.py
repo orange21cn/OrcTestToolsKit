@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
 from OrcLib.LibCommon import OrcCover
 from OrcApi import orc_db
 
@@ -11,15 +10,15 @@ def gen_id(p_name):
     :param p_name:
     :return: id
     """
-    _seq = orc_db.session \
+    sequence = orc_db.session \
         .query(LibSequence) \
         .filter(LibSequence.field_name == p_name) \
         .first()
 
-    _seq.field_seq += 1
+    sequence.field_seq += 1
     orc_db.session.commit()
 
-    return _seq.field_seq
+    return sequence.field_seq
 
 
 class TabRunTime(orc_db.Model):
@@ -143,16 +142,16 @@ class TabCaseDef(orc_db.Model):
 
     def __init__(self, p_def=None):
 
-            self.id = p_def["id"] if p_def else None
-            self.pid = p_def["pid"] if p_def else None
-            self.case_no = p_def["case_no"] if p_def else None
-            self.case_path = p_def["case_path"] if p_def else None
-            self.case_type = p_def["case_type"] if p_def else None
-            self.case_name = p_def["case_name"] if p_def else None
-            self.case_desc = p_def["case_desc"] if p_def else None
-            self.comment = p_def["comment"] if p_def else None
-            self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-            self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.id = p_def["id"] if p_def else None
+        self.pid = p_def["pid"] if p_def else None
+        self.case_no = p_def["case_no"] if p_def else None
+        self.case_path = p_def["case_path"] if p_def else None
+        self.case_type = p_def["case_type"] if p_def else None
+        self.case_name = p_def["case_name"] if p_def else None
+        self.case_desc = p_def["case_desc"] if p_def else None
+        self.comment = p_def["comment"] if p_def else None
+        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -179,6 +178,7 @@ class TabCaseDet(orc_db.Model):
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     case_id = orc_db.Column(orc_db.Integer)
     step_id = orc_db.Column(orc_db.Integer)
+    step_no = orc_db.Column(orc_db.String(8))
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
@@ -186,6 +186,7 @@ class TabCaseDet(orc_db.Model):
         self.id = p_def["id"] if p_def else None
         self.case_id = p_def["case_id"] if p_def else None
         self.step_id = p_def["step_id"] if p_def else None
+        self.step_no = p_def["step_no"] if p_def else None
         self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
 
     def to_json(self):
@@ -194,6 +195,7 @@ class TabCaseDet(orc_db.Model):
             id=str(self.id),
             case_id=str(self.case_id),
             step_id=str(self.step_id),
+            step_no=self.step_no,
             create_time=OrcCover.time2str(self.create_time)
         )
 
@@ -205,7 +207,7 @@ class TabStepDef(orc_db.Model):
     __tablename__ = 'tab_step_def'
 
     id = orc_db.Column(orc_db.Integer, primary_key=True)
-    step_no = orc_db.Column(orc_db.String(8))
+    step_type = orc_db.Column(orc_db.String(8))
     step_desc = orc_db.Column(orc_db.String(512))
     comment = orc_db.Column(orc_db.String(1024))
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
@@ -214,7 +216,7 @@ class TabStepDef(orc_db.Model):
     def __init__(self, p_def=None):
 
         self.id = p_def["id"] if p_def else None
-        self.step_no = p_def["step_no"] if p_def else None
+        self.step_type = p_def["step_type"] if p_def else None
         self.step_desc = p_def["step_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
         self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
@@ -224,7 +226,7 @@ class TabStepDef(orc_db.Model):
 
         return dict(
             id=str(self.id),
-            step_no=self.step_no,
+            step_type=self.step_type,
             step_desc=self.step_desc,
             comment=self.comment,
             create_time=OrcCover.time2str(self.create_time),
@@ -241,6 +243,7 @@ class TabStepDet(orc_db.Model):
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     step_id = orc_db.Column(orc_db.Integer)
     item_id = orc_db.Column(orc_db.Integer)
+    item_no = orc_db.Column(orc_db.String(32))
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
@@ -248,6 +251,7 @@ class TabStepDet(orc_db.Model):
         self.id = p_def["id"] if p_def else None
         self.step_id = p_def["step_id"] if p_def else None
         self.item_id = p_def["item_id"] if p_def else None
+        self.item_no = p_def["item_no"] if p_def else None
         self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
 
     def to_json(self):
@@ -256,6 +260,7 @@ class TabStepDet(orc_db.Model):
             id=str(self.id),
             step_id=str(self.step_id),
             item_id=str(self.item_id),
+            item_no=self.item_no,
             create_time=OrcCover.time2str(self.create_time)
         )
 
@@ -265,8 +270,8 @@ class TabItem(orc_db.Model):
 
     """
     __tablename__ = 'tab_item'
+
     id = orc_db.Column(orc_db.Integer, primary_key=True)
-    item_no = orc_db.Column(orc_db.String(32))
     item_type = orc_db.Column(orc_db.String(8))
     item_mode = orc_db.Column(orc_db.String(8))
     item_operate = orc_db.Column(orc_db.String(256))
@@ -278,7 +283,6 @@ class TabItem(orc_db.Model):
     def __init__(self, p_def=None):
 
         self.id = p_def["id"] if p_def else None
-        self.item_no = p_def["item_no"] if p_def else None
         self.item_type = p_def["item_type"] if p_def else None
         self.item_mode = p_def["item_mode"] if p_def else None
         self.item_operate = p_def["item_operate"] if p_def else None
@@ -291,7 +295,6 @@ class TabItem(orc_db.Model):
 
         return dict(
             id=str(self.id),
-            item_no=self.item_no,
             item_type=self.item_type,
             item_mode=self.item_mode,
             item_operate=self.item_operate,
@@ -312,6 +315,7 @@ class TabData(orc_db.Model):
     test_env = orc_db.Column(orc_db.String(16))
     src_id = orc_db.Column(orc_db.Integer)
     src_type = orc_db.Column(orc_db.String(16))
+    step_order = orc_db.Column(orc_db.Integer)
     data_flag = orc_db.Column(orc_db.String(32))
     data_order = orc_db.Column(orc_db.Integer)
     data_type = orc_db.Column(orc_db.String(16))
@@ -327,6 +331,7 @@ class TabData(orc_db.Model):
         self.test_env = p_def["test_env"] if p_def else None
         self.src_id = p_def["src_id"] if p_def else None
         self.src_type = p_def["src_type"] if p_def else None
+        self.step_order = p_def["step_order"] if p_def else None
         self.data_flag = p_def["data_flag"] if p_def else None
         self.data_order = p_def["data_order"] if p_def else None
         self.data_type = p_def["data_type"] if p_def else None
@@ -343,6 +348,7 @@ class TabData(orc_db.Model):
             test_env=self.test_env,
             src_id=str(self.src_id),
             src_type=self.src_type,
+            step_order=self.step_order,
             data_flag=self.data_flag,
             data_order=str(self.data_order),
             data_type=self.data_type,
@@ -512,7 +518,6 @@ class WebWidgetDet(orc_db.Model):
 
 
 class WebWindowDef(orc_db.Model):
-
     """
     Table widget definition
     """

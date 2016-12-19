@@ -2,7 +2,7 @@
 from flask_restful import Resource
 
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcResult
+from OrcLib.LibNet import orc_api
 from ReportDetModel import ReportDetModel
 
 
@@ -16,6 +16,7 @@ class ReportDetAPI(Resource):
     def dispatch_request(self, *args, **kwargs):
         return super(Resource, self).dispatch_request(*args, **kwargs)
 
+    @orc_api
     def get(self, p_id, p_time):
         """
         Search

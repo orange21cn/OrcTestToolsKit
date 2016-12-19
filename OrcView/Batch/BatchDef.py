@@ -1,7 +1,6 @@
 # coding=utf-8
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
-from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
@@ -93,7 +92,7 @@ class ViewBatchDefMag(QWidget):
         _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit[dict].connect(self.add)
-        _wid_display.doubleClicked[QModelIndex].connect(self.__batch_detail)
+        _wid_display.doubleClicked.connect(self.__batch_detail)
 
         _wid_display.sig_context.connect(self.__context)  # 右键菜单
         _wid_display.clicked.connect(self.__model.usr_set_current_data)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import func
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
@@ -9,13 +10,15 @@ from OrcLib.LibDatabase import orc_db
 from OrcApi.Case.ItemMod import ItemMod
 
 
-class StepDetMod():
+class StepDetMod(object):
     """
     Test data management
     """
     __session = orc_db.session
 
     def __init__(self):
+
+        object.__init__(self)
 
         self.__item = ItemMod()
 
@@ -66,6 +69,9 @@ class StepDetMod():
         # step_id
         _node.item_id = _item_id
 
+        # step_no
+        _node.item_no = self.__create_no(_step_id)
+
         # create_time, modify_time
         _node.create_time = datetime.now()
 
@@ -100,3 +106,19 @@ class StepDetMod():
 
         _rtn = self.__session.query(TabStepDet).filter(TabStepDet.id.in_(p_list))
         return list(value.item_id for value in _rtn)
+
+    def __create_no(self, p_step_id):
+        """
+        创建 case no
+        :param p_step_id:
+        :return:
+        """
+        case_no = self.__session\
+            .query(func.max(TabStepDet.item_no))\
+            .filter(p_step_id == TabStepDet.step_id)\
+            .first()[0]
+
+        if case_no is None:
+            case_no = 9
+
+        return str(int(case_no) + 1)

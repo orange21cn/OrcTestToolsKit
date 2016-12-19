@@ -3,12 +3,13 @@ from OrcLib.LibNet import OrcHttpNewResource
 from OrcLib.LibApi import connect_list
 
 
-class StepService(object):
+class ItemService(object):
 
     def __init__(self):
 
         object.__init__(self)
 
+        self.__resource_case_def = OrcHttpNewResource("CaseDef")
         self.__resource_step_det = OrcHttpNewResource("StepDet")
         self.__resource_item = OrcHttpNewResource("Item")
 
@@ -18,14 +19,30 @@ class StepService(object):
         :param p_data:
         :return:
         """
-        # 增加 item
-        item = self.__resource_item.post(p_data)
-
-        # 增加 step det
+        step_type = p_data["type"]
         step_id = p_data["step_id"]
-        item_id = item["id"]
-        step_data = dict(step_id=step_id, item_id=item_id)
-        self.__resource_step_det.post(step_data)
+        step_data = p_data["data"]
+
+        if "ITEM" == step_type:
+
+            # 增加 item
+            item = self.__resource_item.post(step_data)
+
+            # 增加 step det
+            step_id = step_id
+            item_id = item["id"]
+            step_det_data = dict(step_id=step_id, item_id=item_id)
+
+            self.__resource_step_det.post(step_det_data)
+
+        elif "FUNC" == step_type:
+
+            # 增加 step det
+            step_id = step_id
+            func_id = step_data
+            step_det_data = dict(step_id=step_id, item_id=func_id)
+
+            self.__resource_step_det.post(step_det_data)
 
         return dict(step_id=step_id)
 
@@ -69,5 +86,39 @@ class StepService(object):
         # 查询 item 列表
         item_list = self.__resource_item.get(dict(id=item_id_list))
 
+        # 查询 func
+        case_list = self.__resource_case_def.get(dict(id=item_id_list))
+
+        # func 转成 item 结构
+        func_list = [dict(
+            id=case["id"],
+            item_no=case["case_no"],
+            item_mode="",
+            item_type="",
+            item_operate=case["case_path"],
+            item_desc=case["case_desc"],
+            comment=case["comment"],
+            create_time=case["create_time"],
+            modify_time=case["modify_time"]
+        )for case in case_list]
+
+        # 连接 list
+        print func_list
+        item_list.extend(func_list)
+        print item_list
         # 连接数据
         return connect_list(step_det_list, item_list, "item_id")
+
+
+class StepService(object):
+
+    def __init__(self):
+
+        object.__init__(self)
+
+        self.__resource_step_def = OrcHttpNewResource("StepDef")
+
+    def view_get_step_type(self, p_step_id):
+
+        self.__resource_step_def.set_path(p_step_id)
+        return self.__resource_step_def.get()["step_type"]

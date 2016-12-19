@@ -1,10 +1,9 @@
 # coding=utf-8
-
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 
-from OrcView.Case.CaseDet import ViewCaseDetMag
-from OrcView.Case.StepDet import ViewStepDetMag
+from OrcView.Case.Step import StepView
+from OrcView.Case.Item import ItemView
 
 
 class StepContainer(QWidget):
@@ -17,8 +16,8 @@ class StepContainer(QWidget):
         _step_id = p_data["id"]
         self.title = _step_no
 
-        self._wid_step = ViewCaseDetMag(_step_id)
-        self._wid_item = ViewStepDetMag()
+        self._wid_step = StepView(_step_id)
+        self._wid_item = ItemView()
 
         _layout = QVBoxLayout()
         _layout.addWidget(self._wid_step)

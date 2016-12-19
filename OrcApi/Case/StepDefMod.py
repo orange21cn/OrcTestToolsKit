@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabStepDef
@@ -45,9 +44,6 @@ class StepDefMod:
         if 'pid' in p_cond:
             result = result.filter(TabStepDef.pid == p_cond['pid'])
 
-        if 'step_no' in p_cond:
-            result = result.filter(TabStepDef.step_no.ilike(_like('step_no')))
-
         if 'step_desc' in p_cond:
             result = result.filter(TabStepDef.step_desc.ilike(_like('step_desc')))
 
@@ -64,16 +60,19 @@ class StepDefMod:
         # Create id
         _node.id = gen_id("step_def")
 
-        # step_no
-        _node.step_no = self._create_no()
-
-        # step_desc, comment
+        # step_desc
         _node.step_desc = p_data['step_desc'] if 'step_desc' in p_data else ""
+
+        # step_type
         _node.step_type = p_data['step_type'] if 'step_type' in p_data else ""
+
+        # comment
         _node.comment = p_data['comment'] if 'comment' in p_data else ""
 
         # create_time, modify_time
         _node.create_time = datetime.now()
+
+        # modify_time
         _node.modify_time = datetime.now()
 
         try:
@@ -83,19 +82,6 @@ class StepDefMod:
             raise OrcDatabaseException
 
         return _node
-
-    def _create_no(self):
-        """
-        Create a no, like step_no
-        :return:
-        """
-        _no = gen_date_str()
-        t_item = self.__session.query(TabStepDef).filter(TabStepDef.step_no == _no).first()
-
-        if t_item is not None:
-            return self._create_no()
-        else:
-            return _no
 
     def usr_update(self, p_cond):
 
@@ -121,7 +107,7 @@ class StepDefMod:
         :param p_filter:
         :return:
         """
-
+        # Todo 条件太少
         # search
         def f_value(p_flag):
             return "%%%s%%" % p_filter[p_flag]
@@ -130,9 +116,6 @@ class StepDefMod:
 
         if 'id' in p_filter:
             _res = _res.filter(TabStepDef.id.in_(p_filter['id']))
-
-        if 'step_no' in p_filter:
-            _res = _res.filter(TabStepDef.step_no.ilike(f_value('step_no')))
 
         if 'step_desc' in p_filter:
             _res = _res.filter(TabStepDef.step_desc.ilike(f_value('step_name')))

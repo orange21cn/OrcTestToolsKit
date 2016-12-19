@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import func
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
-from sqlalchemy import func
-
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import gen_id
 from OrcLib.LibDatabase import orc_db
