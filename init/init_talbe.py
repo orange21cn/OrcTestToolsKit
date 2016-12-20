@@ -113,19 +113,19 @@ init_value_dictionary = [
 
 
 init_value_sequence = [
-    LibSequence(dict(id="20001", field_name="batch_def", field_seq="1000000000")),
-    LibSequence(dict(id="20002", field_name="batch_det", field_seq="1100000000")),
-    LibSequence(dict(id="20003", field_name="case_def", field_seq="2000000000")),
-    LibSequence(dict(id="20004", field_name="case_det", field_seq="2100000000")),
-    LibSequence(dict(id="20005", field_name="step_def", field_seq="2200000000")),
-    LibSequence(dict(id="20006", field_name="step_det", field_seq="2300000000")),
-    LibSequence(dict(id="20007", field_name="item", field_seq="2400000000")),
-    LibSequence(dict(id="20008", field_name="page_def", field_seq="3000000000")),
-    LibSequence(dict(id="20009", field_name="page_det", field_seq="3100000000")),
-    LibSequence(dict(id="20010", field_name="window_def", field_seq="3200000000")),
-    LibSequence(dict(id="20011", field_name="widget_def", field_seq="3300000000")),
-    LibSequence(dict(id="20012", field_name="widget_det", field_seq="3400000000")),
-    LibSequence(dict(id="20013", field_name="data", field_seq="4000000000")),
+    LibSequence(dict(id="20001", field_name="batch_def", field_seq="100000000")),
+    LibSequence(dict(id="20002", field_name="batch_det", field_seq="110000000")),
+    LibSequence(dict(id="20003", field_name="case_def", field_seq="200000000")),
+    LibSequence(dict(id="20004", field_name="case_det", field_seq="210000000")),
+    LibSequence(dict(id="20005", field_name="step_def", field_seq="220000000")),
+    LibSequence(dict(id="20006", field_name="step_det", field_seq="230000000")),
+    LibSequence(dict(id="20007", field_name="item", field_seq="240000000")),
+    LibSequence(dict(id="20008", field_name="page_def", field_seq="300000000")),
+    LibSequence(dict(id="20009", field_name="page_det", field_seq="310000000")),
+    LibSequence(dict(id="20010", field_name="window_def", field_seq="320000000")),
+    LibSequence(dict(id="20011", field_name="widget_def", field_seq="330000000")),
+    LibSequence(dict(id="20012", field_name="widget_det", field_seq="340000000")),
+    LibSequence(dict(id="20013", field_name="data", field_seq="400000000")),
     LibSequence(dict(id="20014", field_name="dict", field_seq="20000"))]
 
 init_value_widget_type = [
