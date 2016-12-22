@@ -4,7 +4,7 @@ from RunCore import RunCore
 from OrcLib import get_config
 
 
-class ReportDetModel:
+class ReportDetMod:
 
     def __init__(self):
 

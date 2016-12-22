@@ -1,5 +1,6 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcHttpService
 from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibDatabase import TabItem
 
@@ -10,10 +11,12 @@ class RunCoreService:
     """
     def __init__(self):
 
-        self.__resource_web_driver = OrcHttpNewResource("Driver")
-        self.__resource_item = OrcHttpNewResource("Item")
-        self.__resource_data = OrcHttpNewResource("Data")
+        self.__resource_web_driver = OrcHttpResource("Driver")
+        self.__resource_item = OrcHttpResource("Item")
+        self.__resource_data = OrcHttpResource("Data")
         self.__resource_view = OrcSocketResource("View")
+
+        self.__service_web_driver = OrcHttpService("Driver")
 
     def launch_web_step(self, p_step_info):
         """
@@ -34,6 +37,14 @@ class RunCoreService:
             return self.__resource_web_driver.post(p_step_info) == step_data
         else:
             return self.__resource_web_driver.post(p_step_info)
+
+    def get_web_pic(self, p_name):
+        """
+        获取截图
+        :param p_name:
+        :return:
+        """
+        self.__service_web_driver.save_pic(p_name)
 
     def get_item(self, p_item_id):
         """

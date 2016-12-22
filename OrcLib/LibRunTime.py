@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class Runtime(object):
@@ -11,7 +11,7 @@ class Runtime(object):
         object.__init__(self)
 
         self.__mod = p_mod
-        self.__resource = OrcHttpNewResource("RunTime")
+        self.__resource = OrcHttpResource("RunTime")
 
     def add_value(self, p_data):
         """

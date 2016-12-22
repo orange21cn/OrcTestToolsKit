@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibLog import OrcLog
 
 
@@ -9,7 +9,7 @@ class WidgetDefService:
 
         # Log
         self.__logger = OrcLog("view.driver.web.service.widget_def")
-        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
+        self.__resource_widget_def = OrcHttpResource("WidgetDef")
 
     def usr_add(self, p_data):
         """
@@ -55,7 +55,7 @@ class WidgetDetService:
 
         # Log
         self.__logger = OrcLog("view.driver.web.service.widget_det")
-        self.__resource_page_det = OrcHttpNewResource("WidgetDet")
+        self.__resource_page_det = OrcHttpResource("WidgetDet")
 
     def usr_add(self, p_data):
         """

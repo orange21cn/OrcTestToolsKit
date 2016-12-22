@@ -1,6 +1,6 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class WebMainService:
@@ -12,10 +12,10 @@ class WebMainService:
         # Log
         self.__logger = OrcLog("view.driver.web.service.web_main")
 
-        self.__resource_page_def = OrcHttpNewResource("PageDef")
-        self.__resource_page_det = OrcHttpNewResource("PageDet")
-        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
-        self.__resource_widget_det = OrcHttpNewResource("WidgetDet")
+        self.__resource_page_def = OrcHttpResource("PageDef")
+        self.__resource_page_det = OrcHttpResource("PageDet")
+        self.__resource_widget_def = OrcHttpResource("WidgetDef")
+        self.__resource_widget_det = OrcHttpResource("WidgetDet")
 
     def get_page_key(self, p_id):
         """

@@ -45,6 +45,7 @@ class BatchDefBus(OrcBus):
             # 其他情况只查询符合条件的数据
             else:
                 result = self._model.usr_search(p_cond)
+
         except Exception:
             self._logger.error("Search batch error, input: %s" % p_cond)
             raise OrcApiModelFailException

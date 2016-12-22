@@ -1,35 +1,32 @@
 # coding=utf-8
-from flask_restful import Resource
-
-from OrcLib.LibLog import OrcLog
+from OrcLib.LibApi import OrcBaseAPI
+from OrcLib.LibApi import OrcListAPI
 from OrcLib.LibNet import OrcParameter
 from OrcLib.LibNet import orc_api
+
 from RunDefBus import RunDefBus
 from RunDetMod import RunDetMod
 from RunCore import RunCore
 
 
-class RunDefListAPI(Resource):
+class RunDefListAPI(OrcListAPI):
 
     def __init__(self):
 
-        self.__logger = OrcLog("resource.runs.api.def")
-        self.__business = RunDefBus()
+        OrcListAPI.__init__(self, "run_def", RunDefBus)
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request(*args, **kwargs)
+        return super(OrcListAPI, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
-    def post(self):
-        """
-        Add
-        :return:
-        """
-        parameter = OrcParameter.receive_para()
 
-        self.__logger.info("Add run, parameter is: %s" % parameter)
+class RunDetListAPI(OrcBaseAPI):
 
-        return self.__business.bus_list_add(parameter)
+    def __init__(self):
+
+        OrcBaseAPI.__init__(self, "run_det", RunDetMod)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
     @orc_api
     def get(self):
@@ -39,55 +36,19 @@ class RunDefListAPI(Resource):
         """
         parameter = OrcParameter.receive_para()
 
-        self.__logger.info("Search run, parameter is: %s" % parameter)
+        self._logger.info("Add run time, parameter is: %s" % parameter)
 
-        return self.__business.bus_list_search(parameter)
-
-    @orc_api
-    def delete(self):
-        """
-        Delete
-        :return:
-        """
-        parameter = OrcParameter.receive_para()
-
-        self.__logger.info("Delete run, parameter is: %s" % parameter)
-
-        return self.__business.bus_list_delete(parameter)
+        return self._business.usr_search(parameter)
 
 
-class RunDetListAPI(Resource):
+class RunAPI(OrcBaseAPI):
 
     def __init__(self):
 
-        self.__logger = OrcLog("resource.runs.api.det")
-        self.__model = RunDetMod()
+        OrcBaseAPI.__init__(self, "run", RunCore)
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request(*args, **kwargs)
-
-    @orc_api
-    def get(self):
-        """
-        Search
-        :return:
-        """
-        parameter = OrcParameter.receive_para()
-
-        self.__logger.info("Add run time, parameter is: %s" % parameter)
-
-        return self.__model.usr_search(parameter)
-
-
-class RunAPI(Resource):
-
-    def __init__(self):
-
-        self.__logger = OrcLog("resource.run.api")
-        self.__model = RunCore()
-
-    def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request(*args, **kwargs)
+        return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
     @orc_api
     def put(self):
@@ -96,6 +57,6 @@ class RunAPI(Resource):
         """
         parameter = OrcParameter.receive_para()
 
-        self.__logger.info("Run, parameter is: %s" % parameter)
+        self._logger.info("Run, parameter is: %s" % parameter)
 
-        return self.__model.run_start(parameter)
+        return self._business.run_start(parameter)

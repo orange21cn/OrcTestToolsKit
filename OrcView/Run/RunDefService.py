@@ -1,13 +1,13 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class RunDefService:
 
     def __init__(self):
 
-        self.__res_run_def = OrcHttpNewResource("RunDef")
-        self.__res_run = OrcHttpNewResource("Run")
+        self.__res_run_def = OrcHttpResource("RunDef")
+        self.__res_run = OrcHttpResource("Run")
 
     def usr_add(self, p_cond):
         """

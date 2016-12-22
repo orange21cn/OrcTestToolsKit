@@ -27,3 +27,16 @@ class TestOrcParameter(unittest.TestCase):
         OrcTest.test_print_result("Parameter para_04 is: %s, type is %s" % (_para_04, type(_para_04)))
 
         OrcTest.test_print_end()
+
+    def test_save_pic(self):
+        """
+        Test get exist option
+        """
+        OrcTest.test_print_begin()
+
+        from OrcLib.LibNet import OrcHttpService
+
+        service = OrcHttpService("Driver")
+        service.save_pic("abc.png")
+
+        OrcTest.test_print_end()

@@ -1,9 +1,116 @@
 # coding=utf-8
+from flask_restful import Resource
 
-# coding=utf-8
 from OrcLib import init_log
+from OrcLib.LibNet import orc_api
 from OrcLib.LibNet import OrcLog
+from OrcLib.LibNet import OrcParameter
 from OrcLib.LibException import OrcApiModelFailException
+
+
+class OrcBaseAPI(Resource):
+
+    def __init__(self, p_flag, p_bus):
+
+        self._flag = p_flag
+        self._business = p_bus()
+        self._logger = OrcLog("resource.%s.api" % self._flag)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(Resource, self).dispatch_request(*args, **kwargs)
+
+
+class OrcListAPI(OrcBaseAPI):
+
+    def __init__(self, p_flag, p_bus):
+
+        OrcBaseAPI.__init__(self, p_flag, p_bus)
+
+        self._logger = OrcLog("resource.%ss.api" % self._flag)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
+
+    @orc_api
+    def get(self):
+        """
+        Search
+        :return:
+        """
+        parameter = OrcParameter.receive_para()
+
+        self._logger.info("Search %s, parameter is: %s" % (self._flag, parameter))
+
+        return self._business.bus_list_search(parameter)
+
+    @orc_api
+    def post(self):
+        """
+        Add
+        :return:
+        """
+        parameter = OrcParameter.receive_para()
+
+        self._logger.info("Add %s, parameter is: %s" % (self._flag, parameter))
+
+        return self._business.bus_list_add(parameter)
+
+    @orc_api
+    def delete(self):
+        """
+        Delete
+        :return:
+        """
+        parameter = OrcParameter.receive_para()
+
+        self._logger.info("Delete %s, parameter is: %s" % (self._flag, parameter))
+
+        return self._business.bus_list_delete(parameter)
+
+
+class OrcAPI(OrcBaseAPI):
+
+    def __init__(self, p_flag, p_bus):
+
+        OrcBaseAPI.__init__(self, p_flag, p_bus)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(Resource, self).dispatch_request(*args, **kwargs)
+
+    @orc_api
+    def get(self, p_id):
+        """
+        Search
+        :param p_id:
+        :return:
+        """
+        self._logger.info("Search %s, parameter is: %s" % (self._flag, p_id))
+
+        return self._business.bus_search(p_id)
+
+    @orc_api
+    def put(self, p_id):
+        """
+        Update
+        :param p_id:
+        :return:
+        """
+        parameter = OrcParameter.receive_para()
+
+        self._logger.info("Update %s, parameter is: %s, %s" % (self._flag, p_id, parameter))
+
+        return self._business.bus_update(p_id, parameter)
+
+    @orc_api
+    def delete(self, p_id):
+        """
+        Delete
+        :param p_id:
+        :return:
+        """
+        self._logger.info("Delete %s, parameter is: %s" % (self._flag, p_id))
+
+        return self._business.bus_delete(p_id)
 
 
 class OrcBus(object):

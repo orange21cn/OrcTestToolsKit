@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibApi import connect_list
 
 
@@ -9,8 +9,8 @@ class BatchDefService(object):
 
         object.__init__(self)
 
-        self.__resource_batch_def = OrcHttpNewResource("BatchDef")
-        self.__resource_run_def = OrcHttpNewResource("RunDef")
+        self.__resource_batch_def = OrcHttpResource("BatchDef")
+        self.__resource_run_def = OrcHttpResource("RunDef")
 
     def usr_add(self, p_data):
         """
@@ -60,8 +60,8 @@ class BatchDetService(object):
 
         object.__init__(self)
 
-        self.__resource_batch_det = OrcHttpNewResource("BatchDet")
-        self.__resource_case_def = OrcHttpNewResource("CaseDef")
+        self.__resource_batch_det = OrcHttpResource("BatchDet")
+        self.__resource_case_def = OrcHttpResource("CaseDef")
 
     def usr_add(self, p_data):
         """

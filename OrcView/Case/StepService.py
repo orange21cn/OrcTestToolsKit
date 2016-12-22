@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibApi import connect_list
 
 
@@ -9,9 +9,9 @@ class ItemService(object):
 
         object.__init__(self)
 
-        self.__resource_case_def = OrcHttpNewResource("CaseDef")
-        self.__resource_step_det = OrcHttpNewResource("StepDet")
-        self.__resource_item = OrcHttpNewResource("Item")
+        self.__resource_case_def = OrcHttpResource("CaseDef")
+        self.__resource_step_det = OrcHttpResource("StepDet")
+        self.__resource_item = OrcHttpResource("Item")
 
     def usr_add(self, p_data):
         """
@@ -116,7 +116,7 @@ class StepService(object):
 
         object.__init__(self)
 
-        self.__resource_step_def = OrcHttpNewResource("StepDef")
+        self.__resource_step_def = OrcHttpResource("StepDef")
 
     def view_get_step_type(self, p_step_id):
 

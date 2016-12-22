@@ -1,11 +1,11 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class DataService:
 
     def __init__(self):
-        self.__resource_data = OrcHttpNewResource("Data")
+        self.__resource_data = OrcHttpResource("Data")
 
     def usr_add(self, p_data):
         """

@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 import json
 import socket
 import time
@@ -12,6 +13,7 @@ from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcDriver.Web.Widget.WidgetA import WidgetA
 from OrcLib.LibLog import OrcLog
+from OrcLib import get_config
 from WebDriverService import WebDriverService
 
 
@@ -19,7 +21,7 @@ class DriverSelenium:
 
     def __init__(self, p_ip, p_port):
 
-        self.__logger = OrcLog("driver")
+        self.__logger = OrcLog("driver.web.selenium")
         self.__service = WebDriverService()
 
         self.__browser = "FIREFOX"  # 浏览器
@@ -34,6 +36,9 @@ class DriverSelenium:
         self.__port = int(p_port)
 
     def start(self):
+
+        if not os.path.exists("pics"):
+            os.mkdir("pics")
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((self.__ip, self.__port))
@@ -76,6 +81,9 @@ class DriverSelenium:
             _status = False
             self.__logger.error("Wrong type %s." % _type)
 
+        pic_name = "pics/temp.png"
+        self.save_screen(pic_name)
+
         return _status
 
     def __action(self, p_para):
@@ -113,7 +121,7 @@ class DriverSelenium:
         """
         self.__logger.debug(p_para)
 
-        self.__browser = "FIREFOX" if "BROWSER" not in p_para else p_para["BROWSER"]
+        self.__browser = "PHANTOMJS" if "BROWSER" not in p_para else p_para["BROWSER"]
         self.__env = "TEST" if "ENV" not in p_para else p_para["ENV"]
         _page_det_id = p_para["OBJECT"]
         _page_operation = p_para["OPERATION"]
@@ -128,6 +136,11 @@ class DriverSelenium:
                     self.__root = webdriver.Firefox()
                 elif "CHROME" == self.__browser:
                     self.__root = webdriver.Chrome()
+                elif "PHANTOMJS" == self.__browser:
+                    driver_configer = get_config("driver")
+                    driver_path = driver_configer.get_option("PHANTOMJS", "path")
+                    print driver_path
+                    self.__root = webdriver.PhantomJS(executable_path=driver_path)
                 else:
                     pass
 
@@ -156,7 +169,3 @@ class DriverSelenium:
 
         time.sleep(0.5)
         self.__root.save_screenshot(p_file)
-
-
-
-

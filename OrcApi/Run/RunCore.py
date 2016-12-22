@@ -5,7 +5,7 @@ from xml.etree.ElementTree import Element
 from OrcLib import get_config
 from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibDataStruct import ListTree
 from RunService import RunCoreService
 from RunLog import RunLog
@@ -24,13 +24,13 @@ class RunCore(ListTree):
         self.__logger = OrcLog("view.driver.service.window")
 
         # Source
-        self.__resource_batch_def = OrcHttpNewResource("BatchDef")
-        self.__resource_batch_det = OrcHttpNewResource("BatchDet")
-        self.__resource_case_def = OrcHttpNewResource("CaseDef")
-        self.__resource_case_det = OrcHttpNewResource("CaseDet")
-        self.__resource_step_def = OrcHttpNewResource("StepDef")
-        self.__resource_step_det = OrcHttpNewResource("StepDet")
-        self.__resource_item = OrcHttpNewResource("Item")
+        self.__resource_batch_def = OrcHttpResource("BatchDef")
+        self.__resource_batch_det = OrcHttpResource("BatchDet")
+        self.__resource_case_def = OrcHttpResource("CaseDef")
+        self.__resource_case_det = OrcHttpResource("CaseDet")
+        self.__resource_step_def = OrcHttpResource("StepDef")
+        self.__resource_step_det = OrcHttpResource("StepDet")
+        self.__resource_item = OrcHttpResource("Item")
 
         self.__service = RunCoreService()
 
@@ -387,6 +387,10 @@ class RunCore(ListTree):
             if "OPERATE" == item.item_mode:
                 _result = self.__service.launch_web_step(item_operation)
 
+                folder = self.__run_logger.get_folder()
+                pic_name = "%s/%s.png" % (folder, item_id)
+                self.__service.get_web_pic(pic_name)
+
             # 检查项
             elif "CHECK" == item.item_mode:
                 _result = self.__service.check_web_step(item_operation)
@@ -446,7 +450,7 @@ class RunData:
 
             self.id = _data.id
             self.run_det_type = "STEP"
-            self.flag = _data.step_no
+            self.flag = _data.id
             self.desc = _data.step_desc
 
         elif "Item" == self.__type:
@@ -457,7 +461,7 @@ class RunData:
 
             self.id = _data.id
             self.run_det_type = "ITEM"
-            self.flag = _data.item_no
+            self.flag = _data.id
             self.desc = _data.item_desc
 
         if self.pid is None or "None" == self.pid:

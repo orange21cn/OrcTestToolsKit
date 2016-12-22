@@ -4,8 +4,6 @@ import requests
 import socket
 
 from exceptions import ValueError
-from functools import wraps
-from flask import make_response
 from flask import request
 from requests.exceptions import RequestException
 from requests.packages.urllib3.exceptions import HTTPError
@@ -59,6 +57,42 @@ class OrcResourceBase(object):
         return self._url
 
 
+class OrcHttpService(OrcResourceBase):
+    """
+    Todo
+    """
+    def __init__(self, p_mod):
+
+        OrcResourceBase.__init__(self, p_mod)
+
+    def get(self, p_para):
+        _para = OrcParameter.send_para(p_para)
+        return requests.delete(self._url, data=_para)
+
+    def post(self, p_para):
+        _para = OrcParameter.send_para(p_para)
+        return requests.delete(self._url, data=_para)
+
+    def delete(self, p_para):
+        _para = OrcParameter.send_para(p_para)
+        return requests.delete(self._url, data=_para)
+
+    def put(self, p_para):
+        _para = OrcParameter.send_para(p_para)
+        return requests.delete(self._url, data=_para)
+
+    def save_pic(self, p_file_name):
+
+        req = requests.get(self._url, stream=True)
+
+        with open(p_file_name, 'wb') as _file:
+            for chunk in req.iter_content(chunk_size=1024):
+                if chunk:
+                    _file.write(chunk)
+                    _file.flush()
+            _file.close()
+
+
 class OrcSocketResource(OrcResourceBase):
 
     def __init__(self, p_mod):
@@ -83,7 +117,7 @@ class OrcSocketResource(OrcResourceBase):
         return _msg
 
 
-class OrcHttpNewResource(OrcResourceBase):
+class OrcHttpResource(OrcResourceBase):
     """
     http 服务调用封装为资源
     """
@@ -148,9 +182,7 @@ class OrcHttpNewResource(OrcResourceBase):
     def __invoke(p_flg, p_url, p_para):
 
         _type = {'content-type': 'application/json'}
-
         _para = OrcParameter.send_para(p_para)
-        _result = None
 
         try:
             # 接口调用
@@ -178,7 +210,7 @@ class OrcHttpNewResource(OrcResourceBase):
                 return None
 
         except (HTTPError, ValueError, RequestException):
-            _logger.error("Invoke %s failed, parameter is %s, status is %s" % (p_url, _para, _result.status))
+            _logger.error("Invoke %s failed, parameter is %s, status is" % (p_url, _para))
             return None
 
         return _result.data
@@ -209,7 +241,10 @@ class OrcParameter:
         :return:
         """
         _parameter = request.json
-        return _parameter["para"]
+        if not _parameter:
+            return dict()
+        else:
+            return _parameter["para"]
 
 
 class OrcResult(object):

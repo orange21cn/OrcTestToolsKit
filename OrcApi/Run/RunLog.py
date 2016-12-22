@@ -88,6 +88,9 @@ class RunLog:
     def data(self, p_msg):
         self.__log_file.write("    %s\n" % p_msg)
 
+    def get_folder(self):
+        return self.__run_folder
+
     def __del__(self):
 
         if self.__log_file is not None:

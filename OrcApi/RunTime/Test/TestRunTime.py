@@ -1,6 +1,6 @@
 import unittest
 
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibTest import OrcTest
 
 
@@ -13,7 +13,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         data = dict(data_flag="env",
                     data_index=1,
@@ -31,7 +31,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         result = run_time.get()
 
@@ -46,7 +46,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         data = [1]
         result = run_time.delete(data)
@@ -62,7 +62,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         run_time.set_path(2)
         result = run_time.put(dict(data_value=10))
@@ -78,7 +78,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         run_time.set_path(2)
         result = run_time.get()
@@ -94,7 +94,7 @@ class TestTab(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = OrcHttpNewResource("RunTime")
+        run_time = OrcHttpResource("RunTime")
 
         run_time.set_path(1)
         result = run_time.delete()

@@ -1,7 +1,7 @@
 import unittest
 
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class TestData(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestData(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        test = OrcHttpNewResource("Data")
+        test = OrcHttpResource("Data")
         result = test.get({"src_type": "CASE", "data_flag": "3300000019", "src_id": "2000000003"})
         OrcTest.test_print_result(result)
 

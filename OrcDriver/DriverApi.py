@@ -1,11 +1,11 @@
 # coding=utf-8
 from flask_restful import Resource
+from flask import send_file
 
 from OrcLib import init_log
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_api
 from OrcLib.LibNet import OrcParameter
-from OrcLib.LibNet import OrcResult
 from DriverModel import DriverModel
 
 
@@ -39,10 +39,9 @@ class DriverAPI(Resource):
         parameter = OrcParameter.receive_para()
         return self.__model.run(parameter)
 
-    @orc_api
     def get(self):
         """
-        获取结果
+        获取载图
         :return:
         """
-        pass
+        return send_file('pics/temp.png', mimetype='image/png', cache_timeout=0)

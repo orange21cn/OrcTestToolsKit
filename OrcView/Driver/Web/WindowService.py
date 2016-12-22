@@ -1,6 +1,6 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 
 
 class WindowDefService:
@@ -12,8 +12,8 @@ class WindowDefService:
         # Log
         self.__logger = OrcLog("view.driver.web.service.window_def")
 
-        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
-        self.__resource_widow_def = OrcHttpNewResource("WindowDef")
+        self.__resource_widget_def = OrcHttpResource("WidgetDef")
+        self.__resource_widow_def = OrcHttpResource("WindowDef")
 
     def usr_add(self, p_data):
         """

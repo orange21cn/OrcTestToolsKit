@@ -11,7 +11,7 @@ from PySide.QtGui import QProgressBar
 
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibException import OrcPostFailedException
 from LibDict import LibDict
 
@@ -243,7 +243,7 @@ class OrcSelectBase(QComboBox):
         # 属性名称集
         self.__names = []
 
-        # 是否饮食空选项
+        # 是否包含空选项
         self.empty = p_empty
 
         # 设置在拉伸方式
@@ -386,7 +386,7 @@ def operate_to_str(p_data):
         :param p_id:
         :return:
         """
-        resource_widget_def = OrcHttpNewResource("WidgetDef")
+        resource_widget_def = OrcHttpResource("WidgetDef")
         resource_widget_def.set_path(p_id)
 
         widget_def_data = resource_widget_def.get()
@@ -399,7 +399,7 @@ def operate_to_str(p_data):
         :param p_id:
         :return:
         """
-        resource_page_def = OrcHttpNewResource("PageDef")
+        resource_page_def = OrcHttpResource("PageDef")
         resource_page_def.set_path(p_id)
 
         page_def_data = resource_page_def.get()
@@ -413,7 +413,7 @@ def operate_to_str(p_data):
         :param p_flag:
         :return:
         """
-        resource_dict = OrcHttpNewResource("Dict")
+        resource_dict = OrcHttpResource("Dict")
         dict_data = resource_dict.get(dict(dict_flag=p_flag, dict_value=p_value))
 
         return None if not dict_data else dict_data[0]["dict_text"]

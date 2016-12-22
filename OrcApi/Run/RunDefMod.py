@@ -2,7 +2,7 @@
 import os
 import re
 from OrcLib import get_config
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from RunCore import RunCore
 
 
@@ -14,8 +14,8 @@ class RunDefMod:
     def __init__(self):
 
         self.__config = get_config()
-        self.__resource_batch_def = OrcHttpNewResource("BatchDef")
-        self.__resource_case_def = OrcHttpNewResource("CaseDef")
+        self.__resource_batch_def = OrcHttpResource("BatchDef")
+        self.__resource_case_def = OrcHttpResource("CaseDef")
 
         self.__list = RunCore()
         self.__home = self.__list.get_home()

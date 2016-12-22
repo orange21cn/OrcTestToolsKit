@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import WebWidgetDet
@@ -12,10 +12,10 @@ class WebDriverService:
         # Log
         self.__logger = OrcLog("api.driver.service")
 
-        self.__resource_page_def = OrcHttpNewResource("PageDef")
-        self.__resource_page_det = OrcHttpNewResource("PageDet")
-        self.__resource_widget_def = OrcHttpNewResource("WidgetDef")
-        self.__resource_widget_det = OrcHttpNewResource("WidgetDet")
+        self.__resource_page_def = OrcHttpResource("PageDef")
+        self.__resource_page_det = OrcHttpResource("PageDet")
+        self.__resource_widget_def = OrcHttpResource("WidgetDef")
+        self.__resource_widget_det = OrcHttpResource("WidgetDet")
 
     def page_get_url(self, p_env, p_id):
         """

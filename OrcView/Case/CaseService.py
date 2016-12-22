@@ -1,5 +1,5 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpNewResource
+from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibApi import connect_list
 
 
@@ -9,8 +9,8 @@ class CaseDefService(object):
 
         object.__init__(self)
 
-        self.__resource_case_def = OrcHttpNewResource("CaseDef")
-        self.__resource_run_def = OrcHttpNewResource("RunDef")
+        self.__resource_case_def = OrcHttpResource("CaseDef")
+        self.__resource_run_def = OrcHttpResource("RunDef")
 
     def usr_add(self, p_data):
         """
@@ -64,8 +64,8 @@ class CaseDetService(object):
 
         object.__init__(self)
 
-        self.__resource_case_det = OrcHttpNewResource("CaseDet")
-        self.__resource_step = OrcHttpNewResource("StepDef")
+        self.__resource_case_det = OrcHttpResource("CaseDet")
+        self.__resource_step = OrcHttpResource("StepDef")
 
     def usr_add(self, p_data):
         """
