@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask import send_file
 
 from OrcLib import init_log
+from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_api
 from OrcLib.LibNet import OrcParameter
@@ -16,6 +17,7 @@ class DriverAPI(Resource):
         init_log()
 
         self.__logger = OrcLog("driver.api")
+        self.__configer = get_config("driver")
         self.__model = DriverModel()
 
     def dispatch_request(self, *args, **kwargs):
@@ -44,4 +46,5 @@ class DriverAPI(Resource):
         获取载图
         :return:
         """
-        return send_file('pics/temp.png', mimetype='image/png', cache_timeout=0)
+        file_name = self.__configer.get_option("WEB", "pic_name")
+        return send_file(file_name, mimetype='image/png', cache_timeout=0)

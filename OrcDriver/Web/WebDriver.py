@@ -23,6 +23,7 @@ class DriverSelenium:
 
         self.__logger = OrcLog("driver.web.selenium")
         self.__service = WebDriverService()
+        self.__driver_configer = get_config("driver")
 
         self.__browser = "FIREFOX"  # 浏览器
         self.__env = "TEST"  # 环境
@@ -34,11 +35,9 @@ class DriverSelenium:
 
         self.__ip = p_ip
         self.__port = int(p_port)
+        self.__pic_name = self.__driver_configer.get_option("WEB", "pic_home")
 
     def start(self):
-
-        if not os.path.exists("pics"):
-            os.mkdir("pics")
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((self.__ip, self.__port))
@@ -81,8 +80,7 @@ class DriverSelenium:
             _status = False
             self.__logger.error("Wrong type %s." % _type)
 
-        pic_name = "pics/temp.png"
-        self.save_screen(pic_name)
+        self.save_screen()
 
         return _status
 
@@ -137,9 +135,7 @@ class DriverSelenium:
                 elif "CHROME" == self.__browser:
                     self.__root = webdriver.Chrome()
                 elif "PHANTOMJS" == self.__browser:
-                    driver_configer = get_config("driver")
-                    driver_path = driver_configer.get_option("PHANTOMJS", "path")
-                    print driver_path
+                    driver_path = self.__driver_configer.get_option("PHANTOMJS", "path")
                     self.__root = webdriver.PhantomJS(executable_path=driver_path)
                 else:
                     pass
@@ -165,7 +161,12 @@ class DriverSelenium:
 
         return self.__root is not None
 
-    def save_screen(self, p_file):
+    def save_screen(self):
 
         time.sleep(0.5)
-        self.__root.save_screenshot(p_file)
+
+        if self.__pic_name is None:
+            self.__logger.error("get pic name failed")
+            return
+
+        self.__root.save_screenshot(self.__pic_name)

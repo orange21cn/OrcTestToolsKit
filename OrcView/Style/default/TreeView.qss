@@ -27,7 +27,7 @@ QTreeView::item {
 }
 
 QTreeView::item:selected {
-    color: #DDD;
+    color: #333;
     background: #F2FBFF;
 }
 
