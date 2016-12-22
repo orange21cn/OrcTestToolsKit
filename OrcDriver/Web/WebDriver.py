@@ -35,7 +35,7 @@ class DriverSelenium:
 
         self.__ip = p_ip
         self.__port = int(p_port)
-        self.__pic_name = self.__driver_configer.get_option("WEB", "pic_home")
+        self.__pic_name = self.__driver_configer.get_option("WEB", "pic_name")
 
     def start(self):
 
