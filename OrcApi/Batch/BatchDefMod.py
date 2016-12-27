@@ -197,7 +197,12 @@ class BatchDefMod(TabBatchDef):
         return 1
 
     def usr_update(self, p_cond):
-
+        """
+        Update
+        :param p_cond:
+        :return:
+        """
+        print p_cond
         for t_id in p_cond:
 
             if "id" == t_id:

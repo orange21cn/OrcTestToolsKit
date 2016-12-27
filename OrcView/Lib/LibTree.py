@@ -468,7 +468,7 @@ class ModelTree(QAbstractItemModel):
 
         for t_item in self.__state_list:
 
-            if 'None' == t_item['pid'] or t_item['pid'] is None:
+            if ('None' == t_item['pid']) or (t_item['pid'] is None):
 
                 t_node = self.usr_create_tree_node(t_item)
                 self._state_root.append_node(t_node)

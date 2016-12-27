@@ -1,5 +1,6 @@
 # coding=utf-8
 from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibApi import connect_list
 
 
@@ -9,7 +10,7 @@ class BatchDefService(object):
 
         object.__init__(self)
 
-        self.__resource_batch_def = OrcHttpResource("BatchDef")
+        self.__resource_batch_def = OrcResource("BatchDef")
         self.__resource_run_def = OrcHttpResource("RunDef")
 
     def usr_add(self, p_data):
@@ -18,8 +19,10 @@ class BatchDefService(object):
         :param p_data:
         :return:
         """
-        node = self.__resource_batch_def.post(p_data)
-        return dict(id=node["id"])
+        msg = self.__resource_batch_def.post(parameter=p_data)
+        node = msg.data if msg is not None else None
+
+        return None if node is None else dict(id=node["id"])
 
     def usr_delete(self, p_list):
         """
@@ -27,7 +30,9 @@ class BatchDefService(object):
         :param p_list:
         :return:
         """
-        return self.__resource_batch_def.delete(p_list)
+        msg = self.__resource_batch_def.delete(parameter=p_list)
+
+        return None if msg is None else msg.status
 
     def usr_update(self, p_data):
         """
@@ -35,8 +40,9 @@ class BatchDefService(object):
         :param p_data:
         :return:
         """
-        self.__resource_batch_def.set_path(p_data["id"])
-        return self.__resource_batch_def.put(p_data)
+        msg = self.__resource_batch_def.put(path=p_data["id"], parameter=p_data)
+
+        return None if msg is None else msg.status
 
     def usr_search(self, p_cond):
         """
@@ -46,10 +52,16 @@ class BatchDefService(object):
         """
         cond = dict(type="all")
         cond.update(p_cond)
-        return self.__resource_batch_def.get(cond)
+        msg = self.__resource_batch_def.get(parameter=cond)
+
+        return None if msg is None else msg.data
 
     def add_to_run(self, p_id):
-
+        """
+        加入运行列表
+        :param p_id:
+        :return:
+        """
         cond = dict(id=p_id, run_def_type="BATCH")
         self.__resource_run_def.post(cond)
 

@@ -40,3 +40,47 @@ class TestOrcParameter(unittest.TestCase):
         service.save_pic("abc.png")
 
         OrcTest.test_print_end()
+
+    def test_source_list(self):
+        """
+        Test get exist option
+        """
+        OrcTest.test_print_begin()
+
+        from OrcLib.LibNet import OrcResource
+        from OrcLib.LibNet import OrcResult
+
+        resource = OrcResource("BatchDef", "JSON")
+        result = resource.get(parameter=dict())
+
+        if isinstance(result, OrcResult):
+            OrcTest.test_print_result(result.status, "status")
+            OrcTest.test_print_result(result.message, "message")
+            OrcTest.test_print_result(result.data, "data")
+        else:
+            print result
+
+        OrcTest.test_print_end()
+
+    def test_source_sig(self):
+        """
+        Test get exist option
+        """
+        OrcTest.test_print_begin()
+
+        from OrcLib.LibNet import OrcResource
+        from OrcLib.LibNet import OrcResult
+
+        resource = OrcResource("BatchDef", "JSON")
+        result = resource.get(path=1000000024)
+
+        if isinstance(result, OrcResult):
+            OrcTest.test_print_result(result.status, "status")
+            OrcTest.test_print_result(result.message, "message")
+            OrcTest.test_print_result(result.data, "data")
+        else:
+            print result
+
+        OrcTest.test_print_end()
+
+

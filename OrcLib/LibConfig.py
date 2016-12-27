@@ -22,8 +22,9 @@ class OrcConfig:
         :return:
         """
         try:
+            self.__conf.read(self.__file)
             _res = self.__conf.get(p_sec, p_key)
-        except (NoOptionError, NoSectionError):
+        except (NoOptionError, NoSectionError, TypeError):
             _res = None
 
         return _res
@@ -35,6 +36,7 @@ class OrcConfig:
         :return: None if section is not exists
         """
         try:
+            self.__conf.read(self.__file)
             _res = self.__conf.options(p_sec)
         except NoSectionError:
             _res = None

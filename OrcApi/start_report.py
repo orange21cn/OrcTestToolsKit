@@ -9,7 +9,7 @@ from OrcApi import app
 from OrcApi import orc_api
 from OrcApi.Run.ReportApi import ReportDetAPI
 
-configer = get_config("network")
+configer = get_config("server")
 
 
 @app.after_request

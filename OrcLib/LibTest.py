@@ -11,8 +11,9 @@ class OrcTest:
     @staticmethod
     def test_print_result(p_result, p_result_name=None):
         if p_result_name is not None:
-            print "%s's value is: " % p_result_name
-        print p_result
+            print "%s's value is: %s" % (p_result_name, p_result)
+        else:
+            print p_result
 
     @staticmethod
     def test_print_end():

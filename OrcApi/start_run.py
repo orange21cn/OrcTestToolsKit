@@ -11,7 +11,7 @@ from OrcApi.Run.RunApi import RunDefListAPI
 from OrcApi.Run.RunApi import RunDetListAPI
 from OrcApi.Run.RunApi import RunAPI
 
-configer = get_config("network")
+configer = get_config("server")
 
 
 # Widget

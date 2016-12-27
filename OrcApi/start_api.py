@@ -43,7 +43,7 @@ from OrcApi.RunTime.RunTimeApi import RunTimeAPI
 from OrcApi.Lib.DictApi import DictListAPI
 from OrcApi.Lib.DictApi import DictAPI
 
-configer = get_config("network")
+configer = get_config("server")
 
 # Batch
 orc_api.add_resource(BatchDefListAPI, '/api/1.0/BatchDef', endpoint='BatchDefs')

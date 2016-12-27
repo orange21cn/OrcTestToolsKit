@@ -10,7 +10,7 @@ from OrcLib import init_log
 reload(sys)
 init_log()
 
-configer = get_config("network")
+configer = get_config("server")
 
 orc_api.add_resource(DriverAPI, '/api/1.0/Driver', endpoint='Driver')
 

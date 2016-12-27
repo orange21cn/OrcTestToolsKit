@@ -31,41 +31,57 @@ class OrcListAPI(OrcBaseAPI):
     def dispatch_request(self, *args, **kwargs):
         return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
     def get(self):
         """
         Search
         :return:
         """
         parameter = OrcParameter.receive_para()
-
-        self._logger.info("Search %s, parameter is: %s" % (self._flag, parameter))
-
-        return self._business.bus_list_search(parameter)
+        return self.api_get(parameter)
 
     @orc_api
+    def api_get(self, p_para):
+
+        self._logger.info("Search %s, parameter is: %s" % (self._flag, p_para))
+        return self._business.bus_list_search(p_para)
+
     def post(self):
         """
         Add
         :return:
         """
         parameter = OrcParameter.receive_para()
-
-        self._logger.info("Add %s, parameter is: %s" % (self._flag, parameter))
-
-        return self._business.bus_list_add(parameter)
+        return self.api_post(parameter)
 
     @orc_api
+    def api_post(self, p_para):
+        """
+        Add
+        :param p_para:
+        :return:
+        """
+        self._logger.info("Add %s, parameter is: %s" % (self._flag, p_para))
+
+        return self._business.bus_list_add(p_para)
+
     def delete(self):
         """
         Delete
         :return:
         """
         parameter = OrcParameter.receive_para()
+        return self.api_delete(parameter)
 
-        self._logger.info("Delete %s, parameter is: %s" % (self._flag, parameter))
+    @orc_api
+    def api_delete(self, p_para):
+        """
+        Delete
+        :param p_para:
+        :return:
+        """
+        self._logger.info("Delete %s, parameter is: %s" % (self._flag, p_para))
 
-        return self._business.bus_list_delete(parameter)
+        return self._business.bus_list_delete(p_para)
 
 
 class OrcAPI(OrcBaseAPI):
@@ -77,8 +93,16 @@ class OrcAPI(OrcBaseAPI):
     def dispatch_request(self, *args, **kwargs):
         return super(Resource, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
     def get(self, p_id):
+        """
+        Search
+        :param p_id:
+        :return:
+        """
+        return self.api_get(p_id)
+
+    @orc_api
+    def api_get(self, p_id):
         """
         Search
         :param p_id:
@@ -88,7 +112,6 @@ class OrcAPI(OrcBaseAPI):
 
         return self._business.bus_search(p_id)
 
-    @orc_api
     def put(self, p_id):
         """
         Update
@@ -96,13 +119,30 @@ class OrcAPI(OrcBaseAPI):
         :return:
         """
         parameter = OrcParameter.receive_para()
-
-        self._logger.info("Update %s, parameter is: %s, %s" % (self._flag, p_id, parameter))
-
-        return self._business.bus_update(p_id, parameter)
+        return self.api_put(p_id, parameter)
 
     @orc_api
+    def api_put(self, p_id, p_para):
+        """
+        Update
+        :param p_para:
+        :param p_id:
+        :return:
+        """
+        self._logger.info("Update %s, parameter is: %s, %s" % (self._flag, p_id, p_para))
+
+        return self._business.bus_update(p_id, p_para)
+
     def delete(self, p_id):
+        """
+        Delete
+        :param p_id:
+        :return:
+        """
+        return self.api_delete(p_id)
+
+    @orc_api
+    def api_delete(self, p_id):
         """
         Delete
         :param p_id:

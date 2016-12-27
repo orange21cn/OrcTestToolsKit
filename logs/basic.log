@@ -10,3 +10,142 @@
 [2016-12-08 17:46:52 basic.lib_net] ERROR Invoke http://localhost:5000/api/1.0/RunTime failed, parameter is {"para": 5}, status is False
 [2016-12-08 17:46:52 basic.lib_net] ERROR None
 
+[2016-12-26 15:20:52 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:20:52 basic.lib_net] ERROR None
+
+[2016-12-26 15:23:28 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:23:28 basic.lib_net] ERROR None
+
+[2016-12-26 15:24:21 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:24:21 basic.lib_net] ERROR None
+
+[2016-12-26 15:25:12 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:25:12 basic.lib_net] ERROR None
+
+[2016-12-26 15:28:01 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:28:01 basic.lib_net] ERROR None
+
+[2016-12-26 15:28:59 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:28:59 basic.lib_net] ERROR None
+
+[2016-12-26 15:30:25 basic.lib_net] ERROR Invoke http://172.16.56.131:5000/api/1.0/BatchDef failed, response is False
+[2016-12-26 15:30:25 basic.lib_net] ERROR None
+
+[2016-12-26 15:37:00 basic.lib_net] ERROR function invoke error: 'module' object has no attribute '%sListApi'
+[2016-12-26 15:37:00 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 208, in get
+    module = self.__get_module(path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 238, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute '%sListApi'
+
+[2016-12-26 15:39:33 basic.lib_net] ERROR function invoke error: 'module' object has no attribute '%sListApi'
+[2016-12-26 15:39:33 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 208, in get
+    module = self.__get_module(path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 238, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute '%sListApi'
+
+[2016-12-26 15:40:16 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'BatchDefListApi'
+[2016-12-26 15:40:16 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 208, in get
+    module = self.__get_module(path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 238, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'BatchDefListApi'
+
+[2016-12-26 15:52:53 basic.lib_net] ERROR function invoke error: 'dict' object has no attribute 'ok'
+[2016-12-26 15:52:53 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 220, in get
+    result = self.__get_result(result)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 271, in __get_result
+    if not p_result.ok:
+AttributeError: 'dict' object has no attribute 'ok'
+
+[2016-12-26 15:55:32 basic.lib_net] ERROR function invoke error: 'dict' object has no attribute 'text'
+[2016-12-26 15:55:32 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 220, in get
+    result = self.__get_result(result)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 291, in __get_result
+    return OrcResult(p_result.text)
+AttributeError: 'dict' object has no attribute 'text'
+
+[2016-12-26 16:13:39 basic.lib_net] ERROR function invoke error: Failed to parse: None:None
+[2016-12-26 16:13:39 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 234, in get
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 293, in prepare
+    self.prepare_url(url, params)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 347, in prepare_url
+    raise InvalidURL(*e.args)
+InvalidURL: Failed to parse: None:None
+
+[2016-12-26 16:21:56 basic.lib_net] ERROR function invoke error: 'str' object has no attribute 'items'
+[2016-12-26 16:21:56 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 234, in get
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 294, in prepare
+    self.prepare_headers(headers)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 405, in prepare_headers
+    self.headers = CaseInsensitiveDict((to_native_string(name), value) for name, value in headers.items())
+AttributeError: 'str' object has no attribute 'items'
+
+[2016-12-26 18:54:50 basic.lib_net] ERROR wrong path type, path: 100000002
+[2016-12-26 18:54:50 basic.lib_net] ERROR None
+
+[2016-12-26 18:54:50 basic.lib_net] ERROR function invoke error: Invalid URL 'None': No schema supplied. Perhaps you meant http://None?
+[2016-12-26 18:54:50 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 243, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 120, in put
+    return request('put', url, data=data, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 293, in prepare
+    self.prepare_url(url, params)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 353, in prepare_url
+    raise MissingSchema(error)
+MissingSchema: Invalid URL 'None': No schema supplied. Perhaps you meant http://None?
+
+[2016-12-27 09:41:03 basic.lib_net] ERROR wrong path type, path: 100000002
+[2016-12-27 09:41:03 basic.lib_net] ERROR None
+
+[2016-12-27 09:41:03 basic.lib_net] ERROR function invoke error: Invalid URL 'None': No schema supplied. Perhaps you meant http://None?
+[2016-12-27 09:41:03 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 243, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 120, in put
+    return request('put', url, data=data, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 293, in prepare
+    self.prepare_url(url, params)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 353, in prepare_url
+    raise MissingSchema(error)
+MissingSchema: Invalid URL 'None': No schema supplied. Perhaps you meant http://None?
+
