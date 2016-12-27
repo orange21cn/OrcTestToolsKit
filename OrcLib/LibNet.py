@@ -230,7 +230,6 @@ class OrcResource(OrcResourceBase):
                     result = self.__get_result(result)
 
             except (ImportError, AttributeError), err:
-                print err
                 _logger.error("function invoke error: %s" % err)
 
             return result
@@ -286,11 +285,10 @@ class OrcResource(OrcResourceBase):
         """
         if p_path is None:
             return self._url
-        elif not isinstance(p_path, tuple):
-            _logger.error("wrong path type, path: %s" % p_path)
-            return
-        else:
+        elif isinstance(p_path, tuple):
             return "%s/%s" % (self._url, "/".join(p_path))
+        else:
+            return "%s/%s" % (self._url, p_path)
 
     def __get_http_result(self, p_result):
         """

@@ -16,7 +16,7 @@ class DictMod(object):
 
         object.__init__(self)
 
-    def mod_add(self, p_data):
+    def usr_add(self, p_data):
         """
         新增
         :param p_data:
@@ -50,7 +50,7 @@ class DictMod(object):
 
         return _node
 
-    def mod_delete(self, p_id):
+    def usr_delete(self, p_id):
         """
         删除
         :param p_id:
@@ -64,7 +64,7 @@ class DictMod(object):
 
         return True
 
-    def mod_update(self, p_data):
+    def usr_update(self, p_data):
         """
         更新
         :param p_data:
@@ -85,7 +85,7 @@ class DictMod(object):
         except Exception:
             raise OrcDatabaseException
 
-    def mod_search(self, p_cond):
+    def usr_search(self, p_cond):
         """
         查询
         :param p_cond:

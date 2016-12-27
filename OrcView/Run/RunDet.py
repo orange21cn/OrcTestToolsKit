@@ -122,7 +122,7 @@ class StatusReceiver(QThread):
 
         QThread.__init__(self)
 
-        self.__config = get_config("network")
+        self.__config = get_config("client")
         self.__logger = OrcLog("view")
 
     def run(self, *args, **kwargs):
