@@ -362,7 +362,6 @@ class SelectWidgetOperation(OrcSelectBase):
 
         _data = [dict(name=_item.ope_name, text=_item.ope_text)
                  for _item in self.__dict.get_widget_operation(p_type)]
-        print _data
 
         # 获取基本操作方式
         if p_type not in ("PAGE", "BLOCK"):

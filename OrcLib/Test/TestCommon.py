@@ -1,6 +1,6 @@
 import unittest
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibCommon import OrcCover
+from OrcLib.LibCommon import OrcCovert
 
 
 class TestCovert(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestCovert(unittest.TestCase):
 
         import datetime
 
-        _lib = OrcCover()
+        _lib = OrcCovert()
 
         _res = _lib.time2str(datetime.datetime.now())
 
@@ -26,7 +26,7 @@ class TestCovert(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _lib = OrcCover()
+        _lib = OrcCovert()
 
         _res = _lib.time2str(1)
 
@@ -39,7 +39,7 @@ class TestCovert(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _lib = OrcCover()
+        _lib = OrcCovert()
         _res = _lib.str2time("2016-09-19 17:32:47")
 
         OrcTest.test_print_result(_res)

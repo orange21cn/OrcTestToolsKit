@@ -75,9 +75,8 @@ class DictMod(object):
 
                 if "id" == _key:
                     continue
-                print p_data
+
                 _item = self.__session.query(LibDictionary).filter(LibDictionary.id == p_data["id"])
-                print {_key: (None if not p_data[_key] else p_data[_key])}
                 _item.update({_key: (None if not p_data[_key] else p_data[_key])})
 
             self.__session.commit()

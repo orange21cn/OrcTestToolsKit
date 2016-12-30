@@ -522,8 +522,6 @@ class ModelTree(QAbstractItemModel):
                 if name in node.content:
                     node.content[name] = value
 
-            print node.content
-
             self.reset()
 
         else:

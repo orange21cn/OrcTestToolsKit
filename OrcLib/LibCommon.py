@@ -3,20 +3,6 @@ from importlib import import_module
 import time
 import re
 
-# def import_mod(p_mod_name):
-#     mod_obj = None
-#     obj_db = DatabaseMag()
-#     sql_str = "SELECT mod_path" \
-#               "  FROM test_module" \
-#               " WHERE mod_name = '" + p_mod_name + "'"
-#
-#     mod_path = obj_db.get_one(sql_str)[0]
-#
-#     if mod_path is not None:
-#         mod_obj = import_module(mod_path, p_mod_name)
-#
-#     return mod_obj
-
 
 def is_equal_str(str_a, str_b):
     """
@@ -56,30 +42,7 @@ def gen_date_str():
     return time.strftime("%Y%m%d")
 
 
-# def get_parent_no(p_no):
-#     """
-#     According to tree expression 10.11.12.13 function get the parent no.
-#     Remove the last part of expression ".13"
-#     If the expression is a root expression return None
-#     :param p_no: tree expression
-#     :return: parent expression
-#     """
-#     res_value = None
-#
-#     if re.search('\.', p_no):
-#         res_value = re.sub('\.[^\.]*$', '', p_no)
-#
-#     return res_value
-
-
-# def tuple2list(p_inp):
-#     if p_inp is not None:
-#         return list(str(member) for member in p_inp)
-#     else:
-#         return None
-
-
-class OrcCover:
+class OrcCovert:
 
     def __init__(self):
         pass
@@ -99,27 +62,3 @@ class OrcCover:
         except AttributeError:
             _res = None
         return _res
-
-#
-# def add_quote(p_str):
-#     if type(p_str) is not int:
-#         return '\'' + p_str + '\''
-#     return '\'' + str(p_str) + '\''
-#
-#
-# def add_dquote(p_str):
-#     return '\'' + str(p_str) + '\''
-
-
-# class IndexStr:
-#
-#     def __init__(self, p_seed):
-#         self.seed = p_seed
-#
-#     def get_index(self):
-#         self.seed += 1
-#         return self.seed
-#
-#     def get_date_index(self):
-#         self.seed += 1
-#         return gen_date_str() + "%s" % self.seed

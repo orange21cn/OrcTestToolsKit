@@ -15,7 +15,7 @@ class WidgetInput(OrcWidget):
             return res
 
         _flag = p_para["OPERATION"]
-        _data = p_para["DATA"]
+        _data = None if "DATA" not in p_para else p_para["DATA"]
 
         if "INPUT" == _flag:
 

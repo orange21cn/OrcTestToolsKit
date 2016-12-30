@@ -103,9 +103,8 @@ class ItemService(object):
         )for case in case_list]
 
         # 连接 list
-        print func_list
         item_list.extend(func_list)
-        print item_list
+
         # 连接数据
         return connect_list(step_det_list, item_list, "item_id")
 

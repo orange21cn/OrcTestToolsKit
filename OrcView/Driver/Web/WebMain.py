@@ -30,6 +30,7 @@ class ViewWebMain(QWidget):
     sig_page_selected = OrcSignal(str)
 
     def __init__(self):
+
         QWidget.__init__(self)
 
         self.title = u"Web对象管理"
@@ -86,7 +87,8 @@ class ViewWebMain(QWidget):
                      TYPE=self.__test.type,
                      ENV=self.__test.env,
                      OPERATION=self.__test.operation,
-                     DATA=self.__test.data)
+                     DATA=self.__test.data,
+                     BROWSER="FIREFOX")
 
         from OrcLib.LibNet import OrcSocketResource
 
@@ -231,9 +233,6 @@ class WidgetTest(QWidget):
     def set_env(self, p_env):
         self.env = p_env
 
-    def set_status(self, p_status):
+    def set_status(self, p_data):
 
-        if p_status:
-            self.__edit_status.setText("Success")
-        else:
-            self.__edit_status.setText("Fail")
+        self.__edit_status.setText(p_data)

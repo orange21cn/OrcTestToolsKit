@@ -25,8 +25,15 @@ class DriverSelenium:
         self.__service = WebDriverService()
         self.__driver_configer = get_config("driver")
 
-        self.__browser = "FIREFOX"  # 浏览器
-        self.__env = "TEST"  # 环境
+        # 浏览器
+        self.__browser = self.__driver_configer.get_option("WEB", "browser")
+        if not self.__browser:
+            self.__browser = "PHANTOMJS"
+
+        # 环境
+        self.__env = self.__driver_configer.get_option("WEB", "env")
+        if not self.__env:
+            self.__env = "TEST"
 
         self.__window = None  # 当前窗口
         self.__root = None  # 根节点
@@ -92,24 +99,24 @@ class DriverSelenium:
         # 输入框
         if "INP" == _definition.widget_type:
             _node = WidgetInput(self.__root, _id)
-            _node.execute(p_para)
+            result = _node.execute(p_para)
 
         # Button
         elif "BTN" == _definition.widget_type:
             _node = WidgetButton(self.__root, _id)
-            _node.execute(p_para)
+            result = _node.execute(p_para)
 
         # <a href>
         elif "A" == _definition.widget_type:
             _node = WidgetA(self.__root, _id)
-            _node.execute(p_para)
+            result = _node.execute(p_para)
 
         # 自定义控件
         else:
             _node = OrcWidget(self.__root, _id)
-            _node.basic_execute(p_para)
-
-        return True
+            result = _node.basic_execute(p_para)
+        print "|%s|" % result
+        return result
 
     def __get_page(self, p_para):
         """
@@ -119,8 +126,6 @@ class DriverSelenium:
         """
         self.__logger.debug(p_para)
 
-        self.__browser = "PHANTOMJS" if "BROWSER" not in p_para else p_para["BROWSER"]
-        self.__env = "TEST" if "ENV" not in p_para else p_para["ENV"]
         _page_det_id = p_para["OBJECT"]
         _page_operation = p_para["OPERATION"]
 

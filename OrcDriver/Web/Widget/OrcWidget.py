@@ -259,18 +259,19 @@ class OrcWidget:
 
         # 获取属性
         elif "GET_ATTR" == _flag:
-            if "FLAG" not in p_para:
+            print p_para
+            if "DATA" not in p_para:
                 return ""
             else:
-                return self._widget.get_attribute(p_para["FLAG"])
+                return self._widget.get_attribute(p_para["DATA"])
 
         # 获取内容
         elif "GET_TEXT" == _flag:
-            return self._widget.get_text()
+            return self._widget.text
 
         # 获取HTML
         elif "GET_HTML" == _flag:
-            return self._widget.get_attribute("innerHTML")
+            return self._widget.get_attribute("outerHTML")
 
         # 检查控件存在
         elif "DISPLAY" == _flag:

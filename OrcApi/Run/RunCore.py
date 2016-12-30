@@ -270,6 +270,13 @@ class RunCore(ListTree):
         item_id = p_path["id"]
         item_path = None
 
+        client_ip = p_path["ip"]
+        client_port = p_path["port"]
+
+        client_config = get_config("client")
+        client_config.set_option("VIEW", "ip", client_ip)
+        client_config.set_option("VIEW", "port", client_port)
+
         for _group in os.listdir(self.__home):
 
             _group_id = _group.split("_")[1]
@@ -386,7 +393,6 @@ class RunCore(ListTree):
             # 执行项
             if "OPERATE" == item.item_mode:
                 _result = self.__service.launch_web_step(item_operation)
-
                 folder = self.__run_logger.get_folder()
                 pic_name = "%s/%s.png" % (folder, item_id)
                 self.__service.get_web_pic(pic_name)

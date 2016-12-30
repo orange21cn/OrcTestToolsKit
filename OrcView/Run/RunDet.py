@@ -1,6 +1,5 @@
 # coding=utf-8
 import socket
-import json
 
 from PySide.QtCore import QThread
 from PySide.QtCore import Signal as OrcSignal
@@ -122,7 +121,7 @@ class StatusReceiver(QThread):
 
         QThread.__init__(self)
 
-        self.__config = get_config("client")
+        self.__config = get_config("server")
         self.__logger = OrcLog("view")
 
     def run(self, *args, **kwargs):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from OrcLib.LibCommon import OrcCover
+from OrcLib.LibCommon import OrcCovert
 from OrcApi import orc_db
 
 
@@ -77,8 +77,8 @@ class TabBatchDef(orc_db.Model):
         self.batch_name = p_def["batch_name"] if p_def else None
         self.batch_desc = p_def["batch_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -90,8 +90,8 @@ class TabBatchDef(orc_db.Model):
             batch_name=self.batch_name,
             batch_desc=self.batch_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -111,7 +111,7 @@ class TabBatchDet(orc_db.Model):
         self.id = p_def["id"] if p_def else None
         self.batch_id = p_def["batch_id"] if p_def else None
         self.case_id = p_def["case_id"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
 
     def to_json(self):
 
@@ -119,7 +119,7 @@ class TabBatchDet(orc_db.Model):
             id=str(self.id),
             batch_id=str(self.batch_id),
             case_id=str(self.case_id),
-            create_time=OrcCover.time2str(self.create_time)
+            create_time=OrcCovert.time2str(self.create_time)
         )
 
 
@@ -150,8 +150,8 @@ class TabCaseDef(orc_db.Model):
         self.case_name = p_def["case_name"] if p_def else None
         self.case_desc = p_def["case_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -164,8 +164,8 @@ class TabCaseDef(orc_db.Model):
             case_name=self.case_name,
             case_desc=self.case_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -187,7 +187,7 @@ class TabCaseDet(orc_db.Model):
         self.case_id = p_def["case_id"] if p_def else None
         self.step_id = p_def["step_id"] if p_def else None
         self.step_no = p_def["step_no"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
 
     def to_json(self):
 
@@ -196,7 +196,7 @@ class TabCaseDet(orc_db.Model):
             case_id=str(self.case_id),
             step_id=str(self.step_id),
             step_no=self.step_no,
-            create_time=OrcCover.time2str(self.create_time)
+            create_time=OrcCovert.time2str(self.create_time)
         )
 
 
@@ -219,8 +219,8 @@ class TabStepDef(orc_db.Model):
         self.step_type = p_def["step_type"] if p_def else None
         self.step_desc = p_def["step_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -229,8 +229,8 @@ class TabStepDef(orc_db.Model):
             step_type=self.step_type,
             step_desc=self.step_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -252,7 +252,7 @@ class TabStepDet(orc_db.Model):
         self.step_id = p_def["step_id"] if p_def else None
         self.item_id = p_def["item_id"] if p_def else None
         self.item_no = p_def["item_no"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
 
     def to_json(self):
 
@@ -261,7 +261,7 @@ class TabStepDet(orc_db.Model):
             step_id=str(self.step_id),
             item_id=str(self.item_id),
             item_no=self.item_no,
-            create_time=OrcCover.time2str(self.create_time)
+            create_time=OrcCovert.time2str(self.create_time)
         )
 
 
@@ -288,8 +288,8 @@ class TabItem(orc_db.Model):
         self.item_operate = p_def["item_operate"] if p_def else None
         self.item_desc = p_def["item_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -300,8 +300,8 @@ class TabItem(orc_db.Model):
             item_operate=self.item_operate,
             item_desc=self.item_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -338,8 +338,8 @@ class TabData(orc_db.Model):
         self.data_mode = p_def["data_mode"] if p_def else None
         self.data_value = p_def["data_value"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -355,8 +355,8 @@ class TabData(orc_db.Model):
             data_mode=self.data_mode,
             data_value=self.data_value,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -379,8 +379,8 @@ class WebPageDef(orc_db.Model):
         self.page_flag = p_def["page_flag"] if p_def else None
         self.page_desc = p_def["page_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -389,8 +389,8 @@ class WebPageDef(orc_db.Model):
             page_flag=self.page_flag,
             page_desc=self.page_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -415,8 +415,8 @@ class WebPageDet(orc_db.Model):
         self.page_env = p_def["page_env"] if p_def else None
         self.page_url = p_def["page_url"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -426,8 +426,8 @@ class WebPageDet(orc_db.Model):
             page_env=self.page_env,
             page_url=self.page_url,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -456,8 +456,8 @@ class WebWidgetDef(orc_db.Model):
         self.widget_type = p_def["widget_type"] if p_def else None
         self.widget_desc = p_def["widget_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -469,8 +469,8 @@ class WebWidgetDef(orc_db.Model):
             widget_type=self.widget_type,
             widget_desc=self.widget_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -499,8 +499,8 @@ class WebWidgetDet(orc_db.Model):
         self.widget_attr_value = p_def["widget_attr_value"] if p_def else None
         self.widget_desc = p_def["widget_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -512,8 +512,8 @@ class WebWidgetDet(orc_db.Model):
             widget_attr_value=self.widget_attr_value,
             widget_desc=self.widget_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 
@@ -536,8 +536,8 @@ class WebWindowDef(orc_db.Model):
         self.window_mark = p_def["window_mark"] if p_def else None
         self.window_desc = p_def["window_desc"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCover.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCover.str2time(p_def["modify_time"]) if p_def else None
+        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
 
     def to_json(self):
 
@@ -546,8 +546,8 @@ class WebWindowDef(orc_db.Model):
             window_mark=self.window_mark,
             window_desc=self.window_desc,
             comment=self.comment,
-            create_time=OrcCover.time2str(self.create_time),
-            modify_time=OrcCover.time2str(self.modify_time)
+            create_time=OrcCovert.time2str(self.create_time),
+            modify_time=OrcCovert.time2str(self.modify_time)
         )
 
 

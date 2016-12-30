@@ -1,5 +1,6 @@
 # coding=utf-8
 from OrcLib.LibNet import OrcHttpResource
+from OrcLib import get_config
 
 
 class RunDefService:
@@ -8,6 +9,7 @@ class RunDefService:
 
         self.__res_run_def = OrcHttpResource("RunDef")
         self.__res_run = OrcHttpResource("Run")
+        self.__configer = get_config("server")
 
     def usr_add(self, p_cond):
         """
@@ -45,9 +47,11 @@ class RunDefService:
 
     def usr_run(self, p_pid, p_id):
         """
-        执行
+        执行, pid 目录id, id 条目 id, 发送 ip/port 用于回调
         :param p_pid:
         :param p_id:
         :return:
         """
-        self.__res_run.put(dict(pid=p_pid, id=p_id))
+        pro_ip = self.__configer.get_option("VIEW", "ip")
+        pro_port = self.__configer.get_option("VIEW", "port")
+        self.__res_run.put(dict(pid=p_pid, id=p_id, ip=pro_ip, port=pro_port))

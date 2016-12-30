@@ -14,6 +14,13 @@ from OrcApi import orc_db
 _logger = OrcLog("basic.lib_net")
 
 
+class OrcSocketServer(object):
+
+    def __init__(self):
+
+        object.__init__(self)
+
+
 class OrcResourceBase(object):
     """
     http 服务调用封装为资源
@@ -69,14 +76,14 @@ class OrcResourceBase(object):
         except TypeError:
             self._port = None
 
+        # 接口调用方式, REMOTE 远程服务, LOCAL 本地服务, HOST 本地接口调用
+        self._type = self._configer.get_option(self._flag, "type")
+
         # VERSION
         self._version = self._configer.get_option(self._flag, "version")
 
         # URL for remote api
         self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, p_mod)
-
-    # def get_url(self):
-    #     return self._url
 
 
 class OrcHttpService(OrcResourceBase):
@@ -126,6 +133,30 @@ class OrcSocketResource(OrcResourceBase):
         :param p_para:
         :return:
         """
+        import time
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self._ip, self._port))
+
+        time.sleep(2)
+        sock.send(json.dumps(p_para))
+        _msg = sock.recv(1024)
+        sock.close()
+
+        return _msg
+
+
+class OrcSocketBasic(object):
+
+    def __init__(self, ip, port):
+
+        object.__init__(self)
+
+        self._ip = ip
+        self._port = int(port)
+
+    def get(self, p_para):
+
         import time
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -202,10 +233,9 @@ class OrcResource(OrcResourceBase):
         """
         result = None
         url_path = p_path if not isinstance(p_path, tuple) else "/".join(p_path)
-        api_type = self._configer.get_option(self._flag, "type")
 
         # local api
-        if "LOCAL" == api_type:
+        if "LOCAL" == self._type:
             try:
                 # 导入模块
                 _module = self.__get_module(p_path)
