@@ -2,11 +2,13 @@
 
 from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QHBoxLayout
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_data
+from OrcView.Lib.LibView import OrcPagination
 
 from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibControl import LibControl
@@ -58,13 +60,22 @@ class ViewDataMag(QWidget):
         _wid_display.set_model(self.__model)
         _wid_display.set_control(_control)
 
+        # pagination
+        self.__wid_pagination = OrcPagination()
+
         # Buttons widget
         _wid_buttons = ViewButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),
             dict(id="search", name=u"查询")
-        ])
+        ], p_align="FRONT")
+
+        # bottom layout
+        _layout_bottom = QHBoxLayout()
+        _layout_bottom.addWidget(_wid_buttons)
+        _layout_bottom.addStretch()
+        _layout_bottom.addWidget(self.__wid_pagination)
 
         # win_add
         self.__win_add = ViewAdd(def_view_data)
@@ -73,12 +84,13 @@ class ViewDataMag(QWidget):
         _layout = QVBoxLayout()
         _layout.addWidget(self.__wid_search_cond)
         _layout.addWidget(_wid_display)
-        _layout.addWidget(_wid_buttons)
+        _layout.addLayout(_layout_bottom)
 
         self.setLayout(_layout)
 
         # Connection
         _wid_buttons.sig_clicked.connect(self.__operate)
+        self.__wid_pagination.sig_page.connect(self.search)
 
         self.__win_add.sig_submit[dict].connect(self.add)
 
@@ -95,8 +107,32 @@ class ViewDataMag(QWidget):
         else:
             pass
 
-    def search(self):
-        self.__model.usr_search(self.__wid_search_cond.get_cond())
+    def search(self, p_data=None):
+        """
+        查询
+        :param p_data:
+        :return:
+        """
+        # 默认查询,查第一页
+        if p_data is None:
+            _page = 1
+            _number = int(self.__wid_pagination.get_number())
+
+        # 分页查询
+        else:
+            _page = p_data[0]
+            _number = int(p_data[1])
+
+        self.__model.usr_search(dict(
+            page=_page,
+            number=_number,
+            condition=self.__wid_search_cond.get_cond()
+        ))
+
+        _number = 1 if _number < 1 else _number
+        record_num = int(self.__model.usr_get_record_num())
+
+        self.__wid_pagination.set_data(_page, record_num / _number)
 
     def add(self, p_data):
         self.__model.usr_add(p_data)

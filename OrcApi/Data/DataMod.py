@@ -2,7 +2,7 @@
 from datetime import datetime
 from sqlalchemy import func
 
-from OrcLib.LibCommon import is_null
+from OrcLib import LibCommon
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabData
 from OrcLib.LibDatabase import gen_id
@@ -24,8 +24,19 @@ class DataMod(object):
         :param p_cond:
         :return:
         """
+        # 页码
+        page = int(LibCommon.dict_value(p_cond, "page"))
+
+        # 每页条数
+        number = int(LibCommon.dict_value(p_cond, "number"))
+
         # 判断输入参数是否为空
-        cond = p_cond if p_cond else dict()
+        if p_cond is None:
+            cond = dict()
+        elif "condition" in p_cond:
+            cond = p_cond["condition"]
+        else:
+            cond = p_cond
 
         # 查询条件 like
         _like = lambda p_flag: "%%%s%%" % cond[p_flag]
@@ -56,7 +67,24 @@ class DataMod(object):
         if 'data_type' in cond:
             result = result.filter(TabData.data_type.ilike(_like('data_type')))
 
-        return result.all()
+        # 分页
+        if (page is not None) and (number is not None):
+            # 页码
+            record_num = result.count()
+
+            # 数据
+            result = result.offset((page - 1) * number).limit(number)
+            result = result.all()
+
+            # 数据转换为 json
+            record = []
+            for item in result:
+                record.append(item.to_json())
+
+            return dict(number=record_num, data=record)
+
+        else:
+            return result.all()
 
     def _get_root(self, p_item):
         """
@@ -141,15 +169,15 @@ class DataMod(object):
         Create a no, like case_no
         :return:
         """
-        _order = 1
-        t_item = self.__session.query(func.max(TabData.data_order))\
-                     .filter(TabData.src_id == p_id)\
-                     .filter(TabData.data_flag == p_flg).first()[0]
+        order = 1
+        item = self.__session.query(func.max(TabData.data_order))\
+                   .filter(TabData.src_id == p_id)\
+                   .filter(TabData.data_flag == p_flg).first()[0]
 
-        if t_item is not None:
-            _order = t_item + 1
+        if item is not None:
+            order = item + 1
 
-        return _order
+        return order
 
     def usr_update(self, p_cond):
 
@@ -158,7 +186,7 @@ class DataMod(object):
             if "id" == t_id:
                 continue
 
-            _data = None if is_null(p_cond[t_id]) else p_cond[t_id]
+            _data = None if LibCommon.is_null(p_cond[t_id]) else p_cond[t_id]
             _item = self.__session.query(TabData).filter(TabData.id == p_cond['id'])
             _item.update({t_id: _data})
 

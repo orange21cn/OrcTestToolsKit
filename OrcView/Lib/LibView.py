@@ -1,5 +1,7 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
+from PySide.QtGui import QWidget
+from PySide.QtGui import QPushButton
 from PySide.QtGui import QSizePolicy
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
@@ -526,3 +528,134 @@ class OrcProcess(QProgressBar):
             self.__value = 100
 
         self.setValue(self.__value)
+
+
+class OrcPagination(QWidget):
+
+    sig_page = OrcSignal(tuple)
+
+    def __init__(self):
+
+        QWidget.__init__(self)
+
+        self._message = QLabel()
+
+        self._btn_first = QPushButton("F")
+        self._btn_last = QPushButton("L")
+        self._btn_previous = QPushButton("p")
+        self._btn_next = QPushButton("n")
+
+        self._jump = QComboBox()
+        self._number = QLineEdit()
+        self._number.setText("20")
+
+        _layout = QHBoxLayout()
+        _layout.addWidget(self._message)
+        _layout.addWidget(self._btn_first)
+        _layout.addWidget(self._btn_previous)
+        _layout.addWidget(self._btn_next)
+        _layout.addWidget(self._btn_last)
+        _layout.addWidget(self._jump)
+        _layout.addWidget(self._number)
+
+        _layout.setContentsMargins(0, 0, 0, 0)
+        _layout.setSpacing(0)
+
+        self.setLayout(_layout)
+
+        self._btn_first.clicked.connect(self.first_page)
+        self._btn_last.clicked.connect(self.last_page)
+        self._btn_previous.clicked.connect(self.previous_page)
+        self._btn_next.clicked.connect(self.next_page)
+        self._jump.currentIndexChanged.connect(self.jump_to_page)
+
+        # 总页数
+        self.__pages = 10
+
+        #  当前页码
+        self.__page = 1
+
+    def get_page(self):
+        """
+        获取当前页码
+        :return:
+        """
+        return self.__page
+
+    def get_number(self):
+        """
+        获取每页条数
+        :return:
+        """
+        return self._number.text()
+
+    def set_data(self, p_page, p_pages):
+        """
+        设置页数和条数数据
+        :param p_page: 当前页数
+        :param p_pages: 总页数
+        :return:
+        """
+
+        self._message.setText("%s/%s" % (p_page, p_pages))
+
+        if self.__pages != p_pages:
+
+            self.__pages = p_pages
+            self._jump.clear()
+
+            for _index in range(p_pages):
+                _item = _index + 1
+                self._jump.addItem(str(_item), str(_item))
+
+    def first_page(self):
+        """
+        第一页
+        :return:
+        """
+        self.__page = 1
+        number = self._number.text()
+
+        self.sig_page.emit((self.__page, number))
+
+    def last_page(self):
+        """
+        最后一页
+        :return:
+        """
+        self.__page = self.__pages
+        number = self._number.text()
+
+        self.sig_page.emit((self.__page, number))
+
+    def previous_page(self):
+        """
+        上一页
+        :return:
+        """
+        if 1 < self.__page:
+            self.__page -= 1
+        number = self._number.text()
+
+        self.sig_page.emit((self.__page, number))
+
+    def next_page(self):
+        """
+        下一页
+        :return:
+        """
+        if self.__pages > self.__page:
+            self.__page += 1
+        number = self._number.text()
+
+        self.sig_page.emit((self.__page, number))
+
+    def jump_to_page(self):
+        """
+        跳转
+        :return:
+        """
+        self.__page = int(self._jump.itemData(self._jump.currentIndex()))
+        number = self._number.text()
+
+        self.sig_page.emit((self.__page, number))

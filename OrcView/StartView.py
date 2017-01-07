@@ -7,6 +7,7 @@ from PySide.QtCore import Qt
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
 from OrcView.Lib.LibMain import DockBottom
+from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Batch.BatchDef import ViewBatchDefMag
 from OrcView.Batch.BatchDet import ViewBatchDetMag
@@ -55,6 +56,9 @@ class StartView(QMainWindow):
         self.dock_category = DockCategory()  # category widget
         self.dock_log = DockBottom()  # log widget
         self.dock_detail = DockDetail()  # detail widget
+
+        log_client = LogClient()
+        log_client.sig_log.connect(self.dock_log.put_log)
 
         self.__dock_displayed = False
 

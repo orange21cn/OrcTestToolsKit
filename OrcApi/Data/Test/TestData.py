@@ -16,10 +16,14 @@ class TestData(unittest.TestCase):
 
         OrcTest.test_print_end()
 
-    def test_add(self):
+    def test_model_search(self):
 
         OrcTest.test_print_begin()
 
-        pass
+        from OrcApi.Data.DataMod import DataMod
+
+        model = DataMod()
+        cond = dict(page=1, number=3, condition=dict())
+        print model.usr_search(cond)
 
         OrcTest.test_print_end()

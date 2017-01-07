@@ -17,7 +17,7 @@ class ViewButtons(QWidget):
 
     sig_clicked = OrcSignal(str)
 
-    def __init__(self, p_def, p_direction="HOR"):
+    def __init__(self, p_def, p_direction="HOR", p_align="BACK"):
         """
         生成一个按钮组
         :param p_def: [{id, name, type=None}]
@@ -59,7 +59,10 @@ class ViewButtons(QWidget):
             self.__layout.addWidget(_button)
 
         # 默认向右对齐
-        self.align_back()
+        if "BACK" == p_align:
+            self.align_back()
+        else:
+            self.align_front()
 
         # 设置样式
         self.setStyleSheet(get_theme("Buttons"))

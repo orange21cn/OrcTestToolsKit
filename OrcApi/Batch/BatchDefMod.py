@@ -68,6 +68,7 @@ class BatchDefMod(TabBatchDef):
         for _batch in self.usr_search(p_cond):
 
             if _batch not in result:
+
                 # 获取当前用例的根用例组
                 _root = self.__get_root(_batch)
 

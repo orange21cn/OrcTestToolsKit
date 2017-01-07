@@ -1,7 +1,7 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibApi import connect_list
+from OrcView.Lib.LibMain import LogClient
 
 
 class BatchDefService(object):
@@ -10,8 +10,10 @@ class BatchDefService(object):
 
         object.__init__(self)
 
+        self.__logger = LogClient()
+
         self.__resource_batch_def = OrcResource("BatchDef")
-        self.__resource_run_def = OrcHttpResource("RunDef")
+        self.__resource_run_def = OrcResource("RunDef")
 
     def usr_add(self, p_data):
         """
@@ -20,9 +22,18 @@ class BatchDefService(object):
         :return:
         """
         msg = self.__resource_batch_def.post(parameter=p_data)
-        node = msg.data if msg is not None else None
 
-        return None if node is None else dict(id=node["id"])
+        if msg is None:
+            self.__logger.put_error(u"新增计划失败, 网络连接失败.")
+            return dict()
+
+        if not msg.status:
+            self.__logger.put_error("新增计划失败, %s" % msg.message)
+            return dict()
+
+        self.__logger.put_message(u"新增计划成功")
+
+        return dict(id=msg.data["id"])
 
     def usr_delete(self, p_list):
         """
@@ -32,7 +43,17 @@ class BatchDefService(object):
         """
         msg = self.__resource_batch_def.delete(parameter=p_list)
 
-        return None if msg is None else msg.status
+        if msg is None:
+            self.__logger.put_error(u"删除计划失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"删除计划失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"删除计划成功")
+
+        return msg.status
 
     def usr_update(self, p_data):
         """
@@ -42,7 +63,17 @@ class BatchDefService(object):
         """
         msg = self.__resource_batch_def.put(path=p_data["id"], parameter=p_data)
 
-        return None if msg is None else msg.status
+        if msg is None:
+            self.__logger.put_error(u"更新计划失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"更新计划失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"更新计划成功")
+
+        return msg.status
 
     def usr_search(self, p_cond):
         """
@@ -52,9 +83,20 @@ class BatchDefService(object):
         """
         cond = dict(type="all")
         cond.update(p_cond)
+
         msg = self.__resource_batch_def.get(parameter=cond)
 
-        return None if msg is None else msg.data
+        if msg is None:
+            self.__logger.put_error(u"查询计划失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"查询计划失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"查询计划成功")
+
+        return msg.data
 
     def add_to_run(self, p_id):
         """
@@ -63,7 +105,19 @@ class BatchDefService(object):
         :return:
         """
         cond = dict(id=p_id, run_def_type="BATCH")
-        self.__resource_run_def.post(cond)
+        msg = self.__resource_run_def.post(parameter=cond)
+
+        if msg is None:
+            self.__logger.put_error(u"添加至运行失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"添加至运行失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"添加至运行成功")
+
+        return True
 
 
 class BatchDetService(object):
@@ -72,8 +126,10 @@ class BatchDetService(object):
 
         object.__init__(self)
 
-        self.__resource_batch_det = OrcHttpResource("BatchDet")
-        self.__resource_case_def = OrcHttpResource("CaseDef")
+        self.__logger = LogClient()
+
+        self.__resource_batch_det = OrcResource("BatchDet")
+        self.__resource_case_def = OrcResource("CaseDef")
 
     def usr_add(self, p_data):
         """
@@ -84,7 +140,18 @@ class BatchDetService(object):
         batch_id = p_data["batch_id"]
 
         for _case_id in p_data["case"]:
-            self.__resource_batch_det.post(dict(batch_id=batch_id, case_id=_case_id))
+
+            msg = self.__resource_batch_det.post(parameter=dict(batch_id=batch_id, case_id=_case_id))
+
+            if msg is None:
+                self.__logger.put_error(u"添加用例失败, 网络连接失败.")
+                return dict()
+
+            if not msg.status:
+                self.__logger.put_error(u"添加用例失败, %s" % msg.message)
+                return dict()
+
+        self.__logger.put_message(u"添加用例成功")
 
         return dict(batch_id=batch_id)
 
@@ -94,7 +161,19 @@ class BatchDetService(object):
         :param p_list:
         :return:
         """
-        return self.__resource_batch_det.delete(p_list)
+        msg = self.__resource_batch_det.delete(parameter=p_list)
+
+        if msg is None:
+            self.__logger.put_error(u"删除用例失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"删除用例失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"删除用例成功")
+
+        return msg.status
 
     def usr_update(self, p_data):
         """
@@ -102,8 +181,19 @@ class BatchDetService(object):
         :param p_data:
         :return:
         """
-        self.__resource_batch_det.set_path(p_data["id"])
-        return self.__resource_batch_det.put(p_data)
+        msg = self.__resource_batch_det.put(path=p_data["id"], parameter=p_data)
+
+        if msg is None:
+            self.__logger.put_error(u"更新用例列表失败, 网络连接失败.")
+            return False
+
+        if not msg.status:
+            self.__logger.put_error(u"更新用例列表失败, %s" % msg.message)
+            return False
+
+        self.__logger.put_message(u"更新用例列表成功")
+
+        return msg.status
 
     def usr_search(self, p_cond):
         """
@@ -112,13 +202,38 @@ class BatchDetService(object):
         :return:
         """
         # 查询 batch_det 列表
-        batch_det_list = self.__resource_batch_det.get(p_cond)
+        msg = self.__resource_batch_det.get(parameter=p_cond)
+
+        if msg is None:
+            self.__logger.put_error(u"查询用例列表失败, 网络连接失败.")
+            return list()
+
+        if not msg.status:
+            self.__logger.put_error(u"查询用例列表失败, %s" % msg.message)
+            return list()
+
+        batch_det_list = msg.data
 
         # case_det id 列表
         case_def_id_list = [batch_det["case_id"] for batch_det in batch_det_list]
+        print case_def_id_list
 
         # case_def 列表
-        case_def_list = self.__resource_case_def.get(dict(id=case_def_id_list))
+        msg = self.__resource_case_def.get(parameter=dict(id=case_def_id_list))
+        print msg
+
+        if msg is None:
+            self.__logger.put_error(u"查询用例列表失败, 网络连接失败.")
+            return list()
+
+        if not msg.status:
+            self.__logger.put_error(u"查询用例列表失败, %s" % msg.message)
+            return list()
+
+        case_def_list = msg.data
+        print case_def_list
 
         # 连接 list 并返回
-        return connect_list(batch_det_list, case_def_list, "case_id")
+        res = connect_list(batch_det_list, case_def_list, "case_id")
+        print res
+        return res

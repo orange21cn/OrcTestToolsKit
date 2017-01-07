@@ -88,6 +88,8 @@ class ModelTable(QAbstractTableModel):
 
         self._state_editable = False
 
+        self.__record_num = 0
+
         self.__service = None
 
     def headerData(self, section, orientation, role):
@@ -113,7 +115,11 @@ class ModelTable(QAbstractTableModel):
         return flag
 
     def rowCount(self, parent):
-        return len(self.__state_data)
+
+        if self.__state_data is None:
+            return 0
+        else:
+            return len(self.__state_data)
 
     def columnCount(self, parent):
         return len(self.__state_fields_name)
@@ -224,7 +230,14 @@ class ModelTable(QAbstractTableModel):
                 self.__state_cond.pop(_key)
 
         # Search
-        self.__state_data = self.__service.usr_search(self.__state_cond)
+        data = self.__service.usr_search(self.__state_cond)
+
+        # 分页有冲突
+        if isinstance(data, dict):
+            self.__record_num = data["number"]
+            self.__state_data = data["data"]
+        else:
+            self.__state_data = data
 
         # Clean checked list
         self.__state_check = []
@@ -285,6 +298,21 @@ class ModelTable(QAbstractTableModel):
         :return:
         """
         self.__state_current_data = self.usr_get_data(p_index.row())
+
+    def usr_set_record_num(self, p_num):
+        """
+        设置记录数
+        :param p_num:
+        :return:
+        """
+        self.__record_num = p_num
+
+    def usr_get_record_num(self):
+        """
+        获取记录数
+        :return:
+        """
+        return self.__record_num
 
     def usr_get_current_data(self):
         """
