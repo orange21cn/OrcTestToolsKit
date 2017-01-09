@@ -25,10 +25,12 @@ class DataMod(object):
         :return:
         """
         # 页码
-        page = int(LibCommon.dict_value(p_cond, "page"))
+        page = LibCommon.dict_value(p_cond, "page")
+        page = None if not page else int(p_cond["page"])
 
         # 每页条数
-        number = int(LibCommon.dict_value(p_cond, "number"))
+        number = LibCommon.dict_value(p_cond, "number")
+        number = None if not number else int(number)
 
         # 判断输入参数是否为空
         if p_cond is None:

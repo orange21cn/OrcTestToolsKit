@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from OrcLib import LibCommon
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 
@@ -27,8 +28,21 @@ class BatchDetMod(TabBatchDet):
         :param p_cond:
         :return:
         """
+        # 页码
+        page = LibCommon.dict_value(p_cond, "page")
+        page = None if not page else int(p_cond["page"])
+
+        # 每页条数
+        number = LibCommon.dict_value(p_cond, "number")
+        number = None if not number else int(number)
+
         # 判断输入参数是否为空
-        cond = p_cond if p_cond else dict()
+        if p_cond is None:
+            cond = dict()
+        elif "condition" in p_cond:
+            cond = p_cond["condition"]
+        else:
+            cond = p_cond
 
         # db session
         result = self.__session.query(TabBatchDet)
@@ -47,7 +61,24 @@ class BatchDetMod(TabBatchDet):
         if 'case_id' in p_cond:
             result = result.filter(TabBatchDet.case_id == p_cond['case_id'])
 
-        return result.all()
+        # 分页
+        if (page is not None) and (number is not None):
+            # 页码
+            record_num = result.count()
+
+            # 数据
+            result = result.offset((page - 1) * number).limit(number)
+            result = result.all()
+
+            # 数据转换为 json
+            record = []
+            for item in result:
+                record.append(item.to_json())
+
+            return dict(number=record_num, data=record)
+
+        else:
+            return result.all()
 
     def usr_add(self, p_data):
         """

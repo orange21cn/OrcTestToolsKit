@@ -27,7 +27,7 @@ class DataService:
     def usr_update(self, p_data):
         """
         更新
-        :param p_cond:
+        :param p_data:
         :return:
         """
         self.__resource_data.set_path(p_data["id"])
