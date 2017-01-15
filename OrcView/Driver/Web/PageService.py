@@ -1,6 +1,7 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibLog import OrcLog
+from OrcView.Lib.LibView import ResourceCheck
 
 
 class PageDefService:
@@ -9,7 +10,7 @@ class PageDefService:
 
         # Log
         self.__logger = OrcLog("view.driver.web.service.page_def")
-        self.__resource_page_def = OrcHttpResource("PageDef")
+        self.__resource_page_def = OrcResource("PageDef")
 
     def usr_add(self, p_data):
         """
@@ -17,8 +18,16 @@ class PageDefService:
         :param p_data:
         :return:
         """
-        page_data = self.__resource_page_def.post(p_data)
-        return dict(id=page_data["id"])
+        result = self.__resource_page_def.post(parameter=p_data)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"增加页面"):
+            return dict()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 增加页面")
+
+        return dict(id=result.data["id"])
 
     def usr_delete(self, p_list):
         """
@@ -26,7 +35,16 @@ class PageDefService:
         :param p_list:
         :return:
         """
-        return self.__resource_page_def.delete(p_list)
+        result = self.__resource_page_def.delete(parameter=p_list)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"删除页面"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除页面")
+
+        return result.status
 
     def usr_update(self, p_data):
         """
@@ -34,8 +52,16 @@ class PageDefService:
         :param p_data:
         :return:
         """
-        self.__resource_page_def.set_path(p_data["id"])
-        return self.__resource_page_def.put(p_data)
+        result = self.__resource_page_def.put(path=p_data["id"], parameter=p_data)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"更新页面"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"更新页面")
+
+        return result.status
 
     def usr_search(self, p_cond):
         """
@@ -43,7 +69,16 @@ class PageDefService:
         :param p_cond:
         :return:
         """
-        return self.__resource_page_def.get(p_cond)
+        result = self.__resource_page_def.get(parameter=p_cond)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"查询页面"):
+            return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"查询页面")
+
+        return result.data
 
 
 class PageDetService:
@@ -52,7 +87,7 @@ class PageDetService:
 
         # Log
         self.__logger = OrcLog("view.driver.web.service.page_det")
-        self.__resource_page_det = OrcHttpResource("PageDet")
+        self.__resource_page_det = OrcResource("PageDet")
 
     def usr_add(self, p_data):
         """
@@ -60,8 +95,16 @@ class PageDetService:
         :param p_data:
         :return:
         """
-        page_det_data = self.__resource_page_det.post(p_data)
-        return dict(page_id=page_det_data["page_id"])
+        result = self.__resource_page_det.post(parameter=p_data)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"新增页面信息"):
+            return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"新增页面信息")
+
+        return dict(page_id=result.data["page_id"])
 
     def usr_delete(self, p_list):
         """
@@ -69,7 +112,16 @@ class PageDetService:
         :param p_list:
         :return:
         """
-        return self.__resource_page_det.delete(p_list)
+        result = self.__resource_page_det.delete(parameter=p_list)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"删除页面信息"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除页面信息")
+
+        return result.status
 
     def usr_update(self, p_data):
         """
@@ -77,8 +129,16 @@ class PageDetService:
         :param p_data:
         :return:
         """
-        self.__resource_page_det.set_path(p_data["id"])
-        return self.__resource_page_det.put(p_data)
+        result = self.__resource_page_det.put(path=p_data["id"], parameter=p_data)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"更新页面信息"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"更新页面信息")
+
+        return result.status
 
     def usr_search(self, p_cond):
         """
@@ -86,15 +146,13 @@ class PageDetService:
         :param p_cond:
         :return:
         """
-        return self.__resource_page_det.get(p_cond)
+        result = self.__resource_page_det.get(parameter=p_cond)
 
-    # def page_get_url(self, p_id):
-    #     """
-    #     获取页面 url
-    #     :param p_id: page detail id
-    #     :return: url/None
-    #     """
-    #     self.__resource_page_det.set_path(p_id)
-    #     page_det_data = self.__resource_page_det.get()
-    #
-    #     return None if not page_det_data else page_det_data["page_url"]
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"查询页面信息"):
+            return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"查询页面信息")
+
+        return result.data

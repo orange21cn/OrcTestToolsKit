@@ -1,14 +1,14 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib import get_config
-
+from OrcView.Lib.LibView import ResourceCheck
 
 class RunDefService:
 
     def __init__(self):
 
-        self.__res_run_def = OrcHttpResource("RunDef")
-        self.__res_run = OrcHttpResource("Run")
+        self.__res_run_def = OrcResource("RunDef")
+        self.__res_run = OrcResource("Run")
         self.__configer = get_config("server")
 
     def usr_add(self, p_cond):
@@ -25,7 +25,14 @@ class RunDefService:
             run_def_type=p_cond["run_def_type"],
             result=True)
 
-        self.__res_run_def.post(cond)
+        result = self.__res_run_def.post(parameter=cond)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"新增测试项"):
+            return dict()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"新增测试项")
 
         return dict()
 
@@ -35,7 +42,16 @@ class RunDefService:
         :param p_cond:
         :return:
         """
-        return self.__res_run_def.get(p_cond)
+        result = self.__res_run_def.get(parameter=p_cond)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"查询测试项"):
+            return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"查询测试项")
+
+        return result.data
 
     def usr_delete(self, p_list):
         """
@@ -43,7 +59,16 @@ class RunDefService:
         :param p_list:
         :return:
         """
-        self.__res_run_def.delete(p_list)
+        result =self.__res_run_def.delete(p_list)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"删除测试项"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除测试项")
+
+        return result.status
 
     def usr_run(self, p_pid, p_id):
         """
@@ -54,4 +79,13 @@ class RunDefService:
         """
         pro_ip = self.__configer.get_option("VIEW", "ip")
         pro_port = self.__configer.get_option("VIEW", "port")
-        self.__res_run.put(dict(pid=p_pid, id=p_id, ip=pro_ip, port=pro_port))
+        result = self.__res_run.put(parameter=dict(pid=p_pid, id=p_id, ip=pro_ip, port=pro_port))
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"运行测试项"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"运行测试项")
+
+        return result.status

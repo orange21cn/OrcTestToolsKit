@@ -114,3 +114,81 @@ class CaseDetBus(OrcBus):
             raise OrcApiModelFailException
 
         return True
+
+    def bus_up(self, p_id):
+        """
+        步骤上移
+        :param p_id:
+        :return:
+        """
+        # 查询步骤信息
+        step_info = self._model.usr_search(dict(id=p_id))
+
+        if not step_info:
+            return False
+
+        step_info = step_info[0]
+        step_no = step_info.step_no
+        pre_step_no = int(step_no) - 1
+
+        # 查找最小值
+        steps = self._model.usr_search(dict(case_id=step_info.case_id))
+        min_no = min([step.step_no for step in steps])
+
+        if step_no == min_no:
+            return False, u"已经是第一个步骤"
+
+        # 查找上一个步骤
+        pre_step = self._model.usr_search(
+            dict(case_id=step_info.case_id, step_no=pre_step_no))
+
+        # 互换位置
+        if pre_step:
+            pre_step = pre_step[0]
+            self._model.usr_update(dict(id=pre_step.id, step_no=step_no))
+
+        try:
+            self._model.usr_update(dict(id=step_info.id, step_no=pre_step_no))
+        except AttributeError:
+            return False
+
+        return True
+
+    def bus_down(self, p_id):
+        """
+        步骤下移
+        :param p_id:
+        :return:
+        """
+        # 查询步骤信息
+        step_info = self._model.usr_search(dict(id=p_id))
+
+        if not step_info:
+            return False
+
+        step_info = step_info[0]
+        step_no = step_info.step_no
+        next_step_no = int(step_no) + 1
+
+        # 查找最小值
+        steps = self._model.usr_search(dict(case_id=step_info.case_id))
+        max_no = max([step.step_no for step in steps])
+
+        if step_no == max_no:
+            return False, u"已经是最后一个步骤了"
+
+        # 查找上一个步骤
+        next_step = self._model.usr_search(
+            dict(case_id=step_info.case_id, step_no=next_step_no))
+
+        # 互换位置
+        if next_step:
+            next_step = next_step[0]
+            self._model.usr_update(dict(id=next_step.id, step_no=step_no))
+
+        try:
+            self._model.usr_update(dict(id=step_info.id, step_no=next_step_no))
+        except AttributeError:
+            return False
+
+        return True

@@ -1,6 +1,7 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
+from OrcView.Lib.LibView import ResourceCheck
 
 
 class WindowDefService:
@@ -12,8 +13,8 @@ class WindowDefService:
         # Log
         self.__logger = OrcLog("view.driver.web.service.window_def")
 
-        self.__resource_widget_def = OrcHttpResource("WidgetDef")
-        self.__resource_widow_def = OrcHttpResource("WindowDef")
+        self.__resource_widget_def = OrcResource("WidgetDef")
+        self.__resource_widow_def = OrcResource("WindowDef")
 
     def usr_add(self, p_data):
         """
@@ -21,15 +22,37 @@ class WindowDefService:
         :param p_data:
         :return:
         """
-        windows_all = [item["id"] for item in self.__resource_widget_def.get(dict(widget_type="WINDOW"))]
-        windows_exist = [item["id"] for item in self.__resource_widow_def.get()]
+        # 查找控件定论中的 window
+        result_win_widget = self.__resource_widget_def.get(parameter=dict(widget_type="WINDOW"))
 
-        if not windows_all:
+        # 检查结果
+        if not ResourceCheck.result_status(result_win_widget, u"查询窗口控件"):
+            return dict()
+
+        if not result_win_widget.data:
             return
 
-        for _id in windows_all:
-            if (not windows_exist) or (_id not in windows_exist):
-                self.__resource_widow_def.post(dict(id=_id))
+        # 查询 window 模块中已有的 window
+        result_win_window = self.__resource_widow_def.get()
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_win_window, u"查询现有窗口"):
+            return dict()
+
+        win_id_all = [item["id"] for item in result_win_widget.data]
+        win_id_exist = [item["id"] for item in result_win_window.data]
+
+        for _id in win_id_all:
+            if (not win_id_exist) or (_id not in win_id_exist):
+
+                result = self.__resource_widow_def.post(parameter=dict(id=_id))
+
+                # 检查结果
+                if not ResourceCheck.result_status(result, u"新增窗口"):
+                    return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"新增窗口")
 
         return dict()
 
@@ -38,47 +61,81 @@ class WindowDefService:
         :param p_list:
         :return:
         """
-        return self.__resource_widow_def.delete(p_list)
+        result = self.__resource_widow_def.delete(parameter=p_list)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"删除窗口"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除窗口")
+
+        return result.status
 
     def usr_update(self, p_data):
         """
         :param p_data:
         :return:
         """
-        self.__resource_widow_def.set_path(p_data["id"])
-        return self.__resource_widow_def.put(p_data)
+        result = self.__resource_widow_def.put(path=p_data["id"], parameter=p_data)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"更新窗口"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"更新窗口")
+
+        return result.status
 
     def usr_search(self, p_cond):
         """
         :param p_cond:
         :return:
         """
-        _cond = p_cond
+        cond = p_cond
 
         # 有 window_flag 条件先查 widget
-        if "window_flag" in _cond:
-            _ids = [item["id"] for item in self.__resource_widget_def.get(dict(widget_flag=_cond["window_flag"]))]
-            _cond["id"] = _ids
+        if "window_flag" in cond:
+
+            result_widget = self.__resource_widget_def.get(
+                parameter=dict(widget_flag=cond["window_flag"]))
+
+            # 检查结果
+            if not ResourceCheck.result_status(result_widget, u"查询窗口标识"):
+                return False
+
+            _ids = [item["id"] for item in result_widget.data]
+            cond["id"] = _ids
 
         # 查询
-        _data = self.__resource_widow_def.get(_cond)
-        _window_list = self.__resource_widget_def.get(dict(widget_type="WINDOW"))
+        result_window = self.__resource_widow_def.get(cond)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_window, u"查询窗口标识"):
+            return list()
+
+        result_window_list = self.__resource_widget_def.get(dict(widget_type="WINDOW"))
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_window_list, u"查询窗口标识"):
+            return list()
 
         def _get_widget(p_id):
-            for _item in _window_list:
+            for _item in result_window_list.data:
                 if _item["id"] == p_id:
                     return _item
             return None
 
-        if _data is None:
+        if result_window.data is None:
             return []
-        else:
-            for _window in _data:
 
-                _widget = _get_widget(_window["id"])
+        for _window in result_window.data:
 
-                if _widget is not None:
+            _widget = _get_widget(_window["id"])
 
-                    _window["window_flag"] = _widget["widget_flag"]
+            if _widget is not None:
 
-            return _data
+                _window["window_flag"] = _widget["widget_flag"]
+
+        return result_window.data

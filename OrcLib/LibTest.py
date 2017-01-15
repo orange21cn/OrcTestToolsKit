@@ -24,3 +24,10 @@ class OrcTest:
     def test_print_begin():
         print ">--- Case %s begin -------------------->" % sys._getframe().f_back.f_code.co_name
         init_log()
+
+    @staticmethod
+    def test_print_result(p_result):
+        print p_result
+        print "status: %s" % p_result.status
+        print "message: %s" % p_result.message
+        print "data: %s" % p_result.data

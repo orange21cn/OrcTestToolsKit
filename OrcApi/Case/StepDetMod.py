@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from sqlalchemy import func
+from sqlalchemy import asc
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
@@ -31,23 +32,28 @@ class StepDetMod(object):
         cond = p_cond if p_cond else dict()
 
         # db session
-        _res = self.__session.query(TabStepDet)
+        result = self.__session.query(TabStepDet)
 
         if 'id' in cond:
 
             # 查询支持多 id
             if isinstance(cond["id"], list):
-                _res = _res.filter(TabStepDet.id.in_(cond['id']))
+                result = result.filter(TabStepDet.id.in_(cond['id']))
             else:
-                _res = _res.filter(TabStepDet.id == cond['id'])
+                result = result.filter(TabStepDet.id == cond['id'])
 
         if 'step_id' in cond:
-            _res = _res.filter(TabStepDet.step_id == cond['step_id'])
+            result = result.filter(TabStepDet.step_id == cond['step_id'])
 
         if 'item_id' in cond:
-            _res = _res.filter(TabStepDet.item_id == cond['item_id'])
+            result = result.filter(TabStepDet.item_id == cond['item_id'])
 
-        return _res.all()
+        if 'item_no' in cond:
+            result = result.filter(TabStepDet.item_no == cond['item_no'])
+
+        result = result.order_by(asc(TabStepDet.item_no))
+
+        return result.all()
 
     def usr_add(self, p_data):
         """

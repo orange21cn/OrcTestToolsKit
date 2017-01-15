@@ -11,6 +11,7 @@ from PySide.QtCore import QAbstractItemModel
 from PySide.QtGui import QAbstractItemView
 from PySide.QtGui import QTreeView
 
+from OrcLib import LibCommon
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibView import get_dict
@@ -451,10 +452,9 @@ class ModelTree(QAbstractItemModel):
     def usr_refresh(self):
 
         # Clean condition
-        # for _key, value in self.__state_cond.items():
-        #     if is_null(value):
-        #         self.__state_cond.pop(_key)
-        self.__state_cond = dict()
+        for _key, value in self.__state_cond.items():
+            if LibCommon.is_null(value):
+                self.__state_cond.pop(_key)
 
         # Remove node tree
         self.usr_remove_children(self._state_root)

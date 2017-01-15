@@ -53,7 +53,9 @@ class ViewWidgetDetMag(QWidget):
         _wid_buttons = ViewButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK")
+            dict(id="update", name=u"修改", type="CHECK"),
+            dict(id="up", name=u"上移"),
+            dict(id="down", name=u"下移")
         ])
 
         # win_add
@@ -70,7 +72,7 @@ class ViewWidgetDetMag(QWidget):
 
         # Connection
         _wid_buttons.sig_clicked.connect(self.__operate)
-
+        _wid_display.clicked.connect(self.__model.usr_set_current_data)
         self.__win_add.sig_submit[dict].connect(self.add)
 
     def add_show(self):
@@ -99,5 +101,9 @@ class ViewWidgetDetMag(QWidget):
             self.__model.usr_delete()
         elif "update" == p_flag:
             self.__model.usr_editable()
+        elif "up" == p_flag:
+            self.__model.usr_up()
+        elif "down" == p_flag:
+            self.__model.usr_down()
         else:
             pass

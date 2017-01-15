@@ -81,3 +81,81 @@ class WidgetDetBus(OrcBus):
     def __init__(self):
 
         OrcBus.__init__(self, "widget_det", WidgetDetMod)
+
+    def bus_up(self, p_id):
+        """
+        步骤上移
+        :param p_id:
+        :return:
+        """
+        # 查询步骤信息
+        widget_info = self._model.usr_search(dict(id=p_id))
+
+        if not widget_info:
+            return False
+
+        widget_info = widget_info[0]
+        widget_order = widget_info.widget_order
+        pre_widget_order = int(widget_order) - 1
+
+        # 查找最小值
+        widgets = self._model.usr_search(dict(widget_id=widget_info.widget_id))
+        min_order = min([widget.widget_order for widget in widgets])
+
+        if widget_order == min_order:
+            return False, u"已经是第一个步骤"
+
+        # 查找上一个步骤
+        pre_widget = self._model.usr_search(
+            dict(widget_id=widget_info.widget_id, widget_order=pre_widget_order))
+
+        # 互换位置
+        if pre_widget:
+            pre_widget = pre_widget[0]
+            self._model.usr_update(dict(id=pre_widget.id, widget_order=widget_order))
+
+        try:
+            self._model.usr_update(dict(id=widget_info.id, widget_order=pre_widget_order))
+        except AttributeError:
+            return False
+
+        return True
+
+    def bus_down(self, p_id):
+        """
+        步骤下移
+        :param p_id:
+        :return:
+        """
+        # 查询步骤信息
+        widget_info = self._model.usr_search(dict(id=p_id))
+
+        if not widget_info:
+            return False
+
+        widget_info = widget_info[0]
+        widget_order = widget_info.widget_order
+        next_widget_order = int(widget_order) + 1
+
+        # 查找最小值
+        widgets = self._model.usr_search(dict(widget_id=widget_info.widget_id))
+        max_order = max([widget.widget_order for widget in widgets])
+
+        if widget_order == max_order:
+            return False, u"已经是最后一个步骤了"
+
+        # 查找上一个步骤
+        next_widget = self._model.usr_search(
+            dict(widget_id=widget_info.widget_id, widget_order=next_widget_order))
+
+        # 互换位置
+        if next_widget:
+            next_widget = next_widget[0]
+            self._model.usr_update(dict(id=next_widget.id, widget_order=widget_order))
+
+        try:
+            self._model.usr_update(dict(id=widget_info.id, widget_order=next_widget_order))
+        except AttributeError:
+            return False
+
+        return True

@@ -1,6 +1,7 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibApi import connect_list
+from OrcView.Lib.LibView import ResourceCheck
 
 
 class ItemService(object):
@@ -9,9 +10,9 @@ class ItemService(object):
 
         object.__init__(self)
 
-        self.__resource_case_def = OrcHttpResource("CaseDef")
-        self.__resource_step_det = OrcHttpResource("StepDet")
-        self.__resource_item = OrcHttpResource("Item")
+        self.__resource_case_def = OrcResource("CaseDef")
+        self.__resource_step_det = OrcResource("StepDet")
+        self.__resource_item = OrcResource("Item")
 
     def usr_add(self, p_data):
         """
@@ -26,23 +27,35 @@ class ItemService(object):
         if "ITEM" == step_type:
 
             # 增加 item
-            item = self.__resource_item.post(step_data)
+            result_item = self.__resource_item.post(parameter=step_data)
+
+            # 检查结果
+            if not ResourceCheck.result_status(result_item, u"新增步骤项"):
+                return False
 
             # 增加 step det
-            step_id = step_id
-            item_id = item["id"]
-            step_det_data = dict(step_id=step_id, item_id=item_id)
+            result_step_det = self.__resource_step_det.post(
+                parameter=dict(step_id=step_id, item_id=result_item.data["id"]))
 
-            self.__resource_step_det.post(step_det_data)
+            # 检查结果
+            if not ResourceCheck.result_status(result_step_det, u"新增步骤"):
+                return False
+
+            # 打印成功信息
+            ResourceCheck.result_success(u"新增步骤")
 
         elif "FUNC" == step_type:
 
             # 增加 step det
-            step_id = step_id
-            func_id = step_data
-            step_det_data = dict(step_id=step_id, item_id=func_id)
+            result_step_det = self.__resource_step_det.post(
+                parameter=dict(step_id=step_id, item_id=step_data))
 
-            self.__resource_step_det.post(step_det_data)
+            # 检查结果
+            if not ResourceCheck.result_status(result_step_det, u"新增步骤"):
+                return False
+
+            # 打印成功信息
+            ResourceCheck.result_success(u"新增步骤")
 
         return dict(step_id=step_id)
 
@@ -52,7 +65,16 @@ class ItemService(object):
         :param p_list:
         :return:
         """
-        return self.__resource_step_det.delete(p_list)
+        result = self.__resource_step_det.delete(p_list)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"删除步骤"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除步骤")
+
+        return result.status
 
     def usr_update(self, p_data):
         """
@@ -61,15 +83,25 @@ class ItemService(object):
         :return:
         """
         # 获取 item id
-        self.__resource_step_det.set_path(p_data["id"])
-        item_id = self.__resource_step_det.get()["item_id"]
+        result_step_det = self.__resource_step_det.get(path=p_data["id"])
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_step_det, u"获取执行项ID"):
+            return False
 
         # 更新数据
         data = p_data.copy()
-        data["id"] = item_id
-        self.__resource_item.set_path(item_id)
+        data["id"] = result_step_det.data["item_id"]
+        result_item = self.__resource_item.put(path=result_step_det.data["item_id"], parameter=p_data)
 
-        return self.__resource_item.put(p_data)
+        # 检查结果
+        if not ResourceCheck.result_status(result_item, u"删除步骤"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"删除步骤")
+
+        return result_item.status
 
     def usr_search(self, p_cond):
         """
@@ -78,35 +110,78 @@ class ItemService(object):
         :return:
         """
         # 查询 step det 列表
-        step_det_list = self.__resource_step_det.get(p_cond)
+        result_step_det = self.__resource_step_det.get(parameter=p_cond)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_step_det, u"查询步骤"):
+            return list()
 
         # 查询 item id 列表
-        item_id_list = [step_det["item_id"] for step_det in step_det_list]
+        item_id_list = [step_det["item_id"] for step_det in result_step_det.data]
 
         # 查询 item 列表
-        item_list = self.__resource_item.get(dict(id=item_id_list))
+        result_item = self.__resource_item.get(parameter=dict(id=item_id_list))
+
+        # 检查结果
+        if not ResourceCheck.result_status(result_item, u"查询步骤项"):
+            return list()
 
         # 查询 func
-        case_list = self.__resource_case_def.get(dict(id=item_id_list))
+        # case_list = self.__resource_case_def.get(dict(id=item_id_list))
+        #
+        # # func 转成 item 结构
+        # func_list = [dict(
+        #     id=case["id"],
+        #     item_no=case["case_no"],
+        #     item_mode="",
+        #     item_type="",
+        #     item_operate=case["case_path"],
+        #     item_desc=case["case_desc"],
+        #     comment=case["comment"],
+        #     create_time=case["create_time"],
+        #     modify_time=case["modify_time"]
+        # )for case in case_list]
+        #
+        # # 连接 list
+        # item_list.extend(func_list)
 
-        # func 转成 item 结构
-        func_list = [dict(
-            id=case["id"],
-            item_no=case["case_no"],
-            item_mode="",
-            item_type="",
-            item_operate=case["case_path"],
-            item_desc=case["case_desc"],
-            comment=case["comment"],
-            create_time=case["create_time"],
-            modify_time=case["modify_time"]
-        )for case in case_list]
-
-        # 连接 list
-        item_list.extend(func_list)
+        # 打印成功信息
+        ResourceCheck.result_success(u" 查询步骤")
 
         # 连接数据
-        return connect_list(step_det_list, item_list, "item_id")
+        return connect_list(result_step_det.data, result_item.data, "item_id")
+
+    def usr_up(self, p_id):
+        """
+        上移
+        :return:
+        """
+        result = self.__resource_step_det.post(path=p_id, parameter=dict(cmd="up"))
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"上移步骤"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"上移步骤")
+
+        return result.status
+
+    def usr_down(self, p_id):
+        """
+        下移
+        :return:
+        """
+        result = self.__resource_step_det.post(path=p_id, parameter=dict(cmd="down"))
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"下移步骤"):
+            return False
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"下移步骤")
+
+        return result.status
 
 
 class StepService(object):
@@ -115,9 +190,21 @@ class StepService(object):
 
         object.__init__(self)
 
-        self.__resource_step_def = OrcHttpResource("StepDef")
+        self.__resource_step_def = OrcResource("StepDef")
 
     def view_get_step_type(self, p_step_id):
+        """
+        获取步骤类型
+        :param p_step_id:
+        :return:
+        """
+        result = self.__resource_step_def.get(path=p_step_id)
 
-        self.__resource_step_def.set_path(p_step_id)
-        return self.__resource_step_def.get()["step_type"]
+        # 检查结果
+        if not ResourceCheck.result_status(result, u" 获取步骤"):
+            return list()
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 查询步骤")
+
+        return result.data["step_type"]

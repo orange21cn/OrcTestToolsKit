@@ -215,10 +215,11 @@ class OrcBus(object):
         :param p_cond:
         :return:
         """
-        cond = dict(id=p_id)
-        cond.update(p_cond)
+        cond = p_cond
+        cond["id"] = p_id
 
         try:
+            print "--->", cond
             self._model.usr_update(cond)
         except Exception:
             self._logger.error("Update %s error, input: %s" % (self._flag, p_cond))

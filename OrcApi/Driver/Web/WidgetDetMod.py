@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from sqlalchemy import func
 from sqlalchemy import asc
 
-from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWidgetDet
@@ -44,6 +44,9 @@ class WidgetDetMod:
         if 'widget_id' in cond:
             result = result.filter(WebWidgetDet.widget_id == cond['widget_id'])
 
+        if 'widget_order' in cond:
+            result = result.filter(WebWidgetDet.widget_order == cond['widget_order'])
+
         if 'widget_env' in cond:
             result = result.filter(WebWidgetDet.widget_env.ilike(_like('widget_env')))
 
@@ -67,7 +70,7 @@ class WidgetDetMod:
         _node.widget_id = p_data['widget_id'] if 'widget_id' in p_data else ""
 
         # widget_order
-        _node.widget_order = p_data['widget_order'] if 'widget_order' in p_data else ""
+        _node.widget_order = self._create_no(_node.widget_id)
 
         # widget_attr_type
         _node.widget_attr_type = p_data['widget_attr_type'] if 'widget_attr_type' in p_data else ""
@@ -93,18 +96,19 @@ class WidgetDetMod:
 
         return _node
 
-    def _create_no(self):
+    def _create_no(self, p_widget_id):
         """
         Create a no, like batch_no
         :return:
         """
-        _no = gen_date_str()
-        t_item = self.__session.query(WebWidgetDet).filter(WebWidgetDet.batch_no == _no).first()
+        max_order = self.__session \
+            .query(func.max(WebWidgetDet.widget_order)) \
+            .filter(p_widget_id == WebWidgetDet.widget_id).first()[0]
 
-        if t_item is not None:
-            return self._create_no()
-        else:
-            return _no
+        if max_order is None:
+            max_order = 9
+
+        return str(int(max_order) + 1)
 
     def usr_update(self, p_cond):
 

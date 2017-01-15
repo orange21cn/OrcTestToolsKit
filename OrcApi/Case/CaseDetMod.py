@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from sqlalchemy import func
+from sqlalchemy import asc
 
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
@@ -47,6 +48,11 @@ class CaseDetMod(object):
 
         if 'step_id' in cond:
             result = result.filter(TabCaseDet.step_id == cond['step_id'])
+
+        if 'step_no' in cond:
+            result = result.filter(TabCaseDet.step_no == cond['step_no'])
+
+        result = result.order_by(asc(TabCaseDet.step_no))
 
         return result.all()
 

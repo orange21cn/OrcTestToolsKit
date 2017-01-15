@@ -35,9 +35,9 @@ class OrcResourceBase(object):
             BatchDet=dict(config='BATCH', path="OrcApi.Batch.BatchApi"),
             CaseDef=dict(config='CASE', path="OrcApi.Case.CaseApi"),
             CaseDet=dict(config='CASE', path="OrcApi.Case.CaseApi"),
-            StepDef=dict(config='CASE', path="OrcApi.Case.CaseApi"),
-            StepDet=dict(config='CASE', path="OrcApi.Case.CaseApi"),
-            Item=dict(config='CASE', path="OrcApi.Case.CaseApi"),
+            StepDef=dict(config='CASE', path="OrcApi.Case.StepApi"),
+            StepDet=dict(config='CASE', path="OrcApi.Case.StepApi"),
+            Item=dict(config='CASE', path="OrcApi.Case.ItemApi"),
             Data=dict(config='DATA', path="OrcApi.Case.DataApi"),
             PageDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             PageDet=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
@@ -304,7 +304,7 @@ class OrcResource(OrcResourceBase):
             _name = "%sListAPI" % self._module
         else:
             _name = "%sAPI" % self._module
-
+        print self._path
         return getattr(__import__(self._path, fromlist=True), _name)()
 
     def __get_url(self, p_path=None):
@@ -502,6 +502,7 @@ class OrcResult(object):
                 _res = json.loads(p_res)
 
             self.status = _res["STATUS"]
+            self.message = _res["MESSAGE"]
             self.data = _res["DATA"]
 
     def set_status(self, p_status):
@@ -551,6 +552,7 @@ class OrcResult(object):
         _result = dict(STATUS=self.status,
                        MESSAGE=self.message,
                        DATA=self.data)
+        print _result
         return _result
 
 
@@ -573,7 +575,16 @@ def orc_api(p_func):
 
             # 设置返回值
             result.set_status(True)
-            result.set_data(_rtn)
+
+            # 有返回信息
+            if isinstance(_rtn, tuple):
+                print _rtn
+                result.set_data(_rtn[0])
+                result.set_message(_rtn[1])
+
+            # 只有返回值
+            else:
+                result.set_data(_rtn)
 
         except OrcApiModelFailException:
             result.set_status(False)

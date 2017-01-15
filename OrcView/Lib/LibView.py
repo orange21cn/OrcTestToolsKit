@@ -11,11 +11,16 @@ from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit
 from PySide.QtGui import QProgressBar
 
+from LibDict import LibDict
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
 from OrcLib.LibNet import OrcHttpResource
 from OrcLib.LibException import OrcPostFailedException
-from LibDict import LibDict
+
+from OrcView.Lib.LibMain import LogClient
+
+
+_logger = LogClient()
 
 
 def clean_layout(p_layout):
@@ -659,3 +664,39 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+
+
+class ResourceCheck(object):
+    """
+    OrcResource 结果检查
+    """
+    def __init__(self):
+
+        object.__init__(self)
+
+    @staticmethod
+    def result_status(p_result, p_action):
+        """
+        检查 resource 结果,并将信息发送至 log window
+        :param p_result:
+        :param p_action:
+        :return:
+        """
+        if p_result is None:
+            _logger.put_error(u"%s失败, 网络连接失败." % p_action)
+            return False
+
+        if not p_result.status:
+            _logger.put_error(u"%s失败, %s" % (p_action, p_result.message))
+            return False
+
+        return True
+
+    @staticmethod
+    def result_success(p_action):
+        """
+        打印成功信息至 log window
+        :param p_action:
+        :return:
+        """
+        _logger.put_message(u"%s成功" % p_action)

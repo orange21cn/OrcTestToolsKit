@@ -12,6 +12,7 @@ from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibView import get_dict
 from OrcView.Lib.LibView import operate_to_str
 from OrcView.Lib.LibTheme import get_theme
+from OrcView.Lib.LibMain import LogClient
 
 
 class ViewTable(QTableView):
@@ -25,6 +26,7 @@ class ViewTable(QTableView):
         QTableView.__init__(self)
 
         self.__configer = get_config()
+        self.__logger = LogClient()
 
         # 拉申最后一列
         self.horizontalHeader().setStretchLastSection(True)
@@ -219,11 +221,46 @@ class ModelTable(QAbstractTableModel):
         # 重置界面
         self.usr_refresh()
 
+    def usr_up(self):
+        """
+        上移
+        :return:
+        """
+        print "---->>>"
+        if self.__state_current_data is None:
+            return False
+        print "---->>>>"
+
+        step_id = self.__state_current_data["id"]
+        self.__service.usr_up(step_id)
+
+        self.usr_refresh()
+
+        return True
+
+    def usr_down(self):
+        """
+        下移
+        :return:
+        """
+        if self.__state_current_data is None:
+            return False
+
+        step_id = self.__state_current_data["id"]
+        self.__service.usr_down(step_id)
+
+        self.usr_refresh()
+
+        return True
+
     def usr_refresh(self):
         """
         Refresh the table when data changed
         :return:
         """
+        if self.__state_cond is None:
+            return
+
         # Clean condition
         for _key, value in self.__state_cond.items():
             if is_null(value):

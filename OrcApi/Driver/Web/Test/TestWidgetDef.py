@@ -1,8 +1,9 @@
+# coding=utf-8
 import traceback
 import unittest
 
 from OrcApi.Driver.Web.WidgetDefMod import WidgetDefMod
-from OrcLib.LibException import OrcPostFailedException
+from OrcLib.LibNet import OrcResource
 
 from OrcLib.LibTest import OrcTest
 
@@ -145,5 +146,62 @@ class TestApi(unittest.TestCase):
         i_url = 'http://127.0.0.1:5000/WidgetDef/usr_get_path'
 
         pass
+
+        OrcTest.test_print_end()
+
+
+class TestUpDown(unittest.TestCase):
+
+    def test_bus_det_up(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Driver.Web.WidgetBus import WidgetDetBus
+
+        bus = WidgetDetBus()
+        print bus.bus_up(3400000003)
+
+        OrcTest.test_print_end()
+
+    def test_bus_det_down(self):
+        """
+        测试下移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Driver.Web.WidgetBus import WidgetDetBus
+
+        bus = WidgetDetBus()
+        print bus.bus_down(3400000003)
+
+        OrcTest.test_print_end()
+
+    def test_api_det_up(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        res = OrcResource("WidgetDet")
+
+        OrcTest.test_print_result(res.post(path=3400000003, parameter=dict(cmd="up")))
+
+        OrcTest.test_print_end()
+
+    def test_api_det_down(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        res = OrcResource("WidgetDet")
+
+        OrcTest.test_print_result(res.post(path=3400000003, parameter=dict(cmd="down")))
 
         OrcTest.test_print_end()

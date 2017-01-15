@@ -1,8 +1,8 @@
-import traceback
+# coding=utf-8
 import unittest
 
 from OrcApi.Case.CaseDefMod import CaseDefMod
-from OrcLib.LibException import OrcPostFailedException
+from OrcLib.LibNet import OrcResource
 
 from OrcLib.LibTest import OrcTest
 
@@ -74,5 +74,64 @@ class TestApi(unittest.TestCase):
         OrcTest.test_print_begin()
 
         pass
+
+        OrcTest.test_print_end()
+
+
+class TestCaseDetBus(unittest.TestCase):
+
+    def test_bus_det_up(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Case.CaseBus import CaseDetBus
+
+        bus = CaseDetBus()
+
+        print bus.bus_up(2100000006)
+
+        OrcTest.test_print_end()
+
+    def test_bus_det_down(self):
+        """
+        测试下移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Case.CaseBus import CaseDetBus
+
+        bus = CaseDetBus()
+
+        print bus.bus_down(2100000006)
+
+        OrcTest.test_print_end()
+
+    def test_api_det_up(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        res = OrcResource("CaseDet")
+
+        OrcTest.test_print_result(res.post(path=2100000006, parameter=dict(cmd="up")))
+
+        OrcTest.test_print_end()
+
+    def test_api_det_down(self):
+        """
+        测试上移
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        res = OrcResource("CaseDet")
+
+        OrcTest.test_print_result(res.post(path=2100000006, parameter=dict(cmd="down")))
 
         OrcTest.test_print_end()

@@ -70,7 +70,9 @@ class StepView(QWidget):
         _wid_buttons = ViewButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK")
+            dict(id="update", name=u"修改", type="CHECK"),
+            dict(id="up", name=u"上移"),
+            dict(id="down", name=u"下移")
         ], "VER")
 
         # win_add
@@ -112,6 +114,10 @@ class StepView(QWidget):
             self.sig_delete.emit()
         elif "update" == p_flag:
             self.__model.usr_editable()
+        elif "up" == p_flag:
+            self.__model.usr_up()
+        elif "down" == p_flag:
+            self.__model.usr_down()
         else:
             pass
 
