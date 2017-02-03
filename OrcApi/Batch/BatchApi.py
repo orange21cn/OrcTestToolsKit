@@ -6,6 +6,16 @@ from BatchBus import BatchDefBus
 from BatchBus import BatchDetBus
 
 
+class BatchDefStatusAPI(OrcListAPI):
+
+    def __init__(self):
+
+        OrcListAPI.__init__(self, "batch_def", BatchDefBus)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(OrcListAPI, self).dispatch_request(*args, **kwargs)
+
+
 class BatchDefListAPI(OrcListAPI):
 
     def __init__(self):

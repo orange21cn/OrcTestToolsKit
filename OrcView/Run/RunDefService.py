@@ -3,6 +3,7 @@ from OrcLib.LibNet import OrcResource
 from OrcLib import get_config
 from OrcView.Lib.LibView import ResourceCheck
 
+
 class RunDefService:
 
     def __init__(self):
@@ -42,8 +43,9 @@ class RunDefService:
         :param p_cond:
         :return:
         """
+        print "^^^^", p_cond
         result = self.__res_run_def.get(parameter=p_cond)
-
+        print "^^^^", result.data
         # 检查结果
         if not ResourceCheck.result_status(result, u"查询测试项"):
             return list()
@@ -59,7 +61,7 @@ class RunDefService:
         :param p_list:
         :return:
         """
-        result =self.__res_run_def.delete(p_list)
+        result = self.__res_run_def.delete(parameter=p_list)
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"删除测试项"):

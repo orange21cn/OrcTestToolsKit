@@ -1,11 +1,10 @@
 # coding=utf-8
-from PySide.QtCore import SIGNAL
+from functools import partial
+
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QGridLayout
-from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QLabel
 from PySide.QtGui import QMessageBox
-from PySide.QtGui import QPushButton
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
@@ -21,6 +20,7 @@ class ViewAdd(QWidget):
     """
     sig_submit = OrcSignal([dict])
     sig_operate = OrcSignal()
+    sig_clicked = OrcSignal(str)
 
     def __init__(self, p_def):
 
@@ -49,26 +49,29 @@ class ViewAdd(QWidget):
                 WIDGET=_widget,
                 ESSENTIAL=_ess)
 
+            # ToBeDelete
             if "OPERATE" == _type:
                 _widget.sig_operate.connect(self.sig_operate.emit)
+
+            _widget.clicked.connect(partial(self.sig_clicked.emit, _id))
 
             _label = QLabel(("*" if _ess else " ") + _name + ":")
 
             _lay_inputs.addWidget(_label, _index, 0)
             _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
 
-        buttuns = ViewButtons([
+        buttons = ViewButtons([
             dict(id="submit", name=u"提交"),
             dict(id="cancel", name=u"取消")
         ])
 
         lay_main = QVBoxLayout()
         lay_main.addLayout(_lay_inputs)
-        lay_main.addWidget(buttuns)
+        lay_main.addWidget(buttons)
 
         self.setLayout(lay_main)
 
-        buttuns.sig_clicked.connect(self.__operate)
+        buttons.sig_clicked.connect(self.__operate)
 
         self.setStyleSheet(get_theme("Input"))
 

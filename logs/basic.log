@@ -1,115 +1,75 @@
-[2017-01-13 13:41:38 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-24 16:37:13 basic.lib_net] INFO 获取更新界面进度: {'status': 'PASS', 'flag': '2400000016', 'run_det_type': 'ITEM', 'pid': '2200000015', 'id': '2400000016', '_RunData__type': 'Item', 'desc': ''}成功
+[2017-01-24 16:37:15 basic.lib_net] INFO 获取更新界面进度: {'status': 'PASS', 'flag': '2200000015', 'run_det_type': 'STEP', 'pid': '2000000005', 'id': '2200000015', '_RunData__type': 'StepDef', 'desc': u'\u8f93\u5165\u5173\u952e\u5b57'}成功
+[2017-01-24 16:37:15 basic.lib_net] INFO 获取对象成功
+[2017-01-24 16:37:17 basic.lib_net] INFO 获取控件定义成功
+[2017-01-24 16:37:17 basic.lib_net] INFO 获取控件定义树成功
+[2017-01-24 16:37:17 basic.lib_net] INFO 获取控件信息成功
+[2017-01-24 16:37:17 basic.lib_net] INFO 获取控件信息成功
+[2017-01-24 16:37:18 basic.lib_net] INFO 执行WEB执行项成功
+[2017-01-24 16:37:20 basic.lib_net] INFO 获取更新界面进度: {'status': 'PASS', 'flag': '2400000023', 'run_det_type': 'ITEM', 'pid': '2200000016', 'id': '2400000023', '_RunData__type': 'Item', 'desc': ''}成功
+[2017-01-24 16:37:22 basic.lib_net] INFO 获取更新界面进度: {'status': 'PASS', 'flag': '2200000016', 'run_det_type': 'STEP', 'pid': '2000000005', 'id': '2200000016', '_RunData__type': 'StepDef', 'desc': u'\u70b9\u51fb\u67e5\u8be2'}成功
+[2017-01-24 16:37:24 basic.lib_net] INFO 获取更新界面进度: {'status': 'PASS', 'flag': '13', 'run_det_type': 'CASE', 'pid': None, 'id': '2000000005', '_RunData__type': 'CaseDef', 'desc': ''}成功
+[2017-01-26 09:29:18 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'ReportAPI'
+[2017-01-26 09:29:18 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 332, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
+AttributeError: 'module' object has no attribute 'ReportAPI'
 
-[2017-01-13 13:43:32 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:43:32 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-26 09:33:36 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'ReportAPI'
+[2017-01-26 09:33:36 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
+AttributeError: 'module' object has no attribute 'ReportAPI'
 
-[2017-01-13 13:43:39 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:43:39 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-26 09:37:31 basic.lib_net] ERROR function invoke error: HTTPConnectionPool(host='172.16.56.131', port=5005): Max retries exceeded with url: /api/1.0/Report/CASE_2000000006/20170126 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x12466b410>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+[2017-01-26 09:37:31 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 298, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 468, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 576, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 437, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='172.16.56.131', port=5005): Max retries exceeded with url: /api/1.0/Report/CASE_2000000006/20170126 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x12466b410>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+
+[2017-01-26 10:13:39 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'ReportAPI'
+[2017-01-26 10:13:39 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
+AttributeError: 'module' object has no attribute 'ReportAPI'
 
-[2017-01-13 13:43:40 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:43:40 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-26 11:07:59 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-01-26 11:07:59 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
 
-[2017-01-13 13:43:51 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:43:51 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-26 11:08:21 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefListAPI'
+[2017-01-26 11:08:21 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
+AttributeError: 'module' object has no attribute 'WindowDefListAPI'
 
-[2017-01-13 13:43:51 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:43:51 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
+[2017-01-26 11:08:21 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-01-26 11:08:21 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:47:01 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:47:01 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:47:11 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:47:11 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:48:22 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:48:22 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:49:46 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:49:46 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:52:27 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:52:27 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:55:28 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:55:28 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 13:56:37 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'StepDefListAPI'
-[2017-01-13 13:56:37 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 241, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 308, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-AttributeError: 'module' object has no attribute 'StepDefListAPI'
-
-[2017-01-13 18:54:26 basic.lib_net] ERROR function invoke error: 'dict' object has no attribute 'message'
-[2017-01-13 18:54:26 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 257, in action
-    print result.message
-AttributeError: 'dict' object has no attribute 'message'
-
-[2017-01-13 18:55:10 basic.lib_net] ERROR function invoke error: 'dict' object has no attribute 'status'
-[2017-01-13 18:55:10 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 257, in action
-    print result.status
-AttributeError: 'dict' object has no attribute 'status'
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
 

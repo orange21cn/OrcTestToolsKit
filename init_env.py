@@ -1,14 +1,19 @@
-# coding=utf-8
-from datetime import datetime
-from OrcLib.LibCommon import gen_date_str
-from OrcLib.LibCommon import is_null
-from OrcLib.LibException import OrcDatabaseException
-from OrcLib.LibDatabase import TabBatchDef
-from OrcLib.LibDatabase import gen_id
-from OrcLib.LibDatabase import orc_db
+import subprocess
+from subprocess import CalledProcessError
+import socket
 from OrcLib.LibLog import OrcLog
+from OrcLib import init_log
+
+init_log()
+
+abc = OrcLog("api.driver")
+
+abc.info("abcdef")
+
+def ccc(p_logger=None):
+    aaaa = 3 if p_logger is None else p_logger
+    print aaaa
+    aaaa.info("AAAAA")
 
 
-sess = orc_db.session.query(TabBatchDef).offset(1).limit(1)
-for item in sess.all():
-    print item.to_json()["id"]
+ccc(abc)

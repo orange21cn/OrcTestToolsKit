@@ -1,6 +1,7 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
+from OrcView.Lib.LibView import ResourceCheck
 
 
 class WebMainService:
@@ -12,10 +13,10 @@ class WebMainService:
         # Log
         self.__logger = OrcLog("view.driver.web.service.web_main")
 
-        self.__resource_page_def = OrcHttpResource("PageDef")
-        self.__resource_page_det = OrcHttpResource("PageDet")
-        self.__resource_widget_def = OrcHttpResource("WidgetDef")
-        self.__resource_widget_det = OrcHttpResource("WidgetDet")
+        self.__resource_page_def = OrcResource("PageDef")
+        self.__resource_page_det = OrcResource("PageDet")
+        self.__resource_widget_def = OrcResource("WidgetDef")
+        self.__resource_widget_det = OrcResource("WidgetDet")
 
     def get_page_key(self, p_id):
         """
@@ -60,30 +61,36 @@ class WebMainService:
         """
         from OrcLib.LibDatabase import WebPageDef
 
-        self.__resource_page_def.set_path(p_id)
-        page_def_data = self.__resource_page_def.get()
+        result = self.__resource_page_def.get(path=p_id)
 
-        if page_def_data:
-            return WebPageDef(page_def_data)
-        else:
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取页面定义"):
             return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 获取页面定义")
+
+        return WebPageDef(result.data)
 
     def get_page_det(self, p_id):
         """
-        获取页面定义
+        获取页面信息
         :param p_id:
         :return:
         :rtype: WebPageDet
         """
         from OrcLib.LibDatabase import WebPageDet
 
-        self.__resource_page_det.set_path(p_id)
-        page_det_data = self.__resource_page_det.get()
+        result = self.__resource_page_det.get(path=p_id)
 
-        if page_det_data:
-            return WebPageDet(page_det_data)
-        else:
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取页面信息"):
             return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 获取页面信息")
+
+        return WebPageDet(result.data)
 
     def get_widget_def(self, p_id):
         """
@@ -94,13 +101,16 @@ class WebMainService:
         """
         from OrcLib.LibDatabase import WebWidgetDef
 
-        self.__resource_widget_def.set_path(p_id)
-        widget_def_data = self.__resource_widget_def.get()
+        result = self.__resource_widget_def.get(path=p_id)
 
-        if widget_def_data:
-            return WebWidgetDef(widget_def_data)
-        else:
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取控件定义"):
             return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 获取控件定义")
+
+        return WebWidgetDef(result.data)
 
     def get_widget_det(self, p_id):
         """
@@ -110,10 +120,13 @@ class WebMainService:
         """
         from OrcLib.LibDatabase import WebWidgetDet
 
-        self.__resource_widget_det.set_path(p_id)
-        widget_det_data = self.__resource_widget_det.get()
+        result = self.__resource_widget_det.get(path=p_id)
 
-        if widget_det_data:
-            return WebWidgetDet(widget_det_data)
-        else:
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取控件细节"):
             return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u" 获取控件细节")
+
+        return WebWidgetDet(result.data)

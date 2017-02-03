@@ -6,6 +6,7 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QGridLayout
+from PySide.QtGui import QStackedWidget
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelTable
@@ -16,6 +17,7 @@ from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import SelectWidgetOperation
 from OrcView.Lib.LibViewDef import def_view_item
+from OrcView.Lib.LibViewDef import def_view_case_def
 from OrcView.Data.DataAdd import ViewDataAdd
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
 from OrcView.Driver.Web.PageSelect import ViewPageSelectMag
@@ -39,6 +41,22 @@ class ItemControl(LibControl):
         LibControl.__init__(self, p_def)
 
 
+class BaseView(ViewTable):
+
+    def __init__(self, p_def):
+
+        ViewTable.__init__(self)
+
+        self.definition = p_def
+
+        self.model = ItemModel()
+        self.model.usr_set_definition(self.definition)
+        self.control = ItemControl(self.definition)
+
+        self.set_model(self.model)
+        self.set_control(self.control)
+
+
 class ItemView(QWidget):
 
     def __init__(self):
@@ -52,27 +70,31 @@ class ItemView(QWidget):
         self.__step_type = None
         self.__win_operate = ViewOperate()
 
-        # Model
-        self.__model = ItemModel()
-        self.__model.usr_set_definition(def_view_item)
+        # Item ----
+        # 步骤项显示
+        self.item_display = BaseView(def_view_item)
 
-        # Control
-        _control = ItemControl(def_view_item)
+        # Func --
+        self.func_display = BaseView(def_view_case_def)
 
-        # Data result display widget
-        _wid_display = ViewTable()
-        _wid_display.set_model(self.__model)
-        _wid_display.set_control(_control)
+        # stack widget
+        self.main_display = QStackedWidget()
+        self.main_display.addWidget(self.item_display)
+        self.main_display.addWidget(self.func_display)
+
+        self.display = self.item_display
+        # ----
 
         # Context menu
         _menu_def = [dict(NAME=u"增加", STR="sig_add"),
                      dict(NAME=u"删除", STR="sig_del"),
                      dict(NAME=u"增加数据", STR="sig_data")]
 
-        _wid_display.create_context_menu(_menu_def)
+        self.item_display.create_context_menu(_menu_def)
+        # self.func_display.create_context_menu(_menu_def)
 
         # Buttons widget
-        _wid_buttons = ViewButtons([
+        wid_buttons = ViewButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),
@@ -90,86 +112,132 @@ class ItemView(QWidget):
         self.__win_data = ViewDataAdd()
 
         # Layout
-        _layout = QHBoxLayout()
-        _layout.addWidget(_wid_display)
-        _layout.addWidget(_wid_buttons)
+        main_layout = QHBoxLayout()
+        main_layout.addWidget(self.main_display)
+        main_layout.addWidget(wid_buttons)
 
-        _layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setContentsMargins(0, 0, 0, 0)
 
-        self.setLayout(_layout)
+        self.setLayout(main_layout)
 
         # Connection
         self.__win_add_item.sig_operate.connect(self.__win_operate.show)  # 显示操作选择框
         self.__win_add_item.sig_submit.connect(self.add_item)  # 新增
         self.__win_add_func.sig_selected.connect(self.add_func)  # 新增
         self.__win_operate.sig_submit.connect(self.get_operate)
-        _wid_buttons.sig_clicked.connect(self.__operate)  # 按钮点击
-        _wid_display.sig_context.connect(self.__context)  # 右键菜单
-        _wid_display.clicked.connect(self.__model.usr_set_current_data)  # 单击
+        wid_buttons.sig_clicked.connect(self.__operate)  # 按钮点击
+
+        self.item_display.sig_context.connect(self.__context)  # 右键菜单
+        self.item_display.clicked.connect(self.display.model.usr_set_current_data)  # 单击
 
     def add_show(self):
-
+        """
+        显示增加界面
+        :return:
+        """
         if self.__step_id is not None:
 
             _type = self.__service_step_def.view_get_step_type(self.__step_id)
 
             if "FUNC" == _type:
                 self.__win_add_func.show()
+
             elif "NORMAL" == _type:
                 self.__win_add_item.show()
+
             else:
                 pass
 
     def add_item(self, p_data):
-
+        """
+        增加步骤项
+        :param p_data:
+        :return:
+        """
         _data = dict(
             type="ITEM",
             step_id=self.__step_id,
             data=p_data
         )
-        self.__model.usr_add(_data)
+        self.display.model.usr_add(_data)
 
     def add_func(self, p_data):
-
+        """
+        增加函数步骤
+        :param p_data:
+        :return:
+        """
         _data = dict(
             type="FUNC",
             step_id=self.__step_id,
             data=p_data[0],
         )
-        self.__model.usr_add(_data)
+        self.display.model.usr_add(_data)
 
     def set_step_id(self, p_step_id):
-
+        """
+        设置步骤ID
+        :param p_step_id:
+        :return:
+        """
         self.__step_id = p_step_id
-        self.__model.usr_search({"step_id": self.__step_id})
+        step_type = self.__service_step_def.view_get_step_type(self.__step_id)
+
+        if "FUNC" == step_type:
+            self.display = self.func_display
+            self.main_display.setCurrentIndex(1)
+
+        elif "NORMAL" == step_type:
+            self.display = self.item_display
+            self.main_display.setCurrentIndex(0)
+
+        else:
+            pass
+
+        self.display.model.usr_search({"step_id": self.__step_id})
 
     def clean(self):
+        """
+        清理
+        :return:
+        """
         self.__step_id = None
-        self.__model.usr_clean()
+        self.display.model.usr_clean()
 
     def __operate(self, p_flag):
-
+        """
+        按钮操作
+        :param p_flag:
+        :return:
+        """
         if "add" == p_flag:
             self.add_show()
         elif "delete" == p_flag:
-            self.__model.usr_delete()
+            self.display.model.usr_delete()
         elif "update" == p_flag:
-            self.__model.usr_editable()
+            self.display.model.usr_editable()
         elif "up" == p_flag:
-            self.__model.usr_up()
+            self.display.model.usr_up()
         elif "down" == p_flag:
-            self.__model.usr_down()
+            self.display.model.usr_down()
         else:
             pass
 
     def __context(self, p_flag):
-
+        """
+        右键菜单
+        :param p_flag:
+        :return:
+        """
         if "sig_data" == p_flag:
 
-            _path = self.__model.usr_get_current_data()["item_no"]
+            _path = self.display.model.usr_get_current_data()["item_no"]
+            _id = self.display.model.usr_get_current_data()["id"]
+
             self.__win_data.show()
             self.__win_data.set_type("ITEM")
-            self.__win_data.set_id(_path)
+            self.__win_data.set_path(_path)
+            self.__win_data.set_id(_id)
 
     def get_operate(self, p_data):
         # self. Todo

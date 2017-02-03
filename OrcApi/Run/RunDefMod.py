@@ -2,7 +2,9 @@
 import os
 import re
 from OrcLib import get_config
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibLog import OrcLog
+from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
 from RunCore import RunCore
 
 
@@ -14,8 +16,9 @@ class RunDefMod:
     def __init__(self):
 
         self.__config = get_config()
-        self.__resource_batch_def = OrcHttpResource("BatchDef")
-        self.__resource_case_def = OrcHttpResource("CaseDef")
+        self.__logger = OrcLog("resource.run.run_def.model")
+        self.__resource_batch_def = OrcResource("BatchDef")
+        self.__resource_case_def = OrcResource("CaseDef")
 
         self.__list = RunCore()
         self.__home = self.__list.get_home()
@@ -40,14 +43,20 @@ class RunDefMod:
 
             # 查找 flag, batch 为 batch_no, case 为 case path
             if "BATCH" == _type:
-                self.__resource_batch_def.set_path(_id)
-                _batch = self.__resource_batch_def.get()
-                _flag = _id if not _batch else _batch["batch_no"]
+                _batch = self.__resource_batch_def.get(path=_id)
+
+                # 检查结果
+                ResourceCheck.result_status(_batch, u"查询计划信息", self.__logger)
+
+                _flag = _id if not _batch.data else _batch.data["batch_no"]
 
             else:
-                self.__resource_case_def.set_path(_id)
-                _case = self.__resource_case_def.get()
-                _flag = _id if not _case else _case["case_path"]
+                _case = self.__resource_case_def.get(path=_id)
+
+                # 检查结果
+                ResourceCheck.result_status(_case, u"查询计划信息", self.__logger)
+
+                _flag = _id if not _case.data else _case.data["case_path"]
 
             # 有条件时进行查找,无条件使使用全部数据
             if p_cond is not None:

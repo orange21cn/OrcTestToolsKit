@@ -28,20 +28,21 @@ class RunDetListAPI(OrcBaseAPI):
     def dispatch_request(self, *args, **kwargs):
         return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
     def get(self):
         """
         Search
         :return:
         """
         parameter = OrcParameter.receive_para()
+        return self.api_get(parameter)
 
-        self._logger.info("Add run time, parameter is: %s" % parameter)
+    @orc_api
+    def api_get(self, p_para):
+        self._logger.info("Add run time, parameter is: %s" % p_para)
+        return self._business.usr_search(p_para)
 
-        return self._business.usr_search(parameter)
 
-
-class RunAPI(OrcBaseAPI):
+class RunListAPI(OrcBaseAPI):
 
     def __init__(self):
 
@@ -50,13 +51,15 @@ class RunAPI(OrcBaseAPI):
     def dispatch_request(self, *args, **kwargs):
         return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
     def put(self):
         """
         start
         """
         parameter = OrcParameter.receive_para()
+        return self.api_put(parameter)
 
-        self._logger.info("Run, parameter is: %s" % parameter)
+    @orc_api
+    def api_put(self, p_para):
 
-        return self._business.run_start(parameter)
+        self._logger.info("Run, parameter is: %s" % p_para)
+        return self._business.run_start(p_para)

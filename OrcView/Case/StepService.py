@@ -1,6 +1,9 @@
 # coding=utf-8
+import json
+
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibApi import connect_list
+from OrcView.Lib.LibView import operate_to_str
 from OrcView.Lib.LibView import ResourceCheck
 
 
@@ -11,6 +14,7 @@ class ItemService(object):
         object.__init__(self)
 
         self.__resource_case_def = OrcResource("CaseDef")
+        self.__resource_step_def = OrcResource("StepDef")
         self.__resource_step_det = OrcResource("StepDet")
         self.__resource_item = OrcResource("Item")
 
@@ -65,7 +69,7 @@ class ItemService(object):
         :param p_list:
         :return:
         """
-        result = self.__resource_step_det.delete(p_list)
+        result = self.__resource_step_det.delete(parameter=p_list)
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"删除步骤"):
@@ -109,6 +113,18 @@ class ItemService(object):
         :param p_cond:
         :return:
         """
+        # 获取步骤类型
+        if "step_id" not in p_cond:
+            return list()
+
+        step_info = self.__resource_step_def.get(path=p_cond["step_id"])
+
+        # 检查结果
+        if not ResourceCheck.result_status(step_info, u"获取步骤信息"):
+            return list()
+
+        step_type = step_info.data["step_type"]
+
         # 查询 step det 列表
         result_step_det = self.__resource_step_det.get(parameter=p_cond)
 
@@ -119,41 +135,36 @@ class ItemService(object):
         # 查询 item id 列表
         item_id_list = [step_det["item_id"] for step_det in result_step_det.data]
 
-        # 查询 item 列表
-        result_item = self.__resource_item.get(parameter=dict(id=item_id_list))
+        if "FUNC" == step_type:
+            # 查询 func
+            result_list = self.__resource_case_def.get(parameter=dict(id=item_id_list))
 
-        # 检查结果
-        if not ResourceCheck.result_status(result_item, u"查询步骤项"):
-            return list()
+            # 检查结果
+            if not ResourceCheck.result_status(result_list, u"查询步骤项"):
+                return list()
 
-        # 查询 func
-        # case_list = self.__resource_case_def.get(dict(id=item_id_list))
-        #
-        # # func 转成 item 结构
-        # func_list = [dict(
-        #     id=case["id"],
-        #     item_no=case["case_no"],
-        #     item_mode="",
-        #     item_type="",
-        #     item_operate=case["case_path"],
-        #     item_desc=case["case_desc"],
-        #     comment=case["comment"],
-        #     create_time=case["create_time"],
-        #     modify_time=case["modify_time"]
-        # )for case in case_list]
-        #
-        # # 连接 list
-        # item_list.extend(func_list)
+        else:
+            # 查询 item 列表
+            result_list = self.__resource_item.get(parameter=dict(id=item_id_list))
+
+            # 检查结果
+            if not ResourceCheck.result_status(result_list, u"查询步骤项"):
+                return list()
+
+            for _item in result_list.data:
+                if "item_operate" in _item:
+                    _item["item_operate_text"] = operate_to_str(json.loads(_item["item_operate"]))
 
         # 打印成功信息
         ResourceCheck.result_success(u" 查询步骤")
 
         # 连接数据
-        return connect_list(result_step_det.data, result_item.data, "item_id")
+        return connect_list(result_step_det.data, result_list.data, "item_id")
 
     def usr_up(self, p_id):
         """
         上移
+        :param p_id:
         :return:
         """
         result = self.__resource_step_det.post(path=p_id, parameter=dict(cmd="up"))
@@ -170,6 +181,7 @@ class ItemService(object):
     def usr_down(self, p_id):
         """
         下移
+        :param p_id:
         :return:
         """
         result = self.__resource_step_det.post(path=p_id, parameter=dict(cmd="down"))

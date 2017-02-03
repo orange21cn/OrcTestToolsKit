@@ -1,5 +1,4 @@
 # coding=utf-8
-import os
 import json
 import socket
 import time
@@ -47,6 +46,7 @@ class DriverSelenium:
     def start(self):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.bind((self.__ip, self.__port))
         sock.listen(1)
 
@@ -57,15 +57,26 @@ class DriverSelenium:
             try:
                 connection.settimeout(5)
 
-                _cmd = connection.recv(1024)
-                _result = self.__execute(json.loads(_cmd))
+                _cmd = json.loads(connection.recv(1024))
+
+                self.__logger.info("Run command %s" % _cmd)
+
+                if ("quit" in _cmd) and ("QUIT" == _cmd["quit"]):
+                    if self.__root is not None:
+                        self.__root.quit()
+                    break
+
+                _result = self.__execute(_cmd)
 
                 connection.send(str(_result))
 
             except socket.timeout:
                 self.__logger.error("time out")
+                connection.send(str(False))
+
             except Exception, err:
                 self.__logger.error(err)
+                connection.send(str(False))
 
             connection.close()
 
@@ -115,7 +126,7 @@ class DriverSelenium:
         else:
             _node = OrcWidget(self.__root, _id)
             result = _node.basic_execute(p_para)
-        print "|%s|" % result
+
         return result
 
     def __get_page(self, p_para):

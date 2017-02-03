@@ -11,7 +11,11 @@ class RunDetService():
         self.__resource_run = OrcResource("Run")
 
     def usr_search(self, p_path):
-
+        """
+        查询
+        :param p_path:
+        :return:
+        """
         result = self.__resource_run_det.get(parameter=p_path)
 
         # 检查结果

@@ -1,12 +1,16 @@
 # coding=utf-8
+import subprocess
 from PySide.QtGui import QMainWindow
 from PySide.QtGui import QTabWidget
+from PySide.QtGui import QAction
 from PySide.QtCore import SIGNAL
 from PySide.QtCore import Qt
 
+from OrcLib import get_config
+from OrcLib.LibNet import OrcSocketResource
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
-from OrcView.Lib.LibMain import DockBottom
+from OrcView.Lib.LibMain import DockLog
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Batch.BatchDef import ViewBatchDefMag
@@ -28,39 +32,16 @@ class StartView(QMainWindow):
         self.setWindowTitle("hello")
         self.resize(1024, 768)
 
-        # Menu
-        main_menu = self.menuBar()
+        # 建立菜单栏
+        self.create_menu()
 
-        self.create = main_menu.addMenu('&Create')
-        self.run = main_menu.addMenu('&Run')
-        self.report = main_menu.addMenu('&Report')
-        self.help = main_menu.addMenu('&Help')
-
-        action_batch = self.create.addAction('&Batch')
-        action_case = self.create.addAction('&Case')
-        action_data = self.create.addAction('&Data')
-        action_web = self.create.addAction('&Web')
-        action_run = self.run.addAction('&Run')
-        action_test = self.run.addAction('&Test')
-        action_report = self.report.addAction('&Report')
-
-        self.connect(action_batch, SIGNAL('triggered()'), self.open_batch)
-        self.connect(action_case, SIGNAL('triggered()'), self.open_case)
-        self.connect(action_test, SIGNAL('triggered()'), self.open_test)
-        self.connect(action_data, SIGNAL('triggered()'), self.open_data)
-        self.connect(action_web, SIGNAL('triggered()'), self.open_web_object)
-        self.connect(action_run, SIGNAL('triggered()'), self.open_run)
-        self.connect(action_report, SIGNAL('triggered()'), self.open_report)
+        # 建立工具栏
+        self.create_tools()
 
         # Dock
         self.dock_category = DockCategory()  # category widget
-        self.dock_log = DockBottom()  # log widget
+        # self.dock_log = DockBottom()  # log widget
         self.dock_detail = DockDetail()  # detail widget
-
-        log_client = LogClient()
-        log_client.sig_log.connect(self.dock_log.put_log)
-
-        self.__dock_displayed = False
 
         # center widget
         self.__wid_center = QTabWidget()
@@ -70,6 +51,51 @@ class StartView(QMainWindow):
 
         self.__wid_center.setTabsClosable(True)
         self.connect(self.__wid_center, SIGNAL("tabCloseRequested(int)"), self.close_tab)
+
+    def create_menu(self):
+        """
+        建立菜单
+        :return:
+        """
+        menu = self.menuBar()
+        menu_def = (
+            ('Create', (
+                ('Batch', self.open_batch),
+                ('Case', self.open_case),
+                ('Data', self.open_data),
+                ('Web', self.open_web)
+            )),
+            ('Run', (
+                ('Run', self.open_run),
+                ('Log', self.open_log)
+            )),
+            ('Report', (
+                ('Report', self.open_report),
+            )),
+            ('help', ())
+        )
+
+        for _menu_name, _menu_actions in menu_def:
+
+            _menu = menu.addMenu('&%s' % _menu_name)
+
+            if not _menu_actions:
+                continue
+
+            for _action_name, _slot in _menu_actions:
+                _action = _menu.addAction("&%s" % _action_name)
+                _action.triggered.connect(_slot)
+
+    def create_tools(self):
+        """
+        建立工具栏
+        :return:
+        """
+        from OrcView.Main.Tools.Server import Server
+
+        tools_server = self.addToolBar("Server")
+        tools_server.addWidget(Server())
+        tools_server.addSeparator()
 
     def close_tab(self):
         index = self.__wid_center.currentIndex()
@@ -97,7 +123,7 @@ class StartView(QMainWindow):
         _view = StepContainer(p_data)
         self.__add_tab(_view)
 
-    def open_web_object(self):
+    def open_web(self):
         _view = ViewWebMain()
         self.__add_tab(_view)
 
@@ -109,7 +135,7 @@ class StartView(QMainWindow):
         _view = ViewReportMain()
         self.__add_tab(_view)
 
-    def open_test(self):
+    def open_log(self):
         self.__show_dock()
 
     def __add_tab(self, p_view):
@@ -119,9 +145,8 @@ class StartView(QMainWindow):
 
     def __show_dock(self):
 
-        if not self.__dock_displayed:
+        dock_log = DockLog()  # log widget
+        self.addDockWidget(Qt.BottomDockWidgetArea, dock_log)
 
-            self.addDockWidget(Qt.BottomDockWidgetArea, self.dock_log)
-            # self.addDockWidget(Qt.LeftDockWidgetArea, self.dock_category)
-            # self.addDockWidget(Qt.RightDockWidgetArea, self.dock_detail)
-            pass
+    def test(self):
+        print "OK"

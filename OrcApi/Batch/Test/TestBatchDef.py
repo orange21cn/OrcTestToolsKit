@@ -6,6 +6,7 @@ from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibException import OrcPostFailedException
 
 from OrcLib.LibTest import OrcTest
+from OrcLib.LibNet import OrcResource
 
 
 class TestTab(unittest.TestCase):
@@ -66,6 +67,18 @@ class TestTab(unittest.TestCase):
 
         for i in test.usr_search({'id': '1001000000000003'}):
             OrcTest.test_print_result(i.to_json())
+
+        OrcTest.test_print_end()
+
+    def test_get_status(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        mod = OrcResource("BatchDef")
+        OrcTest.test_print_result(mod.get(path="status"))
 
         OrcTest.test_print_end()
 

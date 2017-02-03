@@ -55,12 +55,14 @@ class ViewBatchDefMag(QWidget):
         self.__wid_search_cond.create()
 
         # Data result display widget
-        _wid_display = ViewTree()
-        _wid_display.set_model(self.__model)
-        _wid_display.set_control(_control)
+        self.wid_display = ViewTree()
+        self.wid_display.set_model(self.__model)
+        self.wid_display.set_control(_control)
+
+        self.wid_display.setWordWrap(True)
 
         # Context menu
-        _wid_display.create_context_menu([
+        self.wid_display.create_context_menu([
             dict(NAME=u"增加", STR="sig_add"),
             dict(NAME=u"删除", STR="sig_del"),
             dict(NAME=u"增加数据", STR="sig_data"),
@@ -83,7 +85,7 @@ class ViewBatchDefMag(QWidget):
         # Layout
         _layout = QVBoxLayout()
         _layout.addWidget(self.__wid_search_cond)
-        _layout.addWidget(_wid_display)
+        _layout.addWidget(self.wid_display)
         _layout.addWidget(_wid_buttons)
 
         self.setLayout(_layout)
@@ -92,13 +94,14 @@ class ViewBatchDefMag(QWidget):
         _wid_buttons.sig_clicked.connect(self.__operate)
 
         self.__win_add.sig_submit[dict].connect(self.add)
-        _wid_display.doubleClicked.connect(self.__batch_detail)
+        self.wid_display.doubleClicked.connect(self.__batch_detail)
 
-        _wid_display.sig_context.connect(self.__context)  # 右键菜单
-        _wid_display.clicked.connect(self.__model.usr_set_current_data)
+        self.wid_display.sig_context.connect(self.__context)  # 右键菜单
+        self.wid_display.clicked.connect(self.__model.usr_set_current_data)
 
     def search(self):
         self.__model.usr_search(self.__wid_search_cond.get_cond())
+        self.wid_display.resizeColumnToContents(0)
 
     def add(self, p_data):
         self.__model.usr_add(p_data)

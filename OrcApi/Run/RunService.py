@@ -1,7 +1,8 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
-from OrcLib.LibNet import OrcHttpService
+from OrcLib.LibLog import OrcLog
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import OrcSocketResource
+from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibDatabase import TabItem
 
 
@@ -11,12 +12,14 @@ class RunCoreService:
     """
     def __init__(self):
 
-        self.__resource_web_driver = OrcHttpResource("Driver")
-        self.__resource_item = OrcHttpResource("Item")
-        self.__resource_data = OrcHttpResource("Data")
+        self.__logger = OrcLog("resource.Run.run_core.service")
+
+        self.__resource_web_driver = OrcResource("Driver")
+        self.__resource_item = OrcResource("Item")
+        self.__resource_data = OrcResource("Data")
         self.__resource_view = OrcSocketResource("View")
 
-        self.__service_web_driver = OrcHttpService("Driver")
+        self.__service_web_driver = OrcResource("Driver")
 
     def launch_web_step(self, p_step_info):
         """
@@ -24,7 +27,16 @@ class RunCoreService:
         :param p_step_info:
         :return:
         """
-        return self.__resource_web_driver.post(p_step_info)
+        result = self.__resource_web_driver.post(parameter=p_step_info)
+
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"执行WEB执行项", self.__logger):
+            return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"执行WEB执行项", self.__logger)
+
+        return result.status
 
     def check_web_step(self, p_step_info):
         """
@@ -34,9 +46,31 @@ class RunCoreService:
         """
         if "DATA" in p_step_info:
             step_data = p_step_info["DATA"]
-            return self.__resource_web_driver.post(p_step_info) == step_data
+            # return self.__resource_web_driver.post(p_step_info) == step_data
+            result = self.__resource_web_driver.post(parameter=p_step_info)
+
+            # 检查结果
+            if not ResourceCheck.result_status(result, u"获取WEB执行结果数据", self.__logger):
+                return False
+
+            # 打印成功信息
+            ResourceCheck.result_success(u"获取WEB执行结果数据", self.__logger)
+
+            result_data = result.data
+
+            return step_data == result_data
+
         else:
-            return self.__resource_web_driver.post(p_step_info)
+            result = self.__resource_web_driver.post(parameter=p_step_info)
+
+            # 检查结果
+            if not ResourceCheck.result_status(result, u"获取WEB执行结果", self.__logger):
+                return False
+
+            # 打印成功信息
+            ResourceCheck.result_success(u"获取WEB执行结果", self.__logger)
+
+            return result.status
 
     def get_web_pic(self, p_name):
         """
@@ -48,20 +82,25 @@ class RunCoreService:
 
     def get_item(self, p_item_id):
         """
+        获取对象
         :param p_item_id:
         :return:
         :rtype: TabItem
         """
-        self.__resource_item.set_path(p_item_id)
-        item_data = self.__resource_item.get()
+        result = self.__resource_item.get(path=p_item_id)
 
-        if not item_data:
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取对象", self.__logger):
             return None
-        else:
-            return TabItem(item_data)
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"获取对象", self.__logger)
+
+        return TabItem(result.data)
 
     def get_data(self, p_def_list, p_object_id):
-        """tab_data
+        """
+        获取数据
         :param p_object_id:
         :param p_def_list:
         :type p_def_list: list
@@ -81,17 +120,27 @@ class RunCoreService:
             else:
                 pass
 
-            _data = self.__resource_data.get(
-                dict(src_id=_id, src_type=_type, data_flag=p_object_id))
+            result = self.__resource_data.get(
+                parameter=dict(src_id=_id, src_type=_type, data_flag=p_object_id))
 
-            if _data:
+            # 检查结果
+            if not ResourceCheck.result_status(result, u"获取%s数据" % _type, self.__logger):
+                return None
+
+            # 打印成功信息
+            ResourceCheck.result_success(u"获取%s数据" % _type, self.__logger)
+
+            if result.data:
                 break
         else:
             return None
 
         p_def_list.reverse()
 
-        return _data[0]["data_value"]
+        if result.data:
+            return result.data[0]["data_value"]
+        else:
+            return None
 
     def update_status(self, p_data):
         """
@@ -101,3 +150,6 @@ class RunCoreService:
         """
         import json
         self.__resource_view.get(json.dumps(p_data))
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"获取更新界面进度: %s" % p_data, self.__logger)

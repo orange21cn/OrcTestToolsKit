@@ -259,7 +259,7 @@ class OrcWidget:
 
         # 获取属性
         elif "GET_ATTR" == _flag:
-            print p_para
+
             if "DATA" not in p_para:
                 return ""
             else:

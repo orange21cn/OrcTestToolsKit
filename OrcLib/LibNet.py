@@ -38,7 +38,7 @@ class OrcResourceBase(object):
             StepDef=dict(config='CASE', path="OrcApi.Case.StepApi"),
             StepDet=dict(config='CASE', path="OrcApi.Case.StepApi"),
             Item=dict(config='CASE', path="OrcApi.Case.ItemApi"),
-            Data=dict(config='DATA', path="OrcApi.Case.DataApi"),
+            Data=dict(config='DATA', path="OrcApi.Data.DataApi"),
             PageDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             PageDet=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             WindowDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.WindowApi"),
@@ -84,6 +84,29 @@ class OrcResourceBase(object):
 
         # URL for remote api
         self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, p_mod)
+
+    def load_config(self):
+        """
+        重新导入 IP/PORT
+        :return:
+        """
+        # IP
+        self._ip = self._configer.get_option(self._flag, "ip")
+
+        # PORT
+        try:
+            self._port = int(self._configer.get_option(self._flag, "port"))
+        except TypeError:
+            self._port = None
+
+        # 接口调用方式, REMOTE 远程服务, LOCAL 本地服务, HOST 本地接口调用
+        self._type = self._configer.get_option(self._flag, "type")
+
+        # VERSION
+        self._version = self._configer.get_option(self._flag, "version")
+
+        # URL for remote api
+        self._url = "http://%s:%s/api/%s/%s" % (self._ip, self._port, self._version, self._module)
 
 
 class OrcHttpService(OrcResourceBase):
@@ -234,6 +257,8 @@ class OrcResource(OrcResourceBase):
         result = None
         url_path = p_path if not isinstance(p_path, tuple) else "/".join(p_path)
 
+        self.load_config()
+
         # local api
         if "LOCAL" == self._type:
             try:
@@ -278,15 +303,13 @@ class OrcResource(OrcResourceBase):
 
             return result
 
-    def save_pic(self, p_path, p_file_name):
+    def save_pic(self, p_file_name):
         """
         保存图片
-        :param p_path:
         :param p_file_name:
         :return:
         """
-        url_path = p_path if not isinstance(p_path, tuple) else "/".join(p_path)
-        req = requests.get("%s/%s" % (self._url, url_path), stream=True)
+        req = requests.get(self._url, stream=True)
 
         with open(p_file_name, 'wb') as _file:
             for chunk in req.iter_content(chunk_size=1024):
@@ -304,7 +327,7 @@ class OrcResource(OrcResourceBase):
             _name = "%sListAPI" % self._module
         else:
             _name = "%sAPI" % self._module
-        print self._path
+
         return getattr(__import__(self._path, fromlist=True), _name)()
 
     def __get_url(self, p_path=None):
@@ -552,7 +575,7 @@ class OrcResult(object):
         _result = dict(STATUS=self.status,
                        MESSAGE=self.message,
                        DATA=self.data)
-        print _result
+
         return _result
 
 
@@ -578,7 +601,6 @@ def orc_api(p_func):
 
             # 有返回信息
             if isinstance(_rtn, tuple):
-                print _rtn
                 result.set_data(_rtn[0])
                 result.set_message(_rtn[1])
 
@@ -592,3 +614,45 @@ def orc_api(p_func):
         return result.rtn()
 
     return api_func
+
+
+class ResourceCheck(object):
+    """
+    OrcResource 结果检查
+    """
+    def __init__(self):
+
+        object.__init__(self)
+
+    @staticmethod
+    def result_status(p_result, p_action, p_logger=None):
+        """
+        检查 resource 结果,并将信息发送至 log window
+        :param p_logger:
+        :param p_result:
+        :param p_action:
+        :return:
+        """
+        logger = _logger if p_logger is None else p_logger
+
+        if p_result is None:
+            logger.error(u"%s失败, 网络连接失败." % p_action)
+            return False
+
+        if not p_result.status:
+            logger.error(u"%s失败, %s" % (p_action, p_result.message))
+            return False
+
+        return True
+
+    @staticmethod
+    def result_success(p_action, p_logger=None):
+        """
+        打印成功信息至 log window
+        :param p_logger:
+        :param p_action:
+        :return:
+        """
+        logger = _logger if p_logger is None else p_logger
+
+        logger.info(u"%s成功" % p_action)

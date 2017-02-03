@@ -5,8 +5,9 @@ from xml.etree.ElementTree import Element
 from OrcLib import get_config
 from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibDataStruct import ListTree
+from OrcLib.LibNet import ResourceCheck
 from RunService import RunCoreService
 from RunLog import RunLog
 
@@ -21,16 +22,16 @@ class RunCore(ListTree):
         ListTree.__init__(self)
 
         # Log
-        self.__logger = OrcLog("view.driver.service.window")
+        self.__logger = OrcLog("resource.run.run_core")
 
         # Source
-        self.__resource_batch_def = OrcHttpResource("BatchDef")
-        self.__resource_batch_det = OrcHttpResource("BatchDet")
-        self.__resource_case_def = OrcHttpResource("CaseDef")
-        self.__resource_case_det = OrcHttpResource("CaseDet")
-        self.__resource_step_def = OrcHttpResource("StepDef")
-        self.__resource_step_det = OrcHttpResource("StepDet")
-        self.__resource_item = OrcHttpResource("Item")
+        self.__resource_batch_def = OrcResource("BatchDef")
+        self.__resource_batch_det = OrcResource("BatchDet")
+        self.__resource_case_def = OrcResource("CaseDef")
+        self.__resource_case_det = OrcResource("CaseDet")
+        self.__resource_step_def = OrcResource("StepDef")
+        self.__resource_step_det = OrcResource("StepDet")
+        self.__resource_item = OrcResource("Item")
 
         self.__service = RunCoreService()
 
@@ -69,12 +70,13 @@ class RunCore(ListTree):
         :return:
         """
         rtn = list()
-        batches = self.__resource_batch_def.get(dict(id=p_id, type="tree"))
+        batches = self.__resource_batch_def.get(parameter=dict(id=p_id, type="tree"))
 
-        if not batches:
-            return None
+        # 检查结果
+        if not ResourceCheck.result_status(batches, u"查询计划列表", self.__logger):
+            return list()
 
-        for _batch in batches:
+        for _batch in batches.data:
 
             _batch_id = _batch["id"]
             _type = _batch["batch_type"]
@@ -83,9 +85,13 @@ class RunCore(ListTree):
 
             if "BATCH" == _type:
 
-                cases = self.__resource_batch_det.get(dict(batch_id=_batch_id))
+                cases = self.__resource_batch_det.get(parameter=dict(batch_id=_batch_id))
 
-                for _case in cases:
+                # 检查结果
+                if not ResourceCheck.result_status(cases, u"查询用例列表", self.__logger):
+                    return list()
+
+                for _case in cases.data:
                     _case_id = _case["case_id"]
                     _case_list = self.__get_case_list(_case_id, _batch_id)
 
@@ -102,19 +108,20 @@ class RunCore(ListTree):
         :rtype: list
         """
         rtn = list()
-        cases = self.__resource_case_def.get(dict(id=p_id, type="tree"))
+        cases = self.__resource_case_def.get(parameter=dict(id=p_id, type="tree"))
 
-        if not cases:
-            return None
+        # 检查结果
+        if not ResourceCheck.result_status(cases, u"查询用例列表", self.__logger):
+            return list()
 
-        for _case in cases:
+        for _case in cases.data:
 
             _id = _case["id"]
             _type = _case["case_type"]
 
             rtn.append(RunData("CaseDef", _case, p_batch_id).__dict__)
 
-            if "CASE" == _type:
+            if _type in ("CASE", "FUNC"):
                 _step_list = self.__get_step_list(_id)
                 rtn.extend(_step_list)
 
@@ -129,20 +136,55 @@ class RunCore(ListTree):
         """
         rtn = list()
 
-        case_dets = self.__resource_case_det.get(dict(case_id=p_id))
+        case_dets = self.__resource_case_det.get(parameter=dict(case_id=p_id))
 
-        if not case_dets:
-            return []
+        # 检查结果
+        if not ResourceCheck.result_status(case_dets, u"查询用例步骤列表", self.__logger):
+            return list()
 
-        for _step_info in case_dets:
+        for _step_info in case_dets.data:
             _step_id = _step_info["step_id"]
             _case_id = _step_info["case_id"]
 
-            self.__resource_step_def.set_path(_step_id)
-            _step = self.__resource_step_def.get()
+            _step = self.__resource_step_def.get(path=_step_id)
 
-            rtn.append(RunData("StepDef", _step, _case_id).__dict__)
-            rtn.extend(self.__get_item_list(_step_id))
+            # 检查结果
+            if not ResourceCheck.result_status(case_dets, u"查询步骤列表", self.__logger):
+                return list()
+
+            rtn.append(RunData("StepDef", _step.data, _case_id).__dict__)
+
+            _step_type = _step.data["step_type"]
+
+            if "NORMAL" == _step_type:
+                rtn.extend(self.__get_item_list(_step_id))
+            elif "FUNC" == _step_type:
+                rtn.extend(self.__get_func_list(_step_id))
+            else:
+                pass
+
+        return rtn
+
+    def __get_func_list(self, p_id):
+        """
+        获取函数列表
+        :param p_id:
+        :return:
+        """
+        rtn = list()
+
+        step_dets = self.__resource_step_det.get(parameter=dict(step_id=p_id))
+
+        # 检查结果
+        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+            return list()
+
+        for _func_info in step_dets.data:
+
+            _func_id = _func_info["item_id"]
+            _step_id = _func_info["step_id"]
+
+            rtn.extend(self.__get_case_list(_func_id, _step_id))
 
         return rtn
 
@@ -154,19 +196,24 @@ class RunCore(ListTree):
         :rtype: list
         """
         rtn = list()
-        step_dets = self.__resource_step_det.get(dict(step_id=p_id))
+        step_dets = self.__resource_step_det.get(parameter=dict(step_id=p_id))
 
-        if not step_dets:
-            return []
+        # 检查结果
+        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+            return list()
 
-        for _item_info in step_dets:
+        for _item_info in step_dets.data:
             _item_id = _item_info["item_id"]
             _step_id = _item_info["step_id"]
 
-            self.__resource_item.set_path(_item_id)
-            _item = self.__resource_item.get()
+            _item = self.__resource_item.get(path=_item_id)
 
-            rtn.append(RunData("Item", _item, _step_id).__dict__)
+            # 检查结果
+            if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+                return list()
+
+            if _item.data is not None:
+                rtn.append(RunData("Item", _item.data, _step_id).__dict__)
 
         return rtn
 
@@ -409,11 +456,13 @@ class RunCore(ListTree):
         return _result
 
 
-class RunData:
+class RunData(object):
     """
     用例数据类型与界面类型转换
     """
     def __init__(self, p_type, p_data, p_pid=None):
+
+        object.__init__(self)
 
         self.id = None
         self.pid = None
@@ -444,7 +493,7 @@ class RunData:
 
             self.id = _data.id
             self.pid = _data.pid
-            self.run_det_type = "CASE" if "CASE" == _data.case_type else "CASE_GROUP"
+            self.run_det_type = "CASE_GROUP" if "GROUP" == _data.case_type else _data.case_type
             self.flag = _data.case_no
             self.desc = _data.case_desc
 
@@ -469,6 +518,9 @@ class RunData:
             self.run_det_type = "ITEM"
             self.flag = _data.id
             self.desc = _data.item_desc
+
+        else:
+            pass
 
         if self.pid is None or "None" == self.pid:
             self.pid = p_pid

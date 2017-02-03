@@ -3,12 +3,15 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 
+from OrcLib.LibProgram import orc_singleton
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibViewDef import def_view_run_def
+
 from RunDef import ViewRunDef
 from RunDet import ViewRunDet
 
 
+@orc_singleton
 class ViewRunMain(QWidget):
 
     def __init__(self):

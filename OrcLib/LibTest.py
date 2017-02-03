@@ -31,3 +31,15 @@ class OrcTest:
         print "status: %s" % p_result.status
         print "message: %s" % p_result.message
         print "data: %s" % p_result.data
+
+    @staticmethod
+    def display_widget(p_widget, *args):
+
+        from PySide.QtGui import QApplication
+
+        main = QApplication(sys.argv)
+
+        _view = p_widget(*args)
+        _view.show()
+
+        main.exec_()

@@ -7,6 +7,7 @@ from OrcLib import get_config
 from OrcApi import app
 from OrcApi import orc_api
 
+from OrcApi.Batch.BatchApi import BatchDefStatusAPI
 from OrcApi.Batch.BatchApi import BatchDefListAPI
 from OrcApi.Batch.BatchApi import BatchDefAPI
 from OrcApi.Batch.BatchApi import BatchDetListAPI
@@ -46,8 +47,10 @@ from OrcApi.Lib.DictApi import DictAPI
 configer = get_config("server")
 
 # Batch
+orc_api.add_resource(BatchDefStatusAPI, '/api/1.0/BatchDef/status', endpoint='BatchDefStatus')
 orc_api.add_resource(BatchDefListAPI, '/api/1.0/BatchDef', endpoint='BatchDefs')
 orc_api.add_resource(BatchDefAPI, '/api/1.0/BatchDef/<int:p_id>', endpoint='BatchDef')
+
 orc_api.add_resource(BatchDetListAPI, '/api/1.0/BatchDet', endpoint='BatchDets')
 orc_api.add_resource(BatchDetAPI, '/api/1.0/BatchDet/<int:p_id>', endpoint='BatchDet')
 
@@ -103,3 +106,5 @@ reload(sys)
 init_log()
 
 app.run(host=driver_host, port=driver_port)
+
+

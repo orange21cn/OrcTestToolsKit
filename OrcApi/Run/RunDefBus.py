@@ -10,7 +10,7 @@ class RunDefBus(object):
 
         object.__init__(self)
 
-        self.__logger = OrcLog("api.run.bus.run_def")
+        self.__logger = OrcLog("resource.run.bus.run_def")
         self.__model_run_def = RunDefMod()
 
     def bus_list_add(self, p_data):

@@ -20,6 +20,22 @@ class OrcBaseAPI(Resource):
         return super(Resource, self).dispatch_request(*args, **kwargs)
 
 
+class OrcStatusAPI(Resource):
+
+    def __init__(self, p_flag, p_bus):
+
+        self._flag = p_flag
+        self._business = p_bus()
+        self._logger = OrcLog("resource.%s.api" % self._flag)
+
+    def dispatch_request(self, *args, **kwargs):
+        return super(Resource, self).dispatch_request(*args, **kwargs)
+
+    @orc_api
+    def get(self):
+        return True
+
+
 class OrcListAPI(OrcBaseAPI):
 
     def __init__(self, p_flag, p_bus):
@@ -219,7 +235,6 @@ class OrcBus(object):
         cond["id"] = p_id
 
         try:
-            print "--->", cond
             self._model.usr_update(cond)
         except Exception:
             self._logger.error("Update %s error, input: %s" % (self._flag, p_cond))

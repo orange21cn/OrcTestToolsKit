@@ -1,5 +1,6 @@
 # coding=utf-8
 import socket
+import json
 
 from PySide.QtCore import QThread
 from PySide.QtCore import Signal as OrcSignal
@@ -95,6 +96,7 @@ class ViewRunDet(QWidget):
 
         self.setLayout(_layout)
 
+        # 进度条进程
         self.__thread_status = StatusReceiver()
         self.__thread_status.start()
 
@@ -130,6 +132,8 @@ class StatusReceiver(QThread):
         _port = int(self.__config.get_option("VIEW", "port"))
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        print _ip
         sock.bind((_ip, _port))
         sock.listen(1)
 
@@ -141,6 +145,13 @@ class StatusReceiver(QThread):
                 connection.settimeout(5)
 
                 _cmd = connection.recv(1024)
+                print "a"
+                dict_cmd = json.loads(_cmd)
+                if ("quit" in dict_cmd) and ("QUIT" == dict_cmd["quit"]):
+                    print "b"
+                    break
+                print "c"
+
                 self.sig_status.emit(_cmd)
 
                 connection.send(_cmd)

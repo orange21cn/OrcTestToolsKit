@@ -147,7 +147,7 @@ class ModelTable(QAbstractTableModel):
                     pass
 
             elif "item_operate" == _id:
-                return operate_to_str(json.loads(_value))
+                return self.__state_data[index.row()]["item_operate_text"]
 
             else:
                 return _value
@@ -226,10 +226,8 @@ class ModelTable(QAbstractTableModel):
         上移
         :return:
         """
-        print "---->>>"
         if self.__state_current_data is None:
             return False
-        print "---->>>>"
 
         step_id = self.__state_current_data["id"]
         self.__service.usr_up(step_id)
@@ -303,22 +301,22 @@ class ModelTable(QAbstractTableModel):
         :param p_def:
         :return:
         """
-        for t_field in p_def:
+        for _field in p_def:
 
-            if t_field["DISPLAY"]:
+            if _field["DISPLAY"]:
 
-                self.__state_fields_name.append(t_field["NAME"])
-                self.__state_fields_id.append(t_field["ID"])
+                self.__state_fields_name.append(_field["NAME"])
+                self.__state_fields_id.append(_field["ID"])
 
-                if "SELECT" == t_field["TYPE"]:
-                    _res = get_dict(t_field["ID"])
-                    self.__state_select[t_field["ID"]] = {}
+                if "SELECT" == _field["TYPE"]:
+                    _res = get_dict(_field["ID"])
+                    self.__state_select[_field["ID"]] = {}
 
                     for t_couple in _res:
-                        self.__state_select[t_field["ID"]][t_couple.dict_value] = t_couple.dict_text
+                        self.__state_select[_field["ID"]][t_couple.dict_value] = t_couple.dict_text
 
-                if t_field["EDIT"]:
-                    self.__state_edit_fields.append(t_field["ID"])
+                if _field["EDIT"]:
+                    self.__state_edit_fields.append(_field["ID"])
 
     def usr_get_data(self, p_row):
         """

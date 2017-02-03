@@ -14,7 +14,7 @@ from PySide.QtGui import QProgressBar
 from LibDict import LibDict
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 from OrcLib.LibException import OrcPostFailedException
 
 from OrcView.Lib.LibMain import LogClient
@@ -127,11 +127,15 @@ class OrcTextArea(QTextEdit):
     """
     多行输入框
     """
+    clicked = OrcSignal()
 
     def __init__(self, parent):
         QTextEdit.__init__(self, parent)
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+    def mousePressEvent(self, *args, **kwargs):
+        self.clicked.emit()
 
     def get_data(self):
         return self.toPlainText()
@@ -143,8 +147,10 @@ class OrcTextArea(QTextEdit):
 class OrcOperate(QLineEdit):
 
     sig_operate = OrcSignal()
+    clicked = OrcSignal()
 
     def __init__(self, parent):
+
         QLineEdit.__init__(self, parent)
 
         self.__data = None
@@ -169,6 +175,9 @@ class OrcSelect(QComboBox):
     """
     下拉列表, 将被替换
     """
+    # 增加 clicked 保持与其他控件一致,但不修改属性避免与点击下拉冲突
+    clicked = OrcSignal()
+
     def __init__(self, p_flag=None):
         """
         User defined combobox, it's data is come from table lib_dictionary
@@ -185,6 +194,9 @@ class OrcSelect(QComboBox):
             self.set_flag(p_flag)
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+
+    # def mousePressEvent(self, *args, **kwargs):
+    #     self.clicked.emit()
 
     def set_flag(self, p_flag):
 
@@ -236,6 +248,9 @@ class OrcSelectBase(QComboBox):
     """
     下拉列表基础类
     """
+    # 增加 clicked 保持与其他控件一致,但不修改属性避免与点击下拉冲突
+    clicked = OrcSignal()
+
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
@@ -392,12 +407,17 @@ def operate_to_str(p_data):
         :param p_id:
         :return:
         """
-        resource_widget_def = OrcHttpResource("WidgetDef")
-        resource_widget_def.set_path(p_id)
+        resource_widget_def = OrcResource("WidgetDef")
+        result = resource_widget_def.get(path=p_id)
 
-        widget_def_data = resource_widget_def.get()
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取控件路径"):
+            return None
 
-        return None if not resource_widget_def else widget_def_data["widget_path"]
+        # 打印成功信息
+        ResourceCheck.result_success(u"获取控件路径")
+
+        return result.data["widget_path"]
 
     def get_page_def_flag(p_id):
         """
@@ -405,12 +425,17 @@ def operate_to_str(p_data):
         :param p_id:
         :return:
         """
-        resource_page_def = OrcHttpResource("PageDef")
-        resource_page_def.set_path(p_id)
+        resource_page_def = OrcResource("PageDef")
+        result = resource_page_def.get(path=p_id)
 
-        page_def_data = resource_page_def.get()
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取页面标识"):
+            return None
 
-        return None if not page_def_data else page_def_data["page_flag"]
+        # 打印成功信息
+        ResourceCheck.result_success(u"获取页面标识")
+
+        return result.data["page_flag"]
 
     def get_lib_dict_text(p_flag, p_value):
         """
@@ -419,10 +444,17 @@ def operate_to_str(p_data):
         :param p_flag:
         :return:
         """
-        resource_dict = OrcHttpResource("Dict")
-        dict_data = resource_dict.get(dict(dict_flag=p_flag, dict_value=p_value))
+        resource_dict = OrcResource("Dict")
+        result = resource_dict.get(parameter=dict(dict_flag=p_flag, dict_value=p_value))
 
-        return None if not dict_data else dict_data[0]["dict_text"]
+        # 检查结果
+        if not ResourceCheck.result_status(result, u"获取操作文字"):
+            return None
+
+        # 打印成功信息
+        ResourceCheck.result_success(u"获取操作文字")
+
+        return result.data[0]["dict_text"]
 
     _dict = LibDict()
 

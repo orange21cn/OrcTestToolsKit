@@ -34,9 +34,9 @@ class TestOrcParameter(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        from OrcLib.LibNet import OrcHttpService
+        from OrcLib.LibNet import OrcResource
 
-        service = OrcHttpService("Driver")
+        service = OrcResource("Driver")
         service.save_pic("abc.png")
 
         OrcTest.test_print_end()

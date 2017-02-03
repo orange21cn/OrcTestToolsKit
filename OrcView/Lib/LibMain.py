@@ -2,9 +2,10 @@
 from PySide.QtGui import QDockWidget
 from PySide.QtGui import QTextEdit
 from PySide.QtCore import QSize
-from PySide.QtGui import QStyleOptionDockWidget
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtCore import QObject
+
+from OrcLib.LibProgram import orc_singleton
 
 
 class BaseDock(QDockWidget):
@@ -39,34 +40,29 @@ class DockDetail(BaseDock):
         pass
 
 
-class DockBottom(BaseDock):
+@orc_singleton
+class DockLog(BaseDock):
 
     def __init__(self):
 
         BaseDock.__init__(self, 100)
 
         self.__win_log = QTextEdit()
+        self.__win_log.setReadOnly(True)
+        self.setWindowTitle("Log")
         self.setWidget(self.__win_log)
 
-        self.setFeatures(QDockWidget.DockWidgetClosable)
+        self.setFeatures(QDockWidget.DockWidgetVerticalTitleBar)
         # self.setStyleSheet(get_theme("dock"))
+
+        log_client = LogClient()
+        log_client.sig_log.connect(self.put_log)
 
     def put_log(self, p_text):
         self.__win_log.insertHtml("%s<br>" % p_text)
 
 
-def singleton(cls, *args, **kw):
-
-    instances = {}
-
-    def _singleton():
-        if cls not in instances:
-            instances[cls] = cls(*args, **kw)
-        return instances[cls]
-    return _singleton
-
-
-@singleton
+@orc_singleton
 class LogClient(QObject):
 
     sig_log = OrcSignal(str)
