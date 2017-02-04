@@ -7,7 +7,7 @@ from OrcLib import init_log
 from OrcLib import get_config
 from OrcApi import app
 from OrcApi import orc_api
-from OrcApi.Run.ReportApi import ReportDetAPI
+from OrcApi.Run.ReportApi import ReportAPI
 
 configer = get_config("server")
 
@@ -26,7 +26,7 @@ def out_html(data, code, headers=None):
 
 
 # Widget
-orc_api.add_resource(ReportDetAPI, '/api/1.0/Report/<string:p_id>/<string:p_time>', endpoint='Report')
+orc_api.add_resource(ReportAPI, '/api/1.0/Report/<string:p_id>/<string:p_time>', endpoint='Report')
 
 driver_host = configer.get_option("REPORT", "ip")
 driver_port = configer.get_option("REPORT", "port")

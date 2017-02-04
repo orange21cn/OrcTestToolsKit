@@ -73,3 +73,33 @@ AttributeError: 'module' object has no attribute 'WindowDefListAPI'
     return getattr(__import__(self._path, fromlist=True), _name)()
 AttributeError: 'module' object has no attribute 'WindowDefAPI'
 
+[2017-02-03 16:26:18 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'ReportAPI'
+[2017-02-03 16:26:18 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'ReportAPI'
+
+[2017-02-03 17:39:16 basic.lib_net] ERROR function invoke error: HTTPConnectionPool(host='172.16.56.131', port=5005): Max retries exceeded with url: /api/1.0/Report/CASE_2000000005/20170124 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x11d848c50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+[2017-02-03 17:39:16 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 298, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 468, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 576, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 437, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='172.16.56.131', port=5005): Max retries exceeded with url: /api/1.0/Report/CASE_2000000005/20170124 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x11d848c50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+
+[2017-02-03 17:45:04 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-02-03 17:45:04 basic.lib_net] ERROR None
+
+[2017-02-03 17:53:26 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-02-03 17:53:26 basic.lib_net] ERROR None
+

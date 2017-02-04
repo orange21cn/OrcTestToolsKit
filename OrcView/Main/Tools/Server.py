@@ -145,7 +145,7 @@ class Server(QWidget):
             self.service_report = subprocess.Popen(["python", "%s/OrcApi/start_report.py" % self.home])
 
             # 客户端设置为本地
-            self.set_client_local('REPORT')
+            # self.set_client_local('REPORT')
 
             self.logger.put_message(u"起动报告服务器")
 

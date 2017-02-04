@@ -7,7 +7,7 @@ class ReportDetService:
 
     def __init__(self):
 
-        self.__resource_report = OrcResource("Report")
+        self.__resource_report = OrcResource("Report", mode="HTML")
 
     def get_report_path(self, p_path):
 

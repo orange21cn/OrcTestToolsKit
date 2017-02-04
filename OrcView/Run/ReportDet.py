@@ -45,6 +45,6 @@ class ViewReportDet(QWidget):
 
         if p_path is not None:
             self.__path = dict(path=p_path)
-
+        print self.__path
         report_path = self.__service.get_report_path(self.__path)
         self.__wid_display.setHtml(report_path)

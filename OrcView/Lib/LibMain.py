@@ -1,6 +1,7 @@
 # coding=utf-8
 from PySide.QtGui import QDockWidget
 from PySide.QtGui import QTextEdit
+from PySide.QtCore import Qt
 from PySide.QtCore import QSize
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtCore import QObject
@@ -11,11 +12,13 @@ from OrcLib.LibProgram import orc_singleton
 class BaseDock(QDockWidget):
 
     def __init__(self, p_size):
+
         QDockWidget.__init__(self)
 
         self.__size = p_size
 
     def sizeHint(self):
+
         return QSize(self.__size, self.__size)
 
 
@@ -45,14 +48,18 @@ class DockLog(BaseDock):
 
     def __init__(self):
 
-        BaseDock.__init__(self, 100)
+        BaseDock.__init__(self, 50)
 
         self.__win_log = QTextEdit()
         self.__win_log.setReadOnly(True)
+        self.__win_log.setMinimumHeight(10)
+        self.__win_log.setMaximumHeight(100)
         self.setWindowTitle("Log")
         self.setWidget(self.__win_log)
 
-        self.setFeatures(QDockWidget.DockWidgetVerticalTitleBar)
+        self.setFeatures(QDockWidget.DockWidgetVerticalTitleBar | QDockWidget.DockWidgetClosable)
+        self.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+
         # self.setStyleSheet(get_theme("dock"))
 
         log_client = LogClient()

@@ -5,7 +5,7 @@ from OrcLib.LibNet import orc_api
 from ReportDetMod import ReportDetMod
 
 
-class ReportDetAPI(OrcBaseAPI):
+class ReportAPI(OrcBaseAPI):
 
     def __init__(self):
 
@@ -14,7 +14,7 @@ class ReportDetAPI(OrcBaseAPI):
     def dispatch_request(self, *args, **kwargs):
         return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
 
-    @orc_api
+    # @orc_api
     def get(self, p_id, p_time):
         """
         Search

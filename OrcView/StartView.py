@@ -32,6 +32,9 @@ class StartView(QMainWindow):
         self.setWindowTitle("hello")
         self.resize(1024, 768)
 
+        # self.dock_log = DockLog()  # log widget
+        # self.addDockWidget(Qt.BottomDockWidgetArea, self.dock_log)
+
         # 建立菜单栏
         self.create_menu()
 
@@ -67,10 +70,12 @@ class StartView(QMainWindow):
             )),
             ('Run', (
                 ('Run', self.open_run),
-                ('Log', self.open_log)
             )),
             ('Report', (
                 ('Report', self.open_report),
+            )),
+            ('View', (
+                (DockLog,),
             )),
             ('help', ())
         )
@@ -82,9 +87,16 @@ class StartView(QMainWindow):
             if not _menu_actions:
                 continue
 
-            for _action_name, _slot in _menu_actions:
-                _action = _menu.addAction("&%s" % _action_name)
-                _action.triggered.connect(_slot)
+            for _action_def in _menu_actions:
+
+                if 1 == len(_action_def):
+                    _widget = _action_def[0]()
+                    self.addDockWidget(Qt.BottomDockWidgetArea, _widget)
+                    _menu.addAction(_widget.toggleViewAction())
+                    _widget.close()
+                else:
+                    _action = _menu.addAction("&%s" % _action_def[0])
+                    _action.triggered.connect(_action_def[1])
 
     def create_tools(self):
         """
