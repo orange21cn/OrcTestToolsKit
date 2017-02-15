@@ -13,17 +13,17 @@ class ListTree:
         if "LIST" == p_type:
             self.list = p_value
             self.tree = []
-            self.tree = self.__list2tree(self.__list_get_root())
+            self.tree = self._list2tree(self._list_get_root())
 
         elif "TREE" == p_type:
             self.list = []
             self.tree = p_value
-            self.__tree2list(self.tree)
+            self._tree2list(self.tree)
 
         else:
             pass
 
-    def __list_get_root(self, p_root_id=None):
+    def _list_get_root(self, p_root_id=None):
         """
         获取列表根元素
         :param p_root_id:
@@ -35,9 +35,9 @@ class ListTree:
         else:
             return None
 
-    def __list2tree(self, p_node):
+    def _list2tree(self, p_node):
         """
-        :param p_node:
+        :param p_node: root_node
         :type p_node: dict
         :return:
         """
@@ -47,12 +47,12 @@ class ListTree:
 
             if _item_pid == _parent_id:
                 _node = dict(content=_item, children=[])
-                self.__list2tree(_node)
+                self._list2tree(_node)
                 p_node["children"].append(_node)
 
         return p_node
 
-    def __tree2list(self, p_tree):
+    def _tree2list(self, p_tree):
         """
         tree 转化为列表
         :param p_tree:
@@ -63,7 +63,7 @@ class ListTree:
         self.list.append(p_tree["content"])
 
         for _item in p_tree["children"]:
-            self.__tree2list(_item)
+            self._tree2list(_item)
 
     def steps(self, p_node=None):
         """

@@ -10,15 +10,14 @@ from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit
 from PySide.QtGui import QProgressBar
-
 from LibDict import LibDict
 from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
 from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibException import OrcPostFailedException
-
 from OrcView.Lib.LibMain import LogClient
-
+from OrcView.Lib.LibTheme import get_theme
 
 _logger = LogClient()
 
@@ -62,6 +61,10 @@ def create_editor(parent, p_type):
     # 时间显示
     elif "DATETIME" == p_type["TYPE"]:
         return OrcLineEdit()
+
+    # 时间显示
+    elif "DISPLAY" == p_type["TYPE"]:
+        return OrcDisplay()
 
     # 选择输入框
     elif "SELECT" == p_type["TYPE"]:
@@ -123,6 +126,43 @@ class OrcLineEdit(QLineEdit):
         self.clicked.emit()
 
 
+class OrcDisplay(QLineEdit):
+    """
+    单行输入框
+    """
+    clicked = OrcSignal()
+
+    def __init__(self):
+        QLineEdit.__init__(self)
+
+        self.text = None
+        self.value = None
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.setReadOnly(True)
+
+    def get_data(self):
+        """
+        获取数据,只获取 text
+        :return:
+        """
+        return self.value
+
+    def set_data(self, p_data):
+        """
+        设置同时设置 text/value
+        :param p_data: (value, text)
+        :return:
+        """
+        self.value = p_data[0]
+        self.text = p_data[1]
+
+        return self.setText(self.text)
+
+    def mousePressEvent(self, *args, **kwargs):
+        self.clicked.emit()
+
+
 class OrcTextArea(QTextEdit):
     """
     多行输入框
@@ -145,12 +185,10 @@ class OrcTextArea(QTextEdit):
 
 
 class OrcOperate(QLineEdit):
-
     sig_operate = OrcSignal()
     clicked = OrcSignal()
 
     def __init__(self, parent):
-
         QLineEdit.__init__(self, parent)
 
         self.__data = None
@@ -271,7 +309,10 @@ class OrcSelectBase(QComboBox):
         # 设置在拉伸方式
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
-    def set_item_data(self, p_data=None):
+        # 设置样式
+        self.setStyleSheet(get_theme("Input"))
+
+    def _set_item_data(self, p_data=None):
         """
         设置 item
         :param p_data:
@@ -331,16 +372,30 @@ class SelectDictionary(OrcSelectBase):
     """
     字典下拉列表
     """
-    def __init__(self):
-        OrcSelectBase.__init__(self)
-        # Todo
-        pass
+    def __init__(self, p_id, p_empty=False):
+
+        OrcSelectBase.__init__(self, p_empty)
+
+        self.__resource_dict = OrcResource('Dict')
+
+        result = self.__resource_dict.get(parameter=dict(dict_flag=p_id))
+
+        if not ResourceCheck.result_status(result, u'获取字典信息'):
+            dict_result = list()
+        else:
+            dict_result = result.data
+
+        dict_data = [dict(name=_item['dict_value'], text=_item['dict_text'])
+                     for _item in dict_result]
+
+        self._set_item_data(dict_data)
 
 
 class SelectWidgetType(OrcSelectBase):
     """
     下拉控件类型列表
     """
+
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
@@ -355,13 +410,14 @@ class SelectWidgetType(OrcSelectBase):
         _data = [dict(name=_item.type_name, text=_item.type_text)
                  for _item in self.__dict.get_widget_type()]
 
-        self.set_item_data(_data)
+        self._set_item_data(_data)
 
 
 class SelectWidgetOperation(OrcSelectBase):
     """
     下拉控件类型列表
     """
+
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
@@ -388,9 +444,9 @@ class SelectWidgetOperation(OrcSelectBase):
         # 获取基本操作方式
         if p_type not in ("PAGE", "BLOCK"):
             _data.extend([dict(name=_item.ope_name, text=_item.ope_text)
-                         for _item in self.__dict.get_widget_operation("BLOCK")])
+                          for _item in self.__dict.get_widget_operation("BLOCK")])
 
-        self.set_item_data(_data)
+        self._set_item_data(_data)
 
 
 def operate_to_str(p_data):
@@ -489,7 +545,6 @@ def operate_to_str(p_data):
 
 
 class ObjectOperator(QVBoxLayout):
-
     def __init__(self):
 
         QVBoxLayout.__init__(self)
@@ -537,7 +592,6 @@ class ObjectOperator(QVBoxLayout):
 
 
 class OrcProcess(QProgressBar):
-
     def __init__(self, p_steps=None):
 
         QProgressBar.__init__(self)
@@ -549,6 +603,9 @@ class OrcProcess(QProgressBar):
         self.setValue(0)
 
     def set_steps(self, p_steps):
+
+        if 0 >= p_steps:
+            return
 
         self.__steps = p_steps
 
@@ -568,7 +625,6 @@ class OrcProcess(QProgressBar):
 
 
 class OrcPagination(QWidget):
-
     sig_page = OrcSignal(tuple)
 
     def __init__(self):
@@ -633,7 +689,6 @@ class OrcPagination(QWidget):
         :param p_pages: 总页数
         :return:
         """
-
         self._message.setText("%s/%s" % (p_page, p_pages))
 
         if self.__pages != p_pages:
@@ -702,6 +757,7 @@ class ResourceCheck(object):
     """
     OrcResource 结果检查
     """
+
     def __init__(self):
 
         object.__init__(self)

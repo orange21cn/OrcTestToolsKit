@@ -43,9 +43,8 @@ class RunDefService:
         :param p_cond:
         :return:
         """
-        print "^^^^", p_cond
         result = self.__res_run_def.get(parameter=p_cond)
-        print "^^^^", result.data
+
         # 检查结果
         if not ResourceCheck.result_status(result, u"查询测试项"):
             return list()

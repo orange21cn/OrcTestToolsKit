@@ -103,7 +103,7 @@ driver_host = configer.get_option("CASE", "ip")
 driver_port = configer.get_option("CASE", "port")
 
 reload(sys)
-init_log()
+init_log('resource')
 
 app.run(host=driver_host, port=driver_port)
 

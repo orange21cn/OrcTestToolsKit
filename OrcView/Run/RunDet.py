@@ -133,7 +133,7 @@ class StatusReceiver(QThread):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        print _ip
+
         sock.bind((_ip, _port))
         sock.listen(1)
 
@@ -145,12 +145,10 @@ class StatusReceiver(QThread):
                 connection.settimeout(5)
 
                 _cmd = connection.recv(1024)
-                print "a"
+
                 dict_cmd = json.loads(_cmd)
                 if ("quit" in dict_cmd) and ("QUIT" == dict_cmd["quit"]):
-                    print "b"
                     break
-                print "c"
 
                 self.sig_status.emit(_cmd)
 

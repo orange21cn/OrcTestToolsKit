@@ -142,13 +142,11 @@ class ViewCaseDefMag(QWidget):
 
         if "sig_data" == p_flag:
 
-            _path = self.__model.usr_get_current_data().content["case_path"]
             _id = self.__model.usr_get_current_data().content["id"]
 
             self.__win_data.show()
-            self.__win_data.set_type("CASE")
-            self.__win_data.set_path(_path)
-            self.__win_data.set_id(_id)
+            self.__win_data.set_src_type("CASE")
+            self.__win_data.set_src_id(_id)
 
         elif "sig_run" == p_flag:
 

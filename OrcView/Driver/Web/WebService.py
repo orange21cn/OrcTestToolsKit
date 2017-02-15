@@ -29,7 +29,7 @@ class WebMainService:
         _page_det = self.get_page_det(p_id)
         _page_def = self.get_page_def(_page_det.page_id)
 
-        return _page_def.id, _page_def.page_flag, _page_det.page_env
+        return _page_def.id, _page_def.page_flag, _page_det.test_env
 
     def get_widget_key(self, p_id):
         """

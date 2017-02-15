@@ -25,14 +25,10 @@ class DriverSelenium:
         self.__driver_configer = get_config("driver")
 
         # 浏览器
-        self.__browser = self.__driver_configer.get_option("WEB", "browser")
-        if not self.__browser:
-            self.__browser = "PHANTOMJS"
+        self.__browser = "PHANTOMJS"
 
         # 环境
-        self.__env = self.__driver_configer.get_option("WEB", "env")
-        if not self.__env:
-            self.__env = "TEST"
+        self.__env = "TEST"
 
         self.__window = None  # 当前窗口
         self.__root = None  # 根节点
@@ -137,13 +133,22 @@ class DriverSelenium:
         """
         self.__logger.debug(p_para)
 
+        # 浏览器
+        self.__browser = self.__driver_configer.get_option("WEB", "browser")
+        if not self.__browser:
+            self.__browser = "PHANTOMJS"
+
+        # 环境
+        self.__env = self.__driver_configer.get_option("WEB", "env")
+        if not self.__env:
+            self.__env = "TEST"
+
         _page_det_id = p_para["OBJECT"]
         _page_operation = p_para["OPERATION"]
 
         if self.__root is None:
 
             try:
-
                 if "IE" == self.__browser:
                     self.__root = webdriver.Ie()
                 elif "FIREFOX" == self.__browser:
@@ -174,6 +179,9 @@ class DriverSelenium:
 
         elif "MAX" == _page_operation:
             self.__root.maximize_window()
+
+        elif "QUIT" == _page_operation:
+            self.__root.quit()
 
         return self.__root is not None
 

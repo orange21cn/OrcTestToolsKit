@@ -24,6 +24,7 @@ QComboBox::drop-down {
     background: white;
     border: 2px solid rgb(170, 170, 170);
     border-radius: 3px;
+    left: -2px;
 }
 
 QComboBox::drop-down:hover {

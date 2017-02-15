@@ -134,13 +134,11 @@ class ViewBatchDefMag(QWidget):
         if "sig_data" == p_flag:
 
             _data = self.__model.usr_get_current_data()
-            _path = _data.content["batch_no"]
             _id = _data.content["id"]
 
             self.__win_data.show()
-            self.__win_data.set_type("BATCH")
-            self.__win_data.set_path(_path)
-            self.__win_data.set_id(_id)
+            self.__win_data.set_src_type("BATCH")
+            self.__win_data.set_src_id(_id)
 
         elif "sig_run" == p_flag:
 

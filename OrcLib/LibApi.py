@@ -1,7 +1,6 @@
 # coding=utf-8
 from flask_restful import Resource
 
-from OrcLib import init_log
 from OrcLib.LibNet import orc_api
 from OrcLib.LibNet import OrcLog
 from OrcLib.LibNet import OrcParameter
@@ -174,8 +173,6 @@ class OrcBus(object):
     def __init__(self, p_flag, p_model):
 
         object.__init__(self)
-
-        init_log()
 
         self._flag = p_flag
         self._model = p_model()

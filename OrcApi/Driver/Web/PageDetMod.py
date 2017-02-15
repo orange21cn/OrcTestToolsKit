@@ -43,8 +43,8 @@ class PageDetMod():
         if 'page_id' in cond:
             result = result.filter(WebPageDet.page_id == cond['page_id'])
 
-        if 'page_env' in cond:
-            result = result.filter(WebPageDet.page_env.ilike(_like('page_env')))
+        if 'test_env' in cond:
+            result = result.filter(WebPageDet.test_env.ilike(_like('test_env')))
 
         return result.all()
 
@@ -62,8 +62,8 @@ class PageDetMod():
         # page_id
         _node.page_id = p_data['page_id'] if 'page_id' in p_data else ""
 
-        # page_env
-        _node.page_env = p_data['page_env'] if 'page_env' in p_data else ""
+        # test_env
+        _node.test_env = p_data['test_env'] if 'test_env' in p_data else ""
 
         # page_url
         _node.page_url = p_data['page_url'] if 'page_url' in p_data else ""

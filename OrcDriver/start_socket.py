@@ -7,7 +7,7 @@ configer = get_config("server")
 driver_host = configer.get_option("SERVER_WEB_001", "ip")
 driver_port = configer.get_option("SERVER_WEB_001", "port")
 
-init_log()
+init_log('socket')
 
 _test = DriverSelenium(driver_host, driver_port)
 _test.start()

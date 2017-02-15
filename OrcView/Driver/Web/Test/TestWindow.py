@@ -2,7 +2,7 @@
 import sys
 import unittest
 from PySide.QtGui import QApplication
-from OrcView.Driver.Web.service import WindowService
+from OrcView.Driver.Web.WindowService import WindowDefService
 from OrcLib.LibTest import OrcTest
 
 
@@ -18,7 +18,7 @@ class TestService(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        _service = WindowService()
+        _service = WindowDefService()
 
         _data = dict(
             id="1716023001",
@@ -26,7 +26,7 @@ class TestService(unittest.TestCase):
             window_mark="TEST_001",
             window_desc=u"测试001",
             comment=u"注释001")
-        _res = _service.usr_add(_data)
+        _res = _service.mod_add(_data)
 
         OrcTest.test_print_result(_res)
 
@@ -43,7 +43,7 @@ class TestService(unittest.TestCase):
 
         _data = dict(
             id="1716023001")
-        _res = _service.usr_search(_data)
+        _res = _service.mod_search(_data)
 
         OrcTest.test_print_result(_res)
 
@@ -79,7 +79,7 @@ class TestService(unittest.TestCase):
         _service = WindowService()
 
         _data = [171602012, 171602014]
-        _res = _service.usr_delete(_data)
+        _res = _service.mod_delete(_data)
 
         OrcTest.test_print_result(_res)
 
@@ -122,5 +122,18 @@ class TestView(unittest.TestCase):
         tp.show()
 
         _view.exec_()
+
+        OrcTest.test_print_end()
+
+    def test_view_data(self):
+        """
+        Test get root
+        :return:
+        """
+        from OrcView.Batch.init_env import DataView
+
+        OrcTest.test_print_begin()
+
+        OrcTest.display_widget(DataView)
 
         OrcTest.test_print_end()

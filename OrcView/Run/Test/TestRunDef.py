@@ -62,7 +62,7 @@ class TestView(unittest.TestCase):
         _configer = get_config()
         _home = _configer.get_option("DEFAULT", "root")
         _file = "%s/run_home/BATCH_1000000001/20161028160724/default.res" % _home
-        tp.usr_refresh(_file)
+        tp.mod_refresh(_file)
 
         tp.show()
 

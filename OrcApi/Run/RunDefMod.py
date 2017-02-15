@@ -5,7 +5,7 @@ from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
-from RunCore import RunCore
+from RunData import RunData
 
 
 class RunDefMod:
@@ -20,8 +20,8 @@ class RunDefMod:
         self.__resource_batch_def = OrcResource("BatchDef")
         self.__resource_case_def = OrcResource("CaseDef")
 
-        self.__list = RunCore()
-        self.__home = self.__list.get_home()
+        self.__data = RunData()
+        self.__home = self.__config.get_option("RUN", "home")
 
         if not os.path.exists(self.__home):
             os.mkdir(self.__home)
@@ -110,9 +110,7 @@ class RunDefMod:
             if not os.path.exists(res_folder):
                 os.mkdir(res_folder)
 
-            self.__list.search_list(_type, _id)
-
-            self.__list.save_list(res_file)
+            self.__data.save_list(_type, _id, res_file)
 
         return _id
 

@@ -1,0 +1,143 @@
+[2017-02-08 13:18:35 view.table.model] ERROR 获取字典值失败, None
+[2017-02-08 13:18:35 view.table.model] ERROR None
+
+[2017-02-08 13:19:12 view.table.model] ERROR 获取字典值失败, None
+[2017-02-08 13:19:12 view.table.model] ERROR None
+
+[2017-02-08 13:22:52 view.table.model] ERROR 获取字典值失败, None
+[2017-02-08 13:22:52 view.table.model] ERROR None
+
+[2017-02-08 16:42:54 view.data.model] INFO 查询数据成功
+[2017-02-08 16:43:35 view.data.model] INFO 查询数据成功
+[2017-02-08 16:55:05 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 16:55:05 view.data.model] ERROR None
+
+[2017-02-08 16:55:05 view.data.model] ERROR 查询用例数据失败, 网络连接失败.
+[2017-02-08 16:55:05 view.data.model] ERROR None
+
+[2017-02-08 16:56:12 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 16:56:12 view.data.model] ERROR None
+
+[2017-02-08 16:59:40 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 16:59:40 view.data.model] ERROR None
+
+[2017-02-08 17:07:39 view.data.model] INFO 查询数据成功
+[2017-02-08 17:09:12 view.data.model] INFO 查询数据成功
+[2017-02-08 17:14:35 view.data.model] INFO 查询数据成功
+[2017-02-08 17:15:15 view.data.model] INFO 查询数据成功
+[2017-02-08 17:16:50 view.data.model] INFO 查询数据成功
+[2017-02-08 17:18:51 view.data.model] INFO 查询数据成功
+[2017-02-08 17:26:51 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 17:26:51 view.data.model] ERROR None
+
+[2017-02-08 17:26:51 view.data.model] INFO 查询数据成功
+[2017-02-08 17:27:48 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 17:27:48 view.data.model] ERROR None
+
+[2017-02-08 17:27:48 view.data.model] INFO 查询数据成功
+[2017-02-08 17:31:36 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 17:31:36 view.data.model] ERROR None
+
+[2017-02-08 17:31:36 view.data.model] INFO 查询数据成功
+[2017-02-08 17:32:23 view.data.model] ERROR 查询计划数据失败, None
+[2017-02-08 17:32:23 view.data.model] ERROR None
+
+[2017-02-08 17:32:23 view.data.model] INFO 查询数据成功
+[2017-02-08 17:32:55 view.data.model] INFO 查询数据成功
+[2017-02-08 17:56:37 view.data.model] ERROR 查询步骤数据失败, None
+[2017-02-08 17:56:37 view.data.model] ERROR None
+
+[2017-02-08 17:57:08 view.data.model] INFO 查询数据成功
+[2017-02-08 18:19:06 view.data.model] INFO 查询数据成功
+[2017-02-08 18:20:17 view.data.model] INFO 查询数据成功
+[2017-02-08 18:32:40 view.data.model] INFO 查询数据成功
+[2017-02-08 18:34:03 view.data.model] ERROR 查询数据失败, 网络连接失败.
+[2017-02-08 18:34:03 view.data.model] ERROR None
+
+[2017-02-08 18:37:14 view.data.model] ERROR 查询数据失败, 网络连接失败.
+[2017-02-08 18:37:14 view.data.model] ERROR None
+
+[2017-02-08 18:37:25 view.data.model] ERROR 查询数据失败, 网络连接失败.
+[2017-02-08 18:37:25 view.data.model] ERROR None
+
+[2017-02-08 18:40:18 view.data.model] INFO 查询数据成功
+[2017-02-08 18:40:48 view.data.model] INFO 查询数据成功
+[2017-02-08 18:41:24 view.data.model] INFO 查询数据成功
+[2017-02-08 18:41:50 view.data.model] INFO 查询数据成功
+[2017-02-08 18:42:11 view.data.model] INFO 查询数据成功
+[2017-02-08 18:42:38 view.data.model] INFO 查询数据成功
+[2017-02-08 18:45:31 view.data.model] INFO 查询数据成功
+[2017-02-08 18:46:16 view.data.model] INFO 查询数据成功
+[2017-02-08 18:46:27 view.data.model] INFO 查询数据成功
+[2017-02-08 18:47:10 view.data.model] INFO 查询数据成功
+[2017-02-08 18:47:55 view.data.model] INFO 查询数据成功
+[2017-02-08 18:54:05 view.data.model] INFO 查询数据成功
+[2017-02-08 18:55:13 view.data.model] INFO 查询数据成功
+[2017-02-08 18:56:27 view.data.model] INFO 查询数据成功
+[2017-02-08 18:56:50 view.data.model] INFO 查询数据成功
+[2017-02-08 18:57:37 view.data.model] INFO 查询数据成功
+[2017-02-08 18:57:41 view.data.model] ERROR 删除数据失败, None
+[2017-02-08 18:57:41 view.data.model] ERROR None
+
+[2017-02-08 18:57:41 view.data.model] INFO 查询数据成功
+[2017-02-08 18:58:58 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:03 view.data.model] INFO 删除数据成功
+[2017-02-08 18:59:03 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:10 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:13 view.data.model] INFO 删除数据成功
+[2017-02-08 18:59:13 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:19 view.data.model] INFO 删除数据成功
+[2017-02-08 18:59:19 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:32 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:39 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:43 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:46 view.data.model] INFO 查询数据成功
+[2017-02-08 18:59:49 view.data.model] INFO 查询数据成功
+[2017-02-09 09:09:48 view.data.model] INFO 查询数据成功
+[2017-02-09 09:16:54 view.data.model] INFO 查询数据成功
+[2017-02-09 09:16:56 view.data.model] INFO 查询数据成功
+[2017-02-09 09:23:07 view.data.model] INFO 查询数据成功
+[2017-02-09 09:23:18 view.data.model] INFO 更新数据成功
+[2017-02-09 09:23:26 view.data.model] INFO 查询数据成功
+[2017-02-09 09:23:34 view.data.model] INFO 更新数据成功
+[2017-02-09 09:23:35 view.data.model] INFO 查询数据成功
+[2017-02-09 09:23:46 view.data.model] INFO 更新数据成功
+[2017-02-09 09:24:07 view.data.model] INFO 更新数据成功
+[2017-02-09 09:24:10 view.data.model] INFO 更新数据成功
+[2017-02-09 09:26:21 view.data.model] INFO 更新数据成功
+[2017-02-09 09:29:57 view.data.model] INFO 查询数据成功
+[2017-02-09 09:29:57 view.data.model] INFO 查询数据成功
+[2017-02-09 09:29:58 view.data.model] INFO 查询数据成功
+[2017-02-09 09:29:59 view.data.model] INFO 查询数据成功
+[2017-02-09 09:30:02 view.data.model] INFO 查询数据成功
+[2017-02-09 09:30:02 view.data.model] INFO 查询数据成功
+[2017-02-09 09:51:38 view.data.model] INFO 查询数据成功
+[2017-02-09 09:51:54 view.data.model] INFO 更新数据成功
+[2017-02-09 09:51:57 view.data.model] INFO 查询数据成功
+[2017-02-09 09:52:18 view.data.model] INFO 更新数据成功
+[2017-02-09 09:52:25 view.data.model] INFO 查询数据成功
+[2017-02-09 09:53:42 view.data.model] INFO 更新数据成功
+[2017-02-09 09:53:44 view.data.model] INFO 更新数据成功
+[2017-02-09 09:53:48 view.data.model] INFO 更新数据成功
+[2017-02-09 09:53:57 view.data.model] INFO 更新数据成功
+[2017-02-09 15:29:24 view.data.model] INFO 查询数据成功
+[2017-02-09 15:37:24 view.data.model] INFO 查询数据成功
+[2017-02-09 15:53:42 view.data.model] INFO 查询数据成功
+[2017-02-09 17:11:46 view.data.model] INFO 查询数据成功
+[2017-02-09 18:31:33 view.data.model] INFO 增加数据成功
+[2017-02-09 18:31:39 view.data.model] INFO 查询数据成功
+[2017-02-10 09:14:53 view.data.model] INFO 增加数据成功
+[2017-02-10 09:48:47 view.data.model] INFO 增加数据成功
+[2017-02-10 09:49:13 view.data.model] INFO 查询数据成功
+[2017-02-10 09:57:41 view.data.model] INFO 增加数据成功
+[2017-02-10 09:58:02 view.data.model] INFO 查询数据成功
+[2017-02-10 10:13:12 view.data.model] INFO 增加数据成功
+[2017-02-10 10:13:45 view.data.model] INFO 增加数据成功
+[2017-02-10 10:13:53 view.data.model] INFO 查询数据成功
+[2017-02-10 10:21:38 view.data.model] INFO 删除数据成功
+[2017-02-10 10:21:38 view.data.model] INFO 查询数据成功
+[2017-02-14 15:00:23 view.data.model] INFO 查询数据成功
+[2017-02-14 15:00:25 view.data.model] INFO 查询数据成功
+[2017-02-14 15:00:25 view.data.model] INFO 查询数据成功
+[2017-02-14 15:00:25 view.data.model] INFO 查询数据成功
+[2017-02-15 15:01:35 view.data.model] INFO 增加数据成功

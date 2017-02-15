@@ -231,13 +231,11 @@ class ItemView(QWidget):
         """
         if "sig_data" == p_flag:
 
-            _path = self.display.model.usr_get_current_data()["item_no"]
-            _id = self.display.model.usr_get_current_data()["id"]
+            _id = self.display.model.usr_get_current_data()["item_id"]
 
             self.__win_data.show()
-            self.__win_data.set_type("ITEM")
-            self.__win_data.set_path(_path)
-            self.__win_data.set_id(_id)
+            self.__win_data.set_src_type("ITEM")
+            self.__win_data.set_src_id(_id)
 
     def get_operate(self, p_data):
         # self. Todo

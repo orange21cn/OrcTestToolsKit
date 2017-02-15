@@ -32,6 +32,6 @@ driver_host = configer.get_option("REPORT", "ip")
 driver_port = configer.get_option("REPORT", "port")
 
 reload(sys)
-init_log()
+init_log('report')
 
 app.run(host=driver_host, port=driver_port)

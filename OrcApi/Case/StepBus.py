@@ -67,7 +67,7 @@ class StepDetBus(OrcBus):
 
             # delete item
             self.__bus_item.bus_list_delete(item_ids)
-            print "@@@@@", p_id
+
             # delete step_det
             self._model.usr_delete(p_id)
 

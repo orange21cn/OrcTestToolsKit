@@ -1,29 +1,27 @@
 # coding=utf-8
-from PySide.QtCore import Signal as OrcSignal
+from OrcLib.LibProcess import get_widget_mark
+from OrcLib.LibProcess import get_mark
 
 from OrcView.Lib.LibViewDef import def_view_data
 from OrcView.Lib.LibAdd import ViewAdd
-
-from DataService import DataService
 from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
+
+from DataModel import DataModel
 
 
 class ViewDataAdd(ViewAdd):
     """
     View of table
     """
-    # sig_data_flag = OrcSignal()
-
     def __init__(self):
         """
         :return:
         """
         ViewAdd.__init__(self, def_view_data)
 
-        self.__service = DataService()
-        self.__id = None
+        self.__model = DataModel()
 
-        # 选择控件
+        # 控件选择控件
         self.__widget_select = ViewWidgetSelect()
 
         # 控件被点击
@@ -50,34 +48,25 @@ class ViewDataAdd(ViewAdd):
         :param p_data:
         :return:
         """
-        self.set_data("data_flag", p_data["id"])
-        self.set_enable("data_flag", False)
+        self.set_data("data_flag", (p_data["id"], get_widget_mark(p_data['id'])))
 
-    def set_type(self, p_type):
+    def set_src_type(self, p_type):
         """
-        设置数据类型
+        设置数据源类型, SELECT
         :param p_type:
         :return:
         """
         self.set_data("src_type", p_type)
         self.set_enable("src_type", False)
 
-    def set_path(self, p_path):
+    def set_src_id(self, p_id):
         """
-        设置数据路径
-        :param p_path:
-        :return:
-        """
-        self.set_data("src_id", p_path)
-        self.set_enable("src_id", False)
-
-    def set_id(self, p_id):
-        """
-        设置数据 id
+        设置数据源标识, DISPLAY
         :param p_id:
         :return:
         """
-        self.__id = p_id
+        self.set_data("src_id", (p_id, get_mark(self.get_data('src_type'), p_id)))
+        self.set_enable("src_id", False)
 
     def __save(self, p_data):
         """
@@ -85,5 +74,4 @@ class ViewDataAdd(ViewAdd):
         :param p_data:
         :return:
         """
-        p_data["src_id"] = self.__id
-        self.__service.usr_add(p_data)
+        self.__model.service_add(p_data)

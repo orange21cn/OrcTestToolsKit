@@ -28,7 +28,6 @@ class StepDetMod(object):
         :param p_cond:
         :return:
         """
-        print p_cond, "---------------------------"
         # 判断输入参数是否为空
         cond = p_cond if p_cond else dict()
 

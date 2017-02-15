@@ -89,7 +89,7 @@ class WidgetDetBus(OrcBus):
         :return:
         """
         # 查询步骤信息
-        widget_info = self._model.usr_search(dict(id=p_id))
+        widget_info = self._model.mod_search(dict(id=p_id))
 
         if not widget_info:
             return False
@@ -99,14 +99,14 @@ class WidgetDetBus(OrcBus):
         pre_widget_order = int(widget_order) - 1
 
         # 查找最小值
-        widgets = self._model.usr_search(dict(widget_id=widget_info.widget_id))
+        widgets = self._model.mod_search(dict(widget_id=widget_info.widget_id))
         min_order = min([widget.widget_order for widget in widgets])
 
         if widget_order == min_order:
             return False, u"已经是第一个步骤"
 
         # 查找上一个步骤
-        pre_widget = self._model.usr_search(
+        pre_widget = self._model.mod_search(
             dict(widget_id=widget_info.widget_id, widget_order=pre_widget_order))
 
         # 互换位置
@@ -128,7 +128,7 @@ class WidgetDetBus(OrcBus):
         :return:
         """
         # 查询步骤信息
-        widget_info = self._model.usr_search(dict(id=p_id))
+        widget_info = self._model.mod_search(dict(id=p_id))
 
         if not widget_info:
             return False
@@ -138,14 +138,14 @@ class WidgetDetBus(OrcBus):
         next_widget_order = int(widget_order) + 1
 
         # 查找最小值
-        widgets = self._model.usr_search(dict(widget_id=widget_info.widget_id))
+        widgets = self._model.mod_search(dict(widget_id=widget_info.widget_id))
         max_order = max([widget.widget_order for widget in widgets])
 
         if widget_order == max_order:
             return False, u"已经是最后一个步骤了"
 
         # 查找上一个步骤
-        next_widget = self._model.usr_search(
+        next_widget = self._model.mod_search(
             dict(widget_id=widget_info.widget_id, widget_order=next_widget_order))
 
         # 互换位置

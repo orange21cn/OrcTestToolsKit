@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 import json
 import requests
 import socket
@@ -57,6 +58,7 @@ class OrcResourceBase(object):
 
         # Configuration
         self._configer = get_config("client")
+        self._configer_driver = get_config("driver")
 
         # module
         self._module = p_mod
@@ -309,14 +311,18 @@ class OrcResource(OrcResourceBase):
         :param p_file_name:
         :return:
         """
-        req = requests.get(self._url, stream=True)
+        if "LOCAL" == self._type:
+            src_name = self._configer_driver.get_option('WEB', 'pic_name')
+            open(p_file_name, "wb").write(open(src_name, "rb").read())
+        else:
+            req = requests.get(self._url, stream=True)
 
-        with open(p_file_name, 'wb') as _file:
-            for chunk in req.iter_content(chunk_size=1024):
-                if chunk:
-                    _file.write(chunk)
-                    _file.flush()
-            _file.close()
+            with open(p_file_name, 'wb') as _file:
+                for chunk in req.iter_content(chunk_size=1024):
+                    if chunk:
+                        _file.write(chunk)
+                        _file.flush()
+                _file.close()
 
     def __get_module(self, p_path):
         """

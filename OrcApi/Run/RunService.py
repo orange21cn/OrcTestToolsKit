@@ -1,4 +1,6 @@
 # coding=utf-8
+import socket
+
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import OrcSocketResource
@@ -19,8 +21,6 @@ class RunCoreService:
         self.__resource_data = OrcResource("Data")
         self.__resource_view = OrcSocketResource("View")
 
-        self.__service_web_driver = OrcResource("Driver")
-
     def launch_web_step(self, p_step_info):
         """
         WEB 类型用例执行项
@@ -31,7 +31,7 @@ class RunCoreService:
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"执行WEB执行项", self.__logger):
-            return None
+            return False
 
         # 打印成功信息
         ResourceCheck.result_success(u"执行WEB执行项", self.__logger)
@@ -46,7 +46,6 @@ class RunCoreService:
         """
         if "DATA" in p_step_info:
             step_data = p_step_info["DATA"]
-            # return self.__resource_web_driver.post(p_step_info) == step_data
             result = self.__resource_web_driver.post(parameter=p_step_info)
 
             # 检查结果
@@ -78,7 +77,7 @@ class RunCoreService:
         :param p_name:
         :return:
         """
-        self.__service_web_driver.save_pic(p_name)
+        self.__resource_web_driver.save_pic(p_name)
 
     def get_item(self, p_item_id):
         """
@@ -149,7 +148,11 @@ class RunCoreService:
         :return:
         """
         import json
-        self.__resource_view.get(json.dumps(p_data))
+
+        try:
+            self.__resource_view.get(json.dumps(p_data))
+        except socket.error:
+            self.__logger.error("update status failed")
 
         # 打印成功信息
         ResourceCheck.result_success(u"获取更新界面进度: %s" % p_data, self.__logger)

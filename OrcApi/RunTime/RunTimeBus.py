@@ -12,8 +12,6 @@ class RunTimeBus(object):
 
         object.__init__(self)
 
-        init_log()
-
         self.__logger = OrcLog("api.run_time.bus")
         self.__model_run_time = RunTimeMod()
 

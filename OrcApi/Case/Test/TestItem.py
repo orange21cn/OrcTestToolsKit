@@ -53,7 +53,7 @@ class TestTab(unittest.TestCase):
 
         test = BatchDefHandle()
 
-        for i in test.usr_search():
+        for i in test.mod_search():
             OrcTest.test_print_result(i.to_json())
 
         OrcTest.test_print_end()
@@ -67,7 +67,7 @@ class TestTab(unittest.TestCase):
 
         test = BatchDefHandle()
 
-        for i in test.usr_search({'id': '1001000000000003'}):
+        for i in test.mod_search({'id': '1001000000000003'}):
             OrcTest.test_print_result(i.to_json())
 
         OrcTest.test_print_end()
@@ -81,7 +81,7 @@ class TestUserAdd(unittest.TestCase):
 
         test = BatchDefHandle()
 
-        i = test.usr_add({'batch_name': '1', 'batch_desc': '2'})
+        i = test.mod_add({'batch_name': '1', 'batch_desc': '2'})
         OrcTest.test_print_result(i)
 
         OrcTest.test_print_end()
@@ -108,7 +108,7 @@ class TestDelete(unittest.TestCase):
 
         test = BatchDefHandle()
 
-        test.usr_delete({"list": ['1001000000000007']})
+        test.mod_delete({"list": ['1001000000000007']})
 
         OrcTest.test_print_end()
 
@@ -165,7 +165,7 @@ class TestStepItem(unittest.TestCase):
         OrcTest.test_print_begin()
 
         test = StepDetHandle()
-        _res = test.usr_search({"step_id": "456"})
+        _res = test.mod_search({"step_id": "456"})
         for i in _res:
             OrcTest.test_print_result(i.to_json())
 
@@ -178,7 +178,7 @@ class TestStepItem(unittest.TestCase):
         OrcTest.test_print_begin()
 
         test = ItemHandle()
-        _res = test.usr_search({"id": ['1001']})
+        _res = test.mod_search({"id": ['1001']})
 
         for i in _res:
             OrcTest.test_print_result(i.to_json())

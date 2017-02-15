@@ -1,23 +1,19 @@
 # coding=utf-8
-import subprocess
 from PySide.QtGui import QMainWindow
 from PySide.QtGui import QTabWidget
-from PySide.QtGui import QAction
 from PySide.QtCore import SIGNAL
 from PySide.QtCore import Qt
 
-from OrcLib import get_config
-from OrcLib.LibNet import OrcSocketResource
+from OrcLib import init_log
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
 from OrcView.Lib.LibMain import DockLog
-from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Batch.BatchDef import ViewBatchDefMag
 from OrcView.Batch.BatchDet import ViewBatchDetMag
 from OrcView.Case.Case import ViewCaseDefMag
 from OrcView.Case.StepMain import StepContainer
-from OrcView.Data.DataDef import ViewDataMag
+from OrcView.Data.DataView import DataView
 from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Run.RunMain import ViewRunMain
 from OrcView.Run.ReportMain import ViewReportMain
@@ -31,9 +27,6 @@ class StartView(QMainWindow):
 
         self.setWindowTitle("hello")
         self.resize(1024, 768)
-
-        # self.dock_log = DockLog()  # log widget
-        # self.addDockWidget(Qt.BottomDockWidgetArea, self.dock_log)
 
         # 建立菜单栏
         self.create_menu()
@@ -54,6 +47,8 @@ class StartView(QMainWindow):
 
         self.__wid_center.setTabsClosable(True)
         self.connect(self.__wid_center, SIGNAL("tabCloseRequested(int)"), self.close_tab)
+
+        init_log()
 
     def create_menu(self):
         """
@@ -103,18 +98,32 @@ class StartView(QMainWindow):
         建立工具栏
         :return:
         """
-        from OrcView.Main.Tools.Server import Server
+        from OrcView.Main.Tools.Server import ServerResource
+        from OrcView.Main.Tools.Server import ServerRun
+        from OrcView.Main.Tools.Server import ServerReport
+        from OrcView.Main.Tools.Server import ServerDriver
+        from OrcView.Main.Tools.Server import ServerDebug
 
-        tools_server = self.addToolBar("Server")
-        tools_server.addWidget(Server())
-        tools_server.addSeparator()
+        tools_server = self.addToolBar('Server')
+        tools_server.addWidget(ServerResource())
+        tools_server.addWidget(ServerRun())
+        tools_server.addWidget(ServerReport())
+        tools_server.addWidget(ServerDriver())
+        tools_server.addWidget(ServerDebug())
+
+        from OrcView.Main.Tools.Run import RunEnv
+        from OrcView.Main.Tools.Run import RunBrowser
+
+        tools_run = self.addToolBar('run')
+        tools_run.addWidget(RunEnv())
+        tools_run.addWidget(RunBrowser())
 
     def close_tab(self):
         index = self.__wid_center.currentIndex()
         self.__wid_center.removeTab(index)
 
     def open_data(self):
-        _view = ViewDataMag()
+        _view = DataView()
         self.__add_tab(_view)
 
     def open_batch(self):
@@ -159,6 +168,3 @@ class StartView(QMainWindow):
 
         dock_log = DockLog()  # log widget
         self.addDockWidget(Qt.BottomDockWidgetArea, dock_log)
-
-    def test(self):
-        print "OK"

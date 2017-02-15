@@ -200,7 +200,7 @@ class ModelTree(QAbstractItemModel):
         self.__service = None
 
         self.__state_current_data = None
-        self.__state_cond = {}  # now sql condition
+        self.__state_cond = dict()  # now sql condition
         self._state_root = TreeNode(None)  # data root
         self.__state_list = []  # data list
         self.__state_check = []  # checked list
@@ -444,7 +444,7 @@ class ModelTree(QAbstractItemModel):
     def usr_search(self, p_cond):
 
         # Get condition
-        self.__state_cond = p_cond
+        self.__state_cond = dict() if p_cond is None else p_cond
 
         # Refresh
         self.usr_refresh()

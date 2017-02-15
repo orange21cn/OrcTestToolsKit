@@ -402,7 +402,7 @@ class WebPageDet(orc_db.Model):
 
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     page_id = orc_db.Column(orc_db.Integer, primary_key=True)
-    page_env = orc_db.Column(orc_db.String(32))
+    test_env = orc_db.Column(orc_db.String(32))
     page_url = orc_db.Column(orc_db.String(32))
     comment = orc_db.Column(orc_db.String(512))
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
@@ -412,7 +412,7 @@ class WebPageDet(orc_db.Model):
 
         self.id = p_def["id"] if p_def else None
         self.page_id = p_def["page_id"] if p_def else None
-        self.page_env = p_def["page_env"] if p_def else None
+        self.test_env = p_def["test_env"] if p_def else None
         self.page_url = p_def["page_url"] if p_def else None
         self.comment = p_def["comment"] if p_def else None
         self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
@@ -423,7 +423,7 @@ class WebPageDet(orc_db.Model):
         return dict(
             id=str(self.id),
             page_id=str(self.page_id),
-            page_env=self.page_env,
+            test_env=self.test_env,
             page_url=self.page_url,
             comment=self.comment,
             create_time=OrcCovert.time2str(self.create_time),
