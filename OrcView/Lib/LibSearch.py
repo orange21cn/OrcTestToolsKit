@@ -55,7 +55,7 @@ class ViewButtons(QWidget):
 
             _button.clicked.connect(partial(self.sig_clicked.emit, _id))
 
-            self.__buttons["id"] = _button
+            self.__buttons[_id] = _button
             self.__layout.addWidget(_button)
 
         # 默认向右对齐
@@ -87,7 +87,9 @@ class ViewButtons(QWidget):
         :param p_id:
         :return:
         """
+        print p_id
         if p_id in self.__buttons:
+            print p_id
             self.__buttons[p_id].setEnabled(False)
 
     def set_enable(self, p_id):

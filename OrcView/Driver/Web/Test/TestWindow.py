@@ -1,8 +1,10 @@
 # coding=utf-8
 import sys
 import unittest
-from PySide.QtGui import QApplication
+
 from OrcView.Driver.Web.WindowService import WindowDefService
+from PySide.QtGui import QApplication
+
 from OrcLib.LibTest import OrcTest
 
 
@@ -95,12 +97,12 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Driver.Web.WindowDef import ViewWindow
+        from OrcView.Driver.Web.Window.WindowView import WindowView
         OrcTest.test_print_begin()
 
         _view = QApplication(sys.argv)
 
-        tp = ViewWindow()
+        tp = WindowView()
         tp.show()
 
         _view.exec_()
@@ -112,13 +114,13 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Driver.Web.WidgetDef import ViewWidgetDef
+        from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefView
 
         OrcTest.test_print_begin()
 
         _view = QApplication(sys.argv)
 
-        tp = ViewWidgetDef()
+        tp = WidgetDefView()
         tp.show()
 
         _view.exec_()

@@ -3,25 +3,27 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
 
-from OrcView.Lib.LibTable import ViewNewTable
+from OrcLib.LibProgram import orc_singleton
+from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_data
 from OrcView.Lib.LibView import OrcPagination
 
-from OrcView.Lib.LibControl import ControlNew
+from OrcView.Lib.LibControl import ControlBase
 
 from DataModel import DataModel
 
 
-class DataControl(ControlNew):
+class DataControl(ControlBase):
 
     def __init__(self):
 
-        ControlNew.__init__(self, 'Data')
+        ControlBase.__init__(self, 'Data')
 
 
+@orc_singleton
 class DataView(QWidget):
     """
     View of table
@@ -38,7 +40,7 @@ class DataView(QWidget):
         self.__wid_search_cond.create()
 
         # Data result display widget
-        self.display = ViewNewTable("Data", DataModel, DataControl)
+        self.display = ViewTable("Data", DataModel, DataControl)
 
         # pagination
         self.__wid_pagination = OrcPagination()
@@ -52,25 +54,24 @@ class DataView(QWidget):
         ], p_align="FRONT")
 
         # bottom layout
-        _layout_bottom = QHBoxLayout()
-        _layout_bottom.addWidget(_wid_buttons)
-        _layout_bottom.addStretch()
-        _layout_bottom.addWidget(self.__wid_pagination)
+        layout_bottom = QHBoxLayout()
+        layout_bottom.addWidget(_wid_buttons)
+        layout_bottom.addStretch()
+        layout_bottom.addWidget(self.__wid_pagination)
 
         # 新增窗口
         self.__win_add = ViewAdd(def_view_data)
 
         # Layout
-        _layout = QVBoxLayout()
-        _layout.addWidget(self.__wid_search_cond)
-        _layout.addWidget(self.display)
-        _layout.addLayout(_layout_bottom)
+        layout_main = QVBoxLayout()
+        layout_main.addWidget(self.__wid_search_cond)
+        layout_main.addWidget(self.display)
+        layout_main.addLayout(layout_bottom)
 
-        self.setLayout(_layout)
+        self.setLayout(layout_main)
 
-        # ---- Connection ----
         # 按钮动作
-        _wid_buttons.sig_clicked.connect(self.__operate)
+        _wid_buttons.sig_clicked.connect(self.operate)
 
         # 分页
         self.__wid_pagination.sig_page.connect(self.search)
@@ -78,7 +79,7 @@ class DataView(QWidget):
         # 新增窗口点击新增
         self.__win_add.sig_submit[dict].connect(self.display.model.mod_add)
 
-    def __operate(self, p_flag):
+    def operate(self, p_flag):
         """
         按钮点击后操作函数
         :param p_flag:

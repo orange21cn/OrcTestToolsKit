@@ -14,354 +14,11 @@ from OrcLib.LibLog import OrcLog
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibContextMenu import ViewContextMenu
-from OrcView.Lib.LibView import get_dict
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibMain import LogClient
 
 
-class ViewTable(QTableView):
-    """
-    View of table
-    """
-    sig_context = OrcSignal(str)
-
-    def __init__(self):
-
-        QTableView.__init__(self)
-
-        self.__configer = get_config()
-        self.__logger = LogClient()
-
-        # 拉申最后一列
-        self.horizontalHeader().setStretchLastSection(True)
-
-        # ...
-        self.resizeColumnToContents(True)
-
-        # 不显示格间距
-        self.setShowGrid(False)
-
-        self.alternatingRowColors()
-
-        self.setStyleSheet(get_theme("TableView"))
-
-    def create_context_menu(self, p_def):
-        """
-        右键菜单
-        :param p_def:
-        :return:
-        """
-        _context_menu = ViewContextMenu(p_def)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-
-        # connection
-        self.customContextMenuRequested.connect(_context_menu.show_menu)
-        _context_menu.sig_clicked.connect(self.sig_context.emit)
-
-    def set_model(self, p_model):
-        """
-        设置模型
-        :param p_model:
-        :return:
-        """
-        self.setModel(p_model)
-
-    def set_control(self, p_control):
-        """
-        :param p_control:
-        :return:
-        """
-        self.setItemDelegate(p_control)
-
-
-class ModelTable(QAbstractTableModel):
-    """
-    Base model
-    """
-    def __init__(self):
-
-        QAbstractTableModel.__init__(self)
-
-        self.__state_current_data = None
-        self.__state_cond = {}  # now sql condition
-        self.__state_data = list()  # data
-        self.__state_check = []  # checked list
-
-        self.__state_fields_name = []  # fields CN name
-        self.__state_fields_id = []  # data table field name
-        self.__state_edit_fields = []
-        self.__state_select = {}
-
-        self._state_editable = False
-
-        self.__record_num = 0
-
-        self.__service = None
-
-    def headerData(self, section, orientation, role):
-
-        if role == Qt.DisplayRole:
-            if orientation == Qt.Horizontal:
-                return self.__state_fields_name[section]
-            else:
-                return section
-
-    def flags(self, index):
-
-        flag = super(ModelTable, self).flags(index)
-
-        if self._state_editable and \
-           (self.__state_fields_id[index.column()] in self.__state_edit_fields):
-            flag |= Qt.ItemIsEditable
-
-        if index.column() == 0:
-            flag |= Qt.ItemIsSelectable
-            flag |= Qt.ItemIsUserCheckable
-
-        return flag
-
-    def rowCount(self, parent):
-
-        if self.__state_data is None:
-            return 0
-        else:
-            return len(self.__state_data)
-
-    def columnCount(self, parent):
-        return len(self.__state_fields_name)
-
-    def data(self, index, role):
-
-        if not index.isValid():
-            return None
-
-        if role == Qt.DisplayRole:
-
-            _id = self.__state_fields_id[index.column()]
-
-            if 0 < len(self.__state_data):
-                _value = self.__state_data[index.row()][_id]
-            else:
-                _value = None
-
-            if _id in self.__state_select:
-                try:
-                    return self.__state_select[_id][_value]
-                except KeyError:
-                    pass
-
-            elif "item_operate" == _id:
-                return self.__state_data[index.row()]["item_operate_text"]
-
-            else:
-                return _value
-
-        if 0 == index.column() and role == Qt.CheckStateRole:
-
-            if index.row() in self.__state_check:
-                return Qt.Checked
-            else:
-                return Qt.Unchecked
-
-        if role == Qt.TextAlignmentRole:
-            return Qt.AlignCenter
-
-        return None
-
-    def setData(self, index, value, role=Qt.EditRole):
-
-        if role == Qt.EditRole:
-
-            _cond = {}
-            _field = self.__state_fields_id[index.column()]
-
-            _cond["id"] = self.__state_data[index.row()]["id"]
-            _cond[_field] = value
-
-            self.__service.usr_update(_cond)
-            self.__state_data[index.row()][_field] = value
-
-            return value
-
-        if role == Qt.CheckStateRole and index.column() == 0:
-
-            if value:
-                self.__state_check.append(index.row())
-            else:
-                self.__state_check.remove(index.row())
-
-            return True
-
-    def usr_editable(self):
-        self._state_editable = not self._state_editable
-
-    def usr_search(self, p_cond=None):
-        self.__state_cond = p_cond
-        self.usr_refresh()
-
-    def usr_add(self, p_data):
-        """
-        Add data
-        :param p_data: {"id": ""value", ...}
-        :return:
-        """
-        self.__state_cond = self.__service.usr_add(p_data)
-        self.usr_refresh()
-
-    def usr_delete(self):
-        """
-        Delete all checked item
-        :return:
-        """
-        # 获取列表
-        _list = list(self.__state_data[_index]["id"] for _index in self.__state_check)
-
-        # 删除
-        self.__service.usr_delete(_list)
-
-        # 清空选取列表
-        self.__state_check = []
-
-        # 重置界面
-        self.usr_refresh()
-
-    def usr_up(self):
-        """
-        上移
-        :return:
-        """
-        if self.__state_current_data is None:
-            return False
-
-        step_id = self.__state_current_data["id"]
-        self.__service.usr_up(step_id)
-
-        self.usr_refresh()
-
-        return True
-
-    def usr_down(self):
-        """
-        下移
-        :return:
-        """
-        if self.__state_current_data is None:
-            return False
-
-        step_id = self.__state_current_data["id"]
-        self.__service.usr_down(step_id)
-
-        self.usr_refresh()
-
-        return True
-
-    def usr_refresh(self):
-        """
-        Refresh the table when data changed
-        :return:
-        """
-        if self.__state_cond is None:
-            return
-
-        # Clean condition
-        for _key, value in self.__state_cond.items():
-            if is_null(value):
-                self.__state_cond.pop(_key)
-
-        # Search
-        data = self.__service.usr_search(self.__state_cond)
-
-        # 分页有冲突
-        if isinstance(data, dict):
-            self.__record_num = data["number"]
-            self.__state_data = data["data"]
-        else:
-            self.__state_data = data
-
-        # Clean checked list
-        self.__state_check = []
-
-        self.reset()
-
-    def usr_clean(self):
-        """
-        Clean table
-        :return:
-        """
-        self.__state_data = []
-        self.__state_check = []
-        self.reset()
-
-    def usr_set_service(self, p_service):
-        """
-
-        :param p_service:
-        :return:
-        """
-        self.__service = p_service
-
-    def usr_set_definition(self, p_def):
-        """
-        :param p_def:
-        :return:
-        """
-        for _field in p_def:
-
-            if _field["DISPLAY"]:
-
-                self.__state_fields_name.append(_field["NAME"])
-                self.__state_fields_id.append(_field["ID"])
-
-                if "SELECT" == _field["TYPE"]:
-                    _res = get_dict(_field["ID"])
-                    self.__state_select[_field["ID"]] = {}
-
-                    for t_couple in _res:
-                        self.__state_select[_field["ID"]][t_couple.dict_value] = t_couple.dict_text
-
-                if _field["EDIT"]:
-                    self.__state_edit_fields.append(_field["ID"])
-
-    def usr_get_data(self, p_row):
-        """
-
-        :param p_row:
-        :return:
-        """
-        return self.__state_data[p_row]
-
-    def usr_set_current_data(self, p_index):
-        """
-
-        :param p_index:
-        :return:
-        """
-        self.__state_current_data = self.usr_get_data(p_index.row())
-
-    def usr_set_record_num(self, p_num):
-        """
-        设置记录数
-        :param p_num:
-        :return:
-        """
-        self.__record_num = p_num
-
-    def usr_get_record_num(self):
-        """
-        获取记录数
-        :return:
-        """
-        return self.__record_num
-
-    def usr_get_current_data(self):
-        """
-        获取当前数据
-        :return:
-        """
-        return self.__state_current_data
-
-
-class ModelNewTableBase(QAbstractTableModel):
+class ModelTableBase(QAbstractTableModel):
     """
     Base model
     """
@@ -387,8 +44,14 @@ class ModelNewTableBase(QAbstractTableModel):
         # 界面字段定义
         self._definition = ViewDefinition(p_flag)
 
+        # 当前可编辑状态
+        self._state_editable = False
+
+        # 可选择状态 todo
+        self.__state_checkable = True
+
         # SELECT 类型的字段
-        self.__state_select = dict()
+        self.__definition_select = dict()
 
         # 获取 SELECT 类型 value/text 数据对
         # {id: {value: text}, id: ....}
@@ -403,10 +66,7 @@ class ModelNewTableBase(QAbstractTableModel):
                 if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
                     break
 
-                self.__state_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
-
-        # 当前可编辑状态
-        self._state_editable = False
+                self.__definition_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
 
         # 记录数
         self._record_num = 0
@@ -427,7 +87,7 @@ class ModelNewTableBase(QAbstractTableModel):
                 _field = self._definition.get_field_display_by_index(section)
 
                 if _field is None:
-                    return
+                    return None
 
                 return _field.name
 
@@ -441,7 +101,7 @@ class ModelNewTableBase(QAbstractTableModel):
         :param index:
         :return:
         """
-        flag = super(ModelNewTableBase, self).flags(index)
+        flag = super(ModelTableBase, self).flags(index)
         field = self._definition.get_field_display_by_index(index.column())
 
         if self._state_editable and field.edit:
@@ -489,7 +149,7 @@ class ModelNewTableBase(QAbstractTableModel):
             # Combobox 类型数据
             if "SELECT" == _field.type:
                 try:
-                    return self.__state_select[_field.id][_value]
+                    return self.__definition_select[_field.id][_value]
                 except KeyError:
                     self.__logger.error("select value error: %s, %s" % (_field.id, _value))
 
@@ -505,17 +165,20 @@ class ModelNewTableBase(QAbstractTableModel):
             else:
                 return _value
 
-        if 0 == index.column() and role == Qt.CheckStateRole:
+        elif role == Qt.CheckStateRole:
 
-            if index.row() in self._checked_list:
-                return Qt.Checked
-            else:
-                return Qt.Unchecked
+            if 0 == index.column():
 
-        if role == Qt.TextAlignmentRole:
+                if index.row() in self._checked_list:
+                    return Qt.Checked
+                else:
+                    return Qt.Unchecked
+
+        elif role == Qt.TextAlignmentRole:
             return Qt.AlignCenter
 
-        return None
+        else:
+            return None
 
     def setData(self, index, value, role=Qt.EditRole):
         """
@@ -548,11 +211,11 @@ class ModelNewTableBase(QAbstractTableModel):
             return True
 
 
-class ModelNewTable(ModelNewTableBase):
+class ModelTable(ModelTableBase):
 
     def __init__(self, p_flg):
 
-        ModelNewTableBase.__init__(self, p_flg)
+        ModelTableBase.__init__(self, p_flg)
 
     def mod_editable(self):
         """
@@ -651,7 +314,6 @@ class ModelNewTable(ModelNewTableBase):
 
         # Clean checked list
         self._checked_list = []
-
         self.reset()
 
     def mod_clean(self):
@@ -694,7 +356,7 @@ class ModelNewTable(ModelNewTableBase):
         """
         return self._record_num
 
-    def usr_get_current_data(self):
+    def mod_get_current_data(self):
         """
         获取当前数据
         :return:
@@ -754,7 +416,7 @@ class ModelNewTable(ModelNewTableBase):
         pass
 
 
-class ViewNewTable(QTableView):
+class ViewTable(QTableView):
     """
     View of table
     """
@@ -778,8 +440,10 @@ class ViewNewTable(QTableView):
         self.setItemDelegate(self.control)
 
         # ---- Connection ----
+        # 设置当前数据
         self.clicked.connect(self.model.mod_set_current_data)
 
+        # ---- Style ----
         # 拉申最后一列
         self.horizontalHeader().setStretchLastSection(True)
 

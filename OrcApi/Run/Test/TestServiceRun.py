@@ -1,7 +1,7 @@
 import unittest
 
 from OrcLib.LibTest import OrcTest
-from OrcApi.Run.RunDefMod import RunCore
+from OrcApi.Run.RunCore import RunCore
 
 
 class TestService(unittest.TestCase):
@@ -29,5 +29,35 @@ class TestService(unittest.TestCase):
         _service = RunCore()
         _service.search_list("batch", 1000000008)
         _service.save_list("./abc.xml")
+
+        OrcTest.test_print_end()
+
+    def test_status(self):
+        """
+        Get page usl
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Run.RunService import RunStatus
+
+        _service = RunStatus()
+        _service.status = False
+        print _service.status
+
+        OrcTest.test_print_end()
+
+    def test_director(self):
+        """
+        Get page usl
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Run.RunService import RunStatus
+
+        _service = RunStatus()
+        _service.director = False
+        print _service.director
 
         OrcTest.test_print_end()

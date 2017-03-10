@@ -1,28 +1,28 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
-from PySide.QtGui import QWidget
+from PySide.QtGui import QGridLayout
+from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QLabel
+from PySide.QtGui import QPushButton
 from PySide.QtGui import QTabWidget
 from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QGridLayout
-from PySide.QtGui import QPushButton
+from PySide.QtGui import QWidget
 
-from OrcView.Driver.Web.PageMain import PageContainer
-from OrcView.Driver.Web.WidgetMain import WidgetContainer
-from OrcView.Driver.Web.WindowDef import ViewWindow
-
-from OrcView.Lib.LibView import OrcSelect
-from OrcView.Lib.LibView import OrcLineEdit
-from OrcView.Lib.LibView import OrcTextArea
-from OrcView.Lib.LibView import SelectWidgetType
-from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcLib.LibProgram import orc_singleton
+from OrcView.Driver.Web.Page.PageMain import PageContainer
+from OrcView.Driver.Web.Widget.WidgetMain import WidgetContainer
+from OrcView.Driver.Web.Window.WindowView import WindowView
 from OrcView.Lib.LibDict import LibDict
 from OrcView.Lib.LibTheme import get_theme
-
+from OrcView.Lib.LibView import OrcLineEdit
+from OrcView.Lib.LibView import OrcSelect
+from OrcView.Lib.LibView import OrcTextArea
+from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcView.Lib.LibView import SelectWidgetType
 from WebService import WebMainService
 
 
+@orc_singleton
 class ViewWebMain(QWidget):
     """
 
@@ -39,7 +39,7 @@ class ViewWebMain(QWidget):
         _page = PageContainer()
 
         # Window
-        _window = ViewWindow()
+        _window = WindowView()
 
         # Widget
         _widget = WidgetContainer()
@@ -235,4 +235,4 @@ class WidgetTest(QWidget):
 
     def set_status(self, p_data):
 
-        self.__edit_status.setText(p_data)
+        self.__edit_status.setPlainText(p_data)

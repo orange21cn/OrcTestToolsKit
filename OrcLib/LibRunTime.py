@@ -1,8 +1,10 @@
 # coding=utf-8
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibLog import OrcLog
+from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
 
 
-class Runtime(object):
+class OrcRunTime(object):
     """
 
     """
@@ -10,18 +12,27 @@ class Runtime(object):
 
         object.__init__(self)
 
+        self.__logger = OrcLog('basic.run_time')
+
         self.__mod = p_mod
-        self.__resource = OrcHttpResource("RunTime")
+        self.__resource = OrcResource('RunTime')
 
     def add_value(self, p_data):
         """
         新增
         :param p_data:
+        :type p_data: dict
         :return:
         """
         data = dict(module=self.__mod)
         data.update(p_data)
-        return self.__resource.post(data)
+
+        result = self.__resource.post(parameter=data)
+
+        if not ResourceCheck.result_status(result, '新增实时数据', self.__logger):
+            return False
+
+        return True
 
     def get_value(self, p_flag):
         """
@@ -30,9 +41,16 @@ class Runtime(object):
         :return:
         """
         cond = dict(module=self.__mod, data_flag=p_flag)
-        result = self.__resource.get(cond)
+        result = self.__resource.get(parameter=cond)
 
-        return None if not result else result[0]["data_value"]
+        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
+            return None
+
+        if not result.data:
+            self.__logger.error("获取实时数据出错,取值为: %s" % result.data)
+            return None
+        else:
+            return result.data[0]["data_value"]
 
     def get_values(self, p_flag):
         """
@@ -41,13 +59,21 @@ class Runtime(object):
         :return:
         """
         cond = dict(module=self.__mod, data_flag=p_flag)
-        result = self.__resource.get(cond)
 
-        return None if not result else [item["data_value"] for item in result]
+        result = self.__resource.get(parameter=cond)
+
+        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
+            return None
+
+        if not result.data:
+            self.__logger.info("未获取到实时数据,取值为: %s" % result.data)
+            return None
+        else:
+            return [item["data_value"] for item in result.data]
 
     def set_value(self, p_flag, p_value, p_index=None):
         """
-        设置数据,如果不存在就新增一个,数据有多个时只入第一个
+        设置数据,如果不存在就新增一个,数据有多个时只设置第一个
         :param p_index:
         :param p_flag:
         :param p_value:
@@ -59,49 +85,42 @@ class Runtime(object):
             cond["data_index"] = p_index
 
         # 判断数据存在,如果存在找到 id
-        data_item = self.__resource.get(cond)
-        data_id = None if data_item is None else data_item[0]["id"]
+        data_item = self.__resource.get(parameter=cond)
+        data_id = None if not data_item.data else data_item.data[0]["id"]
 
         # 设置值
         if data_id is not None:
-            self.__resource.set_path(data_id)
-            result = self.__resource.put(dict(data_value=p_value))
+            result = self.__resource.put(path=data_id, parameter=dict(data_value=p_value))
+
+            if not ResourceCheck.result_status(result, '设置实时数据', self.__logger):
+                return False
+
+            result = result.status
+
         else:
             cond["data_value"] = p_value
-            result = self.__resource.post(cond)
+            result = self.add_value(cond)
 
         return result
 
-    def del_value(self, p_flag, p_index=None):
+    def del_value(self, p_flag):
         """
         删除数据
-        :param p_index:
-        :type p_index: int
         :param p_flag:
         :return:
         """
         # 查找数据
         cond = dict(module=self.__mod, data_flag=p_flag)
-        data_list = self.__resource.get(cond)
+        result = self.__resource.get(parameter=cond)
 
-        # 获取 id list
-        data_id_list = None if data_list is None else [item["id"] for item in data_list]
-
-        # 不存在合适的对象
-        if data_id_list is None:
+        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
             return False
 
-        # 只删除一条的情况
-        if p_index is not None:
+        data_ids = [item['id'] for item in result.data]
 
-            # index 超出范围
-            if p_index < len(data_id_list):
-                data_id = data_id_list[p_index]
-                self.__resource.set_path(data_id)
-                return self.__resource.delete()
-            else:
-                return False
+        result = self.__resource.delete(parameter=data_ids)
 
-        # 删除符合条件全部数据
-        else:
-            return self.__resource.delete(data_id_list)
+        if not ResourceCheck.result_status(result, '删除实时数据', self.__logger):
+            return False
+
+        return True

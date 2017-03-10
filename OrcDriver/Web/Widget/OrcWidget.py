@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from OrcDriver.Web.WebDriverService import WebDriverService
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibRunTime import Runtime
+from OrcLib.LibRunTime import OrcRunTime
 
 
 class OrcWidget:
@@ -15,7 +15,7 @@ class OrcWidget:
     """
     def __init__(self, p_root, p_id):
 
-        self._logger = OrcLog("driver.web")
+        self._logger = OrcLog('driver.web')
 
         self._root = p_root
         self._widget = p_root
@@ -24,28 +24,42 @@ class OrcWidget:
         self.__meet_frame = False
 
         self.__service = WebDriverService()
-        self.__runtime = Runtime("widget")
+        self.__runtime = OrcRunTime('RUN')
 
         self._def = self.__get_def_info(p_id)
         self._get_widget()
 
     # 标识当前的 frame id
-    @property
-    def frame(self):
-        return self.__runtime.get_value("frame")
+    def get_frame(self):
+        """
+        设置 frame
+        :return:
+        """
+        return bool(self.__runtime.get_value('FRAME'))
 
-    @frame.setter
-    def frame(self, p_value):
-        self.__runtime.set_value("frame", p_value)
+    def set_frame(self, p_value):
+        """
+        获取 frame
+        :param p_value:
+        :return:
+        """
+        self.__runtime.set_value('FRAME', p_value)
 
     # 标识当前的 window id
-    @property
-    def window(self):
-        return self.__runtime.get_value("window")
+    def get_window(self):
+        """
+        设置 window
+        :return:
+        """
+        return bool(self.__runtime.get_value('WINDOW'))
 
-    @window.setter
-    def window(self, p_value):
-        self.__runtime.set_value("window", p_value)
+    def set_window(self, p_value):
+        """
+        获取 window
+        :param p_value:
+        :return:
+        """
+        self.__runtime.set_value('FRAME', p_value)
 
     def __get_def_info(self, p_id):
         """
@@ -82,6 +96,8 @@ class OrcWidget:
         except NoSuchElementException:
             return False
 
+        return True
+
     def _get_widget(self):
         """
         获取对象,处理 frame 和 window 跳转
@@ -90,11 +106,9 @@ class OrcWidget:
         if self._root is None or self._def is None:
             return None
 
-        self._root.switch_to_default_content()
-        self._widget = self._root
-
-        # 检查 frame,如查使用相同的 frame 不再跳转
-        # Todo
+        if self.get_frame():
+            self._root.switch_to_default_content()
+            self._widget = self._root
 
         for t_def in self._def:
 
@@ -115,11 +129,11 @@ class OrcWidget:
 
             if "FRAME" == _definition.widget_type:
                 self._get_object(_detail)
-                self.__meet_frame = _definition["id"]
+                self.__meet_frame = _definition.id
 
             elif "WINDOW" == _definition.widget_type:
 
-                _window_id = _definition["id"]
+                _window_id = _definition.id
 
                 # 还没有当前 window
                 if not self.window:

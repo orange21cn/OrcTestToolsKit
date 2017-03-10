@@ -118,7 +118,7 @@ class ServerResource(ServerBase):
             for _server in servers:
                 self._set_client_remote(_server)
 
-            self._logger.put_message(u"设置通用数据远程调用")
+            self._logger.info(u"设置通用数据远程调用")
 
         # 客户端设置为本地
         else:
@@ -126,7 +126,7 @@ class ServerResource(ServerBase):
             for _server in servers:
                 self._set_client_local(_server)
 
-            self._logger.put_message(u"设置通用数据本地调用")
+            self._logger.info(u"设置通用数据本地调用")
 
 
 class ServerRun(ServerBase):
@@ -143,12 +143,12 @@ class ServerRun(ServerBase):
         # 客户端设置为远程
         if self.isChecked():
             self._set_client_remote('RUN')
-            self._logger.put_message(u"设置运行远程调用")
+            self._logger.info(u"设置运行远程调用")
 
         # 客户端设置为本地
         else:
             self._set_client_local('RUN')
-            self._logger.put_message(u"设置运行本地调用")
+            self._logger.info(u"设置运行本地调用")
 
 
 class ServerReport(ServerBase):
@@ -174,7 +174,7 @@ class ServerReport(ServerBase):
 
             # 客户端设置
             self._set_client_remote('REPORT')
-            self._logger.put_message(u"关闭报告服务器")
+            self._logger.info(u"关闭报告服务器")
 
         # 客户端设置为本地
         else:
@@ -185,7 +185,7 @@ class ServerReport(ServerBase):
             self._set_client_local('REPORT', 'IP')
             self._set_client_local('REPORT', 'MODE')
 
-            self._logger.put_message(u"起动报告服务器")
+            self._logger.info(u"起动报告服务器")
 
     def start_service(self):
         self._service = subprocess.Popen(["python", "%s/OrcApi/start_report.py" % self._home])
@@ -205,12 +205,12 @@ class ServerDriver(ServerBase):
         # 客户端设置为远程
         if self.isChecked():
             self._set_client_remote('DRIVER')
-            self._logger.put_message(u"关闭执行服务器")
+            self._logger.info(u"关闭执行服务器")
 
         # 客户端设置为本地
         else:
             self._set_client_local('DRIVER')
-            self._logger.put_message(u"起动执行服务器")
+            self._logger.info(u"起动执行服务器")
 
 
 class ServerDebug(ServerBase):
@@ -242,7 +242,7 @@ class ServerDebug(ServerBase):
             # 客户端设置为远程
             self._set_client_remote('SERVER_WEB_001')
 
-            self._logger.put_message(u"关闭调试服务器")
+            self._logger.info(u"关闭调试服务器")
 
         # 当前为远程
         else:
@@ -253,7 +253,7 @@ class ServerDebug(ServerBase):
             self._set_client_local('SERVER_WEB_001', 'IP')
             self._set_client_local('SERVER_WEB_001', 'MODE')
 
-            self._logger.put_message(u"起动调试服务器")
+            self._logger.info(u"起动调试服务器")
 
     def start_service(self):
         """

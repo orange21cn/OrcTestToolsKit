@@ -1,7 +1,7 @@
 # coding=utf-8
 import unittest
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibRunTime import Runtime
+from OrcLib.LibRunTime import OrcRunTime
 
 
 class TestRunTime(unittest.TestCase):
@@ -14,10 +14,10 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         result = run_time.add_value(dict(data_flag="env", data_value="test"))
 
-        OrcTest.test_print_result(result)
+        print result
 
         OrcTest.test_print_begin()
 
@@ -27,7 +27,7 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         run_time.set_value("env", "abc")
 
         OrcTest.test_print_begin()
@@ -38,10 +38,10 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         result = run_time.get_value("env")
 
-        OrcTest.test_print_result(result)
+        print result
 
         OrcTest.test_print_begin()
 
@@ -51,10 +51,10 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         result = run_time.get_values("env")
 
-        OrcTest.test_print_result(result)
+        print result
 
         OrcTest.test_print_begin()
 
@@ -64,10 +64,10 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
-        result = run_time.del_value("env", 1)
+        run_time = OrcRunTime("test_01")
+        result = run_time.del_value("env")
 
-        OrcTest.test_print_result(result)
+        print result
 
         OrcTest.test_print_begin()
 
@@ -77,7 +77,7 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         result = run_time.del_value("env", 5)
 
         OrcTest.test_print_result(result)
@@ -90,7 +90,7 @@ class TestRunTime(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        run_time = Runtime("test_01")
+        run_time = OrcRunTime("test_01")
         result = run_time.del_value("env")
 
         OrcTest.test_print_result(result)

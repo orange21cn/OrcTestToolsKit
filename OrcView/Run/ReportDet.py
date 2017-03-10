@@ -15,7 +15,7 @@ class ViewReportDet(QWidget):
 
         QWidget.__init__(self)
 
-        self.title = "报告"
+        self.title = u"报告"
 
         self.__path = None
         self.__service = ReportDetService()
@@ -24,22 +24,20 @@ class ViewReportDet(QWidget):
         self.__wid_display = QWebView()
 
         # buttons
-        _wid_buttons = ViewButtons([
+        wid_buttons = ViewButtons([
             dict(id="refresh", name=u'更新'),
             dict(id="export", name=u'导出')
         ])
-        _wid_buttons.align_back()
+        wid_buttons.align_back()
 
         # main layout
-        _layout = QVBoxLayout()
-        _layout.addWidget(self.__wid_display)
-        _layout.addWidget(_wid_buttons)
+        layout_main = QVBoxLayout()
+        layout_main.addWidget(self.__wid_display)
+        layout_main.addWidget(wid_buttons)
 
-        self.setLayout(_layout)
+        self.setLayout(layout_main)
 
-        _layout.setContentsMargins(0, 0, 0, 0)
-
-        # connection
+        layout_main.setContentsMargins(0, 0, 0, 0)
 
     def usr_refresh(self, p_path=None):
 
@@ -47,4 +45,5 @@ class ViewReportDet(QWidget):
             self.__path = dict(path=p_path)
 
         report_path = self.__service.get_report_path(self.__path)
-        self.__wid_display.setHtml(report_path)
+
+        self.__wid_display.setUrl(report_path)

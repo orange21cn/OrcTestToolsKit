@@ -1,7 +1,6 @@
 # coding=utf-8
-from importlib import import_module
+import sys
 import time
-import re
 
 
 dict_value = lambda dict_data, dict_key: None if dict_key not in dict_data else dict_data[dict_key]
@@ -39,6 +38,15 @@ def is_null(p_str):
     return (p_str is None) or\
            ("" == p_str) or\
            ("None" == p_str)
+
+
+def set_default_encoding():
+    """
+    设置默认字符集
+    :return:
+    """
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 
 def gen_date_str():

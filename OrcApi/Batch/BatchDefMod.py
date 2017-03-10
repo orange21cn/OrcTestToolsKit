@@ -122,7 +122,7 @@ class BatchDefMod(TabBatchDef):
         if _res.pid is None:
             return _res
         else:
-            return self._get_root(_res)
+            return self.__get_root(_res)
 
     def __get_tree(self, p_item):
         """

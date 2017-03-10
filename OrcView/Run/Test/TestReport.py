@@ -33,7 +33,7 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Run.ReportMain import ViewReportMain
+        from OrcView.Run.RunMain import ViewReportMain
         OrcTest.test_print_begin()
 
         _view = QApplication(sys.argv)

@@ -1,231 +1,159 @@
-[2017-02-15 15:39:18 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 333, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:12:09 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:12:12 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:12:12 basic.lib_net] ERROR None
 
-[2017-02-15 15:40:33 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:40:33 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 334, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:12:12 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:12:15 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:12:15 basic.lib_net] ERROR None
 
-[2017-02-15 15:43:25 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:43:25 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 334, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:12:15 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:40 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:45 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:14:45 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:50 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:14:50 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:53 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:14:53 basic.lib_net] ERROR None
 
-[2017-02-15 15:46:23 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:46:23 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 334, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:14:53 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:55 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:14:55 basic.lib_net] ERROR None
 
-[2017-02-15 15:49:51 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:49:51 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 334, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:14:55 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:57 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:14:57 basic.lib_net] ERROR None
 
-[2017-02-15 15:52:03 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:52:03 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:14:57 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:14:59 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:14:59 basic.lib_net] ERROR None
 
-[2017-02-15 15:54:45 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:54:45 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:14:59 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:02 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:02 basic.lib_net] ERROR None
 
-[2017-02-15 15:58:32 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 15:58:32 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 333, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:02 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:04 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:04 basic.lib_net] ERROR None
 
-[2017-02-15 16:00:12 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:00:12 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 335, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:04 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:07 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:07 basic.lib_net] ERROR None
 
-[2017-02-15 16:01:21 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:01:21 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 337, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:07 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:09 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:09 basic.lib_net] ERROR None
 
-[2017-02-15 16:03:04 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:03:04 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 337, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:09 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:12 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:12 basic.lib_net] ERROR None
 
-[2017-02-15 16:03:37 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:03:37 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 337, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:12 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:14 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:14 basic.lib_net] ERROR None
 
-[2017-02-15 16:06:08 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:06:08 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 337, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:14 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:16 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:15:16 basic.lib_net] ERROR None
 
-[2017-02-15 16:10:58 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:10:58 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 338, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:15:17 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:23 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:15:23 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:15:34 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:15:34 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:20:39 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:20:42 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:20:44 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:20:44 basic.lib_net] ERROR None
 
-[2017-02-15 16:13:28 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:13:28 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 338, in __get_module
-    """
-ImportError: No module named DriverApi
+[2017-03-08 14:20:44 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:20:59 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:20:59 basic.lib_net] ERROR None
 
-[2017-02-15 16:14:04 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:14:04 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:21:03 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:21:03 basic.lib_net] ERROR None
 
-[2017-02-15 16:16:30 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:16:30 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:21:04 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:21:04 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:23:43 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:23:43 basic.lib_net] ERROR None
 
-[2017-02-15 16:16:41 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:16:41 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:23:43 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:23:46 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 14:23:46 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:23:48 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:23:48 basic.lib_net] ERROR None
 
-[2017-02-15 16:18:14 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:18:14 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:23:50 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:23:50 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:24:03 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:24:03 basic.lib_net] ERROR None
 
-[2017-02-15 16:19:08 basic.lib_net] ERROR function invoke error: 'str' object has no attribute 'status'
-[2017-02-15 16:19:08 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 276, in action
-    result = _func(p_parameter)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 597, in api_func
-    _rtn = p_func(*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunApi.py", line 65, in api_put
-    return self._business.run_start(p_para)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunCore.py", line 72, in run_start
-    self.run(self.tree)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunCore.py", line 99, in run
-    _result = self.run(_sub_step)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunCore.py", line 99, in run
-    _result = self.run(_sub_step)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunCore.py", line 90, in run
-    result = self.__run_step(self.__run_list)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunCore.py", line 174, in __run_step
-    _result = self.__service.launch_web_step(item_operation)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/Run/RunService.py", line 35, in launch_web_step
-    if not ResourceCheck.result_status(result, u"执行WEB执行项", self.__logger):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 642, in result_status
-    if not p_result.status:
-AttributeError: 'str' object has no attribute 'status'
+[2017-03-08 14:24:03 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:24:06 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:24:06 basic.lib_net] ERROR None
 
-[2017-02-15 16:19:45 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:19:45 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:24:06 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:24:07 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:24:07 basic.lib_net] ERROR None
 
-[2017-02-15 16:22:56 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:22:56 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 334, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:24:08 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:24:08 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:24:13 basic.lib_net] ERROR 新增测试项失败, None
+[2017-03-08 14:24:13 basic.lib_net] ERROR None
 
-[2017-02-15 16:23:50 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:23:50 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 336, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:24:13 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:24:14 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:24:14 basic.lib_net] ERROR None
 
-[2017-02-15 16:24:59 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:24:59 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 338, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
+[2017-03-08 14:24:15 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-03-08 14:24:15 basic.lib_net] ERROR None
 
-[2017-02-15 16:25:43 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:25:43 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 266, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 338, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
-
-[2017-02-15 16:27:26 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:27:26 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 339, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
-
-[2017-02-15 16:28:52 basic.lib_net] ERROR function invoke error: No module named DriverApi
-[2017-02-15 16:28:52 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 267, in action
-    _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 339, in __get_module
-    return getattr(__import__(self._path, fromlist=True), _name)()
-ImportError: No module named DriverApi
-
+[2017-03-08 14:24:17 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 14:24:17 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 14:31:10 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:03:10 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:03:25 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:03:25 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:03:31 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:20:29 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:20:35 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:20:35 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:20:53 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:20:53 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:24:12 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:24:18 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:24:18 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:24:31 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:24:32 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:24:46 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:24:46 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:27:25 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:27:31 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:27:31 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:27:42 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:27:42 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:30:44 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:30:47 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:30:47 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:16 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:27 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:30 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:32:30 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:35 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:32:35 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:38 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:32:38 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:32:52 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:32:52 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:27 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:30 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:52:30 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:33 basic.lib_net] INFO 删除测试项成功
+[2017-03-08 15:52:33 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 15:52:35 basic.lib_net] INFO 新增测试项成功
+[2017-03-08 15:52:35 basic.lib_net] INFO 查询测试项成功
+[2017-03-08 16:41:14 basic.lib_net] INFO 查询测试项成功

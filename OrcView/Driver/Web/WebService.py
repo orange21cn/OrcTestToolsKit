@@ -1,7 +1,8 @@
 # coding=utf-8
-from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
-from OrcView.Lib.LibView import ResourceCheck
+from OrcLib.LibNet import ResourceCheck
+
+from OrcView.Lib.LibMain import LogClient
 
 
 class WebMainService:
@@ -11,7 +12,7 @@ class WebMainService:
     def __init__(self):
 
         # Log
-        self.__logger = OrcLog("view.driver.web.service.web_main")
+        self.__logger = LogClient()
 
         self.__resource_page_def = OrcResource("PageDef")
         self.__resource_page_det = OrcResource("PageDet")
@@ -64,11 +65,11 @@ class WebMainService:
         result = self.__resource_page_def.get(path=p_id)
 
         # 检查结果
-        if not ResourceCheck.result_status(result, u"获取页面定义"):
+        if not ResourceCheck.result_status(result, u"获取页面定义", self.__logger):
             return None
 
         # 打印成功信息
-        ResourceCheck.result_success(u" 获取页面定义")
+        ResourceCheck.result_success(u" 获取页面定义", self.__logger)
 
         return WebPageDef(result.data)
 
@@ -84,11 +85,11 @@ class WebMainService:
         result = self.__resource_page_det.get(path=p_id)
 
         # 检查结果
-        if not ResourceCheck.result_status(result, u"获取页面信息"):
+        if not ResourceCheck.result_status(result, u"获取页面信息", self.__logger):
             return None
 
         # 打印成功信息
-        ResourceCheck.result_success(u" 获取页面信息")
+        ResourceCheck.result_success(u" 获取页面信息", self.__logger)
 
         return WebPageDet(result.data)
 
@@ -104,11 +105,11 @@ class WebMainService:
         result = self.__resource_widget_def.get(path=p_id)
 
         # 检查结果
-        if not ResourceCheck.result_status(result, u"获取控件定义"):
+        if not ResourceCheck.result_status(result, u"获取控件定义", self.__logger):
             return None
 
         # 打印成功信息
-        ResourceCheck.result_success(u" 获取控件定义")
+        ResourceCheck.result_success(u" 获取控件定义", self.__logger)
 
         return WebWidgetDef(result.data)
 
@@ -123,10 +124,10 @@ class WebMainService:
         result = self.__resource_widget_det.get(path=p_id)
 
         # 检查结果
-        if not ResourceCheck.result_status(result, u"获取控件细节"):
+        if not ResourceCheck.result_status(result, u"获取控件细节", self.__logger):
             return None
 
         # 打印成功信息
-        ResourceCheck.result_success(u" 获取控件细节")
+        ResourceCheck.result_success(u" 获取控件细节", self.__logger)
 
         return WebWidgetDet(result.data)

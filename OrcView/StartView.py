@@ -1,22 +1,21 @@
 # coding=utf-8
+from PySide.QtCore import Qt
+from PySide.QtCore import SIGNAL
 from PySide.QtGui import QMainWindow
 from PySide.QtGui import QTabWidget
-from PySide.QtCore import SIGNAL
-from PySide.QtCore import Qt
 
 from OrcLib import init_log
+from OrcView.Batch.BatchDefView import BatchDefView
+from OrcView.Batch.BatchDetView import BatchDetView
+from OrcView.Case.Case.CaseView import CaseView
+from OrcView.Case.Step.StepMain import StepContainer
+from OrcView.Data.DataView import DataView
+from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
 from OrcView.Lib.LibMain import DockLog
 from OrcView.Lib.LibTheme import get_theme
-from OrcView.Batch.BatchDef import ViewBatchDefMag
-from OrcView.Batch.BatchDet import ViewBatchDetMag
-from OrcView.Case.Case import ViewCaseDefMag
-from OrcView.Case.StepMain import StepContainer
-from OrcView.Data.DataView import DataView
-from OrcView.Driver.Web.WebMain import ViewWebMain
-from OrcView.Run.RunMain import ViewRunMain
-from OrcView.Run.ReportMain import ViewReportMain
+from OrcView.Run.RunMain import RunMainView
 
 
 class StartView(QMainWindow):
@@ -36,7 +35,6 @@ class StartView(QMainWindow):
 
         # Dock
         self.dock_category = DockCategory()  # category widget
-        # self.dock_log = DockBottom()  # log widget
         self.dock_detail = DockDetail()  # detail widget
 
         # center widget
@@ -65,9 +63,6 @@ class StartView(QMainWindow):
             )),
             ('Run', (
                 ('Run', self.open_run),
-            )),
-            ('Report', (
-                ('Report', self.open_report),
             )),
             ('View', (
                 (DockLog,),
@@ -127,17 +122,17 @@ class StartView(QMainWindow):
         self.__add_tab(_view)
 
     def open_batch(self):
-        _view = ViewBatchDefMag()
+        _view = BatchDefView()
         _view.sig_batch_det[dict].connect(self.open_case_select)
         self.__add_tab(_view)
 
     def open_case(self):
-        _view = ViewCaseDefMag()
+        _view = CaseView()
         _view.sig_case_det[dict].connect(self.open_step)
         self.__add_tab(_view)
 
     def open_case_select(self, p_data):
-        _view = ViewBatchDetMag(p_data)
+        _view = BatchDetView(p_data)
         self.__add_tab(_view)
 
     def open_step(self, p_data):
@@ -149,11 +144,7 @@ class StartView(QMainWindow):
         self.__add_tab(_view)
 
     def open_run(self):
-        _view = ViewRunMain()
-        self.__add_tab(_view)
-
-    def open_report(self):
-        _view = ViewReportMain()
+        _view = RunMainView()
         self.__add_tab(_view)
 
     def open_log(self):

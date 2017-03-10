@@ -76,8 +76,10 @@ class RunDefMod:
                 # 加入目录下测试项
                 _test_list = os.listdir("%s/%s" % (self.__home, _item))
                 rtn.extend(list(
-                    dict(id=test, pid=_id, run_def_type="TEST", run_flag=test)
+                    dict(id="%s:%s" % (_id, test), pid=_id, run_def_type="TEST", run_flag=test)
                     for test in _test_list))
+
+        print rtn
 
         return rtn
 
@@ -104,13 +106,22 @@ class RunDefMod:
 
             from OrcLib.LibCommon import gen_date_str
 
-            res_folder = "%s/%s" % (folder_root, gen_date_str())
-            res_file = "%s/default.res" % res_folder
+            for _index in range(100):
 
-            if not os.path.exists(res_folder):
+                _flag = _index + 1
+
+                if 10 > _flag:
+                    _flag = "%s%s" % (0, _flag)
+
+                res_folder = "%s/%s%s" % (folder_root, gen_date_str(), _flag)
+                res_file = "%s/default.res" % res_folder
+
+                if os.path.exists(res_folder):
+                    continue
+
                 os.mkdir(res_folder)
-
-            self.__data.save_list(_type, _id, res_file)
+                self.__data.save_list(_type, _id, res_file)
+                break
 
         return _id
 
@@ -121,24 +132,22 @@ class RunDefMod:
         :type p_list: list
         :return:
         """
-        delete_list = []
+        delete_list = list()
 
-        for _group in os.listdir(self.__home):
-            _id = _group.split("_")[1]
+        folder_info = {_name.split('_')[1]: _name for _name in os.listdir(self.__home)}
 
-            if _id in p_list:
-                delete_list.append(_group)
+        for _item in p_list:
+            _path = _item.split(':')
 
-            for _item in os.listdir("%s/%s" % (self.__home, _group)):
+            if _path[0] in folder_info:
+                _path[0] = folder_info[_path[0]]
+                delete_list.append("%s/%s" % (self.__home, '/'.join(_path)))
 
-                if _item in p_list:
-                    delete_list.append("%s/%s" % (_group, _item))
 
-        # try:
         for _item in delete_list:
-            _folder = "%s/%s" % (self.__home, _item)
-            if os.path.exists(_folder):
+
+            if os.path.exists(_item):
                 import shutil
-                shutil.rmtree(_folder)
+                shutil.rmtree(_item)
 
         return True

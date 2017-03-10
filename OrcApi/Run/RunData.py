@@ -1,6 +1,7 @@
 # coding=utf-8
 import os
 from xml.etree.ElementTree import ElementTree
+from xml.etree.ElementTree import ParseError
 from xml.etree.ElementTree import Element
 
 from OrcLib.LibLog import OrcLog
@@ -212,6 +213,15 @@ class RunData(ListTree):
         :param p_file:
         :return:
         """
+        self.search_list(p_type, p_id)
+        self.update_list(p_file)
+
+    def update_list(self, p_file):
+        """
+        把 list 存储为xml
+        :param p_file:
+        :return:
+        """
 
         def indent(p_elem, p_level=0):
             """
@@ -240,8 +250,6 @@ class RunData(ListTree):
                             _element.tail = _symbol
 
             return p_elem
-
-        self.search_list(p_type, p_id)
 
         root_node = self.__list2etree()
         indent(root_node)
@@ -277,7 +285,10 @@ class RunData(ListTree):
             return None
 
         element = ElementTree()
-        element.parse(p_path)
+        try:
+            element.parse(p_path)
+        except ParseError:
+            return
 
         _list = self.__xml2list(element.getroot())
         self.resolve("LIST", _list)

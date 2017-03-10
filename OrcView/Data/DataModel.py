@@ -5,16 +5,17 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibProcess import get_mark
 from OrcLib.LibProcess import get_widget_mark
 
-from OrcView.Lib.LibTable import ModelNewTable
+from OrcView.Lib.LibMain import LogClient
+from OrcView.Lib.LibTable import ModelTable
 
 
-class DataModel(ModelNewTable):
+class DataModel(ModelTable):
 
     def __init__(self):
 
-        ModelNewTable.__init__(self, 'Data')
+        ModelTable.__init__(self, 'Data')
 
-        self.__logger = OrcLog("view.data.model")
+        self.__logger = LogClient()
 
         self.__resource_data = OrcResource('Data')
         self.__resource_batch = OrcResource("BatchDef")
@@ -96,7 +97,7 @@ class DataModel(ModelNewTable):
             _item['src_id_text'] = get_mark(_item['src_type'], _item['src_id'])
 
             # 增加控件标识显示
-            _item['data_flag_text'] = get_widget_mark(_item['src_id'])
+            _item['data_flag_text'] = get_widget_mark(_item['data_flag'])
 
         # 打印成功信息
         ResourceCheck.result_success(u"查询数据", self.__logger)

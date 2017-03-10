@@ -62,4 +62,28 @@ class RunListAPI(OrcBaseAPI):
     def api_put(self, p_para):
 
         self._logger.info("Run, parameter is: %s" % p_para)
-        return self._business.run_start(p_para)
+        return self._business.start(p_para)
+
+    def delete(self):
+        """
+        start
+        """
+        return self.api_put()
+
+    @orc_api
+    def api_delete(self):
+
+        self._logger.info('Stop')
+        return self._business.stop()
+
+    def get(self):
+        """
+        获取状态
+        """
+        return self.api_put()
+
+    @orc_api
+    def api_get(self):
+
+        self._logger.info("Get run status.")
+        return self._business.get_status()

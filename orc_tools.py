@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from PySide.QtGui import QApplication
-
-# User interface
+import os
 import sys
+
+sys.path.append(os.path.dirname(__file__))
+
+from PySide.QtGui import QApplication
 from OrcView.StartView import StartView
 
 

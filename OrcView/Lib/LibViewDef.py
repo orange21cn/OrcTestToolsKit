@@ -50,7 +50,7 @@ class ViewDefinition(object):
             self._def = def_view_batch_def
         elif "BatchDet" == p_flag:
             self._def = def_view_batch_det
-        elif "CaseDef" == p_flag:
+        elif "Case" == p_flag:
             self._def = def_view_case_def
         elif "Step" == p_flag:
             self._def = def_view_step
@@ -66,6 +66,8 @@ class ViewDefinition(object):
             self._def = def_view_widget_def
         elif "WidgetDet" == p_flag:
             self._def = def_view_widget_det
+        elif "Window" == p_flag:
+            self._def = def_view_window_def
         elif "RunDef" == p_flag:
             self._def = def_view_run_def
         elif "RunDet" == p_flag:
@@ -198,13 +200,13 @@ def_view_step = [
 def_view_item = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
-    dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
+    dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=False,
          SEARCH=True, ADD=False, ESSENTIAL=False),
     dict(ID="item_type", NAME=u"条目类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="item_mode", NAME=u"条目模式", TYPE="SELECT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=False),
-    dict(ID="item_operate", NAME=u"条目操作", TYPE="OPERATE", DISPLAY=True, EDIT=True,
+    dict(ID="item_operate", NAME=u"条目操作", TYPE="OPERATE", DISPLAY=True, EDIT=False,
          SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="item_desc", NAME=u"条目描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=False),

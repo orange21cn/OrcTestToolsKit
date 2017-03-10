@@ -182,12 +182,20 @@ init_value_widget_operation = [
     LibWidgetOperation(dict(id="40008", type_name="INP", ope_order="1",
                             ope_name="INPUT", ope_text=u"输入", ope_desc=""))]
 
-orc_db.drop_all()
-orc_db.create_all()
+from OrcLib.LibDatabase import LibDictionary
+from OrcLib.LibDatabase import LibWidgetType
+from OrcLib.LibDatabase import LibWidgetOperation
 
+orc_db.session.query(LibDictionary).delete()
+orc_db.session.query(LibWidgetType).delete()
+orc_db.session.query(LibWidgetOperation).delete()
+
+# orc_db.drop_all(bind='tab_item')
+# orc_db.create_all()
+#
 orc_db.session.add_all(init_value_widget_type)
 orc_db.session.add_all(init_value_widget_operation)
 orc_db.session.add_all(init_value_dictionary)
-orc_db.session.add_all(init_value_sequence)
+# orc_db.session.add_all(init_value_sequence)
 
 orc_db.session.commit()

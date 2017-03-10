@@ -1,12 +1,10 @@
 # coding=utf-8
-from OrcLib.LibProcess import get_widget_mark
-from OrcLib.LibProcess import get_mark
-
-from OrcView.Lib.LibViewDef import def_view_data
-from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Driver.Web.WidgetSelect import ViewWidgetSelect
-
 from DataModel import DataModel
+from OrcLib.LibProcess import get_mark
+from OrcLib.LibProcess import get_widget_mark
+from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefView
+from OrcView.Lib.LibAdd import ViewAdd
+from OrcView.Lib.LibViewDef import def_view_data
 
 
 class ViewDataAdd(ViewAdd):
@@ -22,7 +20,7 @@ class ViewDataAdd(ViewAdd):
         self.__model = DataModel()
 
         # 控件选择控件
-        self.__widget_select = ViewWidgetSelect()
+        self.__widget_select = WidgetDefView('SINGLE')
 
         # 控件被点击
         self.sig_clicked.connect(self.__action)

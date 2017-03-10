@@ -1,16 +1,55 @@
 # coding=utf-8
 import os
+import threading
 
 from OrcLib import get_config
 from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcResource
+
 from RunService import RunCoreService
+from RunService import RunStatus
 from RunData import RunData
 from RunLog import RunLog
 
 
-class RunCore(RunData):
+class RunCore(object):
+
+    def __init__(self):
+
+        object.__init__(self)
+
+        self.__launch = RunLaunch()
+        self.__status = RunStatus()
+        self.thread = None
+
+    def start(self, p_path):
+        """
+        执行
+        :param p_path:
+        :return:
+        """
+        self.__status.director = True
+
+        self.thread = threading.Thread(target=self.__launch.run_start, args=(p_path,))
+        self.thread.setDaemon(True)
+        self.thread.start()
+
+    def stop(self):
+        """
+        终止
+        :return:
+        """
+        self.__status.director = False
+
+    def get_status(self):
+        """
+        获取状态
+        :return:
+        """
+        return self.__status.status
+
+
+class RunLaunch(RunData):
     """
     Window service
     """
@@ -18,34 +57,28 @@ class RunCore(RunData):
 
         RunData.__init__(self)
 
-        # Log
+        # Log 普通日志
         self.__logger = OrcLog("resource.run.run_core")
 
-        # Source
-        self.__resource_batch_def = OrcResource("BatchDef")
-        self.__resource_batch_det = OrcResource("BatchDet")
-        self.__resource_case_def = OrcResource("CaseDef")
-        self.__resource_case_det = OrcResource("CaseDet")
-        self.__resource_step_def = OrcResource("StepDef")
-        self.__resource_step_det = OrcResource("StepDet")
-        self.__resource_item = OrcResource("Item")
+        # 执行记录
+        self.__run_logger = RunLog()
 
-        self.__service = RunCoreService()
+        self.__service_core = RunCoreService()
+        self.__service_status = RunStatus()
 
         self.__home = get_config().get_option("RUN", "home")
         self.__home_run = None  # 运行时目录,为home目录/case(batch)/time
 
         self.__list = []  # 列表
-
         self.__run_list = []  # 执行列表,batch->item,用于查找数据及控件...
-        self.__run_logger = RunLog()
 
     def run_start(self, p_path):
         """
-
+        开始执行
         :param p_path:
         :return:
         """
+        # 运行测试
         item_pid = p_path["pid"]
         item_id = p_path["id"]
         item_path = None
@@ -69,14 +102,23 @@ class RunCore(RunData):
             item_path = "%s/default.res" % self.__home_run
 
         self.load_list(item_path)
+
         self.run(self.tree)
-        # self.save_list(item_path)
+
+        self.update_list(item_path)
 
     def run(self, p_node):
         """
         :param p_node:
         :return:
         """
+        # 终止
+        if not self.__service_status.director:
+            self.__service_status.status = False
+            return False
+
+        self.__service_status.status = True
+
         result = True
         step_type = p_node["content"]["run_det_type"]
 
@@ -129,7 +171,7 @@ class RunCore(RunData):
         p_node["content"]["status"] = status
 
         # 更新界面
-        self.__service.update_status(p_node["content"])
+        self.__service_core.update_status(p_node["content"])
 
         return result
 
@@ -149,7 +191,7 @@ class RunCore(RunData):
 
         # 执行该 list 的最后一项,最后一项为 item, 其他为路径用于数据查找
         item_id = p_node_list[len(p_node_list) - 1]["id"]
-        item = self.__service.get_item(item_id)
+        item = self.__service_core.get_item(item_id)
 
         if item is None:
             return False
@@ -158,7 +200,7 @@ class RunCore(RunData):
 
         # 步骤需要数据时读取数据
         if "DATA" in item_operation:
-            data = self.__service.get_data(self.__run_list, item_operation["OBJECT"])
+            data = self.__service_core.get_data(self.__run_list, item_operation["OBJECT"])
 
             if data:
                 item_operation["DATA"] = data
@@ -171,14 +213,14 @@ class RunCore(RunData):
 
             # 执行项
             if "OPERATE" == item.item_mode:
-                _result = self.__service.launch_web_step(item_operation)
+                _result = self.__service_core.launch_web_step(item_operation)
                 folder = self.__run_logger.get_folder()
                 pic_name = "%s/%s.png" % (folder, item_id)
-                self.__service.get_web_pic(pic_name)
+                self.__service_core.get_web_pic(pic_name)
 
             # 检查项
             elif "CHECK" == item.item_mode:
-                _result = self.__service.check_web_step(item_operation)
+                _result = self.__service_core.check_web_step(item_operation)
 
             else:
                 pass

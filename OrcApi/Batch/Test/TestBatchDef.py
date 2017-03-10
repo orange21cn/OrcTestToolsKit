@@ -165,8 +165,8 @@ class TestFunc(unittest.TestCase):
         i_url = 'http://127.0.0.1:5000/BatchDef/usr_get_no'
 
         try:
-            # result = orc_invoke(i_url, i_para)
-            # OrcTest.test_print_result(result, 'result')
+            result = orc_invoke(i_url, i_para)
+            OrcTest.test_print_result(result, 'result')
             pass
         except OrcPostFailedException:
             traceback.print_exc()

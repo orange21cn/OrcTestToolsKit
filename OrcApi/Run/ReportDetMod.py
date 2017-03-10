@@ -9,8 +9,9 @@ class ReportDetMod:
     def __init__(self):
 
         self.__core = RunCore()
-        self.__home = self.__core.get_home()
+
         self.__configer = get_config()
+        self.__home = self.__configer.get_option("RUN", "home")
 
     def usr_search(self, p_path):
         """
@@ -18,18 +19,20 @@ class ReportDetMod:
         :type p_path: dict
         :return:
         """
-        res_file = "%s/%s" % (self.__home, p_path["path"])
+        pass
 
-        if not os.path.exists(res_file):
-            return
-
-        self.__core.load_list(res_file)
-
-        return self.__core.list
+        # res_file = "%s/%s" % (self.__home, p_path["path"])
+        #
+        # if not os.path.exists(res_file):
+        #     return
+        #
+        # self.__core.load_list(res_file)
+        #
+        # return self.__core.list
 
     def usr_get_report(self, p_id, p_time):
 
-        report_path = "%s/%s/%s" % (self.__core.get_home(), p_id, p_time)
+        report_path = "%s/%s/%s" % (self.__home, p_id, p_time)
         report_file = "%s/report.html" % report_path
         result_file = "%s/default.res" % report_path
 

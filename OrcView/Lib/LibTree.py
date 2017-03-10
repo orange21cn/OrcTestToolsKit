@@ -1,4 +1,6 @@
 # coding=utf-8
+import abc
+
 from cPickle import dumps
 from cPickle import load
 from cStringIO import StringIO
@@ -12,72 +14,15 @@ from PySide.QtGui import QAbstractItemView
 from PySide.QtGui import QTreeView
 
 from OrcLib import LibCommon
+from OrcLib import get_config
+from OrcLib.LibLog import OrcLog
+from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
+from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
-from OrcView.Lib.LibView import get_dict
-
-
-class ViewTree(QTreeView):
-    """
-    Base tree view
-    """
-    sig_context = OrcSignal(str)
-
-    def __init__(self):
-
-        QTreeView.__init__(self)
-
-        # MVC
-        # 可拖拽
-        self.dragEnabled()
-
-        # 可释放
-        self.acceptDrops()
-
-        # 拖拽  indicator
-        self.showDropIndicator()
-
-        # 拖拽模式
-        self.setDragDropMode(QAbstractItemView.InternalMove)
-
-        # 标题拉伸最后一列
-        self.header().setStretchLastSection(True)
-
-        # 无 focus, 去掉蓝框
-        self.setFocusPolicy(Qt.NoFocus)
-
-        # 设置样式
-        self.setStyleSheet(get_theme("TreeView"))
-
-    def create_context_menu(self, p_def):
-        """
-        右键菜单
-        :param p_def:
-        :return:
-        """
-        context_menu = ViewContextMenu(p_def)
-
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-
-        # 连接
-        self.customContextMenuRequested.connect(context_menu.show_menu)
-        context_menu.sig_clicked.connect(self.sig_context.emit)
-
-    def set_model(self, p_model):
-        """
-        设置模型
-        :param p_model:
-        :return:
-        """
-        self.setModel(p_model)
-
-    def set_control(self, p_control):
-        """
-        设置 Control
-        :param p_control:
-        :return:
-        """
-        self.setItemDelegate(p_control)
+from OrcView.Lib.LibMain import LogClient
 
 
 class OrcMimeData(QMimeData):
@@ -187,43 +132,86 @@ class TreeNode(object):
         return len(self.children)
 
 
-class ModelTree(QAbstractItemModel):
+class ModelTreeBase(QAbstractItemModel):
     """
     Model
     """
-    def __init__(self):
+    def __init__(self, p_flag):
         """
         :return:
         """
         QAbstractItemModel.__init__(self)
 
-        self.__service = None
+        resource_dict = OrcResource("Dict")
 
-        self.__state_current_data = None
-        self.__state_cond = dict()  # now sql condition
-        self._state_root = TreeNode(None)  # data root
-        self.__state_list = []  # data list
-        self.__state_check = []  # checked list
+        self.__logger = OrcLog("view.tree.model")
 
-        self.__state_fields_name = []  # fields CN name
-        self.__state_fields_id = []  # data table field name
-        self.__state_edit_fields = []
-        self.__state_select = {}
+        # 数据
+        self._data = list()
 
-        self.__state_editable = False
-        self.__state_chk_able = True
+        # 根节点
+        self._root = TreeNode(None)
+
+        # 当前数据
+        self._data_selected = None
+
+        # 查询条件
+        self._condition = dict()
+
+        # 当前选择列表
+        self._checked_list = []
+
+        # 可编辑状态
+        self._state_editable = False
+
+        # 可选择状态
+        self._state_checkable = True
+
+        # 界面字段定义
+        self._definition = ViewDefinition(p_flag)
+
+        # SELECT 类型的字段
+        self._definition_select = dict()
+
+        # 获取 SELECT 类型 value/text 数据对
+        # {id: {value: text}, id: ....}
+        for _field in self._definition.fields_display:
+
+            assert isinstance(_field, FieldDefinition)
+
+            if _field.display and "SELECT" == _field.type:
+
+                _res = resource_dict.get(parameter=dict(dict_flag=_field.id))
+
+                if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
+                    break
+
+                self._definition_select[_field.id] =\
+                    {item['dict_value']: item['dict_text'] for item in _res.data}
 
     def supportedDropActions(self):
+        """
+        支持拖拽
+        :return:
+        """
         return Qt.CopyAction | Qt.MoveAction
 
     def flags(self, index):
-
+        """
+        标识
+        :param index:
+        :return:
+        """
         _flag = QAbstractItemModel.flags(self, index)
 
         if index.isValid():
-            if self.__state_editable and \
-               self.__state_fields_id[index.column()] in self.__state_edit_fields:
+
+            _field = self._definition.get_field_display_by_index(index.column())
+            assert isinstance(_field, FieldDefinition)
+
+            if self._state_editable and _field.edit:
                 _flag |= Qt.ItemIsEditable
+
             _flag |= Qt.ItemIsDragEnabled
             _flag |= Qt.ItemIsDropEnabled
             _flag |= Qt.ItemIsEnabled
@@ -231,41 +219,73 @@ class ModelTree(QAbstractItemModel):
         else:
             _flag |= Qt.ItemIsDropEnabled
 
-        if index.column() == 0 and self.__state_chk_able:
+        if index.column() == 0 and self._state_checkable:
             _flag |= Qt.ItemIsUserCheckable
 
         return _flag
 
     def headerData(self, section, orientation, role):
+        """
+        列名显示
+        :param section:
+        :param orientation:
+        :param role:
+        :return:
+        """
+        # 显示
+        if role == Qt.DisplayRole:
 
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return self.__state_fields_name[section]
+            if orientation == Qt.Horizontal:
 
-        if orientation == Qt.Horizontal and role == Qt.TextAlignmentRole:
-            return Qt.AlignHCenter
+                _field = self._definition.get_field_display_by_index(section)
+
+                if _field is None:
+                    return None
+
+                return _field.name
+
+        # 对齐
+        elif role == Qt.TextAlignmentRole:
+
+            if orientation == Qt.Horizontal:
+                return Qt.AlignHCenter
 
         return None
 
     def mimeTypes(self):
+        """
+        :return:
+        """
         types = ['application/x-ets-qt4-instance']
         return types
 
     def mimeData(self, index):
-
-        node = self.usr_get_node(index[0])
+        """
+        :param index:
+        :return:
+        """
+        node = self.node(index[0])
         mine_data = OrcMimeData(node)
 
         return mine_data
 
-    def dropMimeData(self, p_mime_data, action, row, column, p_parent_index):
+    def dropMimeData(self, mime_data, action, row, column, parent_index):
+        """
 
+        :param mime_data:
+        :param action:
+        :param row:
+        :param column:
+        :param parent_index:
+        :return:
+        """
         _cond = {}
 
         if action == Qt.IgnoreAction:
             return True
 
-        drag_node = p_mime_data.instance()
-        parent_node = self.usr_get_node(p_parent_index)
+        drag_node = mime_data.instance()
+        parent_node = self.node(parent_index)
 
         _cond['id'] = drag_node.content['id']
         if parent_node.content is None:
@@ -273,92 +293,141 @@ class ModelTree(QAbstractItemModel):
         else:
             _cond['pid'] = parent_node.content['id']
 
-        self.__service.usr_update(_cond)
+        self.mod_update(_cond)
 
-        self.usr_refresh()
+        self.mod_refresh()
 
         return True
 
     def index(self, row, column, parent):
-        node = self.usr_get_node(parent)
+        """
+
+        :param row:
+        :param column:
+        :param parent:
+        :return:
+        """
+        node = self.node(parent)
         return self.createIndex(row, column, node.get_child(row))
 
     def data(self, index, role):
+        """
 
+        :param index:
+        :param role:
+        :return:
+        """
         item = index.internalPointer()
 
-        if role == Qt.CheckStateRole and \
-           index.column() == 0 and \
-           self.__state_chk_able:
-
-            _state = Qt.Unchecked
-            for x in self.__state_check:
-                if x == index:
-                    _state = Qt.Checked
-                    break
-
-            return _state
-
+        # 显示数据
         if role == Qt.DisplayRole:
 
-            _id = self.__state_fields_id[index.column()]
-            _value = item.content[_id]
+            _field = self._definition.get_field_display_by_index(index.column())
+            assert isinstance(_field, FieldDefinition)
 
-            if _id in self.__state_select:
-                return self.__state_select[_id][_value]
+            _value = item.content[_field.id]
+
+            # Combobox 类型数据
+            if "SELECT" == _field.type:
+                try:
+                    return self._definition_select[_field.id][_value]
+                except KeyError:
+                    self.__logger.error("select value error: %s, %s" % (_field.id, _value))
+
+            # OPERATE 类型数据
+            elif "OPERATE" == _field.type:
+                return self._data[index.row()]["%s_text" % _field.id]
+
+            # DISPLAY 类型数据
+            elif "DISPLAY" == _field.type:
+                return self._data[index.row()]["%s_text" % _field.id]
+
+            if _field.id in self._definition_select:
+                return self._definition_select[_field.id][_value]
             else:
                 return _value
 
-        if role == Qt.TextAlignmentRole:
+        # 字段选择状态
+        elif role == Qt.CheckStateRole:
+
+            if (index.column() == 0) and self._state_checkable:
+
+                if index in self._checked_list:
+                    return Qt.Checked
+                else:
+                    return Qt.Unchecked
+
+        # 对齐
+        elif role == Qt.TextAlignmentRole:
             return Qt.AlignCenter
 
         return None
 
     def setData(self, index, value, role=Qt.EditRole):
+        """
 
+        :param index:
+        :param value:
+        :param role:
+        :return:
+        """
         if role == Qt.EditRole:
 
             _cond = {}
-            _field = self.__state_fields_id[index.column()]
+            _field = self._definition.get_field_display_by_index(index.column())
 
-            _cond["id"] = self.usr_get_node(index).content["id"]
-            _cond[_field] = value
+            _cond["id"] = self.node(index).content["id"]
+            _cond[_field.id] = value
 
-            self.__service.usr_update(_cond)
-            self.usr_get_node(index).content[_field] = value
+            self.service_update(_cond)
+            self.node(index).content[_field.id] = value
 
             return value
 
-        if role == Qt.CheckStateRole and 0 == index.column():
+        elif role == Qt.CheckStateRole:
 
-            if value == Qt.Unchecked:
-                self.__state_check.remove(index)
-            else:
-                self.__state_check.append(index)
+            if 0 == index.column():
+
+                if value == Qt.Unchecked:
+                    self._checked_list.remove(index)
+                else:
+                    self._checked_list.append(index)
 
             return True
 
     def columnCount(self, parent):
-        return len(self.__state_fields_name)
+        """
+
+        :param parent:
+        :return:
+        """
+        return self._definition.display_length
 
     def rowCount(self, parent):
-        node = self.usr_get_node(parent)
+        """
+
+        :param parent:
+        :return:
+        """
+        node = self.node(parent)
         if node is None:
             return 0
         return len(node)
 
     def parent(self, p_index):
+        """
 
+        :param p_index:
+        :return:
+        """
         if not p_index.isValid():
             return QModelIndex()
 
-        node = self.usr_get_node(p_index)
-
+        node = self.node(p_index)
         if node is None:
             return QModelIndex()
 
         parent = node.parent
-
         if parent is None:
             return QModelIndex()
 
@@ -370,126 +439,132 @@ class ModelTree(QAbstractItemModel):
 
         return self.createIndex(row, 0, parent)
 
-    def usr_set_service(self, p_service):
-        self.__service = p_service
-
-    def usr_set_definition(self, p_def):
+    def node(self, index):
         """
-        Init definition
-        :param p_def:
+        获取节点
+        :param index:
         :return:
         """
-        for t_field in p_def:
+        if index.isValid():
+            return index.internalPointer()
+        else:
+            return self._root
 
-            if t_field["DISPLAY"]:
 
-                self.__state_fields_name.append(t_field["NAME"])
-                self.__state_fields_id.append(t_field["ID"])
+class ModelTree(ModelTreeBase):
 
-                if "SELECT" == t_field["TYPE"]:
-                    _res = get_dict(t_field["ID"])
-                    self.__state_select[t_field["ID"]] = {}
+    sig_reset = OrcSignal()
 
-                    for t_couple in _res:
-                        self.__state_select[t_field["ID"]][t_couple.dict_value] = t_couple.dict_text
+    def __init__(self, p_def):
 
-                if t_field["EDIT"]:
-                    self.__state_edit_fields.append(t_field["ID"])
+        ModelTreeBase.__init__(self, p_def)
 
-    def usr_get_node(self, p_index):
-        return p_index.internalPointer() if p_index.isValid() else self._state_root
+        self._expanded_list = list()
 
-    def usr_add(self, p_values):
+    def mod_add(self, p_values):
         """
-
+        新增
         :param p_values:
         :return:
         """
-        _pid = None
-        _values = p_values
+        values = p_values
 
-        if 1 == len(self.__state_check):
-            _pid = self.usr_get_node(self.__state_check[0]).content['id']
+        # 父元素只能有一个
+        if 1 == len(self._checked_list):
+            pid = self.node(self._checked_list[0]).content['id']
 
-        if _pid is not None:
-            _values['pid'] = _pid
+            # 设置父元素 id
+            if pid is not None:
+                values['pid'] = pid
 
-        self.__state_cond = self.__service.usr_add(_values)
+        # 新增
+        self._condition = self.service_add(values)
 
-        self.usr_refresh()
+        # 刷新界面
+        self.mod_refresh()
 
-    def usr_delete(self):
+    def mod_delete(self):
         """
-
+        删除
         :return:
         """
-        del_list = [self.usr_get_node(_index).content['id'] for _index in self.__state_check]
-        self.__service.usr_delete(del_list)
+        del_list = [self.node(_index).content['id'] for _index in self._checked_list]
+        self.service_delete(del_list)
 
         # 清空选取 list
-        while self.__state_check:
-            self.__state_check.pop()
+        self._checked_list = list()
 
         # 重置界面
-        self.usr_refresh()
+        self.mod_refresh()
 
-    def usr_editable(self):
+    def mod_editable(self, p_value=None):
+        """
+        设置编辑状态
+        :return:
+        """
+        if p_value is None:
+            self._state_editable = not self._state_editable
+        else:
+            assert isinstance(p_value, bool)
+            self._state_editable = p_value
 
-        self.__state_editable = not self.__state_editable
+    def mod_checkable(self, p_value=None):
+        """
+        设置可选择
+        :param p_value:
+        :return:
+        """
+        if p_value is None:
+            self._state_checkable = not self._state_checkable
+        else:
+            assert isinstance(p_value, bool)
+            self._state_checkable = p_value
 
-    def usr_chk_able(self):
-
-        self.__state_chk_able = not self.__state_chk_able
-
-    def usr_search(self, p_cond):
-
+    def mod_search(self, p_cond):
+        """
+        查询
+        :param p_cond:
+        :return:
+        """
         # Get condition
-        self.__state_cond = dict() if p_cond is None else p_cond
+        self._condition = dict() if p_cond is None else p_cond
 
         # Refresh
-        self.usr_refresh()
+        self.mod_refresh()
 
-    def usr_refresh(self):
-
+    def mod_refresh(self):
+        """
+        刷新
+        :return:
+        """
         # Clean condition
-        for _key, value in self.__state_cond.items():
-            if LibCommon.is_null(value):
-                self.__state_cond.pop(_key)
+        for _key, _value in self._condition.items():
+            if LibCommon.is_null(_value):
+                self._condition.pop(_key)
 
         # Remove node tree
-        self.usr_remove_children(self._state_root)
+        self._root.children = list()
 
         # Search
-        result = self.__service.usr_search(self.__state_cond)
-        self.__state_list = dict() if result is None else result
+        result = self.service_search(self._condition)
+        self._data = result
 
-        if self.__state_list is None:
-            self.__state_list = list()
+        if not isinstance(self._data, list):
+            self._data = list()
 
-        for t_item in self.__state_list:
+        for _item in self._data:
 
-            if ('None' == t_item['pid']) or (t_item['pid'] is None):
-
-                t_node = self.usr_create_tree_node(t_item)
-                self._state_root.append_node(t_node)
+            if ('None' == _item['pid']) or (_item['pid'] is None):
+                self._root.append_node(self.mod_create_tree_node(_item))
 
         # Clean checked list
-        for i in self.__state_check:
-            self.__state_check.remove(i)
+        self._checked_list = list()
 
+        # 重置
         self.reset()
+        self.sig_reset.emit()
 
-    def usr_remove_children(self, p_node):
-
-        while 0 != len(p_node.children):
-
-            for t_node in p_node.children:
-                if 0 == len(t_node.children):
-                    p_node.children.remove(t_node)
-                else:
-                    self.usr_remove_children(t_node)
-
-    def usr_set_data(self, p_para, p_list=None):
+    def mod_set_data(self, p_para, p_list=None):
         """
         设置model数据,并重置界面
         :param p_list:
@@ -507,7 +582,7 @@ class ModelTree(QAbstractItemModel):
             return
 
         if p_list is None:
-            node = self._state_root
+            node = self._root
         else:
             node = p_list
 
@@ -528,9 +603,9 @@ class ModelTree(QAbstractItemModel):
 
             for _child in node.children:
 
-                self.usr_set_data(parameter, _child)
+                self.mod_set_data(parameter, _child)
 
-    def usr_create_tree_node(self, p_cont):
+    def mod_create_tree_node(self, p_cont):
         """
         Add all data to root node
         :param p_cont:
@@ -538,29 +613,217 @@ class ModelTree(QAbstractItemModel):
         """
         _node = TreeNode(p_cont)
 
-        for i in self.__state_list:
+        for i in self._data:
 
             if p_cont['id'] == i['pid']:
 
-                t_node = self.usr_create_tree_node(i)
+                t_node = self.mod_create_tree_node(i)
                 _node.append_node(t_node)
 
         return _node
 
-    def usr_get_checked(self):
-
+    def mod_get_checked(self):
+        """
+        获取可选择列表
+        :return:
+        """
         _checked = []
 
-        for t_index in self.__state_check:
-            _checked.append(self.usr_get_node(t_index).content["id"])
+        for t_index in self._checked_list:
+            _checked.append(self.node(t_index).content["id"])
 
         return _checked
 
-    def usr_get_editable(self):
-        return self.__state_editable
+    def mod_get_editable(self):
+        """
+        获取可编辑属性
+        :return:
+        """
+        return self._state_editable
 
-    def usr_set_current_data(self, p_index):
-        self.__state_current_data = self.usr_get_node(p_index)
+    def mod_set_current_data(self, p_index):
+        """
+        设置当前数据
+        :param p_index:
+        :return:
+        """
+        self._data_selected = self.node(p_index)
 
-    def usr_get_current_data(self):
-        return self.__state_current_data
+    def mod_get_current_data(self):
+        """
+        获取当前数据
+        :return:
+        """
+        return self._data_selected
+
+    def mod_add_expanded(self, p_index):
+        """
+        增加展开
+        :return:
+        """
+        if not p_index.isValid():
+            return
+
+        item_id = self.node(p_index).content['id']
+
+        if item_id not in self._expanded_list:
+            self._expanded_list.append(item_id)
+
+    def mod_remove_expanded(self, p_index):
+        """
+        删除展开
+        :param p_index:
+        :return:
+        """
+        if not p_index.isValid():
+            return
+
+        self._expanded_list.remove(self.node(p_index).content['id'])
+
+    def mod_get_expanded(self):
+        """
+        获取展开 index 列表
+        :return:
+        """
+        index_list = list()
+        for _id in self._expanded_list:
+            index_list.append(self.__get_index_by_id(_id))
+
+        return index_list
+
+    def __get_index_by_id(self, p_id, p_node=None):
+        """
+
+        :param p_id:
+        :return:
+        """
+        parent = self._root if p_node is None else p_node
+
+        for _node in parent.children:
+
+            if _node.content['id'] == p_id:
+                return self.createIndex(parent.get_index(_node), 0, _node)
+
+            if _node.children:
+                _index = self.__get_index_by_id(p_id, _node)
+
+                if QModelIndex() != _index:
+                    return _index
+
+        return QModelIndex()
+
+    @abc.abstractmethod
+    def service_add(self, p_data):
+        """
+        调后台服务新增
+        :param p_data:
+        :return:
+        """
+        pass
+
+    @abc.abstractmethod
+    def service_delete(self, p_list):
+        """
+        调后台服务删除
+        :param p_list:
+        :return:
+        """
+        pass
+
+    @abc.abstractmethod
+    def service_update(self, p_data):
+        """
+        调后台服务更新
+        :param p_data:
+        :return:
+        """
+        pass
+
+    @abc.abstractmethod
+    def service_search(self, p_cond):
+        """
+        调后台服务查询
+        :param p_cond:
+        :return:
+        """
+        pass
+
+
+class ViewTree(QTreeView):
+    """
+    Base tree view
+    """
+    sig_context = OrcSignal(str)
+
+    def __init__(self, p_flag, p_model, p_control):
+
+        QTreeView.__init__(self)
+
+        self._configer = get_config()
+        self._logger = LogClient()
+
+        self._flag = p_flag
+
+        # Model
+        self.model = p_model()
+        self.setModel(self.model)
+
+        # Control
+        self.control = p_control()
+        self.setItemDelegate(self.control)
+
+        # MVC
+        # 可拖拽
+        self.dragEnabled()
+
+        # 可释放
+        self.acceptDrops()
+
+        # 拖拽  indicator
+        self.showDropIndicator()
+
+        # 拖拽模式
+        self.setDragDropMode(QAbstractItemView.InternalMove)
+
+        # 标题拉伸最后一列
+        self.header().setStretchLastSection(True)
+
+        # 无 focus, 去掉蓝框
+        self.setFocusPolicy(Qt.NoFocus)
+
+        # 设置样式
+        self.setStyleSheet(get_theme("TreeView"))
+
+        # 单击设置当前数据
+        self.clicked.connect(self.model.mod_set_current_data)
+
+        # 展开
+        self.expanded.connect(self.model.mod_add_expanded)
+
+        # 收起
+        self.collapsed.connect(self.model.mod_remove_expanded)
+
+        # 重置
+        self.model.sig_reset.connect(self.reset_expand)
+
+    def create_context_menu(self, p_def):
+        """
+        右键菜单
+        :param p_def:
+        :return:
+        """
+        context_menu = ViewContextMenu(p_def)
+
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+
+        # 连接
+        self.customContextMenuRequested.connect(context_menu.show_menu)
+        context_menu.sig_clicked.connect(self.sig_context.emit)
+
+    def reset_expand(self):
+        """
+        重新设置展开状态
+        :return:
+        """
+        for _index in self.model.mod_get_expanded():
+            self.expand(_index)

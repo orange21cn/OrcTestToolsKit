@@ -39,3 +39,8 @@ QComboBox::drop-down:on {
 QComboBox:on {
     padding-top: 20px;
 }
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+}

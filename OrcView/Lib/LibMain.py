@@ -7,6 +7,7 @@ from PySide.QtCore import Signal as OrcSignal
 from PySide.QtCore import QObject
 
 from OrcLib.LibProgram import orc_singleton
+from OrcView.Lib.LibTheme import get_theme
 
 
 class BaseDock(QDockWidget):
@@ -65,6 +66,8 @@ class DockLog(BaseDock):
         log_client = LogClient()
         log_client.sig_log.connect(self.put_log)
 
+        self.setStyleSheet(get_theme('DockBottom'))
+
     def put_log(self, p_text):
         self.__win_log.insertHtml("%s<br>" % p_text)
 
@@ -78,8 +81,17 @@ class LogClient(QObject):
 
         QObject.__init__(self)
 
-    def put_message(self, p_text):
-        self.sig_log.emit("<span style=\"color: green\">Message: %s</span>" % p_text)
+    def debug(self, p_msg):
+        self.sig_log.emit("<span style=\"color: green\">Debug: %s</span>" % p_msg)
 
-    def put_error(self, p_text):
-        self.sig_log.emit("<span style=\"color: red\">Error: %s</span>" % p_text)
+    def info(self, p_msg):
+        self.sig_log.emit("<span style=\"color: green\">Info: %s</span>" % p_msg)
+
+    def warning(self, p_msg):
+        self.sig_log.emit("<span style=\"color: orange\">Warning: %s</span>" % p_msg)
+
+    def error(self, p_msg):
+        self.sig_log.emit("<span style=\"color: red\">Error: %s</span>" % p_msg)
+
+    def critical(self, p_msg):
+        self.sig_log.emit("<span style=\"color: red\">Critical: %s</span>" % p_msg)

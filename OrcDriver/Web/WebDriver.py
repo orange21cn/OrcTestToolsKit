@@ -1,4 +1,5 @@
 # coding=utf-8
+import sys
 import json
 import socket
 import time
@@ -7,13 +8,17 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
 
+from OrcLib import LibCommon
+from OrcLib.LibLog import OrcLog
+from OrcLib import get_config
 from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcDriver.Web.Widget.WidgetA import WidgetA
-from OrcLib.LibLog import OrcLog
-from OrcLib import get_config
+
 from WebDriverService import WebDriverService
+
+LibCommon.set_default_encoding()
 
 
 class DriverSelenium:
@@ -88,11 +93,13 @@ class DriverSelenium:
 
         if "PAGE" == _type:
             _status = self.__get_page(p_cmd)
+
         elif "WIDGET" == _type:
             _status = self.__action(p_cmd)
+
         else:
-            _status = False
             self.__logger.error("Wrong type %s." % _type)
+            return False
 
         self.save_screen()
 
@@ -148,21 +155,27 @@ class DriverSelenium:
 
         if self.__root is None:
 
+            driver_path = self.__driver_configer.get_option(self.__browser, "path")
+
             try:
                 if "IE" == self.__browser:
-                    self.__root = webdriver.Ie()
+                    self.__root = webdriver.Ie(executable_path=driver_path)
+
                 elif "FIREFOX" == self.__browser:
-                    self.__root = webdriver.Firefox()
+                    self.__root = webdriver.Firefox(executable_path=driver_path)
+
                 elif "CHROME" == self.__browser:
-                    self.__root = webdriver.Chrome()
+                    self.__root = webdriver.Chrome(executable_path=driver_path)
+
                 elif "PHANTOMJS" == self.__browser:
-                    driver_path = self.__driver_configer.get_option("PHANTOMJS", "path")
                     self.__root = webdriver.PhantomJS(executable_path=driver_path)
+
                 else:
-                    pass
+                    self.__logger.error("Unsupported browser: %s" % self.__browser)
 
             except WebDriverException:
                 self.__logger.error("Open browser failed.")
+                return False
 
         if "GET" == _page_operation:
             # 设置加载时间
