@@ -12,7 +12,7 @@ from OrcView.Lib.LibViewDef import def_view_widget_def
 
 class WidgetContainer(QWidget):
 
-    sig_selected = OrcSignal(str)
+    sig_selected = OrcSignal(dict)
 
     def __init__(self):
 
@@ -44,7 +44,7 @@ class WidgetContainer(QWidget):
 
         self.setLayout(_layout_main)
 
-        self.__wid_widget_def.sig_selected.connect(self.__wid_widget_det.set_widget_id)
+        self.__wid_widget_def.sig_selected.connect(self.__wid_widget_det.set_widget)
         self.__wid_widget_def.sig_selected.connect(self.sig_selected.emit)
         self.__wid_widget_def.sig_search.connect(self.search_definition)
         self.__wid_widget_def.sig_delete.connect(self.__wid_widget_det.clean)

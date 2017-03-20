@@ -7,14 +7,14 @@ from OrcLib.LibApi import connect_list
 
 from OrcView.Lib.LibView import operate_to_str
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import StaticModelTable
 
 
-class ItemModel(ModelTable):
+class ItemModel(StaticModelTable):
 
     def __init__(self, p_def):
 
-        ModelTable.__init__(self, p_def)
+        StaticModelTable.__init__(self, p_def)
 
         self.__logger = LogClient()
 

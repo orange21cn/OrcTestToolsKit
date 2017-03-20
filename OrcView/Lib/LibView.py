@@ -39,7 +39,7 @@ def clean_layout(p_layout):
                 clean_layout(t_child.layout())
 
 
-def create_editor(parent, p_type):
+def create_editor(p_type):
     """
     :param parent:
     :param p_type: {"TYPE": "LINETEXT",
@@ -56,7 +56,7 @@ def create_editor(parent, p_type):
         if "SEARCH" == p_type["SOURCE"]:
             return OrcLineEdit()
         else:
-            return OrcTextArea(parent)
+            return OrcTextArea()
 
     # 时间显示
     elif "DATETIME" == p_type["TYPE"]:
@@ -84,7 +84,7 @@ def create_editor(parent, p_type):
 
     # 其他
     elif "OPERATE" == p_type["TYPE"]:
-        return OrcOperate(parent)
+        return OrcOperate()
 
     # 其他
     else:
@@ -169,8 +169,8 @@ class OrcTextArea(QTextEdit):
     """
     clicked = OrcSignal()
 
-    def __init__(self, parent):
-        QTextEdit.__init__(self, parent)
+    def __init__(self):
+        QTextEdit.__init__(self)
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 

@@ -29,7 +29,7 @@ class ControlBase(QStyledItemDelegate):
                     SOURCE="EDITOR",
                     FLAG=field.id)
 
-        editor = create_editor(parent, _def)
+        editor = create_editor(_def)
         editor.set_data(index.data(Qt.DisplayRole))
 
         return editor

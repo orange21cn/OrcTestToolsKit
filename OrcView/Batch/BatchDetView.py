@@ -5,7 +5,7 @@ from PySide.QtGui import QWidget
 
 from OrcView.Case.Case.CaseView import CaseView
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibView import OrcPagination
@@ -41,7 +41,7 @@ class BatchDetView(QWidget):
         self.__wid_pagination = OrcPagination()
 
         # Buttons widget
-        wid_buttons = ViewButtons([
+        wid_buttons = OrcButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="search", name=u"查询")

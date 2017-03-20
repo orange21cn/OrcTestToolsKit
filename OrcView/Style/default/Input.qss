@@ -1,5 +1,5 @@
 OrcLineEdit {
-    height: 25px;
+    height: 20px;
     background-color: #FFF;
     border: 1px solid #CCC;
 }
@@ -11,14 +11,14 @@ QTextEdit {
 }
 
 QComboBox {
-    height: 25px;
+    height: 20px;
     background-color: #FFF;
     border: 1px solid #CCC;
 }
 
 QComboBox::drop-down {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     subcontrol-origin: border;
     subcontrol-position: right center;
     background: white;

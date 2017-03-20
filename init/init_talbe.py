@@ -125,7 +125,14 @@ init_value_dictionary = [
     LibDictionary(dict(id="11306", dict_flag="browser", dict_order="6",
                        dict_value="SAFARI", dict_text="SAFARI", dict_desc="")),
     LibDictionary(dict(id="11307", dict_flag="browser", dict_order="7",
-                       dict_value="HTMLUNIT", dict_text="HTMLUNIT", dict_desc=""))]
+                       dict_value="HTMLUNIT", dict_text="HTMLUNIT", dict_desc="")),
+
+    LibDictionary(dict(id="11401", dict_flag="data_src_type", dict_order="1",
+                       dict_value="SQLite", dict_text="SQLite", dict_desc="")),
+    LibDictionary(dict(id="11402", dict_flag="data_src_type", dict_order="2",
+                       dict_value="MySql", dict_text="MySql", dict_desc="")),
+    LibDictionary(dict(id="11403", dict_flag="data_src_type", dict_order="3",
+                       dict_value="Oracle", dict_text="Oracle", dict_desc=""))]
 
 
 init_value_sequence = [

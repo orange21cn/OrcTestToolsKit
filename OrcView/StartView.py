@@ -9,7 +9,7 @@ from OrcView.Batch.BatchDefView import BatchDefView
 from OrcView.Batch.BatchDetView import BatchDetView
 from OrcView.Case.Case.CaseView import CaseView
 from OrcView.Case.Step.StepMain import StepContainer
-from OrcView.Data.DataView import DataView
+from OrcView.Data.Data.DataView import DataView
 from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail

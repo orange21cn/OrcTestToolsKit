@@ -32,6 +32,7 @@ class WidgetDefBus(OrcBus):
 
             # 查询节点及子节点
             elif "tree" == mode:
+
                 if widget_id is not None:
                     result = self._model.usr_search_tree(widget_id)
 
@@ -57,8 +58,17 @@ class WidgetDefBus(OrcBus):
         :return:
         """
         try:
+            # 查找 widget_def_list
+            widget_def_list = self.bus_list_search(dict(type='tree', id=p_id))
+
+            # 获取 widget_def_id_list
+            widget_def_id_list = [widget_def.id for widget_def in widget_def_list]
+
             # 查找 widget_det_list
-            widget_det_list = self.__bus_widget_det.bus_list_search(dict(widget_id=p_id))
+            widget_det_list = list()
+            for _widget_def_id in widget_def_id_list:
+                widget_det_list.extend(
+                    self.__bus_widget_det.bus_list_search(dict(widget_id=_widget_def_id)))
 
             # 获取 widget_det_id_list
             widget_det_id_list = [widget_det.id for widget_det in widget_det_list]
@@ -67,7 +77,8 @@ class WidgetDefBus(OrcBus):
             self.__bus_widget_det.bus_list_delete(widget_det_id_list)
 
             # 删除 widget_def
-            self._model.usr_delete(p_id)
+            for _widget_def_id in widget_def_id_list:
+                self._model.usr_delete(_widget_def_id)
 
         except Exception:
             self._logger.error("Delete widget_def error, input: %s" % p_id)

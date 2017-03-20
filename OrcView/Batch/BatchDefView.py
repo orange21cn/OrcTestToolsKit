@@ -1,17 +1,16 @@
 # coding=utf-8
-from PySide.QtGui import QWidget
-from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import Signal as OrcSignal
+from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QWidget
 
 from OrcLib.LibProgram import orc_singleton
-from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Data.Data.DataAdd import ViewDataAdd
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibViewDef import def_view_batch_def
-from OrcView.Data.DataAdd import ViewDataAdd
-
 from .BatchDefModel import BatchDefModel
 
 
@@ -48,7 +47,7 @@ class BatchDefView(QWidget):
             dict(NAME=u"添加至运行", STR="sig_run")])
 
         # Buttons widget
-        wid_buttons = ViewButtons([
+        wid_buttons = OrcButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),

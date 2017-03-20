@@ -6,7 +6,7 @@ from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
@@ -24,7 +24,7 @@ class WidgetDefControl(ControlBase):
 
 class WidgetDefView(QWidget):
 
-    sig_selected = OrcSignal(str)
+    sig_selected = OrcSignal(dict)
     sig_search = OrcSignal()
     sig_delete = OrcSignal()
 
@@ -49,7 +49,7 @@ class WidgetDefView(QWidget):
 
         # Buttons window
         if self.__type is None:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="add", name=u'增加'),
                 dict(id="delete", name=u"删除"),
                 dict(id="update", name=u"修改", type="CHECK"),
@@ -60,7 +60,7 @@ class WidgetDefView(QWidget):
             self.display.clicked[QModelIndex].connect(self.widget_sig)
 
         elif 'SINGLE' == self.__type:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="search", name=u"查询")
             ])
 
@@ -71,7 +71,7 @@ class WidgetDefView(QWidget):
             self.display.doubleClicked[QModelIndex].connect(self.widget_sig)
 
         else:
-            wid_buttons = ViewButtons([])
+            wid_buttons = OrcButtons([])
 
         # win_add
         self.__win_add = ViewAdd(def_view_widget_def)
@@ -133,8 +133,8 @@ class WidgetDefView(QWidget):
         :param p_index:
         :return:
         """
-        _widget_id = self.display.model.node(p_index).content["id"]
-        self.sig_selected[str].emit(str(_widget_id))
+        _widget_def = self.display.model.node(p_index).content
+        self.sig_selected.emit(_widget_def)
 
         if self.__type is not None:
             self.close()

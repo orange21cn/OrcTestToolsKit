@@ -76,10 +76,20 @@ class ViewWebMain(QWidget):
         self.__test.sig_exec.connect(self.send)
 
     def set_page(self, p_id):
-        self.__test.set_type("PAGE", p_id)
+        """
+        设置页面信息
+        :param p_id:
+        :return:
+        """
+        self.__test.set_type('PAGE', p_id)
 
-    def set_widget(self, p_id):
-        self.__test.set_type("WIDGET", p_id)
+    def set_widget(self, p_info):
+        """
+        设置控件信息
+        :param p_info:
+        :return:
+        """
+        self.__test.set_type('WIDGET', p_info)
 
     def send(self):
         # Todo 接口调用方式
@@ -88,11 +98,11 @@ class ViewWebMain(QWidget):
                      ENV=self.__test.env,
                      OPERATION=self.__test.operation,
                      DATA=self.__test.data,
-                     BROWSER="FIREFOX")
+                     BROWSER='FIREFOX')
 
         from OrcLib.LibNet import OrcSocketResource
 
-        _resource = OrcSocketResource("DriverWeb")
+        _resource = OrcSocketResource('DriverWeb')
 
         _result = _resource.get(_data)
         self.__test.set_status(_result)
@@ -142,7 +152,7 @@ class WidgetTest(QWidget):
         _layout_top.addWidget(QLabel(u"数据:"), 4, 0)
         _layout_top.addWidget(self.__widget_data, 4, 1)
 
-        self.__edit_status = OrcTextArea(self)
+        self.__edit_status = OrcTextArea()
         self.__edit_status.setReadOnly(True)
 
         # 按钮
@@ -178,18 +188,18 @@ class WidgetTest(QWidget):
     def __set_data(self):
         self.data = self.__widget_data.get_data()
 
-    def set_type(self, p_type, p_id):
+    def set_type(self, p_type, p_info):
 
         # 设置对象类型
         _type_text = self.__dict.get_dict("operate_object_type", p_type)[0].dict_text
         self.__edit_type.set_data(_type_text)
 
-        self.id = p_id
+        self.id = p_info
         self.type = p_type
 
         if "PAGE" == p_type:
 
-            _page_id, _page_flg, _page_env = self.__service.get_page_key(p_id)
+            _page_id, _page_flg, _page_env = self.__service.get_page_key(p_info)
             _page_key = "%s[%s]" % (_page_flg, _page_env)
 
             self.id = _page_id
@@ -211,8 +221,12 @@ class WidgetTest(QWidget):
 
         elif "WIDGET" == p_type:
 
-            _widget_key = self.__service.get_widget_key(p_id)
-            _widget_type = self.__service.get_widget_type(p_id)
+            # Todo 删除用方法
+            # _widget_key = self.__service.get_widget_key(p_info)
+            # _widget_type = self.__service.get_widget_type(p_info)
+
+            _widget_key = p_info['widget_path']
+            _widget_type = p_info['widget_type']
 
             # 设置控件标识
             self.__edit_flag.set_data(_widget_key)

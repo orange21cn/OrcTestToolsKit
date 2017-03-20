@@ -3,14 +3,14 @@ from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import StaticModelTable
 
 
-class WidgetDetModel(ModelTable):
+class WidgetDetModel(StaticModelTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self, 'WidgetDet')
+        StaticModelTable.__init__(self, 'WidgetDet')
 
         self.__logger = LogClient()
         self.__resource_widget_det = OrcResource("WidgetDet")

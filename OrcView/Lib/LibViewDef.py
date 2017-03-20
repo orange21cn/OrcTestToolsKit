@@ -39,7 +39,7 @@ class ViewDefinition(object):
     """
     表定义
     """
-    def __init__(self, p_flag):
+    def __init__(self, p_flag=None):
 
         self.fields = list()
         self.fields_display = list()
@@ -58,6 +58,8 @@ class ViewDefinition(object):
             self._def = def_view_item
         elif "Data" == p_flag:
             self._def = def_view_data
+        elif "DataSrc" == p_flag:
+            self._def = def_view_data_src
         elif "PageDef" == p_flag:
             self._def = def_view_page_def
         elif "PageDet" == p_flag:
@@ -78,7 +80,6 @@ class ViewDefinition(object):
         for _field_def in self._def:
 
             _field = FieldDefinition(_field_def)
-
             self.fields.append(_field)
 
             if _field.display:
@@ -270,6 +271,15 @@ def_view_data = [
     dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+# DataSrc 界面
+def_view_data_src = [
+    dict(ID="id", NAME=u"序号", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="name", NAME=u"名称", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="desc", NAME=u"描述", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # WidgetDef 界面定义

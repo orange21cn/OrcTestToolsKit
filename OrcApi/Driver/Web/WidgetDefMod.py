@@ -82,10 +82,11 @@ class WidgetDefMod:
         :param p_id:
         :return:
         """
-        batch = self.usr_search(dict(id=p_id))
-
-        if batch:
-            return self.__get_tree(batch[0])
+        print "OKKKKKK"
+        widget = self.usr_search(dict(id=p_id))
+        print '0000', p_id
+        if widget:
+            return self.__get_tree(widget[0])
         else:
             return list()
 
@@ -124,13 +125,13 @@ class WidgetDefMod:
         :param p_item:
         :return:
         """
-        _tree = [p_item]
-        _items = self.__session.query(WebWidgetDef).filter(WebWidgetDef.pid == p_item.id).all()
+        widget_tree = [p_item]
+        widget_items = self.__session.query(WebWidgetDef).filter(WebWidgetDef.pid == p_item.id).all()
 
-        for t_item in _items:
-            _tree.extend(self.__get_tree(t_item))
+        for _item in widget_items:
+            widget_tree.extend(self.__get_tree(_item))
 
-        return _tree
+        return widget_tree
 
     def usr_add(self, p_data):
         """

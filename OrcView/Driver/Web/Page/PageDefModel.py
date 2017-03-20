@@ -3,14 +3,14 @@ from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import StaticModelTable
 
 
-class PageDefModel(ModelTable):
+class PageDefModel(StaticModelTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self, 'PageDef')
+        StaticModelTable.__init__(self, 'PageDef')
 
         self.__logger = LogClient()
         self.__resource_page_def = OrcResource("PageDef")

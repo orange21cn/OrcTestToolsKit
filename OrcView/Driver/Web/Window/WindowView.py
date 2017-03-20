@@ -4,7 +4,7 @@ from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibViewDef import def_view_window_def
 
@@ -44,7 +44,7 @@ class WindowView(QWidget):
             dict(id="update", name=u"修改", type="CHECK"),
             dict(id="delete", name=u"删除")
         ]
-        wid_buttons = ViewButtons(btn_definition)
+        wid_buttons = OrcButtons(btn_definition)
         wid_buttons.align_back()
 
         # Layout

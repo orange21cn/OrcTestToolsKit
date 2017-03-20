@@ -92,20 +92,12 @@ class ViewOperate(QWidget):
         self.sig_submit.emit(json.dumps(_data))
         self.close()
 
-    def __set_widget(self, p_id):
+    def __set_widget(self, p_data):
         """
-        :param p_id: widget id
+        :param p_data:
         :return:
         """
-        resource = OrcResource('WidgetDef')
-
-        result = resource.get(path=p_id)
-
-        # 检查结果
-        if not ResourceCheck.result_status(result, u"删除控件"):
-            return False
-
-        self.__operate_data = result.data
+        self.__operate_data = p_data
         self.__widget_input.set_data(self.__operate_data['widget_path'])
 
         # 设置操作方式

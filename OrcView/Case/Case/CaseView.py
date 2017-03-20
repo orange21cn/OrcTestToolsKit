@@ -4,15 +4,13 @@ from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
-from OrcLib.LibProgram import orc_singleton
-from OrcView.Data.DataAdd import ViewDataAdd
+from OrcView.Data.Data.DataAdd import ViewDataAdd
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibSearch import ViewButtons
-from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibViewDef import def_view_case_def
-
 from .CaseModel import CaseModel
 
 
@@ -23,7 +21,6 @@ class CaseControl(ControlBase):
         ControlBase.__init__(self, 'Case')
 
 
-@orc_singleton
 class CaseView(QWidget):
 
     sig_case_det = OrcSignal(dict)
@@ -59,7 +56,7 @@ class CaseView(QWidget):
 
         # Buttons widget
         if self._type is None:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="add", name=u"增加"),
                 dict(id="delete", name=u"删除"),
                 dict(id="update", name=u"修改", type="CHECK"),
@@ -70,7 +67,7 @@ class CaseView(QWidget):
             self.display.doubleClicked[QModelIndex].connect(self.case_detail)
 
         elif 'SINGLE' == self._type:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="search", name=u"查询"),
                 dict(id="cancel", name=u"取消")
             ])
@@ -81,14 +78,14 @@ class CaseView(QWidget):
             self.display.doubleClicked.connect(self.select_one)
 
         elif 'MULTI' == self._type:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="select", name=u"选择"),
                 dict(id="search", name=u"查询"),
                 dict(id="cancel", name=u"取消")
             ])
 
         else:
-            wid_buttons = ViewButtons([])
+            wid_buttons = OrcButtons([])
 
         # win add case
         self.__win_add = ViewAdd(def_view_case_def)
@@ -198,3 +195,27 @@ class CaseView(QWidget):
         _res = self.display.model.mod_get_current_data().content["id"]
         self.sig_selected[dict].emit([_res])
         self.close()
+
+#
+# @orc_singleton
+# class CaseView(CaseBaseView):
+#
+#     def __init__(self):
+#
+#         CaseBaseView.__init__(self)
+#
+#
+# class CaseSelectView(CaseBaseView):
+#
+#     def __init__(self):
+#
+#         CaseBaseView.__init__(self, 'MULTI')
+#
+#
+# class FuncSelectView(CaseBaseView):
+#
+#     def __init__(self):
+#
+#         CaseBaseView.__init__(self, 'SINGLE')
+#
+#         self.display.model.set_checkable(False)

@@ -5,7 +5,7 @@ from PySide.QtGui import QWidget
 from PySide.QtWebKit import QWebView
 from PySide.QtGui import QVBoxLayout
 
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from ReportDetService import ReportDetService
 
 
@@ -24,7 +24,7 @@ class ViewReportDet(QWidget):
         self.__wid_display = QWebView()
 
         # buttons
-        wid_buttons = ViewButtons([
+        wid_buttons = OrcButtons([
             dict(id="refresh", name=u'更新'),
             dict(id="export", name=u'导出')
         ])

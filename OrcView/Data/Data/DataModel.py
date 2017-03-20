@@ -6,14 +6,14 @@ from OrcLib.LibProcess import get_mark
 from OrcLib.LibProcess import get_widget_mark
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibTable import StaticModelTable
 
 
-class DataModel(ModelTable):
+class DataModel(StaticModelTable):
 
     def __init__(self):
 
-        ModelTable.__init__(self, 'Data')
+        StaticModelTable.__init__(self, 'Data')
 
         self.__logger = LogClient()
 

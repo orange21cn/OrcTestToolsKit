@@ -54,7 +54,7 @@ class OrcConfig:
         _rtn = False
 
         # 如果配置项不存在返回失败
-        if self.__conf.has_option(p_sec, p_key):
+        if self.__conf.has_section(p_sec):
 
             _file = open(self.__file, "w")
 
@@ -66,3 +66,46 @@ class OrcConfig:
             _rtn = True
 
         return _rtn
+
+    def del_option(self, p_sec, p_key):
+        """
+        删除配置项
+        :param p_sec:
+        :param p_key:
+        :return:
+        """
+        _file = open(self.__file, "w")
+        self.__conf.remove_option(p_sec, p_key)
+        self.__conf.write(_file)
+
+        _file.close()
+
+    def add_section(self, p_sec):
+        """
+        增加配置项
+        :param p_sec:
+        :return:
+        """
+        if self.__conf.has_section(p_sec):
+            return
+
+        self.__conf.add_section(p_sec)
+
+    def del_section(self, p_sec):
+        """
+        删除配置项
+        :param p_sec:
+        :return:
+        """
+        _file = open(self.__file, "w")
+        self.__conf.remove_section(p_sec)
+        self.__conf.write(_file)
+
+        _file.close()
+
+    def get_sections(self):
+        """
+        获取所有 section
+        :return:
+        """
+        return self.__conf.sections()

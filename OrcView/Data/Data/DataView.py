@@ -1,19 +1,17 @@
 # coding=utf-8
-from PySide.QtGui import QWidget
-from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QWidget
 
 from OrcLib.LibProgram import orc_singleton
-from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Data.Data.DataModel import DataModel
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibViewDef import def_view_data
-from OrcView.Lib.LibView import OrcPagination
-
 from OrcView.Lib.LibControl import ControlBase
-
-from DataModel import DataModel
+from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibTable import ViewTable
+from OrcView.Lib.LibView import OrcPagination
+from OrcView.Lib.LibViewDef import def_view_data
 
 
 class DataControl(ControlBase):
@@ -46,7 +44,7 @@ class DataView(QWidget):
         self.__wid_pagination = OrcPagination()
 
         # Buttons widget
-        _wid_buttons = ViewButtons([
+        _wid_buttons = OrcButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),

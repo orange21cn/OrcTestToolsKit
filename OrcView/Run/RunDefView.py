@@ -5,7 +5,7 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 
 from .RunDefModel import RunDefModel
 
@@ -34,7 +34,7 @@ class RunDefView(QWidget):
         self.display = ViewTree('RunDef', RunDefModel, RunDefControl)
 
         # Buttons window
-        self.__wid_buttons = ViewButtons([
+        self.__wid_buttons = OrcButtons([
             dict(id="add", name=u'增加'),
             dict(id="delete", name=u"删除"),
             dict(id="search", name=u'查询'),

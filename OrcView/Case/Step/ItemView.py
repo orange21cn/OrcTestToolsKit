@@ -5,17 +5,16 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QStackedWidget
 from PySide.QtGui import QWidget
 
+from OrcView.Case.Case.CaseView import CaseView
+from OrcView.Data.Data.DataAdd import ViewDataAdd
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibSearch import ViewButtons
 from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibViewDef import def_view_item
-from OrcView.Case.Case.CaseView import CaseView
-from OrcView.Data.DataAdd import ViewDataAdd
-
-from .OperateView import ViewOperate
-from .ItemModel import ItemNormalModel
 from .ItemModel import ItemFuncModel
+from .ItemModel import ItemNormalModel
+from .OperateView import ViewOperate
 
 
 class ItemControl(ControlBase):
@@ -61,7 +60,7 @@ class ItemView(QWidget):
         self.func_display.create_context_menu(menu_def)
 
         # Buttons widget
-        wid_buttons = ViewButtons([
+        wid_buttons = OrcButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),

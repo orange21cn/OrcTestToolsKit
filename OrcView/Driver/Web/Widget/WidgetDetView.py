@@ -4,7 +4,7 @@ from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_widget_det
 
@@ -25,13 +25,13 @@ class WidgetDetView(QWidget):
         QWidget.__init__(self)
 
         # Current widget id
-        self.__widget_id = None
+        self.__widget_info = None
 
         # Data result display widget
         self.display = ViewTable('WidgetDet', WidgetDetModel, WidgetDetControl)
 
         # Buttons widget
-        wid_buttons = ViewButtons([
+        wid_buttons = OrcButtons([
             dict(id="add", name=u"增加"),
             dict(id="delete", name=u"删除"),
             dict(id="update", name=u"修改", type="CHECK"),
@@ -62,7 +62,7 @@ class WidgetDetView(QWidget):
         显示新增弹出框
         :return:
         """
-        if self.__widget_id is not None:
+        if self.__widget_info is not None:
             self.__win_add.show()
 
     def add(self, p_data):
@@ -72,24 +72,25 @@ class WidgetDetView(QWidget):
         :return:
         """
         _data = p_data
-        _data["widget_id"] = self.__widget_id
+        _data["widget_id"] = self.__widget_info['id']
         self.display.model.mod_add(_data)
 
-    def set_widget_id(self, p_widget_id):
+    def set_widget(self, p_widget_info):
         """
         设置控件 id
-        :param p_widget_id:
+        :param p_widget_info:
         :return:
         """
-        self.__widget_id = p_widget_id
-        self.display.model.mod_search({"widget_id": self.__widget_id})
+
+        self.__widget_info = p_widget_info
+        self.display.model.mod_search({"widget_id": self.__widget_info['id']})
 
     def clean(self):
         """
         清空
         :return:
         """
-        self.__widget_id = None
+        self.__widget_info = None
         self.display.model.mod_clean()
 
     def operate(self, p_flag):

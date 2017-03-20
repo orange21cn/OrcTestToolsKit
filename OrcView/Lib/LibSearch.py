@@ -13,7 +13,7 @@ from OrcView.Lib.LibView import create_editor
 from OrcView.Lib.LibTheme import get_theme
 
 
-class ViewButtons(QWidget):
+class OrcButtons(QWidget):
 
     sig_clicked = OrcSignal(str)
 
@@ -87,9 +87,7 @@ class ViewButtons(QWidget):
         :param p_id:
         :return:
         """
-        print p_id
         if p_id in self.__buttons:
-            print p_id
             self.__buttons[p_id].setEnabled(False)
 
     def set_enable(self, p_id):
@@ -100,6 +98,14 @@ class ViewButtons(QWidget):
         """
         if p_id in self.__buttons:
             self.__buttons[p_id].setEnabled(True)
+
+    def get_status(self, p_id):
+        """
+        获取按钮状态
+        :param p_id:
+        :return:
+        """
+        return self.__buttons[p_id].isChecked()
 
 
 class ViewSearch(QWidget):
@@ -154,7 +160,7 @@ class ViewSearch(QWidget):
             _def = dict(TYPE=t_def["TYPE"],
                         SOURCE="SEARCH",
                         FLAG=t_def["ID"])
-            self.__inputs[t_def['ID']] = create_editor(self, _def)
+            self.__inputs[t_def['ID']] = create_editor(_def)
 
             # 控件布局
             _layout = QHBoxLayout()

@@ -1,9 +1,7 @@
-from OrcLib.LibNet import OrcResource
+import re
+import json
+from OrcApi import orc_db
+from OrcLib.LibDatabase import WebWidgetDef
 
 
-test = OrcResource("RunTime")
-
-# test.post(dict(module='Run', data_flag='run_flag', data_value=True))
-# print test.get(parameter=dict(module='Runa', data_flag='run_flag')).data
-print bool('0')
-print bool('1')
+print json.loads('abc')

@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import re
 import threading
 
 from OrcLib import get_config
@@ -80,7 +81,7 @@ class RunLaunch(RunData):
         """
         # 运行测试
         item_pid = p_path["pid"]
-        item_id = p_path["id"]
+        item_id = re.sub('.*:', '', p_path["id"])
         item_path = None
 
         client_ip = p_path["ip"]

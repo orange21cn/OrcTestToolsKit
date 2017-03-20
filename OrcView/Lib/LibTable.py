@@ -26,7 +26,7 @@ class ModelTableBase(QAbstractTableModel):
 
         QAbstractTableModel.__init__(self)
 
-        resource_dict = OrcResource("Dict")
+        self.__resource_dict = OrcResource("Dict")
         self.__logger = OrcLog("view.table.model")
 
         # 模型数据
@@ -47,11 +47,14 @@ class ModelTableBase(QAbstractTableModel):
         # 当前可编辑状态
         self._state_editable = False
 
-        # 可选择状态 todo
-        self.__state_checkable = True
+        # 可选择状态
+        self._state_checkable = True
 
         # SELECT 类型的字段
         self.__definition_select = dict()
+
+        # 记录数
+        self._record_num = 0
 
         # 获取 SELECT 类型 value/text 数据对
         # {id: {value: text}, id: ....}
@@ -61,15 +64,12 @@ class ModelTableBase(QAbstractTableModel):
 
             if _field.display and "SELECT" == _field.type:
 
-                _res = resource_dict.get(parameter=dict(dict_flag=_field.id))
+                _res = self.__resource_dict.get(parameter=dict(dict_flag=_field.id))
 
                 if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
                     break
 
                 self.__definition_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
-
-        # 记录数
-        self._record_num = 0
 
     def headerData(self, section, orientation, role):
         """
@@ -107,7 +107,7 @@ class ModelTableBase(QAbstractTableModel):
         if self._state_editable and field.edit:
             flag |= Qt.ItemIsEditable
 
-        if index.column() == 0:
+        if index.column() == 0 and self._state_checkable:
             flag |= Qt.ItemIsSelectable
             flag |= Qt.ItemIsUserCheckable
 
@@ -167,7 +167,7 @@ class ModelTableBase(QAbstractTableModel):
 
         elif role == Qt.CheckStateRole:
 
-            if 0 == index.column():
+            if 0 == index.column() and self._state_checkable:
 
                 if index.row() in self._checked_list:
                     return Qt.Checked
@@ -211,11 +211,19 @@ class ModelTableBase(QAbstractTableModel):
             return True
 
 
-class ModelTable(ModelTableBase):
+class StaticModelTable(ModelTableBase):
 
     def __init__(self, p_flg):
 
         ModelTableBase.__init__(self, p_flg)
+
+    def mod_checkable(self, p_flag):
+        """
+        设置可选择状态
+        :param p_flag:
+        :return:
+        """
+        self._state_checkable = p_flag
 
     def mod_editable(self):
         """
@@ -259,6 +267,15 @@ class ModelTable(ModelTableBase):
         # 重置界面
         self.mod_refresh()
 
+    def mod_update(self, p_data):
+        """
+        更新数据
+        :param p_data:
+        :return:
+        """
+        self.service_update(p_data)
+        self.mod_refresh()
+
     def mod_up(self):
         """
         上移
@@ -295,7 +312,7 @@ class ModelTable(ModelTableBase):
         :return:
         """
         if self._condition is None:
-            return
+            self._condition = dict()
 
         # Clean condition
         for _key, value in self._condition.items():

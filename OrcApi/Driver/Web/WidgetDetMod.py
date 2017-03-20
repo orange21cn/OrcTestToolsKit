@@ -32,7 +32,7 @@ class WidgetDetMod:
 
         # db session
         result = self.__session.query(WebWidgetDet)
-
+        print '==--==', p_cond
         if 'id' in cond:
 
             # 查询支持多 id

@@ -9,7 +9,7 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
 from OrcLib.LibCommon import is_null
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibView import create_editor
 
@@ -41,7 +41,7 @@ class ViewAdd(QWidget):
             _name = self.__fields[_index]["NAME"]
             _ess = self.__fields[_index]["ESSENTIAL"]
 
-            _widget = create_editor(self, dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
+            _widget = create_editor(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
             self.widgets[_id] = dict(
                 TYPE=_type,
@@ -60,7 +60,7 @@ class ViewAdd(QWidget):
             _lay_inputs.addWidget(_label, _index, 0)
             _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
 
-        buttons = ViewButtons([
+        buttons = OrcButtons([
             dict(id="submit", name=u"提交"),
             dict(id="cancel", name=u"取消")
         ])

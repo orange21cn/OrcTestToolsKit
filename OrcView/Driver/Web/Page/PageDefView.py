@@ -5,7 +5,7 @@ from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibSearch import ViewButtons
+from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import ViewSearch
@@ -45,7 +45,7 @@ class PageDefView(QWidget):
 
         # Buttons widget
         if p_type is None:
-            wid_buttons = ViewButtons([
+            wid_buttons = OrcButtons([
                 dict(id="add", name=u"增加"),
                 dict(id="delete", name=u"删除"),
                 dict(id="update", name=u"修改", type="CHECK"),
@@ -55,7 +55,7 @@ class PageDefView(QWidget):
             # 单击更新页面内容界面
             self.display.clicked[QModelIndex].connect(self.select)
         else:
-            wid_buttons = ViewButtons([dict(id="search", name=u"查询")])
+            wid_buttons = OrcButtons([dict(id="search", name=u"查询")])
             self.display.doubleClicked.connect(self.select)
 
         # win_add
