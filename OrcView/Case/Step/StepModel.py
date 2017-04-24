@@ -4,14 +4,14 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibApi import connect_list
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import StaticModelTable
+from OrcView.Lib.LibTable import ModelTable
 
 
-class StepModel(StaticModelTable):
+class StepModel(ModelTable):
 
     def __init__(self):
 
-        StaticModelTable.__init__(self, 'Step')
+        ModelTable.__init__(self, 'Step')
 
         self.__logger = LogClient()
 

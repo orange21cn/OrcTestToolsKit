@@ -1,5 +1,4 @@
 # coding=utf-8
-from OrcLib import init_log
 from OrcLib.LibNet import OrcLog
 from OrcLib.LibException import OrcApiModelFailException
 

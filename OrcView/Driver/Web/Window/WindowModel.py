@@ -4,14 +4,14 @@ from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import StaticModelTable
+from OrcView.Lib.LibTable import ModelTable
 
 
-class WindowModel(StaticModelTable):
+class WindowModel(ModelTable):
 
     def __init__(self):
 
-        StaticModelTable.__init__(self, 'Window')
+        ModelTable.__init__(self, 'Window')
 
         self.__logger = LogClient()
 

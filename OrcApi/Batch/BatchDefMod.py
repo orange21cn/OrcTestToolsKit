@@ -143,38 +143,38 @@ class BatchDefMod(TabBatchDef):
         :param p_data:
         :return:
         """
-        _node = TabBatchDef()
+        node = TabBatchDef()
 
         # Create id
-        _node.id = gen_id("batch_def")
+        node.id = gen_id("batch_def")
 
         # batch_no
-        _node.batch_no = self.__create_no()
+        node.batch_no = self.__create_no()
 
         # batch_type
-        _node.batch_type = p_data['batch_type'] if 'batch_type' in p_data else None
+        node.batch_type = p_data['batch_type'] if 'batch_type' in p_data else None
 
         # pid
-        _node.pid = p_data['pid'] if 'pid' in p_data else None
+        node.pid = p_data['pid'] if 'pid' in p_data else None
 
         # batch_name
-        _node.batch_name = p_data['batch_name'] if 'batch_name' in p_data else ""
+        node.batch_name = p_data['batch_name'] if 'batch_name' in p_data else ""
 
         # batch_desc, comment
-        _node.batch_desc = p_data['batch_desc'] if 'batch_desc' in p_data else ""
-        _node.comment = p_data['comment'] if 'comment' in p_data else ""
+        node.batch_desc = p_data['batch_desc'] if 'batch_desc' in p_data else ""
+        node.comment = p_data['comment'] if 'comment' in p_data else ""
 
         # create_time, modify_time
-        _node.create_time = datetime.now()
-        _node.modify_time = datetime.now()
+        node.create_time = datetime.now()
+        node.modify_time = datetime.now()
 
         try:
-            self.__session.add(_node)
+            self.__session.add(node)
             self.__session.commit()
         except:
             raise OrcDatabaseException
 
-        return _node
+        return node
 
     def __create_no(self):
         """

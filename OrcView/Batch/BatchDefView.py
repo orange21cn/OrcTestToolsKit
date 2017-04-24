@@ -99,7 +99,7 @@ class BatchDefView(QWidget):
         elif "delete" == p_flag:
             self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.mod_editable()
+            self.display.model.editable()
         elif "search" == p_flag:
             self.search()
         else:

@@ -11,28 +11,28 @@ class FieldDefinition(object):
     def __init__(self, p_field_def):
 
         # 字段 id
-        self.id = p_field_def["ID"]
+        self.id = None if 'ID' not in p_field_def else p_field_def["ID"]
 
         # 字段名称
-        self.name = p_field_def["NAME"]
+        self.name = None if 'NAME' not in p_field_def else p_field_def["NAME"]
 
         # 字段类型
-        self.type = p_field_def["TYPE"]
+        self.type = None if 'TYPE' not in p_field_def else p_field_def["TYPE"]
 
         # 字段是否显示
-        self.display = p_field_def["DISPLAY"]
+        self.display = None if 'DISPLAY' not in p_field_def else p_field_def["DISPLAY"]
 
         # 字段是否可显示
-        self.edit = p_field_def["EDIT"]
+        self.edit = None if 'EDIT' not in p_field_def else p_field_def["EDIT"]
 
         # 字段是否可查询
-        self.search = p_field_def["SEARCH"]
+        self.search = None if 'SEARCH' not in p_field_def else p_field_def["SEARCH"]
 
         # 字段是否在新增中显示
-        self.add = p_field_def["ADD"]
+        self.add = None if 'ADD' not in p_field_def else p_field_def["ADD"]
 
         # 字段在新增是是否必填字段
-        self.essential = p_field_def["ESSENTIAL"]
+        self.essential = None if 'ESSENTIAL' not in p_field_def else p_field_def["ESSENTIAL"]
 
 
 class ViewDefinition(object):
@@ -46,34 +46,27 @@ class ViewDefinition(object):
 
         self._def = list()
 
-        if "BatchDef" == p_flag:
-            self._def = def_view_batch_def
-        elif "BatchDet" == p_flag:
-            self._def = def_view_batch_det
-        elif "Case" == p_flag:
-            self._def = def_view_case_def
-        elif "Step" == p_flag:
-            self._def = def_view_step
-        elif "Item" == p_flag:
-            self._def = def_view_item
-        elif "Data" == p_flag:
-            self._def = def_view_data
-        elif "DataSrc" == p_flag:
-            self._def = def_view_data_src
-        elif "PageDef" == p_flag:
-            self._def = def_view_page_def
-        elif "PageDet" == p_flag:
-            self._def = def_view_page_det
-        elif "WidgetDef" == p_flag:
-            self._def = def_view_widget_def
-        elif "WidgetDet" == p_flag:
-            self._def = def_view_widget_det
-        elif "Window" == p_flag:
-            self._def = def_view_window_def
-        elif "RunDef" == p_flag:
-            self._def = def_view_run_def
-        elif "RunDet" == p_flag:
-            self._def = def_view_run_det
+        rel_list = dict(
+            BatchDef=def_view_batch_def,
+            BatchDet=def_view_batch_det,
+            Case=def_view_case_def,
+            Step=def_view_step,
+            Item=def_view_item,
+            Data=def_view_data,
+            DataSrc=def_view_data_src,
+            RunTime=def_view_run_time,
+            PageDef=def_view_page_def,
+            PageDet=def_view_page_det,
+            WidgetDef=def_view_widget_def,
+            WidgetDet=def_view_widget_det,
+            Window=def_view_window_def,
+            RunDef=def_view_run_def,
+            RunDet=def_view_run_det)
+
+        if isinstance(p_flag, list):
+            self._def = p_flag
+        elif p_flag in rel_list:
+            self._def = rel_list[p_flag]
         else:
             pass
 
@@ -263,6 +256,8 @@ def_view_data = [
     dict(ID="data_order", NAME=u"数据顺序", TYPE="LINETEXT",
          DISPLAY=True, EDIT=True, SEARCH=True, ADD=False, ESSENTIAL=False),
     dict(ID="data_mode", NAME=u"数据类型", TYPE="SELECT",
+         DISPLAY=False, EDIT=False, SEARCH=False, ADD=True, ESSENTIAL=False),
+    dict(ID="data_src_type", NAME=u"数据源", TYPE="DATASRC",
          DISPLAY=True, EDIT=True, SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="data_value", NAME=u"数据", TYPE="TEXTAREA",
          DISPLAY=True, EDIT=True, SEARCH=True, ADD=True, ESSENTIAL=False),
@@ -280,6 +275,18 @@ def_view_data_src = [
     dict(ID="name", NAME=u"名称", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="desc", NAME=u"描述", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+def_view_run_time = [
+    dict(ID="id", NAME=u"序号", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="module", NAME=u"模块", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="data_flag", NAME=u"数据标识", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="data_index", NAME=u"序号", TYPE="LINETEXT",
+         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="data_value", NAME=u"数值", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # WidgetDef 界面定义

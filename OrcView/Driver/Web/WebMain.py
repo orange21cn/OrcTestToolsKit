@@ -9,16 +9,17 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
 from OrcLib.LibProgram import orc_singleton
+from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
 from OrcView.Driver.Web.Page.PageMain import PageContainer
 from OrcView.Driver.Web.Widget.WidgetMain import WidgetContainer
 from OrcView.Driver.Web.Window.WindowView import WindowView
-from OrcView.Lib.LibDict import LibDict
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibView import OrcTextArea
-from OrcView.Lib.LibView import SelectWidgetOperation
-from OrcView.Lib.LibView import SelectWidgetType
+from OrcView.Lib.LibView import OrcSelectWidgetOperation
+from OrcView.Lib.LibView import OrcSelectWidgetType
 from WebService import WebMainService
 
 
@@ -116,7 +117,7 @@ class WidgetTest(QWidget):
 
         QWidget.__init__(self)
 
-        self.__dict = LibDict()
+        self.__resource_dict = OrcResource('Dict')
         self.__service = WebMainService()
 
         self.id = None
@@ -126,58 +127,69 @@ class WidgetTest(QWidget):
         self.env = None
 
         # 输入框
-        _layout_top = QGridLayout()
+        layout_top = QGridLayout()
 
-        self.__edit_type = OrcSelect()  # 类型,页面或者控件
-        self.__edit_flag = OrcLineEdit()  # 标识符
-        self.__widget_type = SelectWidgetType(True)  # 控件类型
-        self.__widget_ope = SelectWidgetOperation(True)  # 控件操作类型
+        # 类型,页面或者控件
+        self.__edit_type = OrcSelect(p_empty=True)
+        self.__edit_type.set_type("operate_object_type")
+
+        # 标识符
+        self.__edit_flag = OrcLineEdit()
+
+        # 控件类型
+        self.__widget_type = OrcSelectWidgetType(p_empty=True)
+
+        # 控件操作类型
+        self.__widget_ope = OrcSelectWidgetOperation(p_empty=True)
+
+        # 数据输入
         self.__widget_data = OrcLineEdit()
 
-        self.__edit_type.set_empty()
-        self.__edit_type.set_flag("operate_object_type")
         self.__edit_type.setEnabled(False)
         self.__edit_flag.setEnabled(False)
         self.__widget_type.setEnabled(False)
         self.__widget_data.setEnabled(False)
 
-        _layout_top.addWidget(QLabel(u"类型:"), 0, 0)
-        _layout_top.addWidget(self.__edit_type, 0, 1)
-        _layout_top.addWidget(QLabel(u"标识:"), 1, 0)
-        _layout_top.addWidget(self.__edit_flag, 1, 1)
-        _layout_top.addWidget(QLabel(u"控件:"), 2, 0)
-        _layout_top.addWidget(self.__widget_type, 2, 1)
-        _layout_top.addWidget(QLabel(u"操作:"), 3, 0)
-        _layout_top.addWidget(self.__widget_ope, 3, 1)
-        _layout_top.addWidget(QLabel(u"数据:"), 4, 0)
-        _layout_top.addWidget(self.__widget_data, 4, 1)
+        layout_top.addWidget(QLabel(u"类型:"), 0, 0)
+        layout_top.addWidget(self.__edit_type, 0, 1)
+        layout_top.addWidget(QLabel(u"标识:"), 1, 0)
+        layout_top.addWidget(self.__edit_flag, 1, 1)
+        layout_top.addWidget(QLabel(u"控件:"), 2, 0)
+        layout_top.addWidget(self.__widget_type, 2, 1)
+        layout_top.addWidget(QLabel(u"操作:"), 3, 0)
+        layout_top.addWidget(self.__widget_ope, 3, 1)
+        layout_top.addWidget(QLabel(u"数据:"), 4, 0)
+        layout_top.addWidget(self.__widget_data, 4, 1)
 
         self.__edit_status = OrcTextArea()
         self.__edit_status.setReadOnly(True)
 
         # 按钮
-        _layout_button = QHBoxLayout()
+        layout_button = QHBoxLayout()
 
         self.__btn_exec = QPushButton(u"执行")
         self.__btn_exec.setStyleSheet(get_theme("Buttons"))
 
-        _layout_button.addStretch()
-        _layout_button.addWidget(self.__btn_exec)
+        layout_button.addStretch()
+        layout_button.addWidget(self.__btn_exec)
 
         # 主界面
-        _layout = QVBoxLayout()
-        _layout.addLayout(_layout_top)
-        _layout.addWidget(self.__edit_status)
-        _layout.addLayout(_layout_button)
+        layout_main = QVBoxLayout()
+        layout_main.addLayout(layout_top)
+        layout_main.addWidget(self.__edit_status)
+        layout_main.addLayout(layout_button)
 
-        self.setLayout(_layout)
+        self.setLayout(layout_main)
 
         self.__widget_ope.currentIndexChanged.connect(self.__set_operation)
         self.__widget_data.textChanged.connect(self.__set_data)
         self.__btn_exec.clicked.connect(self.sig_exec.emit)
 
     def __set_operation(self):
+        """
 
+        :return:
+        """
         _ope = self.__widget_ope.get_data()
 
         if not _ope:
@@ -186,16 +198,22 @@ class WidgetTest(QWidget):
             self.operation = _ope
 
     def __set_data(self):
+        """
+
+        :return:
+        """
         self.data = self.__widget_data.get_data()
 
     def set_type(self, p_type, p_info):
+        """
 
-        # 设置对象类型
-        _type_text = self.__dict.get_dict("operate_object_type", p_type)[0].dict_text
-        self.__edit_type.set_data(_type_text)
-
-        self.id = p_info
+        :param p_type:
+        :param p_info:
+        :return:
+        """
         self.type = p_type
+
+        self.__edit_type.set_data(self.type)
 
         if "PAGE" == p_type:
 
@@ -221,6 +239,7 @@ class WidgetTest(QWidget):
 
         elif "WIDGET" == p_type:
 
+            self.id = p_info['id']
             # Todo 删除用方法
             # _widget_key = self.__service.get_widget_key(p_info)
             # _widget_type = self.__service.get_widget_type(p_info)
@@ -245,8 +264,17 @@ class WidgetTest(QWidget):
             pass
 
     def set_env(self, p_env):
+        """
+
+        :param p_env:
+        :return:
+        """
         self.env = p_env
 
     def set_status(self, p_data):
+        """
 
+        :param p_data:
+        :return:
+        """
         self.__edit_status.setPlainText(p_data)

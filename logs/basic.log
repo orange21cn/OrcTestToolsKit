@@ -1,167 +1,115 @@
-[2017-03-08 14:12:09 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:12:12 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:12:12 basic.lib_net] ERROR None
+[2017-04-20 15:55:40 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
+    self._db.session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
+    mapper, table, insert)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
+    execute(statement, multiparams)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
 
-[2017-03-08 14:12:12 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:12:15 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:12:15 basic.lib_net] ERROR None
+[2017-04-20 15:56:03 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 15:56:03 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
+    self._db.session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
+    mapper, table, insert)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
+    execute(statement, multiparams)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
 
-[2017-03-08 14:12:15 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:40 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:45 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:14:45 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:50 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:14:50 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:53 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:14:53 basic.lib_net] ERROR None
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 208, in db_add
+    self._db.session.close()
+AttributeError: 'MemDB' object has no attribute 'session'
 
-[2017-03-08 14:14:53 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:55 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:14:55 basic.lib_net] ERROR None
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 208, in db_add
+    self._db.session.close()
+AttributeError: 'MemDB' object has no attribute 'session'
 
-[2017-03-08 14:14:55 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:57 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:14:57 basic.lib_net] ERROR None
+[2017-04-20 16:46:30 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({},) {}
+[2017-04-20 16:46:30 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 267, in db_search
+    with self._db as db_session:
+AttributeError: __exit__
 
-[2017-03-08 14:14:57 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:14:59 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:14:59 basic.lib_net] ERROR None
-
-[2017-03-08 14:14:59 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:02 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:02 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:02 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:04 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:04 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:04 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:07 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:07 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:07 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:09 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:09 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:09 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:12 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:12 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:12 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:14 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:14 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:14 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:16 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:15:16 basic.lib_net] ERROR None
-
-[2017-03-08 14:15:17 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:23 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:15:23 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:15:34 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:15:34 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:20:39 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:20:42 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:20:44 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:20:44 basic.lib_net] ERROR None
-
-[2017-03-08 14:20:44 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:20:59 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:20:59 basic.lib_net] ERROR None
-
-[2017-03-08 14:21:03 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:21:03 basic.lib_net] ERROR None
-
-[2017-03-08 14:21:04 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:21:04 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:23:43 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:23:43 basic.lib_net] ERROR None
-
-[2017-03-08 14:23:43 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:23:46 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 14:23:46 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:23:48 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:23:48 basic.lib_net] ERROR None
-
-[2017-03-08 14:23:50 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:23:50 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:24:03 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:24:03 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:03 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:24:06 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:24:06 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:06 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:24:07 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:24:07 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:08 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:24:08 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:24:13 basic.lib_net] ERROR 新增测试项失败, None
-[2017-03-08 14:24:13 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:13 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:24:14 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:24:14 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:15 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-03-08 14:24:15 basic.lib_net] ERROR None
-
-[2017-03-08 14:24:17 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 14:24:17 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 14:31:10 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:03:10 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:03:25 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:03:25 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:03:31 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:20:29 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:20:35 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:20:35 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:20:53 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:20:53 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:24:12 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:24:18 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:24:18 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:24:31 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:24:32 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:24:46 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:24:46 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:27:25 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:27:31 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:27:31 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:27:42 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:27:42 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:30:44 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:30:47 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:30:47 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:16 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:27 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:30 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:32:30 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:35 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:32:35 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:38 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:32:38 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:32:52 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:32:52 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:23 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:27 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:30 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:52:30 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:33 basic.lib_net] INFO 删除测试项成功
-[2017-03-08 15:52:33 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 15:52:35 basic.lib_net] INFO 新增测试项成功
-[2017-03-08 15:52:35 basic.lib_net] INFO 查询测试项成功
-[2017-03-08 16:41:14 basic.lib_net] INFO 查询测试项成功
-[2017-03-14 15:14:31 basic.lib_net] INFO 获取页面标识成功
-[2017-03-14 15:14:31 basic.lib_net] INFO 获取操作文字成功
-[2017-03-14 15:15:30 basic.lib_net] INFO 获取控件路径成功
-[2017-03-14 15:15:30 basic.lib_net] INFO 获取操作文字成功
-[2017-03-14 15:15:51 basic.lib_net] INFO 获取控件路径成功
-[2017-03-14 15:15:51 basic.lib_net] INFO 获取操作文字成功
-[2017-03-14 15:15:55 basic.lib_net] INFO 获取控件路径成功
-[2017-03-14 15:15:55 basic.lib_net] INFO 获取操作文字成功

@@ -19,22 +19,6 @@ class OrcBaseAPI(Resource):
         return super(Resource, self).dispatch_request(*args, **kwargs)
 
 
-class OrcStatusAPI(Resource):
-
-    def __init__(self, p_flag, p_bus):
-
-        self._flag = p_flag
-        self._business = p_bus()
-        self._logger = OrcLog("resource.%s.api" % self._flag)
-
-    def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request(*args, **kwargs)
-
-    @orc_api
-    def get(self):
-        return True
-
-
 class OrcListAPI(OrcBaseAPI):
 
     def __init__(self, p_flag, p_bus):
@@ -56,7 +40,6 @@ class OrcListAPI(OrcBaseAPI):
 
     @orc_api
     def api_get(self, p_para):
-
         self._logger.info("Search %s, parameter is: %s" % (self._flag, p_para))
         return self._business.bus_list_search(p_para)
 
@@ -230,7 +213,6 @@ class OrcBus(object):
         """
         cond = p_cond
         cond["id"] = p_id
-
         try:
             self._model.usr_update(cond)
         except Exception:

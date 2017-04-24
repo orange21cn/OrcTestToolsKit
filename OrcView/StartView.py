@@ -3,6 +3,8 @@ from PySide.QtCore import Qt
 from PySide.QtCore import SIGNAL
 from PySide.QtGui import QMainWindow
 from PySide.QtGui import QTabWidget
+from PySide.QtGui import QAction
+from PySide.QtGui import QIcon
 
 from OrcLib import init_log
 from OrcView.Batch.BatchDefView import BatchDefView
@@ -10,6 +12,7 @@ from OrcView.Batch.BatchDetView import BatchDetView
 from OrcView.Case.Case.CaseView import CaseView
 from OrcView.Case.Step.StepMain import StepContainer
 from OrcView.Data.Data.DataView import DataView
+from OrcView.Data.DataSrc.DataSrcView import DataSrcMain
 from OrcView.Driver.Web.WebMain import ViewWebMain
 from OrcView.Lib.LibMain import DockCategory
 from OrcView.Lib.LibMain import DockDetail
@@ -63,6 +66,9 @@ class StartView(QMainWindow):
             )),
             ('Run', (
                 ('Run', self.open_run),
+            )),
+            ('Debug', (
+                ('Data Source', self.open_data_src),
             )),
             ('View', (
                 (DockLog,),
@@ -147,8 +153,8 @@ class StartView(QMainWindow):
         _view = RunMainView()
         self.__add_tab(_view)
 
-    def open_log(self):
-        self.__show_dock()
+    def open_data_src(self):
+        self.__add_tab(DataSrcMain())
 
     def __add_tab(self, p_view):
 
@@ -159,3 +165,37 @@ class StartView(QMainWindow):
 
         dock_log = DockLog()  # log widget
         self.addDockWidget(Qt.BottomDockWidgetArea, dock_log)
+
+    def __create_action(self, text, slot=None, shortcut=None,
+                        icon=None, tip=None, checkable=False, signal="triggered()"):
+        """
+
+        :param self:
+        :param text:
+        :param slot:
+        :param shortcut:
+        :param icon:
+        :param tip:
+        :param checkable:
+        :param signal:
+        :return:
+        """
+        action = QAction(text, self)
+
+        if icon is not None:
+            action.setIcon(QIcon("./images/%s.png" % icon))
+
+        if shortcut is not None:
+            action.setShortcut(shortcut)
+
+        if tip is not None:
+            action.setToolTip(tip)
+            action.setStatusTip(tip)
+
+        if slot is not None:
+            self.connect(action, SIGNAL(signal), slot)
+
+        if checkable:
+            action.setCheckable(True)
+
+        return action

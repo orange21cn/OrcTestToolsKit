@@ -3,9 +3,9 @@ import unittest
 
 from OrcLib.LibException import OrcPostFailedException
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibNet import OrcHttpResource
+from OrcLib.LibNet import OrcResource
 
-from OrcApi.Lib.Dictionory import DictHandle
+from OrcApi.Lib.DictBus import DictBus
 
 
 class TestFunc(unittest.TestCase):
@@ -17,10 +17,10 @@ class TestFunc(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        test = DictHandle()
+        test = DictBus()
         _para = dict(flag="case_type", value="CASE")
-        i = test.get_dict_text(_para)
-        OrcTest.test_print_result(i)
+        i = test.bus_list_search(dict(TYPE='dictionary', DATA=_para))
+        print i
 
         OrcTest.test_print_end()
 
@@ -45,8 +45,9 @@ class TestDict(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        resource = OrcHttpResource("Dict")
-        OrcTest.test_print_result(resource.get(dict(id=10001)))
+        resource = OrcResource("Dict")
+        OrcTest.test_print_result(
+            resource.get(parameter=dict(TYPE='widget_type', DATA=dict(id=10101))))
 
         OrcTest.test_print_end()
 

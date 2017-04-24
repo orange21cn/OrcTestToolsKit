@@ -65,7 +65,7 @@ class WidgetDefView(QWidget):
             ])
 
             # 禁止选择
-            self.display.model.mod_checkable(False)
+            self.display.model.checkable(False)
 
             # 双击选择
             self.display.doubleClicked[QModelIndex].connect(self.widget_sig)
@@ -109,7 +109,7 @@ class WidgetDefView(QWidget):
             self.sig_delete.emit()
 
         elif "update" == p_flg:
-            self.display.model.mod_editable()
+            self.display.model.editable()
 
         elif "search" == p_flg:
             if self.__type is None:

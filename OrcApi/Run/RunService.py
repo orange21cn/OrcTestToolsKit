@@ -3,9 +3,7 @@ import socket
 
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
-from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibNet import ResourceCheck
-from OrcLib.LibRunTime import OrcRunTime
 from OrcLib.LibDatabase import TabItem
 
 
@@ -22,7 +20,7 @@ class RunCoreService(object):
         self.__resource_web_driver = OrcResource("Driver")
         self.__resource_item = OrcResource("Item")
         self.__resource_data = OrcResource("Data")
-        self.__resource_view = OrcSocketResource("View")
+        # self.__resource_view = OrcSocketResource("View")  # Todo Delete
 
     def launch_web_step(self, p_step_info):
         """
@@ -150,6 +148,7 @@ class RunCoreService(object):
         :param p_data:
         :return:
         """
+        # Todo Delete
         import json
 
         try:
@@ -159,46 +158,3 @@ class RunCoreService(object):
 
         # 打印成功信息
         ResourceCheck.result_success(u"获取更新界面进度: %s" % p_data, self.__logger)
-
-
-class RunStatus(object):
-
-    def __init__(self):
-
-        object.__init__(self)
-
-        self.__logger = OrcLog("resource.Run.run.service")
-        self.__run_time = OrcRunTime("RUN")
-
-    @property
-    def status(self):
-        """
-        当前实际状态
-        :return:
-        :return:
-        """
-        return self.__run_time.get_value('RUN_STATUS')
-
-    @status.setter
-    def status(self, p_status):
-        """
-        设置状态
-        :return:
-        """
-        self.__run_time.set_value('RUN_STATUS', p_status)
-
-    @property
-    def director(self):
-        """
-        指示状态
-        :return:
-        """
-        return self.__run_time.get_value('RUN_DIRECTOR')
-
-    @director.setter
-    def director(self, p_director):
-        """
-        设置指示状态
-        :return:
-        """
-        self.__run_time.set_value('RUN_DIRECTOR', p_director)

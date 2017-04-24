@@ -72,7 +72,7 @@ class WindowView(QWidget):
         elif "refresh" == p_flg:
             self.display.model.mod_add(None)
         elif "update" == p_flg:
-            self.display.model.mod_editable()
+            self.display.model.editable()
         elif "delete" == p_flg:
             self.display.model.mod_delete()
         else:

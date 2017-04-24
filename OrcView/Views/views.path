@@ -1,0 +1,4 @@
+{
+  "DATASRC": {"PATH": "OrcView.Views.ExtendSelect", "NAME": "DataSrcSelect"},
+  "TEST": {"PATH": "", "NAME": ""}
+}

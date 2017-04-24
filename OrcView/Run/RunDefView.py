@@ -21,7 +21,7 @@ class RunDefView(QWidget):
 
     sig_search = OrcSignal()
     sig_selected = OrcSignal(str)
-    sig_run = OrcSignal()
+    sig_start = OrcSignal()
 
     def __init__(self):
 
@@ -111,34 +111,52 @@ class RunDefView(QWidget):
 
         elif 'run' == p_flg:
 
-            self.sig_run.emit()
+            self.sig_start.emit()
 
             item_data = self.display.model.mod_get_current_data()
 
             if item_data is not None:
+
                 _id = item_data.content["id"]
                 _pid = item_data.content["pid"]
 
                 if _pid is None:
                     return
 
+                # 运行
                 self.display.model.service_run(_pid, _id)
 
-                self.__wid_buttons.set_disable('add')
-                self.__wid_buttons.set_disable('delete')
-                self.__wid_buttons.set_disable('search')
-                self.__wid_buttons.set_disable('run')
-                self.__wid_buttons.set_enable('stop')
+                # 更改按钮状态
+                self.btn_status_stop()
 
         elif 'stop' == p_flg:
-
+            # 停止
             self.display.model.service_stop()
 
-            self.__wid_buttons.set_enable('add')
-            self.__wid_buttons.set_enable('delete')
-            self.__wid_buttons.set_enable('search')
-            self.__wid_buttons.set_enable('run')
-            self.__wid_buttons.set_disable('stop')
+            # 按钮状态停止
+            self.btn_status_start()
 
         else:
             pass
+
+    def btn_status_start(self):
+        """
+        按钮运行状态
+        :return:
+        """
+        self.__wid_buttons.set_disable('add')
+        self.__wid_buttons.set_disable('delete')
+        self.__wid_buttons.set_disable('search')
+        self.__wid_buttons.set_disable('run')
+        self.__wid_buttons.set_enable('stop')
+
+    def btn_status_stop(self):
+        """
+        按钮停止状态
+        :return:
+        """
+        self.__wid_buttons.set_enable('add')
+        self.__wid_buttons.set_enable('delete')
+        self.__wid_buttons.set_enable('search')
+        self.__wid_buttons.set_enable('run')
+        self.__wid_buttons.set_disable('stop')

@@ -11,7 +11,7 @@ from PySide.QtGui import QWidget
 from OrcLib.LibCommon import is_null
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTheme import get_theme
-from OrcView.Lib.LibView import create_editor
+from OrcView.Lib.LibView import WidgetFactory
 
 
 class ViewAdd(QWidget):
@@ -26,10 +26,16 @@ class ViewAdd(QWidget):
 
         QWidget.__init__(self)
 
-        self.__fields = p_def  # 控件定义
-        self.widgets = dict()  # 控件
+        # 控件生成器
+        self.__creater = WidgetFactory()
 
-        _lay_inputs = QGridLayout()
+        # 控件定义
+        self.__fields = p_def
+
+        # 控件
+        self.widgets = dict()
+
+        layout_input = QGridLayout()
 
         for _index in range(len(self.__fields)):
 
@@ -41,7 +47,7 @@ class ViewAdd(QWidget):
             _name = self.__fields[_index]["NAME"]
             _ess = self.__fields[_index]["ESSENTIAL"]
 
-            _widget = create_editor(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
+            _widget = self.__creater.create_widget(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
             self.widgets[_id] = dict(
                 TYPE=_type,
@@ -57,8 +63,8 @@ class ViewAdd(QWidget):
 
             _label = QLabel(("*" if _ess else " ") + _name + ":")
 
-            _lay_inputs.addWidget(_label, _index, 0)
-            _lay_inputs.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
+            layout_input.addWidget(_label, _index, 0)
+            layout_input.addWidget(self.widgets[_id]["WIDGET"], _index, 1)
 
         buttons = OrcButtons([
             dict(id="submit", name=u"提交"),
@@ -66,7 +72,7 @@ class ViewAdd(QWidget):
         ])
 
         lay_main = QVBoxLayout()
-        lay_main.addLayout(_lay_inputs)
+        lay_main.addLayout(layout_input)
         lay_main.addWidget(buttons)
 
         self.setLayout(lay_main)

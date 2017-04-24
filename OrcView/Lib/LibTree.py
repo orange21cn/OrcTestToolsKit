@@ -295,8 +295,6 @@ class ModelTreeBase(QAbstractItemModel):
 
         self.mod_update(_cond)
 
-        self.mod_refresh()
-
         return True
 
     def index(self, row, column, parent):
@@ -450,6 +448,29 @@ class ModelTreeBase(QAbstractItemModel):
         else:
             return self._root
 
+    def editable(self, p_value=None):
+        """
+        设置编辑状态
+        :return:
+        """
+        if p_value is None:
+            self._state_editable = not self._state_editable
+        else:
+            assert isinstance(p_value, bool)
+            self._state_editable = p_value
+
+    def checkable(self, p_value=None):
+        """
+        设置可选择
+        :param p_value:
+        :return:
+        """
+        if p_value is None:
+            self._state_checkable = not self._state_checkable
+        else:
+            assert isinstance(p_value, bool)
+            self._state_checkable = p_value
+
 
 class ModelTree(ModelTreeBase):
 
@@ -497,28 +518,14 @@ class ModelTree(ModelTreeBase):
         # 重置界面
         self.mod_refresh()
 
-    def mod_editable(self, p_value=None):
+    def mod_update(self, p_data):
         """
-        设置编辑状态
+        个性
+        :param p_data:
         :return:
         """
-        if p_value is None:
-            self._state_editable = not self._state_editable
-        else:
-            assert isinstance(p_value, bool)
-            self._state_editable = p_value
-
-    def mod_checkable(self, p_value=None):
-        """
-        设置可选择
-        :param p_value:
-        :return:
-        """
-        if p_value is None:
-            self._state_checkable = not self._state_checkable
-        else:
-            assert isinstance(p_value, bool)
-            self._state_checkable = p_value
+        self.service_update(p_data)
+        self.mod_refresh()
 
     def mod_search(self, p_cond):
         """
@@ -573,8 +580,7 @@ class ModelTree(ModelTreeBase):
         :return:
         """
         if not isinstance(p_para, dict):
-            import json
-            parameter = json.loads(json.loads(p_para))
+            return
         else:
             parameter = p_para
 

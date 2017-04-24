@@ -110,6 +110,54 @@ class TestView(unittest.TestCase):
 
         OrcTest.test_print_end()
 
+    def test_view_create(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        import sys
+        from PySide.QtGui import QApplication
+        from OrcView.Lib.LibView import WidgetFactory
+
+        main = QApplication(sys.argv)
+
+        wfc = WidgetFactory()
+
+        _view = wfc.create_widget('DATASRC')
+        _view.show()
+
+        main.exec_()
+
+        OrcTest.test_print_end()
+
+    def test_mem_data(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Tools.MemData.RunTimeView import RunTimeDispView
+
+        OrcTest.display_widget(RunTimeDispView)
+
+        OrcTest.test_print_end()
+
+    def test_mem_main(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Tools.MemData.RunMainView import RunMainView
+
+        OrcTest.display_widget(RunMainView)
+
+        OrcTest.test_print_end()
+
 
 class TestModel(unittest.TestCase):
 
@@ -135,16 +183,8 @@ class TestModel(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        from OrcView.Data.DataSrc.DataSrcView import MySqlConnection
+        from OrcView.Lib.LibView import WidgetFactory
 
-        db = MySqlConnection(
-            '172.16.56.131',
-            3306,
-            'ch_auto',
-            'ch_auto',
-            'ch_auto'
-        )
-        print db.db_test_connection()
-        print db.db_execute('select * from tab_item')
+        wfc = WidgetFactory()
 
         OrcTest.test_print_end()

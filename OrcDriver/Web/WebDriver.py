@@ -15,6 +15,7 @@ from OrcDriver.Web.Widget.OrcWidget import OrcWidget
 from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcDriver.Web.Widget.WidgetA import WidgetA
+from OrcDriver.Web.Widget.WidgetSelect import WidgetSelect
 
 from WebDriverService import WebDriverService
 
@@ -123,6 +124,11 @@ class DriverSelenium:
         # <a href>
         elif "A" == _definition.widget_type:
             _node = WidgetA(self.__root, _id)
+            result = _node.execute(p_para)
+
+        # 下拉框
+        elif "SELECT" == _definition.widget_type:
+            _node = WidgetSelect(self.__root, _id)
             result = _node.execute(p_para)
 
         # 自定义控件

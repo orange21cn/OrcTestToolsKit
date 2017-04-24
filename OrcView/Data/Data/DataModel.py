@@ -1,19 +1,20 @@
 # coding=utf-8
-from OrcLib.LibLog import OrcLog
+import json
+
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibProcess import get_mark
 from OrcLib.LibProcess import get_widget_mark
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import StaticModelTable
+from OrcView.Lib.LibTable import ModelTable
 
 
-class DataModel(StaticModelTable):
+class DataModel(ModelTable):
 
     def __init__(self):
 
-        StaticModelTable.__init__(self, 'Data')
+        ModelTable.__init__(self, 'Data')
 
         self.__logger = LogClient()
 
@@ -32,7 +33,11 @@ class DataModel(StaticModelTable):
         :param p_data:
         :return:
         """
-        result = self.__resource_data.post(parameter=p_data)
+        data = p_data
+        if 'SQL' == data['data_mode']:
+            data['data_value'] = json.dumps(dict(SRC=data['data_src_type'], VALUE=data['data_value']))
+
+        result = self.__resource_data.post(parameter=data)
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"增加数据", self.__logger):

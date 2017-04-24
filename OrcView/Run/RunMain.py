@@ -69,6 +69,8 @@ class RunMainView(QWidget):
         # 更换 tab
         layout_right.currentChanged.connect(self.change_display)
 
+        self.__wid_run_def.sig_start.connect(self.__wid_run_det.usr_start)
+
     def change_display(self, p_index):
         """
         切换当前控件
@@ -83,6 +85,7 @@ class RunMainView(QWidget):
     def refresh(self, p_path):
         """
         刷新显示界面
+        :param p_path:
         :return:
         """
         self._current_display.usr_refresh(p_path)

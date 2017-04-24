@@ -1,16 +1,15 @@
 # coding=utf-8
 import json
 import socket
+import time
+import threading
 
-
+from PySide.QtCore import QThread
+from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
-from PySide.QtCore import QThread
-from PySide.QtCore import Signal as OrcSignal
 
-from OrcLib import get_config
-from OrcLib.LibLog import OrcLog
 from OrcView.Lib.LibView import OrcProcess
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibControl import ControlBase
@@ -26,6 +25,8 @@ class RunDetControl(ControlBase):
 
 
 class RunDetView(QWidget):
+
+    sig_stop = OrcSignal()
 
     def __init__(self):
 
@@ -56,20 +57,46 @@ class RunDetView(QWidget):
         self.setLayout(layout_main)
 
         # 进度条进程
-        self.__thread_status = StatusReceiver()
-        self.__thread_status.start()
+        # self.__thread_status = StatusReceiver()
+        # self.__thread_status.start()
 
         # 更新数据
-        self.__thread_status.sig_status.connect(self.update_data)
+        # self.__thread_status.sig_status.connect(self.update_data)
+        self.__progress.sig_finish.connect(self.sig_stop.emit)
 
-    def update_data(self, p_data):
+    def usr_update(self):
         """
         更新数据
         :param p_data:
         :return:
         """
-        self.display.model.mod_set_data(p_data)
-        self.__progress.step_forward()
+        while True:
+
+            # 检查用户停止状态
+            usr_status = self.display.model.service_get_usr_status()
+
+            if not usr_status:
+                self.__progress.reset()
+                break
+
+            # 实时数据读取列表,一次性读取,读取后会删除
+            steps = self.display.model.service_get_steps()
+            print "==========", steps
+            # if not steps:
+            #     print "============--------1"
+            #     break
+            time.sleep(2)
+
+            # 更新状态
+            for _index in steps:
+                self.display.model.mod_set_data(eval(steps[_index]))
+                self.__progress.step_forward()
+
+            # 停止判断
+            if 100 == self.__progress.get_process():
+                self.sig_stop.emit()
+                print "============--------2"
+                break
 
     def usr_refresh(self, p_path=None):
         """
@@ -80,52 +107,17 @@ class RunDetView(QWidget):
         if p_path is not None:
             self.__path = dict(path=p_path)
 
+        # 更新用例列表
         self.display.model.mod_search(self.__path)
+
+        # 更新进度条
         self.__progress.set_steps(self.display.model.service_item_nums())
 
-
-class StatusReceiver(QThread):
-
-    sig_status = OrcSignal(str)
-
-    def __init__(self):
-
-        QThread.__init__(self)
-
-        self.__config = get_config("server")
-        self.__logger = OrcLog("view")
-
-    def run(self, *args, **kwargs):
-
-        _ip = self.__config.get_option("VIEW", "ip")
-        _port = int(self.__config.get_option("VIEW", "port"))
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-        sock.bind((_ip, _port))
-        sock.listen(1)
-
-        while True:
-
-            connection, address = sock.accept()
-
-            try:
-                connection.settimeout(5)
-
-                _cmd = connection.recv(1024)
-
-                dict_cmd = json.loads(_cmd)
-                if ("quit" in dict_cmd) and ("QUIT" == dict_cmd["quit"]):
-                    break
-
-                self.sig_status.emit(_cmd)
-
-                connection.send(_cmd)
-
-            except socket.timeout:
-                self.__logger.error("time out")
-            except Exception, err:
-                self.__logger.error(err)
-
-            connection.close()
+    def usr_start(self):
+        """
+        开始执行,更新实时更新进度条,如果完成显示 100%,如果人为结束显示0%
+        :return:
+        """
+        task = threading.Thread(target=self.usr_update)
+        task.setDaemon(True)
+        task.start()

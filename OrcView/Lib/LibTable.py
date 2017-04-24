@@ -1,11 +1,9 @@
 # coding=utf-8
 import abc
-
 from PySide.QtCore import QAbstractTableModel
 from PySide.QtCore import Qt
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QTableView
-
 from OrcLib.LibCommon import is_null
 from OrcLib.LibNet import get_config
 from OrcLib.LibNet import OrcResource
@@ -22,12 +20,12 @@ class ModelTableBase(QAbstractTableModel):
     """
     Base model
     """
-    def __init__(self, p_flag):
+
+    def __init__(self):
 
         QAbstractTableModel.__init__(self)
 
-        self.__resource_dict = OrcResource("Dict")
-        self.__logger = OrcLog("view.table.model")
+        self.__logger = OrcLog("view.table.model.base")
 
         # 模型数据
         self._data = list()
@@ -42,7 +40,7 @@ class ModelTableBase(QAbstractTableModel):
         self._checked_list = list()
 
         # 界面字段定义
-        self._definition = ViewDefinition(p_flag)
+        self._definition = ViewDefinition('')
 
         # 当前可编辑状态
         self._state_editable = False
@@ -51,25 +49,10 @@ class ModelTableBase(QAbstractTableModel):
         self._state_checkable = True
 
         # SELECT 类型的字段
-        self.__definition_select = dict()
+        self._definition_select = dict()
 
         # 记录数
         self._record_num = 0
-
-        # 获取 SELECT 类型 value/text 数据对
-        # {id: {value: text}, id: ....}
-        for _field in self._definition.fields_display:
-
-            assert isinstance(_field, FieldDefinition)
-
-            if _field.display and "SELECT" == _field.type:
-
-                _res = self.__resource_dict.get(parameter=dict(dict_flag=_field.id))
-
-                if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
-                    break
-
-                self.__definition_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
 
     def headerData(self, section, orientation, role):
         """
@@ -144,12 +127,15 @@ class ModelTableBase(QAbstractTableModel):
             _field = self._definition.get_field_display_by_index(index.column())
             assert isinstance(_field, FieldDefinition)
 
+            if _field.id not in self._data[index.row()]:
+                return None
+
             _value = self._data[index.row()][_field.id]
 
             # Combobox 类型数据
             if "SELECT" == _field.type:
                 try:
-                    return self.__definition_select[_field.id][_value]
+                    return self._definition_select[_field.id][_value]
                 except KeyError:
                     self.__logger.error("select value error: %s, %s" % (_field.id, _value))
 
@@ -189,7 +175,6 @@ class ModelTableBase(QAbstractTableModel):
         :return:
         """
         if role == Qt.EditRole:
-
             _cond = dict()
             _id = self._definition.fields_display[index.column()].id
 
@@ -210,14 +195,7 @@ class ModelTableBase(QAbstractTableModel):
 
             return True
 
-
-class StaticModelTable(ModelTableBase):
-
-    def __init__(self, p_flg):
-
-        ModelTableBase.__init__(self, p_flg)
-
-    def mod_checkable(self, p_flag):
+    def checkable(self, p_flag):
         """
         设置可选择状态
         :param p_flag:
@@ -225,12 +203,40 @@ class StaticModelTable(ModelTableBase):
         """
         self._state_checkable = p_flag
 
-    def mod_editable(self):
+    def editable(self):
         """
         设置可编辑状态
         :return:
         """
         self._state_editable = not self._state_editable
+
+
+class ModelTable(ModelTableBase):
+
+    def __init__(self, p_flag=None):
+
+        ModelTableBase.__init__(self)
+
+        self.__logger = OrcLog("view.table.model")
+        self.__resource_dict = OrcResource("Dict")
+
+        # 界面字段定义
+        self._definition = ViewDefinition(p_flag)
+
+        # 获取 SELECT 类型 value/text 数据对
+        # {id: {value: text}, id: ....}
+        for _field in self._definition.fields_display:
+
+            assert isinstance(_field, FieldDefinition)
+
+            if _field.display and "SELECT" == _field.type:
+
+                _res = self.__resource_dict.get(parameter=dict(dict_flag=_field.id))
+
+                if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
+                    break
+
+                self._definition_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
 
     def mod_search(self, p_cond=None):
         """

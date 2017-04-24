@@ -635,7 +635,7 @@ class LibWidgetOperation(orc_db.Model):
     ope_text = orc_db.Column(orc_db.String(16))
     ope_desc = orc_db.Column(orc_db.String(255))
 
-    def __init__(self, p_def):
+    def __init__(self, p_def=None):
 
         self.id = int(p_def["id"]) if p_def else None
         self.type_name = p_def["type_name"] if p_def else None

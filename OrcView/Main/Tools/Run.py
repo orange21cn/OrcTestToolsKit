@@ -2,15 +2,15 @@
 from PySide.QtGui import QSizePolicy
 
 from OrcLib import get_config
-from OrcView.Lib.LibView import SelectDictionary
+from OrcView.Lib.LibView import OrcSelect
 from OrcView.Lib.LibMain import LogClient
 
 
-class RunEnv(SelectDictionary):
+class RunEnv(OrcSelect):
 
     def __init__(self):
 
-        SelectDictionary.__init__(self, 'test_env')
+        OrcSelect.__init__(self, 'test_env')
 
         self.__logger = LogClient()
 
@@ -43,11 +43,11 @@ class RunEnv(SelectDictionary):
         self.set_data(env_data)
 
 
-class RunBrowser(SelectDictionary):
+class RunBrowser(OrcSelect):
 
     def __init__(self):
 
-        SelectDictionary.__init__(self, 'browser')
+        OrcSelect.__init__(self, 'browser')
 
         self.__logger = LogClient()
 

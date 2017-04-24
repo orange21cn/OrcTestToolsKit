@@ -1,6 +1,8 @@
 # coding=utf-8
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
+from OrcLib.LibRunTime import OrcRunStatus
+
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTree import ModelTree
@@ -17,7 +19,9 @@ class RunDetModel(ModelTree):
         self.__resource_run_det = OrcResource("RunDet")
         self.__resource_run = OrcResource("Run")
 
-        self.mod_checkable()
+        self.__run_status = OrcRunStatus()
+
+        self.checkable()
 
     def service_search(self, p_path):
         """
@@ -61,7 +65,11 @@ class RunDetModel(ModelTree):
         pass
 
     def service_run(self, p_path):
+        """
 
+        :param p_path:
+        :return:
+        """
         result = self.__resource_run.put(p_path)
 
         # 检查结果
@@ -74,7 +82,11 @@ class RunDetModel(ModelTree):
         return result.status
 
     def service_item_nums(self, p_node=None):
+        """
 
+        :param p_node:
+        :return:
+        """
         count = 0
 
         if p_node is None:
@@ -90,3 +102,17 @@ class RunDetModel(ModelTree):
                 count += self.service_item_nums(child)
 
         return count
+
+    def service_get_usr_status(self):
+        """
+        获取执行状态
+        :return:
+        """
+        return self.__run_status.status
+
+    def service_get_steps(self):
+        """
+
+        :return:
+        """
+        return self.__run_status.get_steps()

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from OrcLib.LibDatabase import LibDictionary
 from OrcLib.LibDatabase import orc_db
-from OrcLib.LibDatabase import gen_id
 
-from OrcLib.LibException import OrcDatabaseException
+from .DictionaryMod import DictionaryMod
+from .WidgetTypeMod import WidgetTypeMod
+from .WidgetOperationMod import WidgetOperationMod
 
 
 class DictMod(object):
@@ -16,53 +16,49 @@ class DictMod(object):
 
         object.__init__(self)
 
+        self.__model_dictionary = DictionaryMod()
+        self.__model_widget_type = WidgetTypeMod()
+        self.__model_widget_operation = WidgetOperationMod()
+
     def usr_add(self, p_data):
         """
         新增
         :param p_data:
         :return:
         """
-        _node = LibDictionary()
+        if ('TYPE' in p_data) and ('DATA' in p_data):
+            dict_type = p_data['TYPE']
+            dict_data = p_data['DATA']
+        else:
+            dict_type = 'dictionary'
+            dict_data = p_data
 
-        # Create id
-        _node.id = gen_id("dict")
+        if 'widget_type' == dict_type:
+            return self.__model_widget_type.usr_add(dict_data)
+        elif 'widget_operation' == dict_type:
+            return self.__model_widget_operation.usr_add(dict_data)
+        else:
+            return self.__model_dictionary.usr_add(dict_data)
 
-        # batch_no
-        _node.dict_flag = p_data['dict_flag'] if 'dict_flag' in p_data else None
-
-        # batch_type
-        _node.dict_order = p_data['dict_order'] if 'dict_order' in p_data else None
-
-        # pid
-        _node.dict_value = p_data['dict_value'] if 'dict_value' in p_data else None
-
-        # batch_name
-        _node.dict_text = p_data['dict_text'] if 'dict_text' in p_data else None
-
-        # batch_desc, comment
-        _node.dict_desc = p_data['dict_desc'] if 'dict_desc' in p_data else None
-
-        try:
-            self.__session.add(_node)
-            self.__session.commit()
-        except Exception:
-            raise OrcDatabaseException
-
-        return _node
-
-    def usr_delete(self, p_id):
+    def usr_delete(self, p_data):
         """
         删除
-        :param p_id:
+        :param p_data:
         :return:
         """
-        try:
-            self.__session.query(LibDictionary).filter(LibDictionary.id == p_id).delete()
-            self.__session.commit()
-        except Exception:
-            raise OrcDatabaseException
+        if ('TYPE' in p_data) and ('DATA' in p_data):
+            dict_type = p_data['TYPE']
+            dict_data = p_data['DATA']
+        else:
+            dict_type = 'dictionary'
+            dict_data = p_data
 
-        return True
+        if 'widget_type' == dict_type:
+            return self.__model_widget_type.usr_delete(dict_data)
+        elif 'widget_operation' == dict_type:
+            return self.__model_widget_operation.usr_delete(dict_data)
+        else:
+            return self.__model_dictionary.usr_delete(dict_data)
 
     def usr_update(self, p_data):
         """
@@ -70,38 +66,38 @@ class DictMod(object):
         :param p_data:
         :return:
         """
-        try:
-            for _key in p_data:
+        if ('TYPE' in p_data) and ('DATA' in p_data):
+            dict_type = p_data['TYPE']
+            dict_data = p_data['DATA']
+        else:
+            dict_type = 'dictionary'
+            dict_data = p_data
 
-                if "id" == _key:
-                    continue
+        if 'widget_type' == dict_type:
+            return self.__model_widget_type.usr_update(dict_data)
+        elif 'widget_operation' == dict_type:
+            return self.__model_widget_operation.usr_update(dict_data)
+        else:
+            return self.__model_dictionary.usr_update(dict_data)
 
-                _item = self.__session.query(LibDictionary).filter(LibDictionary.id == p_data["id"])
-                _item.update({_key: (None if not p_data[_key] else p_data[_key])})
-
-            self.__session.commit()
-
-        except Exception:
-            raise OrcDatabaseException
-
-    def usr_search(self, p_cond):
+    def usr_search(self, p_data):
         """
         查询
-        :param p_cond:
+        :param p_data:
         :return:
         """
-        result = self.__session.query(LibDictionary)
-
-        if 'id' in p_cond:
-            result = result.filter(LibDictionary.id == p_cond['id'])
-
-        if 'dict_flag' in p_cond:
-            result = result.filter(LibDictionary.dict_flag == p_cond['dict_flag'])
-
-        if 'dict_value' in p_cond:
-            result = result.filter(LibDictionary.dict_value == p_cond['dict_value'])
-
-        if 'dict_text' in p_cond:
-            result = result.filter(LibDictionary.dict_text == p_cond['dict_text'])
-
-        return result.all()
+        print "+++====", p_data
+        if ('TYPE' in p_data) and ('DATA' in p_data):
+            dict_type = p_data['TYPE']
+            dict_data = p_data['DATA']
+        else:
+            dict_type = 'dictionary'
+            dict_data = p_data
+        print dict_type
+        if 'widget_type' == dict_type:
+            print "AAAA"
+            return self.__model_widget_type.usr_search(dict_data)
+        elif 'widget_operation' == dict_type:
+            return self.__model_widget_operation.usr_search(dict_data)
+        else:
+            return self.__model_dictionary.usr_search(dict_data)

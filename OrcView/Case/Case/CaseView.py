@@ -72,7 +72,7 @@ class CaseView(QWidget):
                 dict(id="cancel", name=u"取消")
             ])
 
-            self.display.model.mod_checkable()
+            self.display.model.checkable()
 
             # 双击选择用例
             self.display.doubleClicked.connect(self.select_one)
@@ -133,7 +133,7 @@ class CaseView(QWidget):
         elif "delete" == p_flag:
             self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.mod_editable()
+            self.display.model.editable()
         elif "search" == p_flag:
             self.search()
         if "select" == p_flag:
@@ -150,8 +150,6 @@ class CaseView(QWidget):
         :return:
         """
         if not self.display.model.mod_get_editable():
-
-            print self.display.model.node(p_index).content
 
             _id = self.display.model.node(p_index).content["id"]
             _no = self.display.model.node(p_index).content["case_no"]
@@ -196,7 +194,7 @@ class CaseView(QWidget):
         self.sig_selected[dict].emit([_res])
         self.close()
 
-#
+
 # @orc_singleton
 # class CaseView(CaseBaseView):
 #

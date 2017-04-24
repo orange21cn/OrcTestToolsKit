@@ -15,7 +15,7 @@ from OrcView.Driver.Web.Page.PageDefView import PageDefView
 from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefView
 from OrcView.Lib.LibView import OrcLineEdit
 from OrcView.Lib.LibView import OrcSelect
-from OrcView.Lib.LibView import SelectWidgetOperation
+from OrcView.Lib.LibView import OrcSelectWidgetOperation
 
 
 class ViewOperate(QWidget):
@@ -48,7 +48,7 @@ class ViewOperate(QWidget):
 
         # 操作信息输入 layout
         _operate_label = QLabel(u"操作")
-        self.__operate_select = SelectWidgetOperation()
+        self.__operate_select = OrcSelectWidgetOperation()
 
         # 按钮
         _button_submit = QPushButton(u"确定")

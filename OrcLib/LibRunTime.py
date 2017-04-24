@@ -1,4 +1,6 @@
 # coding=utf-8
+import json
+
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
@@ -17,19 +19,19 @@ class OrcRunTime(object):
         self.__mod = p_mod
         self.__resource = OrcResource('RunTime')
 
-    def add_value(self, p_data):
+    def add_value(self, p_flag, p_data):
         """
         新增
+        :param p_flag:
         :param p_data:
-        :type p_data: dict
+        :type p_data:
         :return:
         """
-        data = dict(module=self.__mod)
-        data.update(p_data)
+        data = dict(module=self.__mod, data_flag=p_flag, data_value=p_data)
 
         result = self.__resource.post(parameter=data)
 
-        if not ResourceCheck.result_status(result, '新增实时数据', self.__logger):
+        if not ResourceCheck.result_status(result, u'新增实时数据', self.__logger):
             return False
 
         return True
@@ -63,13 +65,9 @@ class OrcRunTime(object):
         result = self.__resource.get(parameter=cond)
 
         if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
-            return None
+            return list()
 
-        if not result.data:
-            self.__logger.info("未获取到实时数据,取值为: %s" % result.data)
-            return None
-        else:
-            return [item["data_value"] for item in result.data]
+        return {item['data_index']: item["data_value"] for item in result.data}
 
     def set_value(self, p_flag, p_value, p_index=None):
         """
@@ -98,29 +96,143 @@ class OrcRunTime(object):
             result = result.status
 
         else:
-            cond["data_value"] = p_value
-            result = self.add_value(cond)
+            result = self.add_value(p_flag, p_value)
 
         return result
 
-    def del_value(self, p_flag):
+    def del_value(self, p_flag=None, p_index=None):
         """
         删除数据
+        :param p_index:
         :param p_flag:
         :return:
         """
-        # 查找数据
-        cond = dict(module=self.__mod, data_flag=p_flag)
+        # 查询条件
+        cond = dict(module=self.__mod)
+
+        if p_flag is not None:
+            cond['data_flag'] = p_flag
+
+        if p_index is not None:
+            cond['data_index'] = p_index
+
+        # 查询
         result = self.__resource.get(parameter=cond)
 
         if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
             return False
 
+        # 获取列表
         data_ids = [item['id'] for item in result.data]
 
+        # 删除
         result = self.__resource.delete(parameter=data_ids)
 
         if not ResourceCheck.result_status(result, '删除实时数据', self.__logger):
             return False
 
         return True
+
+
+class OrcRunStatus(object):
+    """
+
+    """
+    def __init__(self):
+
+        object.__init__(self)
+
+        self.__logger = OrcLog("resource.Run.run.service")
+        self.__run_time = OrcRunTime("RUN")
+
+    @property
+    def process(self):
+        """
+        当前的运行进度
+        :return:
+        """
+        return self.__run_time.get_value('RUN_PROCESS')
+
+    @process.setter
+    def process(self, value):
+        """
+        设置进度
+        :return:
+        """
+        self.__run_time.set_value('RUN_PROCESS', value)
+
+    @property
+    def status(self):
+        """
+        当前实际状态
+        :return:
+        :return:
+        """
+        return self.__run_time.get_value('RUN_STATUS')
+
+    @status.setter
+    def status(self, p_status):
+        """
+        设置状态
+        :return:
+        """
+        self.__run_time.set_value('RUN_STATUS', p_status)
+
+    @property
+    def director(self):
+        """
+        指示状态
+        :return:
+        """
+        return self.__run_time.get_value('RUN_DIRECTOR')
+
+    @director.setter
+    def director(self, p_director):
+        """
+        设置指示状态
+        :return:
+        """
+        self.__run_time.set_value('RUN_DIRECTOR', p_director)
+
+    def step_forward(self):
+        """
+        下一步,进度加 1
+        :return:
+        """
+        prc = self.process
+
+        if prc is None:
+            prc = 1
+        else:
+            prc = int(self.process) + 1
+
+        self.process = prc
+
+    def step_message(self, p_message):
+        """
+        输出执行完的步骤信息
+        :param p_message:
+        :return:
+        """
+        self.step_forward()
+
+        self.__run_time.add_value('RUN_STEP', p_message)
+
+    def get_steps(self):
+        """
+        获取步骤信息
+        :return:
+        """
+        result = self.__run_time.get_values('RUN_STEP')
+
+        for _index in result:
+            self.__run_time.del_value('RUN_STEP', _index)
+
+        return result
+
+    def clean(self):
+        """
+        清空数据
+        :return:
+        """
+        self.__run_time.del_value()

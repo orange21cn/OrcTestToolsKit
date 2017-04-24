@@ -8,7 +8,7 @@ from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
 
 from RunService import RunCoreService
-from RunService import RunStatus
+from OrcLib.LibRunTime import OrcRunStatus
 from RunData import RunData
 from RunLog import RunLog
 
@@ -20,7 +20,7 @@ class RunCore(object):
         object.__init__(self)
 
         self.__launch = RunLaunch()
-        self.__status = RunStatus()
+        self.__status = OrcRunStatus()
         self.thread = None
 
     def start(self, p_path):
@@ -65,7 +65,7 @@ class RunLaunch(RunData):
         self.__run_logger = RunLog()
 
         self.__service_core = RunCoreService()
-        self.__service_status = RunStatus()
+        self.__service_status = OrcRunStatus()
 
         self.__home = get_config().get_option("RUN", "home")
         self.__home_run = None  # 运行时目录,为home目录/case(batch)/time
@@ -75,7 +75,7 @@ class RunLaunch(RunData):
 
     def run_start(self, p_path):
         """
-        开始执行
+        读取运行记录文件并逐条执行
         :param p_path:
         :return:
         """
@@ -84,12 +84,10 @@ class RunLaunch(RunData):
         item_id = re.sub('.*:', '', p_path["id"])
         item_path = None
 
-        client_ip = p_path["ip"]
-        client_port = p_path["port"]
-
-        client_config = get_config("client")
-        client_config.set_option("VIEW", "ip", client_ip)
-        client_config.set_option("VIEW", "port", client_port)
+        # 清空状态数据
+        self.__service_status.clean()
+        self.__service_status.director = True
+        self.__service_status.status = True
 
         for _group in os.listdir(self.__home):
 
@@ -103,7 +101,6 @@ class RunLaunch(RunData):
             item_path = "%s/default.res" % self.__home_run
 
         self.load_list(item_path)
-
         self.run(self.tree)
 
         self.update_list(item_path)
@@ -118,6 +115,7 @@ class RunLaunch(RunData):
             self.__service_status.status = False
             return False
 
+        # 设置默认状态
         self.__service_status.status = True
 
         result = True
@@ -137,23 +135,24 @@ class RunLaunch(RunData):
             if not p_node["children"]:
                 result = None
 
-            for _sub_step in p_node["children"]:
+            else:
+                for _sub_step in p_node["children"]:
 
-                _result = self.run(_sub_step)
+                    _result = self.run(_sub_step)
 
-                # 如果有一个步骤没有通过,忽略剩余的步骤
-                if "STEP" == step_type and not _result:
-                    break
+                    # 如果有一个步骤没有通过,忽略剩余的步骤
+                    if "STEP" == step_type and not _result:
+                        break
 
-                # 更新状态
-                if result is None:
-                    result = None
+                    # 更新状态
+                    if result is None:
+                        result = None
 
-                elif _result is None:
-                    result = None
+                    elif _result is None:
+                        result = None
 
-                else:
-                    result = result and _result
+                    else:
+                        result = result and _result
 
         # 转换状态
         if result is None:
@@ -171,8 +170,12 @@ class RunLaunch(RunData):
         # 更新文件状态
         p_node["content"]["status"] = status
 
-        # 更新界面
-        self.__service_core.update_status(p_node["content"])
+        # 设置进度 + 1, 并写入执行信息
+        self.__service_status.step_message(str(p_node['content']))
+        # str(dict(
+        #     TYPE=p_node["content"]['run_det_type'],
+        #     ID=p_node["content"]['id'],
+        #     STATUS=p_node["content"]['status']))
 
         return result
 
@@ -201,6 +204,7 @@ class RunLaunch(RunData):
 
         # 步骤需要数据时读取数据
         if "DATA" in item_operation:
+
             data = self.__service_core.get_data(self.__run_list, item_operation["OBJECT"])
 
             if data:

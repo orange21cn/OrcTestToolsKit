@@ -106,7 +106,7 @@ class PageDefView(QWidget):
             self.display.model.mod_delete()
             self.sig_delete.emit()
         elif "update" == p_flag:
-            self.display.model.mod_editable()
+            self.display.model.editable()
         elif "search" == p_flag:
             if self.__type is None:
                 self.sig_search.emit()

@@ -15,13 +15,6 @@ from OrcApi import orc_db
 _logger = OrcLog("basic.lib_net")
 
 
-class OrcSocketServer(object):
-
-    def __init__(self):
-
-        object.__init__(self)
-
-
 class OrcResourceBase(object):
     """
     http 服务调用封装为资源
@@ -40,6 +33,7 @@ class OrcResourceBase(object):
             StepDet=dict(config='CASE', path="OrcApi.Case.StepApi"),
             Item=dict(config='CASE', path="OrcApi.Case.ItemApi"),
             Data=dict(config='DATA', path="OrcApi.Data.DataApi"),
+            DataSrc=dict(config='DATA', path="OrcApi.DataSrc.DataSrcApi"),
             PageDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             PageDet=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             WindowDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.WindowApi"),
@@ -53,6 +47,7 @@ class OrcResourceBase(object):
             RunTime=dict(config='DEFAULT', path="OrcApi.RunTime.RunTimeApi"),
             Driver=dict(config='DRIVER', path="OrcDriver.DriverApi"),
             View=dict(config="VIEW", path=""),
+            MEM=dict(config="MEM", path=""),
             DriverWeb=dict(config='SERVER_WEB_001', path=""),
         )
 

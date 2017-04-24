@@ -104,7 +104,7 @@ class RunDefModel(ModelTree):
         # 打印成功信息
         ResourceCheck.result_success(u"运行测试项", self.__logger)
 
-        return result.status
+        return
 
     def service_stop(self):
         """
@@ -113,18 +113,18 @@ class RunDefModel(ModelTree):
         """
         self.__resource_run.delete()
 
-    def service_get_status(self):
-        """
-        获取状态
-        :return:
-        """
-        result = self.__resource_run.get()
-
-        # 检查结果
-        if not ResourceCheck.result_status(result, u"获取运行状态", self.__logger):
-            return False
-
-        # 打印成功信息
-        ResourceCheck.result_success(u"获取运行状态", self.__logger)
-
-        return result.data
+    # def service_update_status(self):
+    #     """
+    #     获取状态
+    #     :return:
+    #     """
+    #     result = self.__resource_run.get()
+    #
+    #     # 检查结果
+    #     if not ResourceCheck.result_status(result, u"获取运行状态", self.__logger):
+    #         return False
+    #
+    #     # 打印成功信息
+    #     ResourceCheck.result_success(u"获取运行状态", self.__logger)
+    #
+    #     return result.data

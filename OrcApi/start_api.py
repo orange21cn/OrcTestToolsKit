@@ -30,6 +30,9 @@ from OrcApi.Case.ItemApi import ItemAPI
 from OrcApi.Data.DataApi import DataListAPI
 from OrcApi.Data.DataApi import DataAPI
 
+from OrcApi.DataSrc.DataSrcApi import DataSrcListAPI
+from OrcApi.DataSrc.DataSrcApi import DataSrcAPI
+
 from OrcApi.Driver.Web.PageApi import PageDefListAPI
 from OrcApi.Driver.Web.PageApi import PageDefAPI
 from OrcApi.Driver.Web.PageApi import PageDetListAPI
@@ -73,9 +76,13 @@ orc_api.add_resource(StepDetAPI, '/api/1.0/StepDet/<int:p_id>', endpoint='StepDe
 orc_api.add_resource(ItemListAPI, '/api/1.0/Item', endpoint='Items')
 orc_api.add_resource(ItemAPI, '/api/1.0/Item/<int:p_id>', endpoint='Item')
 
-# Item
+# Data
 orc_api.add_resource(DataListAPI, '/api/1.0/Data', endpoint='Datas')
 orc_api.add_resource(DataAPI, '/api/1.0/Data/<int:p_id>', endpoint='Data')
+
+# DataSrc
+orc_api.add_resource(DataSrcListAPI, '/api/1.0/DataSrc', endpoint='DataSrcs')
+orc_api.add_resource(DataSrcAPI, '/api/1.0/DataSrc/<int:p_id>', endpoint='DataSrc')
 
 # Page
 orc_api.add_resource(PageDefListAPI, '/api/1.0/PageDef', endpoint='PageDefs')

@@ -9,7 +9,8 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
 from PySide.QtCore import Signal as OrcSignal
 
-from OrcView.Lib.LibView import create_editor
+from OrcView.Lib.LibView import WidgetFactory
+# from OrcView.Lib.LibView import create_editor
 from OrcView.Lib.LibTheme import get_theme
 
 
@@ -120,6 +121,8 @@ class ViewSearch(QWidget):
         """
         QWidget.__init__(self)
 
+        self.__widget_creator = WidgetFactory()
+
         # 控件定义
         self.__fields_def = p_def
 
@@ -160,7 +163,7 @@ class ViewSearch(QWidget):
             _def = dict(TYPE=t_def["TYPE"],
                         SOURCE="SEARCH",
                         FLAG=t_def["ID"])
-            self.__inputs[t_def['ID']] = create_editor(_def)
+            self.__inputs[t_def['ID']] = self.__widget_creator.create_widget(_def)
 
             # 控件布局
             _layout = QHBoxLayout()

@@ -75,7 +75,7 @@ class PageDetView(QWidget):
         elif "delete" == p_flag:
             self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.mod_editable()
+            self.display.model.editable()
         else:
             pass
 

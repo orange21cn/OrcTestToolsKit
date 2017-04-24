@@ -1,4 +1,5 @@
 # coding=utf-8
+import json
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QPushButton
@@ -10,9 +11,8 @@ from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit
 from PySide.QtGui import QProgressBar
-from LibDict import LibDict
-from OrcLib.LibDatabase import LibDictionary
-from OrcLib.LibDatabase import orc_db
+
+from OrcLib import get_config
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibException import OrcPostFailedException
@@ -22,87 +22,135 @@ from OrcView.Lib.LibTheme import get_theme
 _logger = LogClient()
 
 
-def clean_layout(p_layout):
-    """
-    清空 layout, 暂时未用到
-    :param p_layout:
-    :return:
-    """
-    if p_layout is not None:
+class WidgetFactory(object):
 
-        while p_layout.count():
+    def __init__(self):
 
-            t_child = p_layout.takeAt(0)
-            if t_child.widget() is not None:
-                t_child.widget().deleteLater()
-            elif t_child.layout() is not None:
-                clean_layout(t_child.layout())
+        object.__init__(self)
 
+        self.__configer = get_config()
 
-def create_editor(p_type):
-    """
-    :param parent:
-    :param p_type: {"TYPE": "LINETEXT",
-                    "SOURCE": "SEARCH",
-                    "FLAG": "CASE_DEF:CASE_TYPE"}
-    :return:
-    """
-    # 单行输入框
-    if "LINETEXT" == p_type["TYPE"]:
-        return OrcLineEdit()
-
-    # 多行输入框
-    elif "TEXTAREA" == p_type["TYPE"]:
-        if "SEARCH" == p_type["SOURCE"]:
+    @staticmethod
+    def create_basic(p_type, p_source, p_flag):
+        """
+        创建基本控件
+        :param p_flag:
+        :param p_source:
+        :param p_type:
+        :return:
+        """
+        # 单行输入框
+        if 'LINETEXT' == p_type:
             return OrcLineEdit()
+
+        # 多行输入框
+        elif 'TEXTAREA' == p_type:
+
+            if 'SEARCH' == p_source:
+                return OrcLineEdit()
+            else:
+                return OrcTextArea()
+
+        # 时间显示
+        elif 'DATETIME' == p_type:
+            return OrcLineEdit()
+
+        # 时间显示
+        elif 'DISPLAY' == p_type:
+            return OrcDisplay()
+
+        # 选择输入框
+        elif 'SELECT' == p_type:
+
+            if 'SEARCH' == p_source:
+                return OrcSelect(p_flag, True)
+            else:
+                return OrcSelect(p_flag)
+
+        # 选择控件操作类型
+        elif 'SEL_WIDGET' == p_type:
+            _view = OrcSelectWidgetType()
+            if 'SEARCH' == p_source:
+                # Todo 增加一个公共函数
+                _view.insertItem(0, u'所有', '')
+            _view.setCurrentIndex(0)
+            return _view
+
+        # 操作类型
+        elif 'OPERATE' == p_type:
+            return OrcOperate()
+
+        # 其他
         else:
-            return OrcTextArea()
+            return OrcLineEdit()
 
-    # 时间显示
-    elif "DATETIME" == p_type["TYPE"]:
-        return OrcLineEdit()
+    def create_complex(self, p_type, p_source, p_flag):
+        """
+        创建自定义复杂控件
+        :param p_flag:
+        :param p_source:
+        :param p_type:
+        :return:
+        """
+        view_home = self.__configer.get_option('VIEWLIB', 'path')
+        view_conf_file = "%s/views.path" % view_home
 
-    # 时间显示
-    elif "DISPLAY" == p_type["TYPE"]:
-        return OrcDisplay()
+        with open(view_conf_file, 'r') as conf_file:
+            view_conf = json.loads(conf_file.read())
 
-    # 选择输入框
-    elif "SELECT" == p_type["TYPE"]:
-        _view = OrcSelect(p_type["FLAG"])
-        if "SEARCH" == p_type["SOURCE"]:
-            _view.insertItem(0, u"所有", "")
-        _view.setCurrentIndex(0)
-        return _view
+        widget_path = view_conf[p_type]['PATH']
+        widget_name = view_conf[p_type]['NAME']
 
-    # 选择控件操作类型
-    elif "SEL_WIDGET" == p_type["TYPE"]:
-        _view = SelectWidgetType()
-        if "SEARCH" == p_type["SOURCE"]:
-            _view.insertItem(0, u"所有", "")
-        _view.setCurrentIndex(0)
-        return _view
+        if p_type not in view_conf:
+            return None
 
-    # 其他
-    elif "OPERATE" == p_type["TYPE"]:
-        return OrcOperate()
+        return getattr(__import__(widget_path, fromlist=True), widget_name)()
 
-    # 其他
-    else:
-        return OrcLineEdit()
+    def create_widget(self, p_def):
+        """
+        创建界面用控件,同一类型会根据不同的使用环境有所不同
+        :param p_def:
+        :return:
+        """
+        widget_type = ''
+        widget_source = ''
+        widget_flag = ''
+
+        # 参数判断
+        if isinstance(p_def, str):
+            widget_type = p_def
+        elif isinstance(p_def, dict):
+            if 'TYPE' in p_def:
+                widget_type = p_def['TYPE']
+            if 'SOURCE' in p_def:
+                widget_source = p_def['SOURCE']
+            if 'FLAG' in p_def:
+                widget_flag = p_def['FLAG']
+        else:
+            pass
+
+        if widget_type in ('LINETEXT', 'TEXTAREA', 'DATETIME', 'DISPLAY',
+                           'SELECT', 'SEL_WIDGET', 'OPERATE'):
+            return self.create_basic(widget_type, widget_source, widget_flag)
+        else:
+            return self.create_complex(widget_type, widget_source, widget_flag)
 
 
-def get_dict(p_flag):
-    """
-    获取下拉框定义
-    :param p_flag: 标识,使用字段名定义,特殊的使用字段名和属性名
-    :return:
-    """
-    _items = orc_db.session. \
-        query(LibDictionary). \
-        filter(LibDictionary.dict_flag == p_flag). \
-        order_by(LibDictionary.dict_order)
-
-    return _items
+# def clean_layout(p_layout):
+#     """
+#     清空 layout, 暂时未用到
+#     :param p_layout:
+#     :return:
+#     """
+#     if p_layout is not None:
+#
+#         while p_layout.count():
+#
+#             t_child = p_layout.takeAt(0)
+#             if t_child.widget() is not None:
+#                 t_child.widget().deleteLater()
+#             elif t_child.layout() is not None:
+#                 clean_layout(t_child.layout())
 
 
 class OrcLineEdit(QLineEdit):
@@ -185,11 +233,13 @@ class OrcTextArea(QTextEdit):
 
 
 class OrcOperate(QLineEdit):
+
     sig_operate = OrcSignal()
     clicked = OrcSignal()
 
-    def __init__(self, parent):
-        QLineEdit.__init__(self, parent)
+    def __init__(self):
+
+        QLineEdit.__init__(self)
 
         self.__data = None
 
@@ -207,79 +257,6 @@ class OrcOperate(QLineEdit):
 
     def mousePressEvent(self, *args, **kwargs):
         self.sig_operate.emit()
-
-
-class OrcSelect(QComboBox):
-    """
-    下拉列表, 将被替换
-    """
-    # 增加 clicked 保持与其他控件一致,但不修改属性避免与点击下拉冲突
-    clicked = OrcSignal()
-
-    def __init__(self, p_flag=None):
-        """
-        User defined combobox, it's data is come from table lib_dictionary
-        :param p_flag: 数据库中的标识符
-        :return:
-        """
-        QComboBox.__init__(self)
-
-        self.__empty = False
-        self.__text = []
-        self.__value = []
-
-        if p_flag is not None:
-            self.set_flag(p_flag)
-
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-
-    # def mousePressEvent(self, *args, **kwargs):
-    #     self.clicked.emit()
-
-    def set_flag(self, p_flag):
-
-        self.__text = []
-        self.__value = []
-        self.clear()
-
-        # Todo
-        _items = orc_db.session. \
-            query(LibDictionary). \
-            filter(LibDictionary.dict_flag == p_flag). \
-            order_by(LibDictionary.dict_order).all()
-
-        if self.__empty:
-            _items[0:0] = [LibDictionary(dict(
-                id=0,
-                dict_flag="",
-                dict_text="",
-                dict_order=0,
-                dict_value="",
-                dict_desc=""
-            ))]
-
-        for t_item in _items:
-            self.addItem(t_item.dict_text, t_item.dict_value)
-            self.__text.append(t_item.dict_text)
-            self.__value.append(t_item.dict_value)
-
-    def set_empty(self):
-        self.__empty = True
-
-    def get_data(self):
-        return self.itemData(self.currentIndex())
-
-    def get_text(self):
-        return self.itemText(self.currentIndex())
-
-    def set_data(self, p_data):
-
-        if p_data in self.__text:
-            self.setCurrentIndex(self.__text.index(p_data))
-        elif p_data in self.__value:
-            self.setCurrentIndex(self.__value.index(p_data))
-        else:
-            pass
 
 
 class OrcSelectBase(QComboBox):
@@ -368,17 +345,29 @@ class OrcSelectBase(QComboBox):
             pass
 
 
-class SelectDictionary(OrcSelectBase):
+class OrcSelect(OrcSelectBase):
     """
     字典下拉列表
     """
-    def __init__(self, p_id, p_empty=False):
+    def __init__(self, p_type=None, p_empty=False):
 
         OrcSelectBase.__init__(self, p_empty)
 
-        self.__resource_dict = OrcResource('Dict')
+        self.__resource = OrcResource('Dict')
 
-        result = self.__resource_dict.get(parameter=dict(dict_flag=p_id))
+        if p_type is not None:
+            self.set_type(p_type)
+
+    def set_type(self, p_type):
+        """
+        设置下拉选项
+        :param p_type:
+        :return:
+        """
+        self.clear()
+
+        result = self.__resource.get(
+            parameter=dict(TYPE='dictionary', DATA=dict(dict_flag=p_type)))
 
         if not ResourceCheck.result_status(result, u'获取字典信息'):
             dict_result = list()
@@ -391,11 +380,10 @@ class SelectDictionary(OrcSelectBase):
         self._set_item_data(dict_data)
 
 
-class SelectWidgetType(OrcSelectBase):
+class OrcSelectWidgetType(OrcSelectBase):
     """
     下拉控件类型列表
     """
-
     def __init__(self, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
@@ -404,21 +392,27 @@ class SelectWidgetType(OrcSelectBase):
         """
         OrcSelectBase.__init__(self, p_empty)
 
-        from LibDict import LibDict
+        self.__resource = OrcResource('Dict')
 
-        self.__dict = LibDict()
-        _data = [dict(name=_item.type_name, text=_item.type_text)
-                 for _item in self.__dict.get_widget_type()]
+        result = self.__resource.get(
+            parameter=dict(TYPE='widget_type', DATA=dict()))
+
+        if not ResourceCheck.result_status(result, u'获取字典信息'):
+            dict_result = list()
+        else:
+            dict_result = result.data
+
+        _data = [dict(name=_item['type_name'], text=_item['type_text'])
+                 for _item in dict_result]
 
         self._set_item_data(_data)
 
 
-class SelectWidgetOperation(OrcSelectBase):
+class OrcSelectWidgetOperation(OrcSelectBase):
     """
     下拉控件类型列表
     """
-
-    def __init__(self, p_empty=False):
+    def __init__(self, p_type=None, p_empty=False):
         """
         User defined combobox, it's data is come from table lib_dictionary
         :param p_empty: 是否包含空值
@@ -426,25 +420,38 @@ class SelectWidgetOperation(OrcSelectBase):
         """
         OrcSelectBase.__init__(self, p_empty)
 
-        from LibDict import LibDict
+        self.__resource = OrcResource('Dict')
 
-        self.__dict = LibDict()
+        if p_type is not None:
+            self.set_type(p_type)
 
     def set_type(self, p_type):
 
         self.clear()
 
-        # 获取当前控件的制作方式,去除不可操作控件
+        result = self.__resource.get(
+            parameter=dict(TYPE='widget_operation', DATA=dict(type_name=p_type)))
+
+        if not ResourceCheck.result_status(result, u'获取控件操作信息'):
+            dict_result = list()
+        else:
+            dict_result = result.data
+
+        # 获取当前控件的操作方式,去除不可操作控件
         if p_type in ("WINDOW", "GROUP"):
             return
 
-        _data = [dict(name=_item.ope_name, text=_item.ope_text)
-                 for _item in self.__dict.get_widget_operation(p_type)]
+        _data = [dict(name=_item['ope_name'], text=_item['ope_text'])
+                 for _item in dict_result]
 
         # 获取基本操作方式
         if p_type not in ("PAGE", "BLOCK"):
-            _data.extend([dict(name=_item.ope_name, text=_item.ope_text)
-                          for _item in self.__dict.get_widget_operation("BLOCK")])
+
+            result = self.__resource.get(
+                parameter=dict(TYPE='widget_operation', DATA=dict(type_name='BLOCK')))
+
+            if ResourceCheck.result_status(result, u'获取基本控件操作信息'):
+                _data.extend([dict(name=_item['ope_name'], text=_item['ope_text']) for _item in result.data])
 
         self._set_item_data(_data)
 
@@ -456,6 +463,8 @@ def operate_to_str(p_data):
     """
     if not isinstance(p_data, dict):
         return p_data
+
+    resource_dict = OrcResource("Dict")
 
     def get_widget_def_path(p_id):
         """
@@ -500,7 +509,6 @@ def operate_to_str(p_data):
         :param p_flag:
         :return:
         """
-        resource_dict = OrcResource("Dict")
         result = resource_dict.get(parameter=dict(dict_flag=p_flag, dict_value=p_value))
 
         # 检查结果
@@ -511,8 +519,6 @@ def operate_to_str(p_data):
         ResourceCheck.result_success(u"获取操作文字")
 
         return result.data[0]["dict_text"]
-
-    _dict = LibDict()
 
     _type = p_data["TYPE"]
     _object = p_data["OBJECT"]
@@ -525,7 +531,14 @@ def operate_to_str(p_data):
             _object = get_widget_def_path(_object)
             _type = get_lib_dict_text("operate_object_type", _type)
 
-            _operation = _dict.get_widget_operation_text(_operation)
+            result = resource_dict.get(
+                parameter=dict(TYPE='widget_operation', DATA=dict(ope_name=_operation)))
+
+            # 检查结果
+            if not ResourceCheck.result_status(result, u"获取操作类型文字"):
+                return ""
+
+            _operation = result.data[0]['ope_text']
 
         except OrcPostFailedException:
             # Todo
@@ -545,19 +558,22 @@ def operate_to_str(p_data):
 
 
 class ObjectOperator(QVBoxLayout):
+    """
+
+    """
     def __init__(self):
 
         QVBoxLayout.__init__(self)
 
         _label_type = QLabel(u"对象类型:")
-        self.__type = SelectWidgetType()
+        self.__type = OrcSelectWidgetType()
 
         _layout_type = QHBoxLayout()
         _layout_type.addWidget(_label_type)
         _layout_type.addWidget(self.__type)
 
         _label_operate = QLabel(u"操作方式:")
-        self.__operate = SelectWidgetOperation()
+        self.__operate = OrcSelectWidgetOperation()
 
         _layout_operate = QHBoxLayout()
         _layout_operate.addWidget(_label_operate)
@@ -592,6 +608,11 @@ class ObjectOperator(QVBoxLayout):
 
 
 class OrcProcess(QProgressBar):
+    """
+    进度条
+    """
+    sig_finish = OrcSignal()
+
     def __init__(self, p_steps=None):
 
         QProgressBar.__init__(self)
@@ -623,8 +644,21 @@ class OrcProcess(QProgressBar):
 
         self.setValue(self.__value)
 
+        if 100 == self.__value:
+            self.sig_finish.emit()
+
+    def get_process(self):
+        """
+        获取进度
+        :return:
+        """
+        return self.__value
+
 
 class OrcPagination(QWidget):
+    """
+    分页类
+    """
     sig_page = OrcSignal(tuple)
 
     def __init__(self):
@@ -642,19 +676,19 @@ class OrcPagination(QWidget):
         self._number = QLineEdit()
         self._number.setText("20")
 
-        _layout = QHBoxLayout()
-        _layout.addWidget(self._message)
-        _layout.addWidget(self._btn_first)
-        _layout.addWidget(self._btn_previous)
-        _layout.addWidget(self._btn_next)
-        _layout.addWidget(self._btn_last)
-        _layout.addWidget(self._jump)
-        _layout.addWidget(self._number)
+        layout_main = QHBoxLayout()
+        layout_main.addWidget(self._message)
+        layout_main.addWidget(self._btn_first)
+        layout_main.addWidget(self._btn_previous)
+        layout_main.addWidget(self._btn_next)
+        layout_main.addWidget(self._btn_last)
+        layout_main.addWidget(self._jump)
+        layout_main.addWidget(self._number)
 
-        _layout.setContentsMargins(0, 0, 0, 0)
-        _layout.setSpacing(0)
+        layout_main.setContentsMargins(0, 0, 0, 0)
+        layout_main.setSpacing(0)
 
-        self.setLayout(_layout)
+        self.setLayout(layout_main)
 
         self._btn_first.clicked.connect(self.first_page)
         self._btn_last.clicked.connect(self.last_page)

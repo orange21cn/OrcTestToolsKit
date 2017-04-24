@@ -4,14 +4,14 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibApi import connect_list
 
 from OrcView.Lib.LibMain import LogClient
-from OrcView.Lib.LibTable import StaticModelTable
+from OrcView.Lib.LibTable import ModelTable
 
 
-class BatchDetModel(StaticModelTable):
+class BatchDetModel(ModelTable):
 
     def __init__(self):
 
-        StaticModelTable.__init__(self, 'BatchDet')
+        ModelTable.__init__(self, 'BatchDet')
 
         self.__logger = LogClient()
 
