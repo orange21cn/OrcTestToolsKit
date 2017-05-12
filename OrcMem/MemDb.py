@@ -547,7 +547,7 @@ class MemServer(OrcSocketServer):
     def execute(self, p_cmd):
         """
         执行
-        :param p_cmd:
+        :param p_cmd: {TABLE, CMD, PARA}
         :return:
         """
         self._logger.info('%s input: %s' % (self.execute.__name__, p_cmd))

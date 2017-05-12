@@ -56,3 +56,12 @@ class DriverListAPI(Resource):
     @staticmethod
     def api_get(p_file):
         return send_file(p_file, mimetype='image/png', cache_timeout=0)
+
+
+# GET /pic
+# GET /DriverMessage
+# GET /DriverStatus
+# GET /RunStatus
+# POST /Run
+# PUt /ID/START
+# PUT /ID/STOP

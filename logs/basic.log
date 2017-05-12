@@ -113,3 +113,161 @@ AttributeError: 'MemDB' object has no attribute 'session'
     with self._db as db_session:
 AttributeError: __exit__
 
+[2017-04-25 11:04:27 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-04-25 11:04:27 basic.run_time] ERROR None
+
+[2017-04-28 15:28:20 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 15:28:20 basic.lib_net] INFO 获取操作文字成功
+[2017-04-28 15:28:21 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 15:28:21 basic.lib_net] INFO 获取操作文字成功
+[2017-04-28 16:04:44 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 16:04:44 basic.lib_net] INFO 获取操作文字成功
+[2017-05-08 10:54:24 basic.lib_net] INFO 获取页面标识成功
+[2017-05-08 10:54:24 basic.lib_net] INFO 获取操作文字成功
+[2017-05-10 12:51:33 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 12:51:33 basic.run_time] ERROR None
+
+[2017-05-10 12:51:33 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 12:51:33 basic.run_time] ERROR None
+
+[2017-05-10 13:52:09 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 13:52:09 basic.run_time] ERROR None
+
+[2017-05-10 13:52:09 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 13:52:09 basic.run_time] ERROR None
+
+[2017-05-10 13:55:52 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 13:55:52 basic.run_time] ERROR None
+
+[2017-05-10 13:55:52 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 13:55:52 basic.run_time] ERROR None
+
+[2017-05-10 14:03:48 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:03:48 basic.run_time] ERROR None
+
+[2017-05-10 14:03:48 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 14:03:48 basic.run_time] ERROR None
+
+[2017-05-10 14:22:29 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:22:29 basic.run_time] ERROR None
+
+[2017-05-10 14:24:41 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:24:41 basic.run_time] ERROR None
+
+[2017-05-10 14:25:26 basic.lib_net] INFO 获取页面标识成功
+[2017-05-10 14:25:26 basic.lib_net] INFO 获取操作文字成功
+[2017-05-10 14:27:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:27:28 basic.run_time] ERROR None
+
+[2017-05-10 14:28:20 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:28:20 basic.run_time] ERROR None
+
+[2017-05-10 14:36:00 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:36:00 basic.run_time] ERROR None
+
+[2017-05-10 14:36:02 basic.lib_net] ERROR function invoke error: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/1.0/RunTime (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x123658a90>: Failed to establish a new connection: [Errno 61] Connection refused',))
+[2017-05-10 14:36:02 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 294, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 145, in delete
+    return request('delete', url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 468, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 576, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 437, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/1.0/RunTime (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x123658a90>: Failed to establish a new connection: [Errno 61] Connection refused',))
+
+[2017-05-10 14:36:02 basic.run_time] ERROR 删除实时数据失败, 网络连接失败.
+[2017-05-10 14:36:02 basic.run_time] ERROR None
+
+[2017-05-10 14:41:47 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:41:47 basic.run_time] ERROR None
+
+[2017-05-10 14:43:57 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:43:57 basic.run_time] ERROR None
+
+[2017-05-10 14:43:59 basic.lib_net] ERROR function invoke error: Failed to parse: localhost:None
+[2017-05-10 14:43:59 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 294, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 293, in prepare
+    self.prepare_url(url, params)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 347, in prepare_url
+    raise InvalidURL(*e.args)
+InvalidURL: Failed to parse: localhost:None
+
+[2017-05-10 14:43:59 basic.run_time] ERROR 获取实时数据失败, 网络连接失败.
+[2017-05-10 14:43:59 basic.run_time] ERROR None
+
+[2017-05-10 14:43:59 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:43:59 basic.run_time] ERROR None
+
+[2017-05-10 14:46:12 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:46:12 basic.run_time] ERROR None
+
+[2017-05-10 15:09:15 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:09:15 basic.run_time] ERROR None
+
+[2017-05-10 15:37:54 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:37:54 basic.run_time] ERROR None
+
+[2017-05-10 15:55:37 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:55:37 basic.run_time] ERROR None
+
+[2017-05-10 16:33:25 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 16:33:25 basic.run_time] ERROR None
+
+[2017-05-10 17:06:01 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 17:06:01 basic.run_time] ERROR None
+
+[2017-05-11 09:35:08 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:35:08 basic.run_time] ERROR None
+
+[2017-05-11 09:35:18 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:35:18 basic.run_time] ERROR None
+
+[2017-05-11 09:45:27 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:45:27 basic.run_time] ERROR None
+
+[2017-05-11 10:03:37 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 10:03:37 basic.run_time] ERROR None
+
+[2017-05-11 10:19:32 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 10:19:32 basic.run_time] ERROR None
+
+[2017-05-11 13:26:50 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 13:26:50 basic.run_time] ERROR None
+
+[2017-05-11 15:47:34 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 15:47:34 basic.run_time] ERROR None
+
+[2017-05-12 09:47:36 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 09:47:36 basic.run_time] ERROR None
+
+[2017-05-12 10:14:22 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:14:22 basic.run_time] ERROR None
+
+[2017-05-12 10:19:50 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:19:50 basic.run_time] ERROR None
+
+[2017-05-12 10:29:11 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:29:11 basic.run_time] ERROR None
+
+[2017-05-12 10:30:03 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:30:03 basic.run_time] ERROR None
+
+[2017-05-12 10:30:22 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:30:22 basic.run_time] ERROR None
+

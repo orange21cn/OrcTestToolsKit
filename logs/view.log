@@ -1,158 +1,23 @@
-[2017-03-29 13:18:06 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 135, in data
-    return self._definition_select[_field.id][_value]
-KeyError: None
+[2017-05-10 14:03:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
+    _value = item.content[_field.id]
+KeyError: 'status'
 
-[2017-03-29 13:21:00 view.table.model.base] ERROR select value error: data_src_type, None
-[2017-03-29 13:21:00 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 135, in data
-    return self._definition_select[_field.id][_value]
-KeyError: None
+[2017-05-10 14:03:10 view.tree.model] ERROR Error, data is: 
+[2017-05-10 14:03:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
+    _value = item.content[_field.id]
+KeyError: 'status'
 
-[2017-03-29 13:21:00 view.table.model.base] ERROR select value error: data_src_type, None
-[2017-03-29 13:21:00 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 135, in data
-    return self._definition_select[_field.id][_value]
-KeyError: None
+[2017-05-10 14:41:19 view.tree.model] ERROR Error, data is: 
+[2017-05-10 14:41:19 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
+    _value = item.content[_field.id]
+KeyError: 'status'
 
-[2017-03-31 18:49:53 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:49:53 view.table.model] ERROR None
-
-[2017-03-31 18:51:04 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:51:04 view.table.model] ERROR None
-
-[2017-03-31 18:51:04 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:51:04 view.table.model] ERROR None
-
-[2017-03-31 18:51:48 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:51:48 view.table.model] ERROR None
-
-[2017-03-31 18:51:48 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:51:48 view.table.model] ERROR None
-
-[2017-03-31 18:51:52 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:52 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:52 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:52 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:52 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:52 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:52 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:52 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:53 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:53 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:54 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:54 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:51:57 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:51:57 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:52:02 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:02 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:52:02 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:02 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:52:06 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:06 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:52:06 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:06 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:52:10 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:10 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:52:10 view.table.model.base] ERROR select value error: widget_attr_type, ID
-[2017-03-31 18:52:10 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'widget_attr_type'
-
-[2017-03-31 18:57:40 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:57:40 view.table.model] ERROR None
-
-[2017-03-31 18:57:40 view.table.model] ERROR 获取字典值失败, None
-[2017-03-31 18:57:40 view.table.model] ERROR None
-
-[2017-03-31 18:57:44 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:57:44 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-03-31 18:57:44 view.table.model.base] ERROR select value error: test_env, TEST
-[2017-03-31 18:57:44 view.table.model.base] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
-    return self._definition_select[_field.id][_value]
-KeyError: 'test_env'
-
-[2017-04-01 09:27:39 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:27:39 view.table.model] ERROR None
-
-[2017-04-01 09:27:40 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:27:40 view.table.model] ERROR None
-
-[2017-04-01 09:29:27 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:29:27 view.table.model] ERROR None
-
-[2017-04-01 09:29:27 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:29:27 view.table.model] ERROR None
-
-[2017-04-01 09:29:30 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:29:30 view.table.model] ERROR None
-
-[2017-04-01 09:29:30 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:29:30 view.table.model] ERROR None
-
-[2017-04-01 09:30:27 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:30:27 view.table.model] ERROR None
-
-[2017-04-01 09:30:27 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:30:27 view.table.model] ERROR None
-
-[2017-04-01 09:36:44 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:36:44 view.table.model] ERROR None
-
-[2017-04-01 09:36:44 view.table.model] ERROR 获取字典值失败, None
-[2017-04-01 09:36:44 view.table.model] ERROR None
+[2017-05-10 14:41:19 view.tree.model] ERROR Error, data is: 
+[2017-05-10 14:41:19 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
+    _value = item.content[_field.id]
+KeyError: 'status'
 

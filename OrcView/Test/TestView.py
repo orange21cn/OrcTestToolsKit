@@ -158,6 +158,19 @@ class TestView(unittest.TestCase):
 
         OrcTest.test_print_end()
 
+    def test_conf(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Config.ConfView import ConfMain
+
+        OrcTest.display_widget(ConfMain)
+
+        OrcTest.test_print_end()
+
 
 class TestModel(unittest.TestCase):
 

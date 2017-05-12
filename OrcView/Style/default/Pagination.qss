@@ -1,0 +1,81 @@
+QPushButton {
+    width: 20px;
+    height: 15px;
+	color: #000;
+	background-color: #e2e2e2;
+	border: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-right: 12px;
+	font-size: 13px;
+	text-align: center;
+}
+
+QPushButton:hover {
+	background-color: #BBB;
+	border-color: #FFF
+}
+
+QPushButton:pressed {
+    background-color: #555;
+	border-color: #000
+}
+
+QPushButton:checked {
+    color: #AAA;
+    background-color: #777;
+	border-color: #DDD;
+}
+
+QLineEdit {
+    width: 10px;
+    height: 20px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #CCC;
+}
+
+QLabel {
+    text-align: center;
+    margin-right: 5px;
+}
+
+QComboBox {
+    height: 20px;
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+}
+
+QComboBox::drop-down {
+    width: 10px;
+    height: 10px;
+    subcontrol-origin: border;
+    subcontrol-position: right center;
+    background: white;
+    border: 2px solid rgb(170, 170, 170);
+    border-radius: 3px;
+    left: -2px;
+}
+
+QComboBox::drop-down:hover {
+    background: rgb(76, 76, 76);
+}
+
+QComboBox::drop-down:on {
+    background: black;
+    top: 1px;
+}
+
+QComboBox:on {
+    padding-top: 20px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+}

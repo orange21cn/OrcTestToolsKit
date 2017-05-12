@@ -19,7 +19,6 @@ class OrcSystem(object):
         :param p_path:
         :return:
         """
-        print p_path
         if isinstance(p_path, str):
             res_path = p_path
         else:

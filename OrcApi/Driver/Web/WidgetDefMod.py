@@ -82,9 +82,8 @@ class WidgetDefMod:
         :param p_id:
         :return:
         """
-        print "OKKKKKK"
         widget = self.usr_search(dict(id=p_id))
-        print '0000', p_id
+
         if widget:
             return self.__get_tree(widget[0])
         else:

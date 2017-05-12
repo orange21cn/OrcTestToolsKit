@@ -142,7 +142,7 @@ class ModelTreeBase(QAbstractItemModel):
         """
         QAbstractItemModel.__init__(self)
 
-        resource_dict = OrcResource("Dict")
+        # resource_dict = OrcResource("Dict")
 
         self.__logger = OrcLog("view.tree.model")
 
@@ -171,23 +171,23 @@ class ModelTreeBase(QAbstractItemModel):
         self._definition = ViewDefinition(p_flag)
 
         # SELECT 类型的字段
-        self._definition_select = dict()
+        # self._definition_select = dict()
 
         # 获取 SELECT 类型 value/text 数据对
         # {id: {value: text}, id: ....}
-        for _field in self._definition.fields_display:
-
-            assert isinstance(_field, FieldDefinition)
-
-            if _field.display and "SELECT" == _field.type:
-
-                _res = resource_dict.get(parameter=dict(dict_flag=_field.id))
-
-                if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
-                    break
-
-                self._definition_select[_field.id] =\
-                    {item['dict_value']: item['dict_text'] for item in _res.data}
+        # for _field in self._definition.fields_display:
+        #
+        #     assert isinstance(_field, FieldDefinition)
+        #
+        #     if _field.display and "SELECT" == _field.type:
+        #
+        #         _res = resource_dict.get(parameter=dict(dict_flag=_field.id))
+        #
+        #         if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
+        #             break
+        #
+        #         self._definition_select[_field.id] =\
+        #             {item['dict_value']: item['dict_text'] for item in _res.data}
 
     def supportedDropActions(self):
         """
@@ -323,14 +323,18 @@ class ModelTreeBase(QAbstractItemModel):
             _field = self._definition.get_field_display_by_index(index.column())
             assert isinstance(_field, FieldDefinition)
 
-            _value = item.content[_field.id]
+            try:
+                _value = item.content[_field.id]
+            except KeyError, err:
+                self.__logger.error("Error, data is: " % item.content)
 
             # Combobox 类型数据
             if "SELECT" == _field.type:
                 try:
-                    return self._definition_select[_field.id][_value]
+                    return self._definition.select_def[_field.id][_value]
                 except KeyError:
                     self.__logger.error("select value error: %s, %s" % (_field.id, _value))
+                    return None
 
             # OPERATE 类型数据
             elif "OPERATE" == _field.type:
@@ -340,8 +344,8 @@ class ModelTreeBase(QAbstractItemModel):
             elif "DISPLAY" == _field.type:
                 return self._data[index.row()]["%s_text" % _field.id]
 
-            if _field.id in self._definition_select:
-                return self._definition_select[_field.id][_value]
+            if _field.id in self._definition.select_def:
+                return self._definition.select_def[_field.id][_value]
             else:
                 return _value
 

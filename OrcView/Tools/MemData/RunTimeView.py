@@ -94,6 +94,7 @@ class RunTimeDispView(QWidget):
         # 底部
         layout_bottom = QHBoxLayout()
         layout_bottom.addWidget(self.__wid_buttons)
+        layout_bottom.addStretch()
         layout_bottom.addWidget(self.__wid_pagination)
 
         # 整体布局

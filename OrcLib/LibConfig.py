@@ -54,7 +54,7 @@ class OrcConfig:
         _rtn = False
 
         # 如果配置项不存在返回失败
-        if self.__conf.has_section(p_sec):
+        if self.__conf.has_section(p_sec) or ('DEFAULT' == p_sec):
 
             _file = open(self.__file, "w")
 

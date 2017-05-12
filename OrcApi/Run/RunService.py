@@ -5,6 +5,7 @@ from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibDatabase import TabItem
+from OrcLib.LibProgram import OrcDataStruct
 
 
 class RunCoreService(object):
@@ -106,16 +107,16 @@ class RunCoreService(object):
         :type p_def_list: list
         :return:
         """
-        p_def_list.reverse()
+        # p_def_list.reverse()
 
-        for _node in p_def_list:
+        for _node in OrcDataStruct.iterator_reversed_list(p_def_list):
 
             _id = _node["id"]
             _type = _node["run_det_type"]
 
-            if _type in ("CASE", "CASE_GROUP"):
+            if _type in ("CASE", "CASE_SUIT"):
                 _type = "CASE"
-            elif _type in ("BATCH", "BATCH_GROUP"):
+            elif _type in ("BATCH", "BATCH_SUIT"):
                 _type = "BATCH"
             else:
                 pass
@@ -135,7 +136,7 @@ class RunCoreService(object):
         else:
             return None
 
-        p_def_list.reverse()
+        # p_def_list.reverse()
 
         if result.data:
             return result.data[0]["data_value"]

@@ -10,7 +10,9 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
 from PySide.QtGui import QTextEdit
+from PySide.QtGui import QFileDialog
 from PySide.QtGui import QProgressBar
+from PySide.QtGui import QIcon
 
 from OrcLib import get_config
 from OrcLib.LibNet import OrcResource
@@ -18,6 +20,7 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibException import OrcPostFailedException
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTheme import get_theme
+from OrcView.Lib.LibTheme import OrcTheme
 
 _logger = LogClient()
 
@@ -31,53 +34,57 @@ class WidgetFactory(object):
         self.__configer = get_config()
 
     @staticmethod
-    def create_basic(p_type, p_source, p_flag):
+    def create_basic(p_type, p_flag=None, p_source=None):
         """
         创建基本控件
-        :param p_flag:
-        :param p_source:
-        :param p_type:
+        :param p_flag: 标识,用于创建下拉框
+        :param p_source: 使用的场景,有时候显示和查询会有不同
+        :param p_type: 控件类型
         :return:
         """
+        _type = p_type
+        _source = p_source
+        _flag = '' if p_flag is None else p_flag
+
         # 单行输入框
-        if 'LINETEXT' == p_type:
+        if 'LINETEXT' == _type:
             return OrcLineEdit()
 
         # 多行输入框
-        elif 'TEXTAREA' == p_type:
+        elif 'TEXTAREA' == _type:
 
-            if 'SEARCH' == p_source:
+            if 'SEARCH' == _source:
                 return OrcLineEdit()
             else:
                 return OrcTextArea()
 
         # 时间显示
-        elif 'DATETIME' == p_type:
+        elif 'DATETIME' == _type:
             return OrcLineEdit()
 
         # 时间显示
-        elif 'DISPLAY' == p_type:
+        elif 'DISPLAY' == _type:
             return OrcDisplay()
 
         # 选择输入框
-        elif 'SELECT' == p_type:
+        elif 'SELECT' == _type:
 
-            if 'SEARCH' == p_source:
-                return OrcSelect(p_flag, True)
+            if 'SEARCH' == _source:
+                return OrcSelect(_flag, True)
             else:
-                return OrcSelect(p_flag)
+                return OrcSelect(_flag)
 
         # 选择控件操作类型
-        elif 'SEL_WIDGET' == p_type:
+        elif 'SEL_WIDGET' == _type:
             _view = OrcSelectWidgetType()
-            if 'SEARCH' == p_source:
+            if 'SEARCH' == _source:
                 # Todo 增加一个公共函数
                 _view.insertItem(0, u'所有', '')
             _view.setCurrentIndex(0)
             return _view
 
         # 操作类型
-        elif 'OPERATE' == p_type:
+        elif 'OPERATE' == _type:
             return OrcOperate()
 
         # 其他
@@ -86,7 +93,7 @@ class WidgetFactory(object):
 
     def create_complex(self, p_type, p_source, p_flag):
         """
-        创建自定义复杂控件
+        创建自定义复杂控件,控件在文件中定义,动态导入
         :param p_flag:
         :param p_source:
         :param p_type:
@@ -134,23 +141,6 @@ class WidgetFactory(object):
             return self.create_basic(widget_type, widget_source, widget_flag)
         else:
             return self.create_complex(widget_type, widget_source, widget_flag)
-
-
-# def clean_layout(p_layout):
-#     """
-#     清空 layout, 暂时未用到
-#     :param p_layout:
-#     :return:
-#     """
-#     if p_layout is not None:
-#
-#         while p_layout.count():
-#
-#             t_child = p_layout.takeAt(0)
-#             if t_child.widget() is not None:
-#                 t_child.widget().deleteLater()
-#             elif t_child.layout() is not None:
-#                 clean_layout(t_child.layout())
 
 
 class OrcLineEdit(QLineEdit):
@@ -230,6 +220,41 @@ class OrcTextArea(QTextEdit):
 
     def set_data(self, p_data):
         self.setText(p_data)
+
+
+class OrcFileSelection(QWidget):
+    """
+    文件选择控件
+    """
+    def __init__(self):
+
+        QWidget.__init__(self)
+
+        # 文件名显示框
+        self._file_name = OrcLineEdit()
+
+        # 文件选择按钮
+        self._file_btn = QPushButton('...')
+
+        # 布局
+        layout_main = QHBoxLayout()
+        layout_main.addWidget(self._file_name)
+        layout_main.addWidget(self._file_btn)
+
+        layout_main.setContentsMargins(0, 0, 0, 0)
+        layout_main.setSpacing(0)
+
+        self.setLayout(layout_main)
+
+        self._file_btn.clicked.connect(self.__select_file)
+
+    def __select_file(self):
+        """
+        选择文件
+        :return:
+        """
+        directory_name = QFileDialog.getExistingDirectory(self, u'选择')
+        self._file_name.set_data(directory_name)
 
 
 class OrcOperate(QLineEdit):
@@ -667,14 +692,20 @@ class OrcPagination(QWidget):
 
         self._message = QLabel()
 
-        self._btn_first = QPushButton("F")
-        self._btn_last = QPushButton("L")
-        self._btn_previous = QPushButton("p")
-        self._btn_next = QPushButton("n")
+        self._btn_first = QPushButton()
+        self._btn_first.setIcon(QIcon(OrcTheme.get_icon('previous')))
+
+        self._btn_last = QPushButton()
+        self._btn_last.setIcon(QIcon(OrcTheme.get_icon('next')))
+
+        self._btn_previous = QPushButton()
+        self._btn_previous.setIcon(QIcon(OrcTheme.get_icon('rewind')))
+
+        self._btn_next = QPushButton()
+        self._btn_next.setIcon(QIcon(OrcTheme.get_icon('forward')))
 
         self._jump = QComboBox()
         self._number = QLineEdit()
-        self._number.setText("20")
 
         layout_main = QHBoxLayout()
         layout_main.addWidget(self._message)
@@ -696,11 +727,16 @@ class OrcPagination(QWidget):
         self._btn_next.clicked.connect(self.next_page)
         self._jump.currentIndexChanged.connect(self.jump_to_page)
 
+        self.setStyleSheet(OrcTheme.get_theme('Pagination'))
+
         # 总页数
         self.__pages = 10
 
         #  当前页码
         self.__page = 1
+
+        self._number.setText('20')
+        self.set_data(0, 0)
 
     def get_page(self):
         """

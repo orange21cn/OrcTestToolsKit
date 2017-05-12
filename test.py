@@ -1,51 +1,25 @@
 import socket
 import sys
 import json
+import time
 
 
-def add():
-
-    host, port = "localhost", 6002
-    data = " ".join(sys.argv[1:])
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    try:
-        sock.connect((host, port))
-        sock.sendall(json.dumps(dict(
-            CMD='ADD',
-            TABLE='RunTime',
-            PARA=dict(id='3', module='WEB')
-        )))
-
-        # Receive data from the server and shut down
-        received = sock.recv(1024)
-        print "Sent:     {}".format(data)
-        print "Received: {}".format(received)
-    finally:
-        sock.close()
+from OrcLib.LibNet import OrcSocketResource
+from OrcLib.LibNet import OrcResource
 
 
-def search():
+def orc_time(p_func, *args, **kwargs):
+    begin = time.time()
 
-    host, port = "localhost", 6002
-    data = " ".join(sys.argv[1:])
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    p_func(*args, **kwargs)
 
-    try:
+    end = time.time()
+    print '--', begin
+    print '---', end - begin
 
-        sock.connect((host, port))
-        sock.sendall(json.dumps(dict(
-            CMD='SEARCH',
-            TABLE='RunTime',
-            PARA=dict()
-        )))
+res = OrcSocketResource('MEM')
+orc_time(res.get, dict(TABLE='RunTime', CMD='SEARCH', PARA=dict()))
 
-        received = sock.recv(1024)
-        print "Sent:     {}".format(data)
-        print "Received: {}".format(received)
+abc = OrcResource("Data")
+orc_time(abc.get, parameter=dict(id=10))
 
-    finally:
-        sock.close()
-
-add()
-search()

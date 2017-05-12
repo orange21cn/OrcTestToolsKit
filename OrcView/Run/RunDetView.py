@@ -56,12 +56,7 @@ class RunDetView(QWidget):
 
         self.setLayout(layout_main)
 
-        # 进度条进程
-        # self.__thread_status = StatusReceiver()
-        # self.__thread_status.start()
-
         # 更新数据
-        # self.__thread_status.sig_status.connect(self.update_data)
         self.__progress.sig_finish.connect(self.sig_stop.emit)
 
     def usr_update(self):
@@ -81,21 +76,18 @@ class RunDetView(QWidget):
 
             # 实时数据读取列表,一次性读取,读取后会删除
             steps = self.display.model.service_get_steps()
-            print "==========", steps
-            # if not steps:
-            #     print "============--------1"
-            #     break
+
             time.sleep(2)
 
             # 更新状态
             for _index in steps:
-                self.display.model.mod_set_data(eval(steps[_index]))
+
+                self.display.model.mod_set_data(eval(steps[_index].replace('null,', 'None,')))
                 self.__progress.step_forward()
 
             # 停止判断
             if 100 == self.__progress.get_process():
                 self.sig_stop.emit()
-                print "============--------2"
                 break
 
     def usr_refresh(self, p_path=None):

@@ -2,7 +2,6 @@
 import abc
 import json
 import socket
-
 from OrcLib.LibLog import OrcLog
 
 _logger = OrcLog('basic.lib.lib_program')
@@ -17,7 +16,6 @@ def orc_singleton(cls):
     instances = {}
 
     def _singleton(*args, **kw):
-
         if cls not in instances:
             instances[cls] = cls(*args, **kw)
 
@@ -27,19 +25,54 @@ def orc_singleton(cls):
 
 
 class Singleton(type):
-
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
-
         if cls not in cls._instances:
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
 
         return cls._instances[cls]
 
 
-class OrcSocketServer(object):
+# class Singleton(object):
+#
+#     # 定义静态变量实例
+#     __instance = None
+#
+#     def __init__(self):
+#         pass
+#
+#     def __new__(cls, *args, **kwargs):
+#         if not cls.__instance:
+#             try:
+#                 Lock.acquire()
+#                 # double check
+#                 if not cls.__instance:
+#                     cls.__instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
+#             finally:
+#                 Lock.release()
+#         return cls.__instance
 
+class OrcDataStruct(object):
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def iterator_reversed_list(p_list):
+        """
+        反向数组迭代器,用于反向输出数组元素
+        :param p_list:
+        :return:
+        """
+        assert isinstance(p_list, list)
+
+        len_list = len(p_list)
+
+        for _index in range(len_list):
+            yield p_list[len_list - _index - 1]
+
+
+class OrcSocketServer(object):
     def __init__(self, p_ip, p_port):
 
         self._logger = OrcLog('basic.lib_program.mem_server')
@@ -98,28 +131,11 @@ class OrcSocketServer(object):
         pass
 
 
-# class Singleton(object):
-#
-#     # 定义静态变量实例
-#     __instance = None
-#
-#     def __init__(self):
-#         pass
-#
-#     def __new__(cls, *args, **kwargs):
-#         if not cls.__instance:
-#             try:
-#                 Lock.acquire()
-#                 # double check
-#                 if not cls.__instance:
-#                     cls.__instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
-#             finally:
-#                 Lock.release()
-#         return cls.__instance
-
-
+# ---- Type ----
 class OrcSwitch(object):
-
+    """
+    模拟 switch 关键字
+    """
     def __init__(self, p_def):
 
         object.__init__(self)
@@ -137,7 +153,9 @@ class OrcSwitch(object):
 
 
 class OrcMap(object):
-
+    """
+    dict 类型 none 判断
+    """
     def __init__(self, p_data, p_default=None):
 
         self._data = p_data
@@ -153,10 +171,21 @@ class OrcMap(object):
         return self._default if p_key not in self._data else self._data[p_key]
 
 
+class OrcEnum(set):
+    """
+    Enum 类型
+    """
+    def __getattr__(self, name):
+
+        if name in self:
+            return name()
+
+        raise AttributeError
+
+
 class OrcFactory(object):
 
     def __init__(self):
-
         object.__init__(self)
 
     @staticmethod
@@ -166,3 +195,7 @@ class OrcFactory(object):
     @staticmethod
     def create_switch(p_def):
         return OrcSwitch(p_def)
+
+    @staticmethod
+    def create_enum(p_def):
+        return OrcEnum(p_def)

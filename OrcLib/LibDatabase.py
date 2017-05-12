@@ -214,7 +214,6 @@ class TabStepDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
-
         self.id = p_def["id"] if p_def else None
         self.step_type = p_def["step_type"] if p_def else None
         self.step_desc = p_def["step_desc"] if p_def else None

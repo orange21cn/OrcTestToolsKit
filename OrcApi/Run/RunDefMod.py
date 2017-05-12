@@ -12,7 +12,6 @@ class RunDefMod:
     """
     运行列表管理,操作目录,目录名为 [类型]_[id],目录内含有 result.res 的属于执行过的, result.res 是一个xml文件
     """
-
     def __init__(self):
 
         self.__config = get_config()
@@ -74,18 +73,16 @@ class RunDefMod:
                 rtn.append(dict(id=_id, pid=None, run_def_type=_type, run_flag=_flag))
 
                 # 加入目录下测试项
-                _test_list = os.listdir("%s/%s" % (self.__home, _item))
+                _test_list = os.listdir(os.path.join(self.__home, _item))
                 rtn.extend(list(
                     dict(id="%s:%s" % (_id, test), pid=_id, run_def_type="TEST", run_flag=test)
                     for test in _test_list))
-
-        print rtn
 
         return rtn
 
     def usr_add(self, p_data):
         """
-        增加执行目录时 p_test=false, 为 true 时生成结果文件
+        增加执行目录 p_test=false, 为 true 时生成结果文件
         :param p_data: {id, run_def_type, result}
         :return:
         :rtype: bool
@@ -95,7 +92,7 @@ class RunDefMod:
         _result = p_data["result"] if "result" in p_data else False
 
         # 生成目录名称
-        folder_root = "%s/%s_%s" % (self.__home, _type, _id)
+        folder_root = os.path.join(self.__home, "%s_%s" % (_type, _id))
 
         # 建目录
         if not os.path.exists(folder_root):
@@ -113,13 +110,14 @@ class RunDefMod:
                 if 10 > _flag:
                     _flag = "%s%s" % (0, _flag)
 
-                res_folder = "%s/%s%s" % (folder_root, gen_date_str(), _flag)
-                res_file = "%s/default.res" % res_folder
+                res_folder = os.path.join(folder_root, "%s%s" % (gen_date_str(), _flag))
+                res_file = os.path.join(res_folder, "default.res")
 
                 if os.path.exists(res_folder):
                     continue
 
                 os.mkdir(res_folder)
+
                 self.__data.save_list(_type, _id, res_file)
                 break
 
@@ -140,9 +138,14 @@ class RunDefMod:
             _path = _item.split(':')
 
             if _path[0] in folder_info:
-                _path[0] = folder_info[_path[0]]
-                delete_list.append("%s/%s" % (self.__home, '/'.join(_path)))
 
+                _path[0] = folder_info[_path[0]]
+
+                del_folder = self.__home
+                for _folder in _path:
+                    del_folder = os.path.join(del_folder, _folder)
+
+                delete_list.append(del_folder)
 
         for _item in delete_list:
 

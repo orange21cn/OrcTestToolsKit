@@ -45,11 +45,11 @@ class OrcRunTime(object):
         cond = dict(module=self.__mod, data_flag=p_flag)
         result = self.__resource.get(parameter=cond)
 
-        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
+        if not ResourceCheck.result_status(result, u'获取实时数据', self.__logger):
             return None
 
         if not result.data:
-            self.__logger.error("获取实时数据出错,取值为: %s" % result.data)
+            self.__logger.error(u"获取实时数据出错,取值为: %s" % result.data)
             return None
         else:
             return result.data[0]["data_value"]
@@ -64,7 +64,7 @@ class OrcRunTime(object):
 
         result = self.__resource.get(parameter=cond)
 
-        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
+        if not ResourceCheck.result_status(result, u'获取实时数据', self.__logger):
             return list()
 
         return {item['data_index']: item["data_value"] for item in result.data}
@@ -90,7 +90,7 @@ class OrcRunTime(object):
         if data_id is not None:
             result = self.__resource.put(path=data_id, parameter=dict(data_value=p_value))
 
-            if not ResourceCheck.result_status(result, '设置实时数据', self.__logger):
+            if not ResourceCheck.result_status(result, u'设置实时数据', self.__logger):
                 return False
 
             result = result.status
@@ -119,7 +119,7 @@ class OrcRunTime(object):
         # 查询
         result = self.__resource.get(parameter=cond)
 
-        if not ResourceCheck.result_status(result, '获取实时数据', self.__logger):
+        if not ResourceCheck.result_status(result, u'获取实时数据', self.__logger):
             return False
 
         # 获取列表
@@ -128,7 +128,7 @@ class OrcRunTime(object):
         # 删除
         result = self.__resource.delete(parameter=data_ids)
 
-        if not ResourceCheck.result_status(result, '删除实时数据', self.__logger):
+        if not ResourceCheck.result_status(result, u'删除实时数据', self.__logger):
             return False
 
         return True

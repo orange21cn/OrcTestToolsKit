@@ -114,10 +114,10 @@ class ItemView(QWidget):
 
             _type = self.display.model.service_get_step_type(self.__step_id)
 
-            if "FUNC" == _type:
+            if "STEP_FUNC" == _type:
                 self.__win_add_func.show()
 
-            elif "NORMAL" == _type:
+            elif "STEP_NORMAL" == _type:
                 self.__win_add_item.show()
 
             else:
@@ -158,11 +158,11 @@ class ItemView(QWidget):
         self.__step_id = p_step_id
         step_type = self.display.model.service_get_step_type(self.__step_id)
 
-        if "FUNC" == step_type:
+        if "STEP_FUNC" == step_type:
             self.display = self.func_display
             self.main_display.setCurrentIndex(1)
 
-        elif "NORMAL" == step_type:
+        elif "STEP_NORMAL" == step_type:
             self.display = self.item_display
             self.main_display.setCurrentIndex(0)
 

@@ -1,7 +1,7 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
-
-_logger = OrcLog("view.basic.view_def")
+from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import ResourceCheck
 
 
 class FieldDefinition(object):
@@ -41,28 +41,25 @@ class ViewDefinition(object):
     """
     def __init__(self, p_flag=None):
 
+        # 字段定义
         self.fields = list()
+
+        # 显示的字段定义
         self.fields_display = list()
 
+        # 表原始定义
         self._def = list()
 
-        rel_list = dict(
-            BatchDef=def_view_batch_def,
-            BatchDet=def_view_batch_det,
-            Case=def_view_case_def,
-            Step=def_view_step,
-            Item=def_view_item,
-            Data=def_view_data,
-            DataSrc=def_view_data_src,
-            RunTime=def_view_run_time,
-            PageDef=def_view_page_def,
-            PageDet=def_view_page_det,
-            WidgetDef=def_view_widget_def,
-            WidgetDet=def_view_widget_det,
-            Window=def_view_window_def,
-            RunDef=def_view_run_def,
-            RunDet=def_view_run_det)
+        # 下拉框定义
+        self.select_def = dict()
 
+        # 字典资源
+        self._resource_dict = OrcResource("Dict")
+
+        # log
+        self._logger = OrcLog("view.lib.view_def")
+
+        # 预定义表通过预定义数据定义,动态表要由输入参数给定定义
         if isinstance(p_flag, list):
             self._def = p_flag
         elif p_flag in rel_list:
@@ -70,13 +67,7 @@ class ViewDefinition(object):
         else:
             pass
 
-        for _field_def in self._def:
-
-            _field = FieldDefinition(_field_def)
-            self.fields.append(_field)
-
-            if _field.display:
-                self.fields_display.append(_field)
+        self._get_definition()
 
     @property
     def display_length(self):
@@ -91,7 +82,7 @@ class ViewDefinition(object):
         try:
             return self.fields[p_index]
         except IndexError:
-            _logger.error("field index is out of range.")
+            self._logger.error("field index is out of range.")
 
         return None
 
@@ -104,7 +95,7 @@ class ViewDefinition(object):
         try:
             return self.fields_display[p_index]
         except IndexError:
-            _logger.error("field index is out of range.")
+            self._logger.error("field index is out of range.")
 
         return None
 
@@ -120,6 +111,47 @@ class ViewDefinition(object):
 
         return None
 
+    def _get_definition(self):
+        """
+         生成表定义
+        :return:
+        """
+        # 生成列定义及显示的列
+        for _field_def in self._def:
+
+            _field = FieldDefinition(_field_def)
+            self.fields.append(_field)
+
+            if _field.display:
+
+                self.fields_display.append(_field)
+
+                if "SELECT" == _field.type:
+                    self._get_select_definition(_field.id)
+
+    def _get_select_definition(self, p_id):
+        """
+        生成下拉列表定义
+        :param p_id:
+        :return:
+        """
+        self.select_def[p_id] = dict()
+
+        def get_def(p_def_id):
+
+            _res = self._resource_dict.get(parameter=dict(dict_flag=p_def_id))
+            if not ResourceCheck.result_status(_res, u"获取字典值", self._logger):
+                self._logger.error("get dict %s failed." % p_id)
+                return
+
+            self.select_def[p_id].update({item['dict_value']: item['dict_text'] for item in _res.data})
+
+        if p_id in complex_select_definition:
+            self.select_def[p_id] = dict()
+            for _id in complex_select_definition[p_id]:
+                get_def(_id)
+        else:
+            get_def(p_id)
 
 def_view_batch_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -369,3 +401,34 @@ def_view_run_det = [
          SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="status", NAME=u"状态", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=True)]
+
+def_view_conf_menu = [
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False),
+    dict(ID="name", NAME=u"名称", TYPE="LINETEXT", DISPLAY=True, EDIT=False,
+         SEARCH=False, ADD=False, ESSENTIAL=False)]
+
+rel_list = dict(
+    BatchDef=def_view_batch_def,
+    BatchDet=def_view_batch_det,
+    Case=def_view_case_def,
+    Step=def_view_step,
+    Item=def_view_item,
+    Data=def_view_data,
+    DataSrc=def_view_data_src,
+    RunTime=def_view_run_time,
+    PageDef=def_view_page_def,
+    PageDet=def_view_page_det,
+    WidgetDef=def_view_widget_def,
+    WidgetDet=def_view_widget_det,
+    Window=def_view_window_def,
+    RunDef=def_view_run_def,
+    RunDet=def_view_run_det,
+    ConfMenu=def_view_conf_menu)
+
+complex_select_definition = dict(
+    run_def_type=('batch_type', 'case_type', 'run_def'),
+    run_det_type=('batch_type', 'case_type', 'step_type', 'item_type')
+)

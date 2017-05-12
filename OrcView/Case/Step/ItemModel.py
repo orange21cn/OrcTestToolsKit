@@ -74,7 +74,6 @@ class ItemModel(ModelTable):
         :param p_list:
         :return:
         """
-        print 'dddd', p_list
         result = self.__resource_step_det.delete(parameter=p_list)
 
         # 检查结果
@@ -141,7 +140,7 @@ class ItemModel(ModelTable):
         # 查询 item id 列表
         item_id_list = [step_det["item_id"] for step_det in result_step_det.data]
 
-        if "FUNC" == step_type:
+        if "STEP_FUNC" == step_type:
             # 查询 func
             result_list = self.__resource_case_def.get(parameter=dict(id=item_id_list))
 
@@ -239,7 +238,6 @@ class ItemNormalModel(ItemModel):
         :param p_list:
         :return:
         """
-        print p_list
         return super(ItemNormalModel, self).service_delete(p_list)
 
     def service_update(self, p_data):

@@ -32,9 +32,8 @@ class WidgetDetMod:
 
         # db session
         result = self.__session.query(WebWidgetDet)
-        print '==--==', p_cond
-        if 'id' in cond:
 
+        if 'id' in cond:
             # 查询支持多 id
             if isinstance(cond["id"], list):
                 result = result.filter(WebWidgetDet.id.in_(cond['id']))

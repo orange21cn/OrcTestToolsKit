@@ -1,16 +1,17 @@
 # coding=utf-8
 import os
 import re
+import json
 import threading
 
 from OrcLib import get_config
-from OrcLib.LibState import RunState
 from OrcLib.LibLog import OrcLog
 
 from RunService import RunCoreService
 from OrcLib.LibRunTime import OrcRunStatus
 from RunData import RunData
 from RunLog import RunLog
+from RunData import RunCmdType
 
 
 class RunCore(object):
@@ -71,7 +72,9 @@ class RunLaunch(RunData):
         self.__home_run = None  # 运行时目录,为home目录/case(batch)/time
 
         self.__list = []  # 列表
-        self.__run_list = []  # 执行列表,batch->item,用于查找数据及控件...
+
+        # 执行列表,batch->item,用于查找数据及控件...
+        self.__run_list = []
 
     def run_start(self, p_path):
         """
@@ -94,13 +97,14 @@ class RunLaunch(RunData):
             _group_id = _group.split("_")[1]
 
             if _group_id == item_pid:
-                item_path = "%s/%s" % (self.__home, _group)
+                item_path = os.path.join(self.__home, _group)
 
         if item_path is not None:
-            self.__home_run = "%s/%s" % (item_path, item_id)
-            item_path = "%s/default.res" % self.__home_run
+            self.__home_run = os.path.join(item_path, item_id)
+            item_path = os.path.join(self.__home_run, 'default.res')
 
         self.load_list(item_path)
+
         self.run(self.tree)
 
         self.update_list(item_path)
@@ -119,7 +123,9 @@ class RunLaunch(RunData):
         self.__service_status.status = True
 
         result = True
-        step_type = p_node["content"]["run_det_type"]
+
+        cmd = RunCmdType(p_node['content'])
+        children = p_node['children']
 
         self.__run_list.append(p_node["content"])
 
@@ -127,22 +133,18 @@ class RunLaunch(RunData):
         self.__run_logger.run_begin()
 
         # 如果是 item 运行步骤
-        if "ITEM" == step_type:
+        if cmd.is_item_type():
             result = self.__run_step(self.__run_list)
 
         # 不是 item,运行子节点
         else:
-            if not p_node["children"]:
+            if not children:
                 result = None
 
             else:
-                for _sub_step in p_node["children"]:
+                for _sub_step in children:
 
                     _result = self.run(_sub_step)
-
-                    # 如果有一个步骤没有通过,忽略剩余的步骤
-                    if "STEP" == step_type and not _result:
-                        break
 
                     # 更新状态
                     if result is None:
@@ -154,28 +156,31 @@ class RunLaunch(RunData):
                     else:
                         result = result and _result
 
+                    # 如果有一个步骤没有通过,忽略剩余的步骤
+                    if cmd.is_step_type() and not _result:
+                        break
+
         # 转换状态
         if result is None:
-            status = RunState.state_not_run
+            # status = RunState.state_not_run
+            cmd.status.reset()
         elif result:
-            status = RunState.state_pass
+            # status = RunState.state_pass
+            cmd.status.set_pass()
         else:
-            status = RunState.state_fail
+            # status = RunState.state_fail
+            cmd.status.set_fail()
 
         self.__run_logger.set_list(self.__home_run, self.__run_list)
-        self.__run_logger.run_end(status)
+        self.__run_logger.run_end(cmd.status)
 
         self.__run_list.pop()
 
         # 更新文件状态
-        p_node["content"]["status"] = status
+        p_node["content"]["status"] = cmd.status.get_status()
 
         # 设置进度 + 1, 并写入执行信息
-        self.__service_status.step_message(str(p_node['content']))
-        # str(dict(
-        #     TYPE=p_node["content"]['run_det_type'],
-        #     ID=p_node["content"]['id'],
-        #     STATUS=p_node["content"]['status']))
+        self.__service_status.step_message(json.dumps(cmd.to_dict()))
 
         return result
 
@@ -183,7 +188,7 @@ class RunLaunch(RunData):
         """
         {'status': 'WAITING',
          'flag': '20161028153349',
-         'run_det_type': 'BATCH_GROUP',
+         'run_det_type': 'BATCH_SUIT',
          'pid': None, 'id': '1000000001',
          'desc': 'BATCH_001'}
         :param p_node_list:
@@ -220,7 +225,7 @@ class RunLaunch(RunData):
             if "OPERATE" == item.item_mode:
                 _result = self.__service_core.launch_web_step(item_operation)
                 folder = self.__run_logger.get_folder()
-                pic_name = "%s/%s.png" % (folder, item_id)
+                pic_name = os.path.join(folder, "%s.png" % item_id)
                 self.__service_core.get_web_pic(pic_name)
 
             # 检查项
@@ -233,3 +238,4 @@ class RunLaunch(RunData):
         self.__run_logger.data("Run message: %s" % item_operation)
 
         return _result
+

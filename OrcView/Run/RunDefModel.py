@@ -66,7 +66,6 @@ class RunDefModel(ModelTree):
         :param p_list:
         :return:
         """
-        print p_list
         result = self.__resource_run_def.delete(parameter=p_list)
 
         # 检查结果

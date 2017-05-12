@@ -1,5 +1,4 @@
 # coding=utf-8
-import os
 import json
 import requests
 import socket
@@ -158,7 +157,7 @@ class OrcSocketResource(OrcResourceBase):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self._ip, self._port))
 
-        time.sleep(2)
+        # time.sleep(2)
         sock.send(json.dumps(p_para))
         _msg = sock.recv(1024)
         sock.close()

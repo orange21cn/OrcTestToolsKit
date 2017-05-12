@@ -86,21 +86,21 @@
                         <th>DESCRIPTION</th>
                         <th>STATUS</th>
                     </tr>
-                    <xsl:apply-templates select="CASE_GROUP"/>
+                    <xsl:apply-templates select="CASE_SUITE"/>
                     <xsl:apply-templates select="CASE"/>
                 </table>
             </body>
         </html>
     </xsl:template>
 
-    <xsl:template match="CASE_GROUP">
+    <xsl:template match="CASE_SUITE">
         <tr>
             <td><xsl:value-of select="@flag"/></td>
             <td><xsl:value-of select="@run_det_type"/></td>
             <td><xsl:value-of select="@desc"/></td>
             <td><xsl:value-of select="@status"/></td>
         </tr>
-        <xsl:apply-templates select="CASE_GROUP"/>
+        <xsl:apply-templates select="CASE_SUITE"/>
         <xsl:apply-templates select="CASE"/>
     </xsl:template>
 

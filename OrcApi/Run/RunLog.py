@@ -36,9 +36,10 @@ class RunLog:
         # path_list.reverse()
 
         # 运行目录
-        self.__run_folder = "%s/%s" % \
-                            (self.__home,
-                             "/".join(["%s_%s" % (item["run_det_type"], item["flag"]) for item in path_list]))
+        self.__run_folder = self.__home
+        for _folder in ["%s_%s" % (item["run_det_type"], item["flag"]) for item in path_list]:
+            self.__run_folder = os.path.join(self.__run_folder, _folder)
+
         if not os.path.exists(self.__run_folder):
             os.mkdir(self.__run_folder)
 
@@ -46,9 +47,9 @@ class RunLog:
         self.__current_content = p_list[len(p_list) - 1]
 
         if self.__current_content["run_det_type"] == 'CASE':
-            self.__log_file = codecs.open("%s/default.log" % self.__run_folder, "a+")
+            self.__log_file = codecs.open(os.path.join(self.__run_folder, "default.log"), "a+")
         elif self.__current_content["run_det_type"] in ("STEP", "ITEM"):
-            self.__log_file = codecs.open("%s/default.log" % self.__run_folder, "a+")
+            self.__log_file = codecs.open(os.path.join(self.__run_folder, "default.log"), "a+")
         else:
             pass
 

@@ -86,16 +86,14 @@ class DictMod(object):
         :param p_data:
         :return:
         """
-        print "+++====", p_data
         if ('TYPE' in p_data) and ('DATA' in p_data):
             dict_type = p_data['TYPE']
             dict_data = p_data['DATA']
         else:
             dict_type = 'dictionary'
             dict_data = p_data
-        print dict_type
+
         if 'widget_type' == dict_type:
-            print "AAAA"
             return self.__model_widget_type.usr_search(dict_data)
         elif 'widget_operation' == dict_type:
             return self.__model_widget_operation.usr_search(dict_data)

@@ -24,7 +24,7 @@ class RunDetMod(object):
         if not isinstance(p_path, dict) or "path" not in p_path:
             return list()
 
-        res_file = "%s/%s/default.res" % (self.__home, p_path["path"])
+        res_file = os.path.join(self.__home, p_path["path"], 'default.res')
 
         if not os.path.exists(res_file):
             return

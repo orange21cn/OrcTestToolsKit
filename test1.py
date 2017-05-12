@@ -1,7 +1,18 @@
-from OrcLib import init_log
-from OrcMem.MemDb import MemServer
+# -*- coding: utf-8 -*-
+import os
+import sys
 
-if __name__ == '__main__':
-    init_log()
-    server = MemServer('localhost', 6002)
-    server.start()
+sys.path.append(os.path.dirname(__file__))
+
+from PySide.QtGui import QApplication
+from PySide.QtGui import QFileDialog
+from OrcView.StartView import StartView
+from OrcView.Lib.LibView import OrcFileSelection
+
+
+OrcData = QApplication(sys.argv)
+
+tp = OrcFileSelection()
+tp.show()
+
+OrcData.exec_()

@@ -1,9 +1,11 @@
 # coding=utf-8
 
 
-class ListTree:
+class ListTree(object):
 
     def __init__(self):
+
+        object.__init__(self)
 
         self.list = None
         self.tree = None
@@ -12,6 +14,7 @@ class ListTree:
 
         if "LIST" == p_type:
             self.list = p_value
+            self._clean_duplication()
             self.tree = []
             self.tree = self._list2tree(self._list_get_root())
 
@@ -19,6 +22,7 @@ class ListTree:
             self.list = []
             self.tree = p_value
             self._tree2list(self.tree)
+            self._clean_duplication()
 
         else:
             pass
@@ -54,7 +58,7 @@ class ListTree:
 
     def _tree2list(self, p_tree):
         """
-        tree 转化为列表
+        tree 转化为列表,过程中会有重复
         :param p_tree:
         :type p_tree: dict
         :return:
@@ -64,6 +68,21 @@ class ListTree:
 
         for _item in p_tree["children"]:
             self._tree2list(_item)
+
+    def _clean_duplication(self):
+        """
+        去重
+        :return:
+        """
+        if self.list is None:
+            return
+
+        new_list = list()
+        for _item in self.list:
+            if _item not in new_list:
+                new_list.append(_item)
+
+        self.list = new_list
 
     def steps(self, p_node=None):
         """
