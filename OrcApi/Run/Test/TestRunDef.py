@@ -72,21 +72,3 @@ class TestModel(unittest.TestCase):
         OrcTest.test_print_result(res)
 
         OrcTest.test_print_end()
-
-
-class TestApi(unittest.TestCase):
-
-    def test_add_01(self):
-        """
-        增加测试集目录
-        :return:
-        """
-        OrcTest.test_print_begin()
-
-        # invoker = OrcInvoke()
-
-        # res = invoker.get("http://localhost:5004/api/1.0/RunDef")
-
-        # OrcTest.test_print_result(res)
-
-        OrcTest.test_print_end()

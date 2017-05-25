@@ -65,6 +65,8 @@ class OrcButtons(QWidget):
         else:
             self.align_front()
 
+        self.__layout.setContentsMargins(0, 0, 0, 0)
+
         # 设置样式
         self.setStyleSheet(get_theme("Buttons"))
 
@@ -137,6 +139,7 @@ class ViewSearch(QWidget):
         self.setLayout(self.__layout_srh)
 
         self.setStyleSheet(get_theme("Input"))
+        self.__layout_srh.setContentsMargins(0, 0, 0, 0)
 
     def set_col_num(self, p_num):
         """
@@ -160,9 +163,8 @@ class ViewSearch(QWidget):
             _label = QLabel(t_def['NAME'] + ":")
 
             # 控件
-            _def = dict(TYPE=t_def["TYPE"],
-                        SOURCE="SEARCH",
-                        FLAG=t_def["ID"])
+            _def = dict(TYPE=t_def["TYPE"], SOURCE="SEARCH", FLAG=t_def["ID"])
+
             self.__inputs[t_def['ID']] = self.__widget_creator.create_widget(_def)
 
             # 控件布局

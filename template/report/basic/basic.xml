@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <xsl:output method="html"  encoding="utf-8" media-type="text/html" />
+
+    <xsl:template match="/">
+        <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+                <title>test</title>
+                <script type="text/javascript" src="http://localhost:5005/api/1.0/Resource/echart.js"/>
+                <style type="text/css">
+                    #main-background {
+                        width: 594px;
+                        height: 400px;
+                        margin: 20px 0 5px 3px;
+                        border: 1px solid #C1DAD7;
+                        background: #FFF;
+                    }
+                    #main {
+                        width: 588px;
+                        height: 400px;
+                    }
+                    body {
+                        font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #4f6b72;
+                        background: #E6EAE9;
+                    }
+                    table {
+                        width: 600px;
+                        padding: 0;
+                        margin: 0;
+                        text-align: center;
+                    }
+                    caption {
+                        padding: 0 0 5px 0;
+                        width: 700px;
+                        font: italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        text-align: right;
+                    }
+                    th {
+                        font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #4f6b72;
+                        border-right: 1px solid #C1DAD7;
+                        border-bottom: 1px solid #C1DAD7;
+                        border-top: 1px solid #C1DAD7;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        padding: 6px 6px 6px 12px;
+                        background: #CAE8EA  no-repeat;
+                    }
+                    th.nobg {
+                        border-top: 0;
+                        border-left: 0;
+                        border-right: 1px solid #C1DAD7;
+                        background: none;
+                    }
+
+                    td {
+                        border-right: 1px solid #C1DAD7;
+                        border-bottom: 1px solid #C1DAD7;
+                        background: #fff;
+                        font-size:11px;
+                        padding: 6px 6px 6px 12px;
+                        color: #4f6b72;
+                    }
+                    td.alt {
+                        background: #F5FAFA;
+                        color: #797268;
+                    }
+
+                    th.spec {
+                        border-left: 1px solid #C1DAD7;
+                        border-top: 0;
+                        background: #fff no-repeat;
+                        font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                    }
+
+                    th.specalt {
+                        border-left: 1px solid #C1DAD7;
+                        border-top: 0;
+                        background: #f5fafa no-repeat;
+                        font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+                        color: #797268;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="main-background"><div id="main"/></div>
+                <script type="text/javascript">
+
+                    var myChart = echarts.init(document.getElementById('main'));
+
+                    option = {
+                        title : {
+                            text: '测试结果',
+                            subtext: '执行情况',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} &lt;br/&gt;{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            x : 'center',
+                            y : 'bottom',
+                            data:['通过','未通过','未执行']
+                        },
+                        calculable : true,
+                        series : [
+                            {
+                                name:'占比',
+                                type:'pie',
+                                radius : [30, 110],
+                                center : ['50%', '50%'],
+                                roseType : 'area',
+                                data:[
+                                    {value:<xsl:value-of select="count(.//CASE[@status='pass'])"/>, name:'通过'},
+                                    {value:<xsl:value-of select="count(.//CASE[@status='fail'])"/>, name:'未通过'},
+                                    {value:<xsl:value-of select="count(.//CASE[@status='new'])"/>, name:'未执行'}
+                                ]
+                            }
+                        ]
+                    };
+
+                    myChart.setOption(option)
+
+                </script>
+                <table align="Center" width="100%">
+                    <tr>
+                        <th>序号</th>
+                        <th>类型</th>
+                        <th>描述</th>
+                        <th>结果</th>
+                    </tr>
+                    <xsl:apply-templates select="CASE_SUITE"/>
+                    <xsl:apply-templates select="CASE"/>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+
+    <xsl:template match="CASE_SUITE">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+        <xsl:apply-templates select="CASE_SUITE"/>
+        <xsl:apply-templates select="CASE"/>
+    </xsl:template>
+
+    <xsl:template match="CASE">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+        <xsl:apply-templates select="STEP_NORMAL"/>
+    </xsl:template>
+
+    <xsl:template match="STEP_NORMAL">
+        <tr>
+            <td><xsl:value-of select="@flag"/></td>
+            <td><xsl:value-of select="@run_det_type"/></td>
+            <td><xsl:value-of select="@desc"/></td>
+            <td><xsl:value-of select="@status"/></td>
+        </tr>
+    </xsl:template>
+
+</xsl:stylesheet>

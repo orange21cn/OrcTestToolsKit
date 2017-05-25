@@ -6,19 +6,14 @@ from PySide.QtGui import QWidget
 from OrcLib.LibProgram import orc_singleton
 from OrcView.Data.Data.DataModel import DataModel
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibControl import ControlBase
+
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibView import OrcPagination
 from OrcView.Lib.LibViewDef import def_view_data
 
-
-class DataControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'Data')
+from .DataModel import DataControl
 
 
 @orc_singleton

@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 
+from OrcLib import LibCommon
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibProcess import get_mark
@@ -8,6 +9,14 @@ from OrcLib.LibProcess import get_widget_mark
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibControl import ControlBase
+
+
+class DataControl(ControlBase):
+
+    def __init__(self):
+
+        ControlBase.__init__(self, 'Data')
 
 
 class DataModel(ModelTable):
@@ -88,6 +97,9 @@ class DataModel(ModelTable):
         :param p_cond:
         :return:
         """
+        page = LibCommon.dict_value(p_cond, "page")
+        number = LibCommon.dict_value(p_cond, "page")
+
         # 查询 data 数据
         data_list = self.__resource_data.get(parameter=p_cond)
 
@@ -95,8 +107,13 @@ class DataModel(ModelTable):
         if not ResourceCheck.result_status(data_list, u"查询数据", self.__logger):
             return list()
 
+        if (page is not None) and (number is not None):
+            res_data = data_list.data['data']
+        else:
+            res_data = data_list.data
+
         # 查询数据源数据
-        for _item in data_list.data['data']:
+        for _item in res_data:
 
             # 增加数据标识显示
             _item['src_id_text'] = get_mark(_item['src_type'], _item['src_id'])

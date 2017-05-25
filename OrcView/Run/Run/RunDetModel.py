@@ -6,6 +6,15 @@ from OrcLib.LibRunTime import OrcRunStatus
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTree import ModelTree
+from OrcView.Lib.LibControl import ControlBase
+from OrcApi.Run.RunData import RunCmdType
+
+
+class RunDetControl(ControlBase):
+
+    def __init__(self):
+
+        ControlBase.__init__(self, 'RunDet')
 
 
 class RunDetModel(ModelTree):
@@ -116,3 +125,36 @@ class RunDetModel(ModelTree):
         :return:
         """
         return self.__run_status.get_steps()
+
+    def service_get_child_list(self, p_id):
+        """
+        获取子节点列表
+        :param p_id:
+        :return:
+        """
+        return self._data_struct.get_children_list(p_id)
+
+    def service_get_item_list(self, p_id):
+        """
+        获取 item 列表
+        :param p_id:
+        :return:
+        """
+        result = list()
+
+        children = self.service_get_child_list(p_id)
+        for _child_data in children:
+            _child = RunCmdType(_child_data)
+
+            if _child.is_item_type():
+                result.append(_child_data)
+
+        return result
+
+    def service_get_path(self, p_id):
+        """
+        获取路径
+        :param p_id:
+        :return:
+        """
+        return self._data_struct.get_path(p_id)

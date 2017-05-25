@@ -162,13 +162,10 @@ class RunLaunch(RunData):
 
         # 转换状态
         if result is None:
-            # status = RunState.state_not_run
             cmd.status.reset()
         elif result:
-            # status = RunState.state_pass
             cmd.status.set_pass()
         else:
-            # status = RunState.state_fail
             cmd.status.set_fail()
 
         self.__run_logger.set_list(self.__home_run, self.__run_list)
@@ -238,4 +235,3 @@ class RunLaunch(RunData):
         self.__run_logger.data("Run message: %s" % item_operation)
 
         return _result
-

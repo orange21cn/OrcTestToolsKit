@@ -88,7 +88,7 @@ class DriverSelenium:
         :param p_cmd: {TYPE, PARA, OPERATE}
         :return:
         """
-        self.__logger.debug(p_cmd)
+        self.__logger.debug("Run WEB command: " % p_cmd)
 
         _type = p_cmd["TYPE"]
 
@@ -103,6 +103,8 @@ class DriverSelenium:
             return False
 
         self.save_screen()
+
+        self.__logger.debug("Run WEB status is : " % p_cmd)
 
         return _status
 

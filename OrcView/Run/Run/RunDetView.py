@@ -1,10 +1,7 @@
 # coding=utf-8
-import json
-import socket
 import time
 import threading
 
-from PySide.QtCore import QThread
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
@@ -12,16 +9,9 @@ from PySide.QtGui import QVBoxLayout
 
 from OrcView.Lib.LibView import OrcProcess
 from OrcView.Lib.LibTree import ViewTree
-from OrcView.Lib.LibControl import ControlBase
 
 from .RunDetModel import RunDetModel
-
-
-class RunDetControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'RunDet')
+from .RunDetModel import RunDetControl
 
 
 class RunDetView(QWidget):
@@ -62,7 +52,6 @@ class RunDetView(QWidget):
     def usr_update(self):
         """
         更新数据
-        :param p_data:
         :return:
         """
         while True:

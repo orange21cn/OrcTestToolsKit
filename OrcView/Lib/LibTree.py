@@ -16,8 +16,7 @@ from PySide.QtGui import QTreeView
 from OrcLib import LibCommon
 from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcResource
-from OrcLib.LibNet import ResourceCheck
+from OrcLib.LibDataStruct import ListTree
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibTheme import get_theme
@@ -148,6 +147,9 @@ class ModelTreeBase(QAbstractItemModel):
 
         # 数据
         self._data = list()
+
+        # 数据list及tree表示(临时)
+        self._data_struct = ListTree()
 
         # 根节点
         self._root = TreeNode(None)
@@ -327,6 +329,7 @@ class ModelTreeBase(QAbstractItemModel):
                 _value = item.content[_field.id]
             except KeyError, err:
                 self.__logger.error("Error, data is: " % item.content)
+                return None
 
             # Combobox 类型数据
             if "SELECT" == _field.type:
@@ -560,6 +563,9 @@ class ModelTree(ModelTreeBase):
         result = self.service_search(self._condition)
         self._data = result
 
+        # list 数据转化为 tree
+        self._data_struct.resolve_list(self._data)
+
         if not isinstance(self._data, list):
             self._data = list()
 
@@ -701,6 +707,13 @@ class ModelTree(ModelTreeBase):
 
         return index_list
 
+    def mod_get_root(self):
+        """
+        获取根节点
+        :return:
+        """
+        return self._root
+
     def __get_index_by_id(self, p_id, p_node=None):
         """
 
@@ -764,6 +777,7 @@ class ViewTree(QTreeView):
     Base tree view
     """
     sig_context = OrcSignal(str)
+    sig_selected = OrcSignal(dict)
 
     def __init__(self, p_flag, p_model, p_control):
 
@@ -806,6 +820,7 @@ class ViewTree(QTreeView):
 
         # 单击设置当前数据
         self.clicked.connect(self.model.mod_set_current_data)
+        self.clicked.connect(self.select)
 
         # 展开
         self.expanded.connect(self.model.mod_add_expanded)
@@ -837,3 +852,10 @@ class ViewTree(QTreeView):
         """
         for _index in self.model.mod_get_expanded():
             self.expand(_index)
+
+    def select(self):
+
+        current_data = self.model.mod_get_current_data()
+
+        if current_data is not None:
+            self.sig_selected.emit(current_data.content)

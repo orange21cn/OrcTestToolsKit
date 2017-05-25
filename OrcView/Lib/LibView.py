@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 import json
 from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
@@ -91,7 +92,7 @@ class WidgetFactory(object):
         else:
             return OrcLineEdit()
 
-    def create_complex(self, p_type, p_source, p_flag):
+    def create_complex(self, p_type, p_flag=None, p_source=None):
         """
         创建自定义复杂控件,控件在文件中定义,动态导入
         :param p_flag:
@@ -100,7 +101,7 @@ class WidgetFactory(object):
         :return:
         """
         view_home = self.__configer.get_option('VIEWLIB', 'path')
-        view_conf_file = "%s/views.path" % view_home
+        view_conf_file = os.path.join(view_home, "views.path")
 
         with open(view_conf_file, 'r') as conf_file:
             view_conf = json.loads(conf_file.read())
@@ -138,9 +139,9 @@ class WidgetFactory(object):
 
         if widget_type in ('LINETEXT', 'TEXTAREA', 'DATETIME', 'DISPLAY',
                            'SELECT', 'SEL_WIDGET', 'OPERATE'):
-            return self.create_basic(widget_type, widget_source, widget_flag)
+            return self.create_basic(widget_type, widget_flag, widget_source)
         else:
-            return self.create_complex(widget_type, widget_source, widget_flag)
+            return self.create_complex(widget_type, widget_flag, widget_source)
 
 
 class OrcLineEdit(QLineEdit):
@@ -393,6 +394,11 @@ class OrcSelect(OrcSelectBase):
 
         result = self.__resource.get(
             parameter=dict(TYPE='dictionary', DATA=dict(dict_flag=p_type)))
+
+        print "====>===="
+        print p_type
+        print result.data
+        print "====<===="
 
         if not ResourceCheck.result_status(result, u'获取字典信息'):
             dict_result = list()

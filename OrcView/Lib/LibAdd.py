@@ -27,7 +27,7 @@ class ViewAdd(QWidget):
         QWidget.__init__(self)
 
         # 控件生成器
-        self.__creater = WidgetFactory()
+        self.__creator = WidgetFactory()
 
         # 控件定义
         self.__fields = p_def
@@ -47,7 +47,7 @@ class ViewAdd(QWidget):
             _name = self.__fields[_index]["NAME"]
             _ess = self.__fields[_index]["ESSENTIAL"]
 
-            _widget = self.__creater.create_widget(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
+            _widget = self.__creator.create_widget(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
             self.widgets[_id] = dict(
                 TYPE=_type,
@@ -97,6 +97,14 @@ class ViewAdd(QWidget):
         :return:
         """
         return self.widgets[p_id]["WIDGET"].get_data()
+
+    def clean_data(self, p_id):
+        """
+        清空数据
+        :param p_id:
+        :return:
+        """
+        self.widgets[p_id]['WIDGET'].clear()  # todo 可能有问题对于不同的控件应该有针对性的方法
 
     def set_enable(self, p_id, p_status):
         """

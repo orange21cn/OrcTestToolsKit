@@ -171,23 +171,21 @@ class TestView(unittest.TestCase):
 
         OrcTest.test_print_end()
 
-
-class TestModel(unittest.TestCase):
-
-    def test_case_01(self):
+    def test_debug(self):
         """
         Test get root
         :return:
         """
         OrcTest.test_print_begin()
 
-        from OrcView.Data.DataSrc.DataSrcView import SQLiteConnection
+        from OrcView.Run.Debug.DebugMain import DebugMain
 
-        db = SQLiteConnection('/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/data/orc_data.s3db')
-        print db.db_test_connection()
-        print db.db_execute('select * from tab_item')
+        OrcTest.display_widget(DebugMain)
 
         OrcTest.test_print_end()
+
+
+class TestModel(unittest.TestCase):
 
     def test_case_02(self):
         """

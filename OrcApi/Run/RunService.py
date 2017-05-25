@@ -7,6 +7,8 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibDatabase import TabItem
 from OrcLib.LibProgram import OrcDataStruct
 
+from RunData import RunCmdType
+
 
 class RunCoreService(object):
     """
@@ -21,7 +23,6 @@ class RunCoreService(object):
         self.__resource_web_driver = OrcResource("Driver")
         self.__resource_item = OrcResource("Item")
         self.__resource_data = OrcResource("Data")
-        # self.__resource_view = OrcSocketResource("View")  # Todo Delete
 
     def launch_web_step(self, p_step_info):
         """
@@ -107,22 +108,23 @@ class RunCoreService(object):
         :type p_def_list: list
         :return:
         """
-        # p_def_list.reverse()
-
         for _node in OrcDataStruct.iterator_reversed_list(p_def_list):
 
-            _id = _node["id"]
-            _type = _node["run_det_type"]
+            _cmd = RunCmdType(_node)
 
-            if _type in ("CASE", "CASE_SUIT"):
-                _type = "CASE"
-            elif _type in ("BATCH", "BATCH_SUIT"):
-                _type = "BATCH"
+            if _cmd.is_batch_type():
+                _type = 'BATCH'
+            elif _cmd.is_case_type():
+                _type = 'CASE'
+            elif _cmd.is_step_type():
+                _type = 'STEP'
+            elif _cmd.is_item_type():
+                _type = 'ITEM'
             else:
-                pass
+                _type = ''
 
             result = self.__resource_data.get(
-                parameter=dict(src_id=_id, src_type=_type, data_flag=p_object_id))
+                parameter=dict(src_id=_cmd.id, src_type=_type, data_flag=p_object_id))
 
             # 检查结果
             if not ResourceCheck.result_status(result, u"获取%s数据" % _type, self.__logger):
@@ -136,26 +138,7 @@ class RunCoreService(object):
         else:
             return None
 
-        # p_def_list.reverse()
-
         if result.data:
             return result.data[0]["data_value"]
         else:
             return None
-
-    def update_status(self, p_data):
-        """
-        更新界面状态
-        :param p_data:
-        :return:
-        """
-        # Todo Delete
-        import json
-
-        try:
-            self.__resource_view.get(json.dumps(p_data))
-        except socket.error:
-            self.__logger.error("update status failed")
-
-        # 打印成功信息
-        ResourceCheck.result_success(u"获取更新界面进度: %s" % p_data, self.__logger)

@@ -364,6 +364,13 @@ class ModelTable(ModelTableBase):
         """
         self._data_selected = self.mod_get_data(p_index.row())
 
+    def mod_get_current_data(self):
+        """
+        获取当前数据
+        :return:
+        """
+        return self._data_selected
+
     def mod_set_record_num(self, p_num):
         """
         设置记录数
@@ -378,13 +385,6 @@ class ModelTable(ModelTableBase):
         :return:
         """
         return self._record_num
-
-    def mod_get_current_data(self):
-        """
-        获取当前数据
-        :return:
-        """
-        return self._data_selected
 
     @abc.abstractmethod
     def service_add(self, p_data):
@@ -444,6 +444,7 @@ class ViewTable(QTableView):
     View of table
     """
     sig_context = OrcSignal(str)
+    sig_selected = OrcSignal(dict)
 
     def __init__(self, p_flag, p_model, p_control):
 
@@ -465,6 +466,7 @@ class ViewTable(QTableView):
         # ---- Connection ----
         # 设置当前数据
         self.clicked.connect(self.model.mod_set_current_data)
+        self.clicked.connect(self.select)
 
         # ---- Style ----
         # 拉申最后一列
@@ -491,3 +493,10 @@ class ViewTable(QTableView):
         # connection
         self.customContextMenuRequested.connect(_context_menu.show_menu)
         _context_menu.sig_clicked.connect(self.sig_context.emit)
+
+    def select(self):
+
+        current_data = self.model.mod_get_current_data()
+
+        if current_data is not None:
+            self.sig_selected.emit(current_data)

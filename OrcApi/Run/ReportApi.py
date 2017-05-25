@@ -25,3 +25,14 @@ class ReportAPI(OrcBaseAPI):
         self._logger.info("Get report, parameter is: %s, %s" % (p_id, p_time))
 
         return self._business.usr_get_report(p_id, p_time)
+
+
+class ResourceAPI(OrcBaseAPI):
+
+    def __init__(self):
+
+        OrcBaseAPI.__init__(self, 'resource', ReportDetMod)
+
+    def get(self, p_file):
+
+        return self._business.usr_get_resource(p_file)

@@ -55,7 +55,12 @@ class DataMod(object):
                 result = result.filter(TabData.id == cond['id'])
 
         if 'src_id' in cond:
-            result = result.filter(TabData.src_id.ilike(_like('src_id')))
+
+            # 查询支持多 id
+            if isinstance(cond["src_id"], list):
+                result = result.filter(TabData.src_id.in_(cond['src_id']))
+            else:
+                result = result.filter(TabData.srcid == cond['src_id'])
 
         if 'src_type' in cond:
             result = result.filter(TabData.src_type.ilike(_like('src_type')))

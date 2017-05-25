@@ -125,7 +125,7 @@ class OrcWidget:
                 self._widget = self._root
 
                 self.__meet_frame = False
-                self.frame = self.__meet_frame
+                self.set_frame(self.__meet_frame)
 
             if "FRAME" == _definition.widget_type:
                 self._get_object(_detail)

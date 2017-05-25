@@ -1,23 +1,90 @@
-[2017-05-10 14:03:10 view.tree.model] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
-    _value = item.content[_field.id]
-KeyError: 'status'
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
 
-[2017-05-10 14:03:10 view.tree.model] ERROR Error, data is: 
-[2017-05-10 14:03:10 view.tree.model] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
-    _value = item.content[_field.id]
-KeyError: 'status'
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
 
-[2017-05-10 14:41:19 view.tree.model] ERROR Error, data is: 
-[2017-05-10 14:41:19 view.tree.model] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
-    _value = item.content[_field.id]
-KeyError: 'status'
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
 
-[2017-05-10 14:41:19 view.tree.model] ERROR Error, data is: 
-[2017-05-10 14:41:19 view.tree.model] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 327, in data
-    _value = item.content[_field.id]
-KeyError: 'status'
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, BATCH_SUIT
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'BATCH_SUIT'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, GROUP
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-05-15 18:18:08 view.tree.model] ERROR select value error: batch_type, BATCH_SUIT
+[2017-05-15 18:18:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 334, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'BATCH_SUIT'
 
