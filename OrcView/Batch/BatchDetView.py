@@ -10,6 +10,7 @@ from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibView import OrcPagination
 from OrcView.Lib.LibViewDef import def_view_batch_det
+from OrcView.Lib.LibMessage import OrcMessage
 from .BatchDetModel import BatchDetModel
 
 
@@ -80,6 +81,7 @@ class BatchDetView(QWidget):
         """
         _cond = self.__wid_search_cond.get_cond()
         _cond["batch_id"] = self.__batch_id
+
         self.display.model.mod_search(_cond)
 
     def add(self, p_data):
@@ -89,6 +91,7 @@ class BatchDetView(QWidget):
         :return:
         """
         _data = {"batch_id": self.__batch_id, "case": p_data}
+
         self.display.model.mod_add(_data)
 
     def operate(self, p_flag):
@@ -100,7 +103,8 @@ class BatchDetView(QWidget):
         if "add" == p_flag:
             self.__win_add.show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
         elif "search" == p_flag:
             self.search()
         else:

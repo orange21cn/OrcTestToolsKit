@@ -1,5 +1,6 @@
 # coding=utf-8
 from PySide.QtGui import QWidget
+from PySide.QtGui import QDialog
 from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
@@ -10,6 +11,7 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibViewDef import def_view_page_def
+from OrcView.Lib.LibMessage import OrcMessage
 
 from .PageDefModel import PageDefModel
 
@@ -103,8 +105,9 @@ class PageDefView(QWidget):
         if "add" == p_flag:
             self.__win_add.show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
-            self.sig_delete.emit()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
+                self.sig_delete.emit()
         elif "update" == p_flag:
             self.display.model.editable()
         elif "search" == p_flag:
@@ -124,11 +127,63 @@ class PageDefView(QWidget):
         _page_id = self.display.model.mod_get_data(p_index.row())["id"]
         self.sig_selected[str].emit(str(_page_id))
 
-        # _node = self.__model.usr_get_data(p_index.row())
-        # _id = _node["id"]
-        # _flag = _node["page_flag"]
-        #
-        # self.sig_selected.emit(dict(id=str(_id), flag=_flag))
-
         if self.__type is not None:
             self.close()
+
+
+class PageDefSelector(QDialog):
+
+    sig_submit = OrcSignal(str)
+
+    def __init__(self):
+
+        QDialog.__init__(self)
+
+        self.title = u"用例管理"
+
+        # Search condition widget
+        self.__wid_search_cond = ViewSearch(def_view_page_def)
+        self.__wid_search_cond.set_col_num(2)
+        self.__wid_search_cond.create()
+
+        # Data result display widget
+        self.display = ViewTable('PageDef', PageDefModel, PageDefControl)
+
+        # Buttons widget
+        wid_buttons = OrcButtons([dict(id="search", name=u"查询")])
+        self.display.doubleClicked.connect(self.close)
+
+        # Layout
+        layout_main = QVBoxLayout()
+        layout_main.addWidget(self.__wid_search_cond)
+        layout_main.addWidget(self.display)
+        layout_main.addWidget(wid_buttons)
+
+        self.setLayout(layout_main)
+
+        # 点击按钮操作
+        wid_buttons.sig_clicked.connect(self.__operate)
+
+        self.data = ''
+
+    def __operate(self, p_flag):
+        """
+        点击按钮操作
+        :param p_flag:
+        :return:
+        """
+        if "search" == p_flag:
+            self.display.model.mod_search(self.__wid_search_cond.get_cond())
+        else:
+            pass
+
+    @staticmethod
+    def get_page():
+        """
+        获取选择的页面
+        :return:
+        """
+        view = PageDefSelector()
+        view.exec_()
+
+        return view.display.model.mod_get_current_data()

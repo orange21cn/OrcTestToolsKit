@@ -26,9 +26,6 @@ class ViewAdd(QWidget):
 
         QWidget.__init__(self)
 
-        # 控件生成器
-        self.__creator = WidgetFactory()
-
         # 控件定义
         self.__fields = p_def
 
@@ -47,7 +44,7 @@ class ViewAdd(QWidget):
             _name = self.__fields[_index]["NAME"]
             _ess = self.__fields[_index]["ESSENTIAL"]
 
-            _widget = self.__creator.create_widget(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
+            _widget = WidgetFactory.create_widget(dict(TYPE=_type, SOURCE="ADD", FLAG=_id))
 
             self.widgets[_id] = dict(
                 TYPE=_type,
@@ -56,7 +53,7 @@ class ViewAdd(QWidget):
                 ESSENTIAL=_ess)
 
             # ToBeDelete
-            if "OPERATE" == _type:
+            if "OPE_DISP" == _type:
                 _widget.sig_operate.connect(self.sig_operate.emit)
 
             _widget.clicked.connect(partial(self.sig_clicked.emit, _id))

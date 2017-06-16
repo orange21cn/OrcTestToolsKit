@@ -60,7 +60,7 @@ class DataMod(object):
             if isinstance(cond["src_id"], list):
                 result = result.filter(TabData.src_id.in_(cond['src_id']))
             else:
-                result = result.filter(TabData.srcid == cond['src_id'])
+                result = result.filter(TabData.src_id == cond['src_id'])
 
         if 'src_type' in cond:
             result = result.filter(TabData.src_type.ilike(_like('src_type')))

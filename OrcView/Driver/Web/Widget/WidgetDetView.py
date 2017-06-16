@@ -7,6 +7,7 @@ from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibViewDef import def_view_widget_det
+from OrcView.Lib.LibMessage import OrcMessage
 
 from .WidgetDetModel import WidgetDetModel
 
@@ -102,7 +103,8 @@ class WidgetDetView(QWidget):
         if "add" == p_flag:
             self.__win_add.show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
         elif "update" == p_flag:
             self.display.model.editable()
         elif "up" == p_flag:

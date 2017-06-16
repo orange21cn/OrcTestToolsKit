@@ -1,6 +1,7 @@
 # coding=utf-8
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -9,24 +10,52 @@ from OrcLib.LibLog import OrcLog
 from OrcLib.LibRunTime import OrcRunTime
 
 
-class OrcWidget:
+class OrcWidget(object):
     """
     控件基类
     """
     def __init__(self, p_root, p_id):
 
+        object.__init__(self)
+
         self._logger = OrcLog('driver.web')
 
+        # 根,驱动本身
         self._root = p_root
+
+        # 控件
+        self._widget = p_root
+
+
+class WidgetBlock(object):
+    """
+    控件基类
+    """
+    def __init__(self, p_root, p_id):
+
+        object.__init__(self)
+
+        self._logger = OrcLog('driver.web')
+
+        # 根,驱动本身
+        self._root = p_root
+
+        # 控件
         self._widget = p_root
 
         # 是否遇到 frame,下一步将执行 switch_to
         self.__meet_frame = False
 
+        # 服务用于调用其他模块
         self.__service = WebDriverService()
+
+        # 实时数据
         self.__runtime = OrcRunTime('RUN')
 
+        # 控件定义
         self._def = self.__get_def_info(p_id)
+
+        # 获取控件
         self._get_widget()
 
     # 标识当前的 frame id
@@ -258,21 +287,29 @@ class OrcWidget:
         :return:
         """
         _flag = p_para["OPERATION"]
-
+        print p_para
+        print _flag
         # 判断存在
-        if "EXISTS" == _flag:
+        if 'EXISTS' == _flag:
+            print self.exists()
             return self.exists()
 
         # 点击
-        elif "CLICK" == _flag:
+        elif 'CLICK' == _flag:
+            print "OO"
             try:
                 self._widget.click()
             except TimeoutException:
+                print "OO1"
                 self._root.execute_script('window.stop()')
+            except ElementNotInteractableException:
+                print "ABC"
+                return False
+
             return True
 
         # 获取属性
-        elif "GET_ATTR" == _flag:
+        elif 'GET_ATTR' == _flag:
 
             if "DATA" not in p_para:
                 return ""
@@ -280,15 +317,24 @@ class OrcWidget:
                 return self._widget.get_attribute(p_para["DATA"])
 
         # 获取内容
-        elif "GET_TEXT" == _flag:
+        elif 'GET_TEXT' == _flag:
             return self._widget.text
 
         # 获取HTML
-        elif "GET_HTML" == _flag:
+        elif 'GET_HTML' == _flag:
+            print "$$$$", self._widget.get_attribute("outerHTML")
             return self._widget.get_attribute("outerHTML")
 
+        # 滚动至显示区
+        elif 'SCROLL' == _flag:
+            self._root.execute_script("arguments[0].scrollIntoView();", self._widget)
+
+        # Focus
+        elif 'FOCUS' == _flag:
+            self._root.execute_script("arguments[0].focus();", self._widget)
+
         # 检查控件存在
-        elif "DISPLAY" == _flag:
+        elif 'DISPLAY' == _flag:
             return self.__check_object()
 
         else:

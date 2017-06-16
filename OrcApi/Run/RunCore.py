@@ -1,7 +1,6 @@
 # coding=utf-8
 import os
 import re
-import json
 import threading
 
 from OrcLib import get_config
@@ -30,11 +29,16 @@ class RunCore(object):
         :param p_path:
         :return:
         """
+        if self.__status.status:
+            return False, u'驱动忙'
+
         self.__status.director = True
 
         self.thread = threading.Thread(target=self.__launch.run_start, args=(p_path,))
         self.thread.setDaemon(True)
         self.thread.start()
+
+        return True, u'开始执行'
 
     def stop(self):
         """
@@ -107,6 +111,9 @@ class RunLaunch(RunData):
 
         self.run(self.tree)
 
+        self.__service_status.director = False
+        self.__service_status.status = False
+
         self.update_list(item_path)
 
     def run(self, p_node):
@@ -177,7 +184,7 @@ class RunLaunch(RunData):
         p_node["content"]["status"] = cmd.status.get_status()
 
         # 设置进度 + 1, 并写入执行信息
-        self.__service_status.step_message(json.dumps(cmd.to_dict()))
+        self.__service_status.step_message(cmd.to_dict())
 
         return result
 

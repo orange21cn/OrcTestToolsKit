@@ -402,7 +402,7 @@ class WebPageDet(orc_db.Model):
     id = orc_db.Column(orc_db.Integer, primary_key=True)
     page_id = orc_db.Column(orc_db.Integer, primary_key=True)
     test_env = orc_db.Column(orc_db.String(32))
-    page_url = orc_db.Column(orc_db.String(32))
+    page_url = orc_db.Column(orc_db.String(512))
     comment = orc_db.Column(orc_db.String(512))
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
@@ -561,6 +561,7 @@ class LibDictionary(orc_db.Model):
     dict_order = orc_db.Column(orc_db.String(32))
     dict_value = orc_db.Column(orc_db.String(16))
     dict_text = orc_db.Column(orc_db.String(16))
+    dict_param = orc_db.Column(orc_db.String(128))
     dict_desc = orc_db.Column(orc_db.String(255))
 
     def __init__(self, p_def=None):
@@ -573,6 +574,7 @@ class LibDictionary(orc_db.Model):
         self.dict_order = p_def["dict_order"] if p_def else None
         self.dict_value = p_def["dict_value"] if p_def else None
         self.dict_text = p_def["dict_text"] if p_def else None
+        self.dict_param = p_def["dict_param"] if p_def else None
         self.dict_desc = p_def["dict_desc"] if p_def else None
 
     def to_json(self):
@@ -583,6 +585,7 @@ class LibDictionary(orc_db.Model):
             dict_order=self.dict_order,
             dict_value=self.dict_value,
             dict_text=self.dict_text,
+            dict_param=self.dict_param,
             dict_desc=self.dict_desc
         )
 
@@ -632,6 +635,8 @@ class LibWidgetOperation(orc_db.Model):
     ope_order = orc_db.Column(orc_db.Integer)
     ope_name = orc_db.Column(orc_db.String(16))
     ope_text = orc_db.Column(orc_db.String(16))
+    operate_text = orc_db.Column(orc_db.String(16))
+    check_text = orc_db.Column(orc_db.String(16))
     ope_desc = orc_db.Column(orc_db.String(255))
 
     def __init__(self, p_def=None):
@@ -641,6 +646,8 @@ class LibWidgetOperation(orc_db.Model):
         self.ope_order = int(p_def["ope_order"]) if p_def else None
         self.ope_name = p_def["ope_name"] if p_def else None
         self.ope_text = p_def["ope_text"] if p_def else None
+        self.operate_text = p_def["operate_text"] if p_def else None
+        self.check_text = p_def["check_text"] if p_def else None
         self.ope_desc = p_def["ope_desc"] if p_def else None
 
     def to_json(self):
@@ -651,6 +658,8 @@ class LibWidgetOperation(orc_db.Model):
             ope_order=self.ope_order,
             ope_name=self.ope_name,
             ope_text=self.ope_text,
+            operate_text=self.operate_text,
+            check_text=self.check_text,
             ope_desc=self.ope_desc
         )
 

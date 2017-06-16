@@ -11,11 +11,12 @@ from selenium.common.exceptions import TimeoutException
 from OrcLib import LibCommon
 from OrcLib.LibLog import OrcLog
 from OrcLib import get_config
-from OrcDriver.Web.Widget.OrcWidget import OrcWidget
+from OrcDriver.Web.Widget.OrcWidget import WidgetBlock
 from OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcDriver.Web.Widget.WidgetInput import WidgetInput
 from OrcDriver.Web.Widget.WidgetA import WidgetA
 from OrcDriver.Web.Widget.WidgetSelect import WidgetSelect
+from OrcDriver.Web.Widget.WidgetAlert import WidgetAlert
 
 from WebDriverService import WebDriverService
 
@@ -31,18 +32,27 @@ class DriverSelenium:
         self.__driver_configer = get_config("driver")
 
         # 浏览器
-        self.__browser = "PHANTOMJS"
+        self.__browser = self.__driver_configer.get_option('WEB', 'browser')
 
         # 环境
-        self.__env = "TEST"
+        self.__env = self.__driver_configer.get_option('WEB', 'env')
 
-        self.__window = None  # 当前窗口
-        self.__root = None  # 根节点
+        # 窗口,用于窗口切换
+        self.__window = None
 
-        self.__objects = {}  # 存储出现过的对象
+        # 根节点
+        self.__root = None
 
+        # 存储出现过的对象
+        self.__objects = {}
+
+        # IP
         self.__ip = p_ip
+
+        # port
         self.__port = int(p_port)
+
+        # 截图
         self.__pic_name = self.__driver_configer.get_option("WEB", "pic_name")
 
     def start(self):
@@ -69,7 +79,7 @@ class DriverSelenium:
                     break
 
                 _result = self.__execute(_cmd)
-
+                print "9090909090", str(_result)
                 connection.send(str(_result))
 
             except socket.timeout:
@@ -97,6 +107,7 @@ class DriverSelenium:
 
         elif "WIDGET" == _type:
             _status = self.__action(p_cmd)
+            print "action", _status
 
         else:
             self.__logger.error("Wrong type %s." % _type)
@@ -112,7 +123,7 @@ class DriverSelenium:
 
         _id = p_para["OBJECT"]
         _definition = self.__service.widget_get_definition(_id)
-
+        print _definition.to_json()
         # 输入框
         if "INP" == _definition.widget_type:
             _node = WidgetInput(self.__root, _id)
@@ -127,16 +138,23 @@ class DriverSelenium:
         elif "A" == _definition.widget_type:
             _node = WidgetA(self.__root, _id)
             result = _node.execute(p_para)
+            print "===", result
 
         # 下拉框
         elif "SELECT" == _definition.widget_type:
             _node = WidgetSelect(self.__root, _id)
             result = _node.execute(p_para)
 
+        # win 提示框
+        elif 'ALERT' == _definition.widget_type:
+            _node = WidgetAlert(self.__root)
+            result = _node.execute(p_para)
+
         # 自定义控件
         else:
-            _node = OrcWidget(self.__root, _id)
+            _node = WidgetBlock(self.__root, _id)
             result = _node.basic_execute(p_para)
+            print "''''''", result
 
         return result
 
@@ -170,6 +188,7 @@ class DriverSelenium:
                     self.__root = webdriver.Ie(executable_path=driver_path)
 
                 elif "FIREFOX" == self.__browser:
+                    print driver_path
                     self.__root = webdriver.Firefox(executable_path=driver_path)
 
                 elif "CHROME" == self.__browser:

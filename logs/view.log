@@ -88,3 +88,177 @@ KeyError: u'GROUP'
     return self._definition.select_def[_field.id][_value]
 KeyError: u'BATCH_SUIT'
 
+[2017-06-06 14:01:53 view.tree.model] ERROR select value error: case_type, <bound method OrcSelect.get_data of <OrcView.Lib.LibView.OrcSelect object at 0x123e68320>>
+[2017-06-06 14:01:53 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: <bound method OrcSelect.get_data of <OrcView.Lib.LibView.OrcSelect object at 0x123e68320>>
+
+[2017-06-16 17:32:06 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:06 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:06 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:06 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:06 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:06 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:06 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:06 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:32:09 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:32:09 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: 'widget_type'
+
+[2017-06-16 17:34:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:08 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:08 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, ALERT
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'ALERT'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, ALERT
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'ALERT'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, ALERT
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'ALERT'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+
+[2017-06-16 17:34:10 view.tree.model] ERROR select value error: widget_type, GROUP
+[2017-06-16 17:34:10 view.tree.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTree.py", line 337, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'GROUP'
+

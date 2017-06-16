@@ -28,11 +28,37 @@ _logger = LogClient()
 
 class WidgetFactory(object):
 
+    _configer = get_config()
+
     def __init__(self):
 
         object.__init__(self)
 
-        self.__configer = get_config()
+    @staticmethod
+    def create_line_text():
+        """
+        创建单行输入控件
+        :return:
+        """
+        return OrcLineEdit()
+
+    @staticmethod
+    def create_text_area():
+        """
+        创建多行输入控件
+        :return:
+        """
+        return OrcTextArea()
+
+    @staticmethod
+    def create_select(p_flag, p_empty=False):
+        """
+        创建下拉框
+        :param p_empty:
+        :param p_flag:
+        :return:
+        """
+        return OrcSelect(p_flag, p_empty)
 
     @staticmethod
     def create_basic(p_type, p_flag=None, p_source=None):
@@ -92,7 +118,8 @@ class WidgetFactory(object):
         else:
             return OrcLineEdit()
 
-    def create_complex(self, p_type, p_flag=None, p_source=None):
+    @classmethod
+    def create_complex(cls, p_type, p_flag=None, p_source=None):
         """
         创建自定义复杂控件,控件在文件中定义,动态导入
         :param p_flag:
@@ -100,7 +127,7 @@ class WidgetFactory(object):
         :param p_type:
         :return:
         """
-        view_home = self.__configer.get_option('VIEWLIB', 'path')
+        view_home = cls._configer.get_option('VIEWLIB', 'path')
         view_conf_file = os.path.join(view_home, "views.path")
 
         with open(view_conf_file, 'r') as conf_file:
@@ -114,12 +141,15 @@ class WidgetFactory(object):
 
         return getattr(__import__(widget_path, fromlist=True), widget_name)()
 
-    def create_widget(self, p_def):
+    @staticmethod
+    def create_widget(p_def):
         """
         创建界面用控件,同一类型会根据不同的使用环境有所不同
         :param p_def:
         :return:
         """
+        creator = WidgetFactory()
+
         widget_type = ''
         widget_source = ''
         widget_flag = ''
@@ -139,9 +169,9 @@ class WidgetFactory(object):
 
         if widget_type in ('LINETEXT', 'TEXTAREA', 'DATETIME', 'DISPLAY',
                            'SELECT', 'SEL_WIDGET', 'OPERATE'):
-            return self.create_basic(widget_type, widget_flag, widget_source)
+            return creator.create_basic(widget_type, widget_flag, widget_source)
         else:
-            return self.create_complex(widget_type, widget_flag, widget_source)
+            return creator.create_complex(widget_type, widget_flag, widget_source)
 
 
 class OrcLineEdit(QLineEdit):
@@ -259,7 +289,9 @@ class OrcFileSelection(QWidget):
 
 
 class OrcOperate(QLineEdit):
-
+    """
+    ToBeDeleted
+    """
     sig_operate = OrcSignal()
     clicked = OrcSignal()
 
@@ -363,6 +395,8 @@ class OrcSelectBase(QComboBox):
         :param p_data:
         :return:
         """
+        print "==-->>", p_data
+        print self.__names
         if p_data in self.__texts:
             self.setCurrentIndex(self.__texts.index(p_data))
         elif p_data in self.__names:
@@ -394,11 +428,6 @@ class OrcSelect(OrcSelectBase):
 
         result = self.__resource.get(
             parameter=dict(TYPE='dictionary', DATA=dict(dict_flag=p_type)))
-
-        print "====>===="
-        print p_type
-        print result.data
-        print "====<===="
 
         if not ResourceCheck.result_status(result, u'获取字典信息'):
             dict_result = list()

@@ -2,6 +2,7 @@
 from PySide.QtGui import QStyledItemDelegate
 from PySide.QtCore import Qt
 from OrcView.Lib.LibView import WidgetFactory
+from OrcView.Lib.LibBaseWidget import WidgetCreator
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 
@@ -12,7 +13,6 @@ class ControlBase(QStyledItemDelegate):
 
         QStyledItemDelegate.__init__(self)
 
-        self.__widget_creator = WidgetFactory()
         self._definition = ViewDefinition(p_flag)
 
     def createEditor(self, parent, option, index):
@@ -30,7 +30,7 @@ class ControlBase(QStyledItemDelegate):
                     SOURCE="EDITOR",
                     FLAG=field.id)
 
-        editor = self.__widget_creator.create_widget(_def)
+        editor = WidgetCreator.create_widget(parent, _def)
         editor.set_data(index.data(Qt.DisplayRole))
 
         return editor
@@ -42,8 +42,7 @@ class ControlBase(QStyledItemDelegate):
         :param index:
         :return:
         """
-        item_str = index.data(Qt.DisplayRole)
-        editor.set_data(item_str)
+        editor.set_data(index.data(Qt.DisplayRole))
 
     def setModelData(self, editor, model, index):
         """

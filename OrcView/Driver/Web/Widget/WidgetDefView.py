@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 from PySide.QtGui import QWidget
+from PySide.QtGui import QDialog
 from PySide.QtGui import QVBoxLayout
 from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
@@ -11,6 +12,7 @@ from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibViewDef import def_view_widget_def
+from OrcView.Lib.LibMessage import OrcMessage
 
 from .WidgetDefModel import WidgetDefModel
 
@@ -105,8 +107,9 @@ class WidgetDefView(QWidget):
             self.__win_add.show()
 
         elif "delete" == p_flg:
-            self.display.model.mod_delete()
-            self.sig_delete.emit()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
+                self.sig_delete.emit()
 
         elif "update" == p_flg:
             self.display.model.editable()
@@ -138,3 +141,65 @@ class WidgetDefView(QWidget):
 
         if self.__type is not None:
             self.close()
+
+
+class WidgetDefSelector(QDialog):
+    """
+
+    """
+    def __init__(self):
+
+        QDialog.__init__(self)
+
+        # Search
+        self.__wid_search_cond = ViewSearch(def_view_widget_def)
+        self.__wid_search_cond.set_col_num(2)
+        self.__wid_search_cond.create()
+
+        # Data result display widget
+        self.display = ViewTree('WidgetDef', WidgetDefModel, WidgetDefControl)
+
+        # Buttons window
+        wid_buttons = OrcButtons([
+            dict(id="search", name=u"查询")
+        ])
+
+        # 禁止选择
+        self.display.model.checkable(False)
+
+        # Layout
+        layout_main = QVBoxLayout()
+
+        layout_main.addWidget(self.__wid_search_cond)
+        layout_main.addWidget(self.display)
+        layout_main.addWidget(wid_buttons)
+
+        self.setLayout(layout_main)
+
+        # 点击按钮
+        wid_buttons.sig_clicked.connect(self.operate)
+
+        # 双击后关闭
+        self.display.doubleClicked.connect(self.close)
+
+    def operate(self, p_flg):
+        """
+        点击按钮操作
+        :param p_flg:
+        :return:
+        """
+        if "search" == p_flg:
+            self.display.model.mod_search(self.__wid_search_cond.get_cond())
+        else:
+            pass
+
+    @staticmethod
+    def get_widget():
+        """
+
+        :return:
+        """
+        view = WidgetDefSelector()
+        view.exec_()
+
+        return view.display.model.mod_get_current_data().content

@@ -2,7 +2,7 @@
 import sys
 import unittest
 
-from OrcView.Driver.Web.WindowService import WindowDefService
+# from OrcView.Driver.Web.WindowService import WindowDefService
 from PySide.QtGui import QApplication
 
 from OrcLib.LibTest import OrcTest
@@ -132,10 +132,10 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Batch.init_env import DataView
+        from OrcView.Driver.Web.Cmd.WebDebug import WidgetDebug
 
         OrcTest.test_print_begin()
 
-        OrcTest.display_widget(DataView)
+        OrcTest.display_widget(WidgetDebug)
 
         OrcTest.test_print_end()

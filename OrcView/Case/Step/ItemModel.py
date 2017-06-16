@@ -1,13 +1,11 @@
 # coding=utf-8
-import json
-
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibApi import connect_list
 
-from OrcView.Lib.LibView import operate_to_str
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
+from OrcLib.LibCmd import OrcCmd
 
 
 class ItemModel(ModelTable):
@@ -157,8 +155,15 @@ class ItemModel(ModelTable):
                 return list()
 
             for _item in result_list.data:
+
                 if "item_operate" in _item:
-                    _item["item_operate_text"] = operate_to_str(json.loads(_item["item_operate"]))
+
+                    item_cmd = OrcCmd(eval(_item["item_operate"]))
+                    item_cmd.set_operate_mode(_item['item_mode'])
+                    item_cmd.set_driver_type(_item['item_type'])
+
+                    _item["item_operate_text"] = item_cmd.get_disp_text()
+                    print _item["item_operate_text"]
 
         # 打印成功信息
         ResourceCheck.result_success(u" 查询步骤", self.__logger)

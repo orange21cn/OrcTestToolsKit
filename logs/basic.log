@@ -1,92 +1,215 @@
-[2017-05-18 18:16:52 basic.lib_net] INFO 获取操作文字成功
-[2017-05-18 18:16:54 basic.lib_net] INFO 获取控件路径成功
-[2017-05-18 18:16:54 basic.lib_net] INFO 获取操作文字成功
-[2017-05-18 18:16:54 basic.lib_net] INFO 获取控件路径成功
-[2017-05-18 18:16:54 basic.lib_net] INFO 获取操作文字成功
-[2017-05-18 18:16:56 basic.lib_net] INFO 获取控件路径成功
-[2017-05-18 18:16:56 basic.lib_net] INFO 获取操作文字成功
-[2017-05-18 18:23:14 basic.lib_net] INFO 获取控件路径成功
-[2017-05-18 18:23:14 basic.lib_net] INFO 获取操作文字成功
-[2017-05-18 18:23:18 basic.lib_net] INFO 获取控件路径成功
-[2017-05-18 18:23:18 basic.lib_net] INFO 获取操作文字成功
-[2017-05-23 16:25:54 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:25:54 basic.lib_net] ERROR None
+[2017-06-16 13:08:19 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
 
-[2017-05-23 16:37:23 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:37:23 basic.lib_net] ERROR None
 
-[2017-05-23 16:37:43 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:37:43 basic.lib_net] ERROR None
+[2017-06-16 13:08:47 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:08:47 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
 
-[2017-05-23 16:41:00 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:41:00 basic.lib_net] ERROR None
 
-[2017-05-23 16:41:01 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:41:01 basic.lib_net] ERROR None
+[2017-06-16 13:34:38 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:34:38 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    try:
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
 
-[2017-05-23 16:41:27 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:41:27 basic.lib_net] ERROR None
 
-[2017-05-23 16:41:28 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:41:28 basic.lib_net] ERROR None
+[2017-06-16 13:35:44 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:35:44 basic.run_time] ERROR None
 
-[2017-05-23 16:41:31 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:41:31 basic.lib_net] ERROR None
+[2017-06-16 13:37:03 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:37:03 basic.run_time] ERROR None
 
-[2017-05-23 16:51:53 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:51:53 basic.lib_net] ERROR None
+[2017-06-16 13:37:15 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:37:15 basic.run_time] ERROR None
 
-[2017-05-23 16:51:55 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:51:55 basic.lib_net] ERROR None
+[2017-06-16 13:37:31 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:37:31 basic.run_time] ERROR None
 
-[2017-05-23 16:51:56 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:51:56 basic.lib_net] ERROR None
+[2017-06-16 13:38:08 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:38:08 basic.run_time] ERROR None
 
-[2017-05-23 16:55:18 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:18 basic.lib_net] ERROR None
+[2017-06-16 13:40:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:40:28 basic.run_time] ERROR None
 
-[2017-05-23 16:55:18 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:18 basic.lib_net] ERROR None
+[2017-06-16 13:40:40 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:40:40 basic.run_time] ERROR None
 
-[2017-05-23 16:55:19 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:19 basic.lib_net] ERROR None
+[2017-06-16 13:41:55 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:41:55 basic.run_time] ERROR None
 
-[2017-05-23 16:55:20 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:20 basic.lib_net] ERROR None
+[2017-06-16 13:42:00 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:42:00 basic.run_time] ERROR None
 
-[2017-05-23 16:55:21 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:21 basic.lib_net] ERROR None
+[2017-06-16 13:43:12 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:43:12 basic.run_time] ERROR None
 
-[2017-05-23 16:55:22 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:22 basic.lib_net] ERROR None
+[2017-06-16 13:43:58 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:43:58 basic.run_time] ERROR None
 
-[2017-05-23 16:55:22 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:22 basic.lib_net] ERROR None
+[2017-06-16 13:44:04 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:44:04 basic.run_time] ERROR None
 
-[2017-05-23 16:55:24 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:24 basic.lib_net] ERROR None
+[2017-06-16 13:45:13 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:45:13 basic.run_time] ERROR None
 
-[2017-05-23 16:55:25 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:55:25 basic.lib_net] ERROR None
+[2017-06-16 13:50:11 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:50:11 basic.run_time] ERROR None
 
-[2017-05-23 16:56:53 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:56:53 basic.lib_net] ERROR None
+[2017-06-16 13:50:44 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:50:44 basic.run_time] ERROR None
 
-[2017-05-23 16:56:54 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:56:54 basic.lib_net] ERROR None
+[2017-06-16 13:51:57 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:51:57 basic.run_time] ERROR None
 
-[2017-05-23 16:56:56 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-23 16:56:56 basic.lib_net] ERROR None
+[2017-06-16 13:52:19 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:52:19 basic.run_time] ERROR None
 
-[2017-05-25 15:39:57 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-25 15:39:57 basic.lib_net] ERROR None
+[2017-06-16 13:53:24 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:24 basic.run_time] ERROR None
 
-[2017-05-25 15:39:58 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-25 15:39:58 basic.lib_net] ERROR None
+[2017-06-16 13:53:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:28 basic.run_time] ERROR None
 
-[2017-05-25 15:42:57 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-25 15:42:57 basic.lib_net] ERROR None
+[2017-06-16 13:53:37 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:37 basic.run_time] ERROR None
 
-[2017-05-25 15:42:58 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
-[2017-05-25 15:42:58 basic.lib_net] ERROR None
+[2017-06-16 13:53:43 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:43 basic.run_time] ERROR None
+
+[2017-06-16 13:53:50 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:50 basic.run_time] ERROR None
+
+[2017-06-16 13:53:57 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:53:57 basic.run_time] ERROR None
+
+[2017-06-16 13:54:16 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:54:16 basic.run_time] ERROR None
+
+[2017-06-16 13:54:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:54:28 basic.run_time] ERROR None
+
+[2017-06-16 13:55:16 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:55:16 basic.run_time] ERROR None
+
+[2017-06-16 13:55:24 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:55:24 basic.run_time] ERROR None
+
+[2017-06-16 14:03:40 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:03:40 basic.run_time] ERROR None
+
+[2017-06-16 14:03:46 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:03:46 basic.run_time] ERROR None
+
+[2017-06-16 14:04:10 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:04:10 basic.run_time] ERROR None
+
+[2017-06-16 14:06:14 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:06:14 basic.run_time] ERROR None
+
+[2017-06-16 14:12:12 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:12:12 basic.run_time] ERROR None
+
+[2017-06-16 14:12:18 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:12:18 basic.run_time] ERROR None
+
+[2017-06-16 14:15:23 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:15:23 basic.run_time] ERROR None
+
+[2017-06-16 14:15:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:15:28 basic.run_time] ERROR None
+
+[2017-06-16 14:21:40 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:21:40 basic.run_time] ERROR None
+
+[2017-06-16 14:26:58 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:26:58 basic.run_time] ERROR None
+
+[2017-06-16 14:31:13 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:31:13 basic.run_time] ERROR None
+
+[2017-06-16 14:32:33 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:32:33 basic.run_time] ERROR None
+
+[2017-06-16 14:35:40 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:35:40 basic.run_time] ERROR None
+
+[2017-06-16 14:35:47 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:35:47 basic.run_time] ERROR None
+
+[2017-06-16 14:37:06 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:37:06 basic.run_time] ERROR None
+
+[2017-06-16 14:37:12 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:37:12 basic.run_time] ERROR None
+
+[2017-06-16 14:56:14 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:56:14 basic.run_time] ERROR None
+
+[2017-06-16 14:56:19 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:56:19 basic.run_time] ERROR None
+
+[2017-06-16 14:56:49 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:56:49 basic.run_time] ERROR None
+
+[2017-06-16 14:57:13 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:57:13 basic.run_time] ERROR None
+
+[2017-06-16 14:57:19 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:57:19 basic.run_time] ERROR None
+
+[2017-06-16 14:57:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:57:28 basic.run_time] ERROR None
+
+[2017-06-16 14:59:26 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:59:26 basic.run_time] ERROR None
+
+[2017-06-16 14:59:31 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 14:59:31 basic.run_time] ERROR None
 

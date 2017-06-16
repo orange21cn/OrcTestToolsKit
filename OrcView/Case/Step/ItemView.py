@@ -11,10 +11,11 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
+from OrcView.Lib.LibMessage import OrcMessage
 from OrcView.Lib.LibViewDef import def_view_item
+from OrcView.Driver.Web.Cmd.WebCmd import CmdCreator
 from .ItemModel import ItemFuncModel
 from .ItemModel import ItemNormalModel
-from .OperateView import ViewOperate
 
 
 class ItemControl(ControlBase):
@@ -34,7 +35,6 @@ class ItemView(QWidget):
 
         # Current case id
         self.__step_type = None
-        self.__win_operate = ViewOperate()
 
         # Item ----
         # 步骤项显示
@@ -87,16 +87,13 @@ class ItemView(QWidget):
         self.setLayout(main_layout)
 
         # 显示操作选择框
-        self.__win_add_item.sig_operate.connect(self.__win_operate.show)
+        self.__win_add_item.sig_operate.connect(self.set_operate)
 
         # 新增 item
         self.__win_add_item.sig_submit.connect(self.add_item)
 
         # 新增 func
         self.__win_add_func.sig_selected.connect(self.add_func)
-
-        # 新增 operate
-        self.__win_operate.sig_submit.connect(self.set_operate)
 
         # 点击按钮操作
         wid_buttons.sig_clicked.connect(self.operate)
@@ -188,7 +185,8 @@ class ItemView(QWidget):
         if "add" == p_flag:
             self.add_show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u'确认删除'):
+                self.display.model.mod_delete()
         elif "update" == p_flag:
             self.display.model.editable()
         elif "up" == p_flag:
@@ -212,10 +210,12 @@ class ItemView(QWidget):
             self.__win_data.set_src_type("ITEM")
             self.__win_data.set_src_id(_id)
 
-    def set_operate(self, p_data):
+    def set_operate(self):
         """
         获取操作字符串
-        :param p_data:
         :return:
         """
-        self.__win_add_item.set_data("item_operate", json.loads(p_data))
+        mode = self.__win_add_item.get_data('item_mode')
+        cmd = CmdCreator.get_cmd(mode)
+
+        self.__win_add_item.set_data("item_operate", cmd)

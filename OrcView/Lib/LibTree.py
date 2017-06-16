@@ -332,7 +332,7 @@ class ModelTreeBase(QAbstractItemModel):
                 return None
 
             # Combobox 类型数据
-            if "SELECT" == _field.type:
+            if _field.type in ('SELECT', 'TYPE_SELECT'):
                 try:
                     return self._definition.select_def[_field.id][_value]
                 except KeyError:

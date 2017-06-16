@@ -143,11 +143,11 @@ class ClientConf(QWidget):
             self._desc, self._type, self._mode, self._ip, self._port =\
                 [self.create_widget() for i in range(5)]
 
-            self._desc.set_data(self._conf.get_option(p_flag, 'desc').decode('utf-8'))
-            self._type.set_data(self._conf.get_option(p_flag, 'type'))
-            self._mode.set_data(self._conf.get_option(p_flag, 'mode'))
-            self._ip.set_data(self._conf.get_option(p_flag, 'ip'))
-            self._port.set_data(self._conf.get_option(p_flag, 'port'))
+            self._desc.set_data()
+            self._type.set_data()
+            self._mode.set_data()
+            self._ip.set_data()
+            self._port.set_data()
 
             self.setTitle(self._conf.get_option(p_flag, 'name').decode('utf-8'))
 
@@ -180,10 +180,10 @@ class ClientConf(QWidget):
 
             _local = WidgetFactory.create_basic('LINETEXT')
             _local.setDisabled(True)
-            _local.set_data(self._conf.get_option('DEFAULT', 'local'))
+            _local.set_data()
 
             _remote = WidgetFactory.create_basic('LINETEXT')
-            _remote.set_data(self._conf.get_option('DEFAULT', 'remote'))
+            _remote.set_data()
 
             layout_main = QHBoxLayout()
             layout_main.addWidget(QLabel(u'本地IP: '))

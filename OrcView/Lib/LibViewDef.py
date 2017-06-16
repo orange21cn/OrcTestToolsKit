@@ -126,8 +126,27 @@ class ViewDefinition(object):
 
                 self.fields_display.append(_field)
 
-                if "SELECT" == _field.type:
+                if 'SELECT' == _field.type:
                     self._get_select_definition(_field.id)
+
+                elif _field.type in ('TYPE_SELECT',):
+                    self._get_complex_definition(_field.id)
+
+    def _get_complex_definition(self, p_id):
+        """
+
+        :param p_id:
+        :return:
+        """
+        self.select_def[p_id] = dict()
+
+        _res = self._resource_dict.get(parameter=dict(TYPE='widget_type', DATA=dict()))
+
+        if not ResourceCheck.result_status(_res, u"获取字典值", self._logger):
+            self._logger.error("get dict %s failed." % p_id)
+            return
+
+        self.select_def[p_id].update({item['type_name']: item['type_text'] for item in _res.data})
 
     def _get_select_definition(self, p_id):
         """
@@ -146,9 +165,9 @@ class ViewDefinition(object):
 
             self.select_def[p_id].update({item['dict_value']: item['dict_text'] for item in _res.data})
 
-        if p_id in complex_select_definition:
+        if p_id in multi_select_definition:
             self.select_def[p_id] = dict()
-            for _id in complex_select_definition[p_id]:
+            for _id in multi_select_definition[p_id]:
                 get_def(_id)
         else:
             get_def(p_id)
@@ -232,7 +251,7 @@ def_view_item = [
          SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="item_mode", NAME=u"条目模式", TYPE="SELECT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=False),
-    dict(ID="item_operate", NAME=u"条目操作", TYPE="OPERATE", DISPLAY=True, EDIT=False,
+    dict(ID="item_operate", NAME=u"条目操作", TYPE="OPE_DISP", DISPLAY=True, EDIT=False,
          SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="item_desc", NAME=u"条目描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=False),
@@ -331,7 +350,7 @@ def_view_widget_def = [
          DISPLAY=True, EDIT=True, SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="widget_path", NAME=u"控件路径", TYPE="LINETEXT",
          DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
-    dict(ID="widget_type", NAME=u"控件类型", TYPE="SEL_WIDGET",
+    dict(ID="widget_type", NAME=u"控件类型", TYPE="TYPE_SELECT",
          DISPLAY=True, EDIT=True, SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="widget_desc", NAME=u"控件描述", TYPE="LINETEXT",
          DISPLAY=True, EDIT=True, SEARCH=False, ADD=True, ESSENTIAL=False),
@@ -428,7 +447,7 @@ rel_list = dict(
     RunDet=def_view_run_det,
     ConfMenu=def_view_conf_menu)
 
-complex_select_definition = dict(
+multi_select_definition = dict(
     run_def_type=('batch_type', 'case_type', 'run_def'),
     run_det_type=('batch_type', 'case_type', 'step_type', 'item_type')
 )

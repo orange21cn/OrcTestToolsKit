@@ -1,0 +1,47 @@
+OrcLineEdit {
+    height: 30px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+}
+
+QTextEdit {
+    height: 100px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    outline: 0px;
+}
+
+QComboBox {
+    height: 30px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+}
+
+QComboBox::drop-down {
+    width: 10px;
+    height: 10px;
+    subcontrol-origin: border;
+    subcontrol-position: right center;
+    background: white;
+    border: 2px solid rgb(170, 170, 170);
+    border-radius: 3px;
+    left: -2px;
+}
+
+QComboBox::drop-down:hover {
+    background: rgb(76, 76, 76);
+}
+
+QComboBox::drop-down:on {
+    background: black;
+    top: 1px;
+}
+
+QComboBox:on {
+    padding-top: 20px;
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid darkgray;
+    selection-background-color: lightgray;
+}

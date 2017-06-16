@@ -1,16 +1,16 @@
 # coding=utf-8
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
-from OrcWidget import OrcWidget
+from OrcWidget import WidgetBlock
 
 
-class WidgetSelect(OrcWidget):
+class WidgetSelect(WidgetBlock):
     """
     Select 下拉框,选择方法有根据值来选择,根据顺序选择
     """
     def __init__(self, p_root, p_id):
 
-        OrcWidget.__init__(self, p_root, p_id)
+        WidgetBlock.__init__(self, p_root, p_id)
 
     def execute(self, p_para):
 

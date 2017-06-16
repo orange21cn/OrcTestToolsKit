@@ -16,7 +16,9 @@ class DriverModel:
         :param p_cmd:
         :return:
         """
-        return self.__service.run(p_cmd)
+        result = self.__service.run(p_cmd)
+        print "-->", result
+        return result
 
     def debug(self, p_cmd):
         """

@@ -8,6 +8,7 @@ from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
+from OrcView.Lib.LibMessage import OrcMessage
 from OrcView.Lib.LibViewDef import def_view_step
 from .StepModel import StepModel
 
@@ -98,8 +99,9 @@ class StepView(QWidget):
         if "add" == p_flag:
             self.__win_add.show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
-            self.sig_delete.emit()
+            if OrcMessage.question(self, u'确认删除'):
+                self.display.model.mod_delete()
+                self.sig_delete.emit()
         elif "update" == p_flag:
             self.display.model.editable()
         elif "up" == p_flag:

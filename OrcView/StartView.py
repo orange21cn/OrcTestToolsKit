@@ -71,7 +71,7 @@ class StartView(QMainWindow):
                 ('Data Source', self.open_data_src),
             )),
             ('View', (
-                (DockLog,),
+                ('ACTION', DockLog, 'BOTTOM'),
             )),
             ('help', ())
         )
@@ -85,11 +85,20 @@ class StartView(QMainWindow):
 
             for _action_def in _menu_actions:
 
-                if 1 == len(_action_def):
-                    _widget = _action_def[0]()
-                    self.addDockWidget(Qt.BottomDockWidgetArea, _widget)
+                _type = _action_def[0]
+
+                if 'ACTION' == _type:
+
+                    _widget = _action_def[1]()
+                    if 'BOTTOM' == _action_def[2]:
+                        _station = Qt.BottomDockWidgetArea
+                    else:
+                        _station = Qt.RightDockWidgetArea
+
+                    self.addDockWidget(_station, _widget)
                     _menu.addAction(_widget.toggleViewAction())
                     _widget.close()
+
                 else:
                     _action = _menu.addAction("&%s" % _action_def[0])
                     _action.triggered.connect(_action_def[1])
@@ -160,11 +169,6 @@ class StartView(QMainWindow):
 
         self.__wid_center.addTab(p_view, p_view.title)
         self.__wid_center.setCurrentWidget(p_view)
-
-    def __show_dock(self):
-
-        dock_log = DockLog()  # log widget
-        self.addDockWidget(Qt.BottomDockWidgetArea, dock_log)
 
     def __create_action(self, text, slot=None, shortcut=None,
                         icon=None, tip=None, checkable=False, signal="triggered()"):

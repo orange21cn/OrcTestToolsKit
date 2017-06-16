@@ -123,8 +123,6 @@ class ViewSearch(QWidget):
         """
         QWidget.__init__(self)
 
-        self.__widget_creator = WidgetFactory()
-
         # 控件定义
         self.__fields_def = p_def
 
@@ -165,7 +163,7 @@ class ViewSearch(QWidget):
             # 控件
             _def = dict(TYPE=t_def["TYPE"], SOURCE="SEARCH", FLAG=t_def["ID"])
 
-            self.__inputs[t_def['ID']] = self.__widget_creator.create_widget(_def)
+            self.__inputs[t_def['ID']] = WidgetFactory.create_widget(_def)
 
             # 控件布局
             _layout = QHBoxLayout()

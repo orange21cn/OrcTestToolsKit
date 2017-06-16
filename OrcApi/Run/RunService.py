@@ -128,7 +128,7 @@ class RunCoreService(object):
 
             # 检查结果
             if not ResourceCheck.result_status(result, u"获取%s数据" % _type, self.__logger):
-                return None
+                continue
 
             # 打印成功信息
             ResourceCheck.result_success(u"获取%s数据" % _type, self.__logger)

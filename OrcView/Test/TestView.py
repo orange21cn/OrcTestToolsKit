@@ -1,6 +1,5 @@
 import unittest
 
-from OrcView.Lib.LibView import operate_to_str
 from OrcLib.LibTest import OrcTest
 
 
@@ -181,6 +180,91 @@ class TestView(unittest.TestCase):
         from OrcView.Run.Debug.DebugMain import DebugMain
 
         OrcTest.display_widget(DebugMain)
+
+        OrcTest.test_print_end()
+
+    def test_object_select(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Views.WebWidget import OperationSelect
+
+        OrcTest.display_widget(OperationSelect)
+
+        OrcTest.test_print_end()
+
+    def test_operate_select(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        import sys
+        from OrcView.Views.WebWidget import OperationSelect
+        from PySide.QtGui import QApplication
+
+        main = QApplication(sys.argv)
+
+        _view = OperationSelect(None, True)
+        _view.set_type('BLOCK')
+        _view.set_sense('OPERATE')
+        _view.show()
+
+        main.exec_()
+
+        OrcTest.test_print_end()
+
+    def test_cmd_creator(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        import sys
+        from OrcView.Case.Step.OperateView import CmdCreator
+        from PySide.QtGui import QApplication
+
+        main = QApplication(sys.argv)
+
+        print CmdCreator().get_cmd('CHECK')
+
+        main.exec_()
+
+        OrcTest.test_print_end()
+
+    def test_get_page(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        import sys
+        from OrcView.Driver.Web.Page.PageDefView import PageDefSelector
+        from PySide.QtGui import QApplication
+
+        main = QApplication(sys.argv)
+
+        print '---->', PageDefSelector.get_page()
+
+        main.exec_()
+
+        OrcTest.test_print_end()
+
+    def test_debug_001(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Driver.Web.Cmd.WebDebug import WebDebug
+        OrcTest.display_widget(WebDebug)
 
         OrcTest.test_print_end()
 

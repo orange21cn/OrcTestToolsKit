@@ -59,9 +59,6 @@ class DockLog(BaseDock):
         self.setWidget(self.__win_log)
 
         self.setFeatures(QDockWidget.DockWidgetVerticalTitleBar | QDockWidget.DockWidgetClosable)
-        self.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
-
-        # self.setStyleSheet(get_theme("dock"))
 
         log_client = LogClient()
         log_client.sig_log.connect(self.put_log)

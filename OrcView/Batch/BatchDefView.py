@@ -11,6 +11,7 @@ from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibViewDef import def_view_batch_def
+from OrcView.Lib.LibMessage import OrcMessage
 from .BatchDefModel import BatchDefModel
 
 
@@ -97,7 +98,8 @@ class BatchDefView(QWidget):
         if "add" == p_flag:
             self.__win_add.show()
         elif "delete" == p_flag:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u'确认删除'):
+                self.display.model.mod_delete()
         elif "update" == p_flag:
             self.display.model.editable()
         elif "search" == p_flag:

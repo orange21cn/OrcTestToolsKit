@@ -44,10 +44,10 @@ class BatchDefMod(TabBatchDef):
                 result = result.filter(TabBatchDef.id == cond['id'])
 
         if 'pid' in cond:
-            result = result.filter(TabBatchDef.pid == cond('pid'))
+            result = result.filter(TabBatchDef.pid == cond['pid'])
 
         if 'batch_no' in cond:
-            result = result.filter(TabBatchDef.batch_no == cond('batch_no'))
+            result = result.filter(TabBatchDef.batch_no == cond['batch_no'])
 
         if 'batch_name' in cond:
             result = result.filter(TabBatchDef.batch_name.ilike(_like('batch_name')))

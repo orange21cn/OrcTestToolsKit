@@ -90,13 +90,25 @@ class WidgetOperationMod(object):
         :param p_cond:
         :return:
         """
+        cond = p_cond if p_cond else dict()
+
         result = self.__session.query(LibWidgetOperation)
 
-        if 'id' in p_cond:
-            result = result.filter(LibWidgetOperation.id == p_cond['id'])
+        if 'id' in cond:
+
+            # 查询支持多 id
+            if isinstance(cond["id"], list):
+                result = result.filter(LibWidgetOperation.id.in_(cond['id']))
+            else:
+                result = result.filter(LibWidgetOperation.id == cond['id'])
 
         if 'type_name' in p_cond:
-            result = result.filter(LibWidgetOperation.type_name == p_cond['type_name'])
+
+            # 查询支持多 id
+            if isinstance(cond["type_name"], list):
+                result = result.filter(LibWidgetOperation.type_name.in_(cond['type_name']))
+            else:
+                result = result.filter(LibWidgetOperation.type_name == cond['type_name'])
 
         if 'ope_name' in p_cond:
             result = result.filter(LibWidgetOperation.ope_name == p_cond['ope_name'])

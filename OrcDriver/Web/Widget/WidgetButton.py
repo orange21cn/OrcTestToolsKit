@@ -1,11 +1,11 @@
-from OrcWidget import OrcWidget
+from OrcWidget import WidgetBlock
 
 
-class WidgetButton(OrcWidget):
+class WidgetButton(WidgetBlock):
 
     def __init__(self, p_root, p_id):
 
-        OrcWidget.__init__(self, p_root, p_id)
+        WidgetBlock.__init__(self, p_root, p_id)
 
     def execute(self, p_para):
 

@@ -6,6 +6,7 @@ from PySide.QtCore import Signal as OrcSignal
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibMessage import OrcMessage
 
 from .RunDefModel import RunDefModel
 
@@ -104,7 +105,8 @@ class RunDefView(QWidget):
             self.display.model.mod_add(dict(run_def_type=data.content["run_def_type"]))
 
         elif 'delete' == p_flg:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
 
         elif 'search' == p_flg:
             self.sig_search.emit()

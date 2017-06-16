@@ -34,26 +34,10 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-# class Singleton(object):
-#
-#     # 定义静态变量实例
-#     __instance = None
-#
-#     def __init__(self):
-#         pass
-#
-#     def __new__(cls, *args, **kwargs):
-#         if not cls.__instance:
-#             try:
-#                 Lock.acquire()
-#                 # double check
-#                 if not cls.__instance:
-#                     cls.__instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
-#             finally:
-#                 Lock.release()
-#         return cls.__instance
-
 class OrcDataStruct(object):
+    """
+
+    """
     def __init__(self):
         pass
 

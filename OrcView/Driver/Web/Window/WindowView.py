@@ -7,6 +7,7 @@ from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibViewDef import def_view_window_def
+from OrcView.Lib.LibMessage import OrcMessage
 
 from .WindowModel import WindowModel
 
@@ -74,14 +75,24 @@ class WindowView(QWidget):
         elif "update" == p_flg:
             self.display.model.editable()
         elif "delete" == p_flg:
-            self.display.model.mod_delete()
+            if OrcMessage.question(self, u"确认删除"):
+                self.display.model.mod_delete()
         else:
             pass
 
     def set_window_id(self, p_window_id):
+        """
+
+        :param p_window_id:
+        :return:
+        """
         self.__window_id = p_window_id
         self.display.model.mod_search({"window_id": self.__window_id})
 
     def clean(self):
+        """
+
+        :return:
+        """
         self.__window_id = None
         self.display.model.mod_clean()

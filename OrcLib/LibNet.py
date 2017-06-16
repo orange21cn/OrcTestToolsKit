@@ -43,7 +43,7 @@ class OrcResourceBase(object):
             Run=dict(config='RUN', path="OrcApi.Run.RunApi"),
             Report=dict(config="REPORT", path="OrcApi.Run.ReportApi"),
             Dict=dict(config='DEFAULT', path="OrcApi.Lib.DictApi"),
-            RunTime=dict(config='DEFAULT', path="OrcApi.RunTime.RunTimeApi"),
+            RunTime=dict(config='RUN', path="OrcApi.RunTime.RunTimeApi"),
             Driver=dict(config='DRIVER', path="OrcDriver.DriverApi"),
             View=dict(config="VIEW", path=""),
             MEM=dict(config="MEM", path=""),
@@ -572,11 +572,9 @@ class OrcResult(object):
         返回信息字符串
         :return:
         """
-        _result = dict(STATUS=self.status,
-                       MESSAGE=self.message,
-                       DATA=self.data)
-
-        return _result
+        return dict(STATUS=self.status,
+                    MESSAGE=self.message,
+                    DATA=self.data)
 
 
 def orc_api(p_func):

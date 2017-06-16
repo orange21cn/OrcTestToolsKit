@@ -139,12 +139,8 @@ class ModelTableBase(QAbstractTableModel):
                 except KeyError:
                     self.__logger.error("select value error: %s, %s" % (_field.id, _value))
 
-            # OPERATE 类型数据
-            elif "OPERATE" == _field.type:
-                return self._data[index.row()]["%s_text" % _field.id]
-
-            # DISPLAY 类型数据
-            elif "DISPLAY" == _field.type:
+            # OPERATE/DISPLAY 类型数据
+            elif _field.type in ('OPE_DISP', 'DISPLAY'):
                 return self._data[index.row()]["%s_text" % _field.id]
 
             # 其他类型数据,直接返回

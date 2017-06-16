@@ -56,17 +56,3 @@ class ReportDetMod:
             report_content = template_xslt(result_content)
 
         return str(report_content)
-
-    def usr_get_resource(self, p_file_name):
-        """
-
-        :param p_file_name:
-        :return:
-        """
-        file_name = "%s/report/resource/%s" %\
-                    (self.__configer.get_option("TEMPLATE", "template_root_path"), p_file_name)
-        print file_name
-        return redirect(url_for('template/resource', filename="ab.html"), code=301)
-
-        # with open(file_name, 'r') as res_file:
-        #     return res_file.read()
