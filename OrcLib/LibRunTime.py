@@ -166,7 +166,12 @@ class OrcRunStatus(object):
         :return:
         :return:
         """
-        return self.__run_time.get_value('RUN_STATUS')
+        result = self.__run_time.get_value('RUN_STATUS')
+
+        if result is None:
+            return False
+        else:
+            return bool(int(result))
 
     @status.setter
     def status(self, p_status):

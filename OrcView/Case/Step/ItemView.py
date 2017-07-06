@@ -13,7 +13,7 @@ from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibMessage import OrcMessage
 from OrcView.Lib.LibViewDef import def_view_item
-from OrcView.Driver.Web.Cmd.WebCmd import CmdCreator
+from OrcView.Driver.Web.Cmd.WebCmd import WebCmdCreator
 from .ItemModel import ItemFuncModel
 from .ItemModel import ItemNormalModel
 
@@ -216,6 +216,6 @@ class ItemView(QWidget):
         :return:
         """
         mode = self.__win_add_item.get_data('item_mode')
-        cmd = CmdCreator.get_cmd(mode)
+        cmd = WebCmdCreator.get_cmd(mode)
 
         self.__win_add_item.set_data("item_operate", cmd)

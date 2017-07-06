@@ -7,7 +7,8 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QStackedWidget
 
 from OrcLib.LibProgram import orc_singleton
-from OrcLib.LibCmd import OrcCmd
+from OrcLib.LibCmd import WebCmd
+from OrcLib.LibType import WebObjectType
 from OrcLib.LibNet import OrcSocketResource
 
 from OrcView.Lib.LibBaseWidget import WidgetCreator
@@ -209,10 +210,10 @@ class PageDebug(QWidget):
         """
         获取界面数据
         :return:
-        :rtype: OrcCmd
+        :rtype: OrcWebCmd
         """
-        res_cmd = OrcCmd()
-        res_cmd.set_cmd_type('PAGE')
+        res_cmd = WebCmd()
+        res_cmd.set_cmd_type(WebObjectType.PAGE)
         res_cmd.set_cmd_object(self._page_def_data['id'])
         res_cmd.set_cmd_operation(self._operation.get_data())
 
@@ -318,8 +319,8 @@ class WidgetDebug(QWidget):
         获取界面数据
         :return:
         """
-        res_cmd = OrcCmd()
-        res_cmd.set_cmd_type('WIDGET')
+        res_cmd = WebCmd()
+        res_cmd.set_cmd_type(WebObjectType.WIDGET)
         res_cmd.set_cmd_object(self._widget_data['id'])
         res_cmd.set_cmd_operation(self._operation.get_data())
         res_cmd.set_data(self._data.get_data())

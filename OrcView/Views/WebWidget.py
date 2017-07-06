@@ -1,7 +1,6 @@
 # coding=utf-8
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
-from OrcLib.LibCmd import OrcCmd
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibBaseWidget import OrcSelectBase
@@ -159,7 +158,6 @@ class OperationDisp(OrcDisplay):
         """
         设置数据
         :param p_cmd:
-        :type p_cmd: OrcCmd
         :return:
         """
         super(OperationDisp, self).set_data([p_cmd.get_cmd_dict(),

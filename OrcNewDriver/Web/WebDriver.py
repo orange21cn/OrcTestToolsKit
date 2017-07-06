@@ -137,6 +137,7 @@ class DriverSelenium:
         elif "A" == _definition.widget_type:
             _node = WidgetA(self.__root, _id)
             result = _node.execute(p_para)
+            print "===", result
 
         # 下拉框
         elif "SELECT" == _definition.widget_type:
@@ -152,6 +153,7 @@ class DriverSelenium:
         else:
             _node = WidgetBlock(self.__root, _id)
             result = _node.basic_execute(p_para)
+            print "''''''", result
 
         return result
 

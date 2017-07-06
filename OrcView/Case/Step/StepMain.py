@@ -12,20 +12,32 @@ class StepContainer(QWidget):
 
         QWidget.__init__(self)
 
-        _step_no = p_data["no"]
-        _step_id = p_data["id"]
-        self.title = _step_no
+        # 步骤编号
+        step_no = p_data["no"]
 
-        self._wid_step = StepView(_step_id)
+        # 步骤 ID
+        step_id = p_data["id"]
+
+        # 界面 title
+        self.title = step_no
+
+        # 步骤显示界面
+        self._wid_step = StepView(step_id)
+
+        # 步骤项显示界面
         self._wid_item = ItemView()
 
-        _layout = QVBoxLayout()
-        _layout.addWidget(self._wid_step)
-        _layout.addWidget(self._wid_item)
+        # 布局
+        layout_main = QVBoxLayout()
+        layout_main.addWidget(self._wid_step)
+        layout_main.addWidget(self._wid_item)
 
-        _layout.setSpacing(0)
+        layout_main.setSpacing(0)
 
-        self.setLayout(_layout)
+        self.setLayout(layout_main)
 
+        # 步骤界面显示后更新步骤项界面
         self._wid_step.sig_select.connect(self._wid_item.set_step_id)
+
+        # 步骤删除后清除步骤项界面
         self._wid_step.sig_delete.connect(self._wid_item.clean)

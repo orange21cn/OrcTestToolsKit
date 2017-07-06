@@ -1,7 +1,6 @@
 # coding=utf-8
 from PySide.QtGui import QStyledItemDelegate
 from PySide.QtCore import Qt
-from OrcView.Lib.LibView import WidgetFactory
 from OrcView.Lib.LibBaseWidget import WidgetCreator
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition

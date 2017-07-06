@@ -213,3 +213,17 @@ ElementNotInteractableException: Message:
 [2017-06-16 14:59:31 basic.run_time] ERROR 获取实时数据出错,取值为: []
 [2017-06-16 14:59:31 basic.run_time] ERROR None
 
+[2017-06-19 13:14:44 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-06-19 13:14:44 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 262, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-06-20 18:46:59 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-20 18:46:59 basic.run_time] ERROR None
+
+[2017-06-20 18:46:59 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-20 18:46:59 basic.run_time] ERROR None
+

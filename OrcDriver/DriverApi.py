@@ -2,7 +2,6 @@
 from flask_restful import Resource
 from flask import send_file
 
-from OrcLib import init_log
 from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import orc_api

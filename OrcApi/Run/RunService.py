@@ -1,6 +1,4 @@
 # coding=utf-8
-import socket
-
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck

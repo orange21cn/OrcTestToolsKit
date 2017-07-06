@@ -9,10 +9,10 @@ from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefSelector
 from OrcView.Lib.LibBaseWidget import WidgetCreator
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcLib.LibCmd import OrcCmd
+from OrcLib.LibCmd import WebCmd
 
 
-class CmdCreator(QDialog):
+class WebCmdCreator(QDialog):
     """
     命令生成控件
     """
@@ -26,7 +26,7 @@ class CmdCreator(QDialog):
         self._mode = ''
 
         # 命令,最终生成的字符串
-        self._cmd = OrcCmd()
+        self._cmd = WebCmd()
 
         # 控件类型
         self.__type_select = WidgetCreator.create_complex(self, 'OBJ_SELECT')
@@ -70,7 +70,6 @@ class CmdCreator(QDialog):
 
         # 初始设置
         self.__change_type('PAGE')
-        self._cmd.set_driver_type('WEB')
 
     def __operate(self, p_flag):
         """
@@ -90,7 +89,7 @@ class CmdCreator(QDialog):
         :param p_mode:
         :return:
         """
-        self._cmd.set_operate_mode(p_mode)
+        self._cmd.set_mode(p_mode)
         self.__operate_select.set_sense(p_mode)
 
     def __change_type(self, p_data):
@@ -113,9 +112,10 @@ class CmdCreator(QDialog):
             self.__widget_input.set_data(self._cmd.get_flag())
 
             # 设置操作方式
-            self.__operate_select.set_type(self._cmd.cmd_type)
+            self.__operate_select.set_type(self._cmd.get_widget_type())
 
         elif self._cmd.is_page():
+
             self._cmd.set_page_info(PageDefSelector.get_page())
 
             self.__widget_input.set_data(self._cmd.get_flag())
@@ -150,7 +150,7 @@ class CmdCreator(QDialog):
         :param p_mode:
         :return:
         """
-        view = CmdCreator()
+        view = WebCmdCreator()
         view.__set_mode(p_mode)
         view.exec_()
 

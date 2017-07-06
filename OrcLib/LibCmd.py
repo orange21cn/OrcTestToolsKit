@@ -2,11 +2,15 @@
 from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
+from OrcLib.LibType import WebObjectType
+from OrcLib.LibType import WebItemModeType
+from OrcLib.LibType import WebDriverType
 
 
 class OrcCmd(object):
     """
-    命令结构类
+    用于驱动执行的命令,包括一些系统命令,基本格工是: {TYPE, CMD}, 格式为dict 可以生成或者读取
+    {TYPE: type, CMD: cmd}
     """
     def __init__(self, p_cmd=None):
 
@@ -14,15 +18,241 @@ class OrcCmd(object):
 
         _cmd = OrcFactory.create_dict(p_cmd)
 
+        # 命令类型
+        self.type = None
+
+        # 命令
+        self.cmd = None
+
+        # 初始化数据
+        self.set_type(_cmd.value('TYPE'))
+        self.set_cmd(_cmd.value('CMD'))
+
+    def set_type(self, p_type):
+        """
+        设置类型
+        :param p_type:
+        :return:
+        """
+        if p_type in ('SYSTEM', 'DRIVER'):
+            self.type = p_type
+
+    def set_sys_type(self):
+        """
+        设置为系统类型
+        :return:
+        """
+        self.type = "SYSTEM"
+
+    def is_system(self):
+        """
+        是系统命令
+        :return:
+        """
+        return 'SYSTEM' == self.type
+
+    def set_driver_type(self, p_type):
+        """
+        设置为驱动类型
+        :param p_type:
+        :return:
+        """
+        self.type = 'DRIVER'
+
+    def is_driver(self):
+        """
+        是驱动命令
+        :return:
+        """
+        return 'DRIVER' == self.type
+
+    def set_cmd(self, p_cmd):
+        """
+        设置命令
+        :param p_cmd:
+        :return:
+        """
+        if self.is_system():
+            self.cmd = OrcSysCmd(p_cmd)
+        elif self.is_driver():
+            self.cmd = OrcDriverCmd(p_cmd)
+        else:
+            self.cmd = None
+
+
+class OrcSysCmd(object):
+    """
+    系统命令, 暂时只有 quit, {OPERATION: operation, DATA: data}
+    """
+    def __init__(self, p_cmd=None):
+
+        object.__init__(self)
+
+        # 操作
+        self.operation = None
+
+        # 初始化数据
+        self.set_cmd(p_cmd)
+
+    def set_cmd(self, p_cmd):
+        """
+        设置命令
+        :param p_cmd:
+        :return:
+        """
+        _cmd = OrcFactory.create_dict(p_cmd)
+
+        self.set_operation(_cmd.value('OPERATION'))
+
+    def set_operation(self, p_operation):
+        """
+        设置操作
+        :param p_operation:
+        :return:
+        """
+        if p_operation in ('OPERATION',):
+            self.operation = p_operation
+
+    def set_quit(self):
+        """
+        设置为退出
+        :return:
+        """
+        self.operation = 'QUIT'
+
+    def is_quit(self):
+        """
+        是否退出
+        :return:
+        """
+        return 'QUIT' == self.operation
+
+
+class OrcDriverCmd(object):
+    """
+
+    """
+    def __init__(self, p_cmd=None):
+
+        object.__init__(self)
+
+        # 驱动类型,WEB/IOS...
+        self.driver_type = None
+
+        # 操作模式,操作项/检查项
+        self.operate_mode = None
+
+        # 命令
+        self.cmd = None
+
+        # 初始化数据
+
+        if p_cmd is not None:
+
+            _cmd = OrcFactory.create_dict(p_cmd)
+
+            self.set_type(_cmd.value('DTYPE'))
+            self.set_mode(_cmd.value('MODE'))
+            self.set_cmd(_cmd.value('CMD'))
+
+    def set_type(self, p_type):
+        """
+
+        :param p_type:
+        :return:
+        """
+        if p_type in WebDriverType.all():
+            self.driver_type = p_type
+
+    def set_web(self):
+        """
+
+        :return:
+        """
+        self.driver_type = WebDriverType.WEB
+
+    def is_web(self):
+        """
+
+        :return:
+        """
+        return WebDriverType.WEB == self.driver_type
+
+    def set_mode(self, p_mode):
+        """
+
+        :param p_mode:
+        :return:
+        """
+        if p_mode in WebItemModeType.all():
+            self.operate_mode = p_mode
+            if self.cmd is not None:
+                self.cmd.set_mode(p_mode)
+
+    def set_operation(self):
+        """
+
+        :return:
+        """
+        self.operate_mode = WebItemModeType.OPERATE
+
+    def is_operation(self):
+        """
+
+        :return:
+        """
+        return WebItemModeType.OPERATE == self.operate_mode
+
+    def set_check(self):
+        """
+
+        :return:
+        """
+        self.operate_mode = WebItemModeType.CHECK
+
+    def is_check(self):
+        """
+
+        :return:
+        """
+        return WebItemModeType.CHECK == self.operate_mode
+
+    def set_cmd(self, p_cmd):
+        """
+
+        :param p_cmd:
+        :return:
+        """
+        assert isinstance(p_cmd, dict)
+
+        if self.is_web():
+            self.cmd = WebCmd(p_cmd)
+            self.cmd.set_mode(self.operate_mode)
+
+    def get_disp_text(self):
+        """
+
+        :return:
+        """
+        return self.cmd.get_disp_text()
+
+
+class WebCmd(object):
+    """
+    命令结构类
+    """
+    def __init__(self, p_cmd=None):
+
+        object.__init__(self)
+
         self.__resource_page = OrcResource('PageDef')
         self.__resource_window = OrcResource('WindowDef')
         self.__resource_widget = OrcResource('WidgetDef')
 
-        # 驱动类型,WEB/IOS...
-        self.driver_type = _cmd.value('DTYPE')
+        # 模式,操作项/检查项,由外部提供
+        self.mode = None
 
-        # 操作模式,操作项/检查项
-        self.operate_mode = _cmd.value('MODE')
+        _cmd = OrcFactory.create_dict(p_cmd)
 
         # 对象类型,PAGE/WINDOW/WIDGET
         self.cmd_type = _cmd.value('TYPE')
@@ -39,140 +269,67 @@ class OrcCmd(object):
         # 对象数据
         self._object_info = self.__get_info(self.cmd_object)
 
-    def is_web_cmd(self):
+    def set_mode(self, p_mode):
         """
-        命令类型,是否 WEB
+        设置模式
+        :param p_mode:
+        :type p_mode: WebItemModeType
         :return:
         """
-        return 'WEB' == self.driver_type
+        self.mode = p_mode
 
-    def is_operation_mode(self):
-        """
-        命令模式,是否操作项
-        :return:
-        """
-        return 'OPERATE' == self.operate_mode
+        self.__cal_data()
 
-    def is_check_mode(self):
+    def set_cmd_type(self, p_type):
         """
-        命令模式,是否检查项
+
+        :param p_type:
         :return:
         """
-        return 'CHECK' == self.operate_mode
+        if p_type in WebObjectType.all():
+            self.cmd_type = p_type
+
+    def set_page(self):
+        """
+
+        :return:
+        """
+        self.cmd_type = WebObjectType.PAGE
 
     def is_page(self):
         """
         对象类型,是否页面
         :return:
         """
-        print self.cmd_type
-        return 'PAGE' == self.cmd_type
+        return WebObjectType.PAGE == self.cmd_type
+
+    def set_window(self):
+        """
+
+        :return:
+        """
+        self.cmd_type = WebObjectType.WINDOW
 
     def is_window(self):
         """
         对象类型,是否窗口
         :return:
         """
-        return 'WINDOW' == self.cmd_type
+        return WebObjectType.WINDOW == self.cmd_type
+
+    def set_widget(self):
+        """
+
+        :return:
+        """
+        self.cmd_type = WebObjectType.WIDGET
 
     def is_widget(self):
         """
         对象类型,是否控件
         :return:
         """
-        return 'WIDGET' == self.cmd_type
-
-    def is_group_widget(self):
-        """
-        控件类型,是否 group
-        :return:
-        """
-        return 'GROUP' == self.cmd_object['widget_type']
-
-    def is_frame_widget(self):
-        """
-        控件类型,是否 frame
-        :return:
-        """
-        return 'FRAME' == self.cmd_object['widget_type']
-
-    def is_block_widget(self):
-        """
-        控件类型,是否通用控件
-        :return:
-        """
-        return 'BLOCK' == self._object_info['widget_type']
-
-    def is_block_type_widget(self):
-        """
-        控件类型,是否基于通用控件的控件
-        :return:
-        """
-        return self._object_info['widget_type'] in ('BLOCK', 'INP', 'BTN', 'LINK', 'SELECT')
-
-    def is_input_widget(self):
-        """
-        控件类型,是否输入框
-        :return:
-        """
-        return 'INP' == self._object_info['widget_type']
-
-    def is_select_widget(self):
-        """
-        控件类型,是否下拉框
-        :return:
-        """
-        return 'SELECT' == self._object_info['widget_type']
-
-    def is_alert_widget(self):
-        """
-        控件类型,是否弹出框
-        :return:
-        """
-        return 'ALERT' == self._object_info['widget_type']
-
-    def get_data_num(self):
-        """
-        获取数据数量
-        :return:
-        """
-        if self.is_check_mode():
-            if self.cmd_operation in ('GET_TEXT', 'TEXT', 'LABEL', 'VALUE'):
-                self.data = 1
-            elif self.cmd_operation in ('GET_ATTR',):
-                self.data = 2
-            else:
-                pass
-
-        elif self.is_operation_mode():
-            if self.cmd_operation in ('INPUT',):
-                self.data = 1
-        else:
-            pass
-
-    def set_driver_type(self, p_type):
-        """
-        驱动类型
-        :param p_type:
-        :return:
-        """
-        self.driver_type = p_type
-
-    def set_operate_mode(self, p_mode):
-        """
-        设置操作模式,操作项/检查项
-        :param p_mode:
-        :return:
-        """
-        self.operate_mode = p_mode
-
-    def set_cmd_type(self, p_cmd_type):
-        """
-        设置命令类型,page/widget
-        :param p_cmd_type:
-        :return:
-        """
-        self.cmd_type = p_cmd_type
+        return WebObjectType.WIDGET == self.cmd_type
 
     def set_cmd_object(self, p_cmd_object):
         """
@@ -191,6 +348,8 @@ class OrcCmd(object):
         :return:
         """
         self.cmd_operation = p_cmd_operation
+
+        self.__cal_data()
 
     def set_data(self, p_data):
         """
@@ -218,7 +377,7 @@ class OrcCmd(object):
         """
         self._object_info = p_info
         self.set_cmd_object(self._object_info['id'])
-        self.set_cmd_type('PAGE')
+        self.set_cmd_type(WebObjectType.PAGE)
 
     def set_widget_info(self, p_info):
         """
@@ -228,45 +387,34 @@ class OrcCmd(object):
         """
         self._object_info = p_info
         self.set_cmd_object(self._object_info['id'])
-        self.set_cmd_type('WIDGET')
+        self.set_cmd_type(WebObjectType.WIDGET)
 
     def get_flag(self):
         """
         获取对象标识
         :return:
         """
-        if self.is_web_cmd():
+        if self._object_info is None:
+            return ''
 
-            if self.is_page():
-                return self._object_info['page_flag']
-            elif self.is_widget():
-                print "ljljlj", self._object_info
-                return self._object_info['widget_path']
-            elif self.is_window():
-                return ''
-            else:
-                return ''
-
+        if self.is_page():
+            return self._object_info['page_flag']
+        elif self.is_widget():
+            return self._object_info['widget_path']
+        elif self.is_window():
+            return ''
         else:
             return ''
 
-    def get_dict(self):
+    def get_widget_type(self):
         """
-        获取完整命令字典,含驱动类型和模式
+
         :return:
         """
-        res_dict = dict(
-            DTYPE=self.driver_type,
-            MODE=self.operate_mode,
-            TYPE=self.cmd_type,
-            OBJECT=self.cmd_object,
-            OPERATION=self.cmd_operation
-        )
+        if self.is_page():
+            return None
 
-        if self.data is not None:
-            res_dict['DATA'] = self.data
-
-        return res_dict
+        return self._object_info['widget_type']
 
     def get_cmd_dict(self):
         """
@@ -311,19 +459,11 @@ class OrcCmd(object):
         else:
             pass
 
-    @staticmethod
-    def static_get_disp_text(p_cmd):
-        """
-        获取检查项显示文字,静态函数
-        :param p_cmd:
-        :return:
-        """
-        cmd = OrcCmd(p_cmd)
-        return cmd.get_disp_text()
-
     def get_disp_text(self):
         """
         获取检查项显示文字
+        :param p_type:
+        :type p_type: WebItemModeType
         :return:
         """
         def get_operation_text():
@@ -342,33 +482,45 @@ class OrcCmd(object):
             if not res_operation.data:
                 return ''
 
-            if self.is_check_mode():
+            if WebItemModeType.CHECK == self.mode:
                 return res_operation.data[0]['check_text']
-            elif self.is_operation_mode():
+            elif WebItemModeType.OPERATE == self.mode:
                 return res_operation.data[0]['operate_text']
             else:
-                return res_operation.data[0]['ope_text']
+                return ''
 
-        if self.is_web_cmd():
+        # 页面命令
+        if self.is_page():
+            res_text = u"页面[%s].%s" % (self.get_flag(), get_operation_text())
 
-            # 页面命令
-            if self.is_page():
-                res_text = u"页面[%s].%s" % (self.get_flag(), get_operation_text())
+        # 控件命令
+        elif self.is_widget():
+            res_text = u"控件[%s].%s" % (self.get_flag(), get_operation_text())
 
-            # 控件命令
-            elif self.is_widget():
-                res_text = u"控件[%s].%s" % (self.get_flag(), get_operation_text())
-
-            # 其他
-            else:
-                res_text = ''
-
-            if self.data is not None:
-                res_text = u"%s 数据 %s" % (res_text, self.data)
-
-            return res_text
+        # 其他
         else:
-            # 暂时没用,用于兼容其他类型的驱动
-            # object_text = ''
-            # operation_text = ''
+            res_text = ''
+
+        if self.data is not None:
+            res_text = u"%s.数据(%s)" % (res_text, self.data)
+
+        return res_text
+
+    def __cal_data(self):
+        """
+        计算数据数量
+        :return:
+        """
+        if WebItemModeType.OPERATE == self.mode:
+            if self.cmd_operation in ('INPUT',):
+                self.data = 1
+
+        elif WebItemModeType.CHECK == self.mode:
+            if self.cmd_operation in ('GET_TEXT', 'TEXT', 'LABEL', 'VALUE'):
+                self.data = 1
+            elif self.cmd_operation in ('GET_ATTR',):
+                self.data = 2
+            else:
+                pass
+        else:
             pass
