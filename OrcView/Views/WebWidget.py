@@ -160,5 +160,8 @@ class OperationDisp(OrcDisplay):
         :param p_cmd:
         :return:
         """
+        if p_cmd is None:
+            return
+
         super(OperationDisp, self).set_data([p_cmd.get_cmd_dict(),
                                              p_cmd.get_disp_text()])

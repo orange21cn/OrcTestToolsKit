@@ -1,0 +1,333 @@
+[2017-04-20 15:55:40 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
+    self._db.session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
+    mapper, table, insert)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
+    execute(statement, multiparams)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+
+[2017-04-20 15:56:03 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 15:56:03 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
+    self._db.session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
+    mapper, table, insert)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
+    execute(statement, multiparams)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 208, in db_add
+    self._db.session.close()
+AttributeError: 'MemDB' object has no attribute 'session'
+
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-04-20 16:18:07 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 208, in db_add
+    self._db.session.close()
+AttributeError: 'MemDB' object has no attribute 'session'
+
+[2017-04-20 16:46:30 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({},) {}
+[2017-04-20 16:46:30 basic.lib.lib_program] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
+    return self._operator[p_flag](*args, **kwargs)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 267, in db_search
+    with self._db as db_session:
+AttributeError: __exit__
+
+[2017-04-25 11:04:27 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-04-25 11:04:27 basic.run_time] ERROR None
+
+[2017-04-28 15:28:20 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 15:28:20 basic.lib_net] INFO 获取操作文字成功
+[2017-04-28 15:28:21 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 15:28:21 basic.lib_net] INFO 获取操作文字成功
+[2017-04-28 16:04:44 basic.lib_net] INFO 获取页面标识成功
+[2017-04-28 16:04:44 basic.lib_net] INFO 获取操作文字成功
+[2017-05-08 10:54:24 basic.lib_net] INFO 获取页面标识成功
+[2017-05-08 10:54:24 basic.lib_net] INFO 获取操作文字成功
+[2017-05-10 12:51:33 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 12:51:33 basic.run_time] ERROR None
+
+[2017-05-10 12:51:33 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 12:51:33 basic.run_time] ERROR None
+
+[2017-05-10 13:52:09 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 13:52:09 basic.run_time] ERROR None
+
+[2017-05-10 13:52:09 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 13:52:09 basic.run_time] ERROR None
+
+[2017-05-10 13:55:52 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 13:55:52 basic.run_time] ERROR None
+
+[2017-05-10 13:55:52 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 13:55:52 basic.run_time] ERROR None
+
+[2017-05-10 14:03:48 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:03:48 basic.run_time] ERROR None
+
+[2017-05-10 14:03:48 basic.run_time] ERROR 新增实时数据失败, None
+[2017-05-10 14:03:48 basic.run_time] ERROR None
+
+[2017-05-10 14:22:29 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:22:29 basic.run_time] ERROR None
+
+[2017-05-10 14:24:41 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:24:41 basic.run_time] ERROR None
+
+[2017-05-10 14:25:26 basic.lib_net] INFO 获取页面标识成功
+[2017-05-10 14:25:26 basic.lib_net] INFO 获取操作文字成功
+[2017-05-10 14:27:28 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:27:28 basic.run_time] ERROR None
+
+[2017-05-10 14:28:20 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:28:20 basic.run_time] ERROR None
+
+[2017-05-10 14:36:00 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:36:00 basic.run_time] ERROR None
+
+[2017-05-10 14:36:02 basic.lib_net] ERROR function invoke error: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/1.0/RunTime (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x123658a90>: Failed to establish a new connection: [Errno 61] Connection refused',))
+[2017-05-10 14:36:02 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 294, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 145, in delete
+    return request('delete', url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 468, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 576, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 437, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/1.0/RunTime (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x123658a90>: Failed to establish a new connection: [Errno 61] Connection refused',))
+
+[2017-05-10 14:36:02 basic.run_time] ERROR 删除实时数据失败, 网络连接失败.
+[2017-05-10 14:36:02 basic.run_time] ERROR None
+
+[2017-05-10 14:41:47 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:41:47 basic.run_time] ERROR None
+
+[2017-05-10 14:43:57 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:43:57 basic.run_time] ERROR None
+
+[2017-05-10 14:43:59 basic.lib_net] ERROR function invoke error: Failed to parse: localhost:None
+[2017-05-10 14:43:59 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 294, in action
+    headers=self._header)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 454, in request
+    prep = self.prepare_request(req)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 388, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 293, in prepare
+    self.prepare_url(url, params)
+  File "/Library/Python/2.7/site-packages/requests/models.py", line 347, in prepare_url
+    raise InvalidURL(*e.args)
+InvalidURL: Failed to parse: localhost:None
+
+[2017-05-10 14:43:59 basic.run_time] ERROR 获取实时数据失败, 网络连接失败.
+[2017-05-10 14:43:59 basic.run_time] ERROR None
+
+[2017-05-10 14:43:59 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:43:59 basic.run_time] ERROR None
+
+[2017-05-10 14:46:12 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 14:46:12 basic.run_time] ERROR None
+
+[2017-05-10 15:09:15 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:09:15 basic.run_time] ERROR None
+
+[2017-05-10 15:37:54 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:37:54 basic.run_time] ERROR None
+
+[2017-05-10 15:55:37 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 15:55:37 basic.run_time] ERROR None
+
+[2017-05-10 16:33:25 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 16:33:25 basic.run_time] ERROR None
+
+[2017-05-10 17:06:01 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-10 17:06:01 basic.run_time] ERROR None
+
+[2017-05-11 09:35:08 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:35:08 basic.run_time] ERROR None
+
+[2017-05-11 09:35:18 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:35:18 basic.run_time] ERROR None
+
+[2017-05-11 09:45:27 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 09:45:27 basic.run_time] ERROR None
+
+[2017-05-11 10:03:37 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 10:03:37 basic.run_time] ERROR None
+
+[2017-05-11 10:19:32 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 10:19:32 basic.run_time] ERROR None
+
+[2017-05-11 13:26:50 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 13:26:50 basic.run_time] ERROR None
+
+[2017-05-11 15:47:34 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-11 15:47:34 basic.run_time] ERROR None
+
+[2017-05-12 09:47:36 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 09:47:36 basic.run_time] ERROR None
+
+[2017-05-12 10:14:22 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:14:22 basic.run_time] ERROR None
+
+[2017-05-12 10:19:50 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:19:50 basic.run_time] ERROR None
+
+[2017-05-12 10:29:11 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:29:11 basic.run_time] ERROR None
+
+[2017-05-12 10:30:03 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:30:03 basic.run_time] ERROR None
+
+[2017-05-12 10:30:22 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 10:30:22 basic.run_time] ERROR None
+
+[2017-05-12 14:59:14 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 14:59:14 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:03:28 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:03:28 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:04:50 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:04:50 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:09:56 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:09:56 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:29:45 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:29:45 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:29:47 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:29:47 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:30:06 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:30:06 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:30:08 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:30:08 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:31:00 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 15:31:00 basic.run_time] ERROR None
+
+[2017-05-12 15:31:56 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:31:56 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:31:59 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:31:59 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:32:00 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:32:00 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:32:08 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:32:08 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:32:09 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:32:09 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:32:35 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 15:32:35 basic.run_time] ERROR None
+
+[2017-05-12 15:47:57 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:47:57 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:48:15 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:48:15 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:48:16 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:48:16 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:48:19 basic.lib_net] INFO 获取页面标识成功
+[2017-05-12 15:48:19 basic.lib_net] INFO 获取操作文字成功
+[2017-05-12 15:48:41 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 15:48:41 basic.run_time] ERROR None
+
+[2017-05-12 15:49:18 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 15:49:18 basic.run_time] ERROR None
+
+[2017-05-12 15:49:58 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-05-12 15:49:58 basic.run_time] ERROR None
+
+[2017-05-18 18:12:52 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:12:52 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:12:54 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:12:54 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:12:57 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:12:57 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:15:51 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:15:51 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:16:51 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:16:51 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:16:52 basic.lib_net] INFO 获取控件路径成功

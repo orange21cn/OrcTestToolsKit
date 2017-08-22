@@ -119,7 +119,7 @@ class StartView(QMainWindow):
         tools_server.addWidget(ServerRun())
         tools_server.addWidget(ServerReport())
         tools_server.addWidget(ServerDriver())
-        tools_server.addWidget(ServerDebug())
+        # tools_server.addWidget(ServerDebug())
 
         from OrcView.Main.Tools.Run import RunEnv
         from OrcView.Main.Tools.Run import RunBrowser

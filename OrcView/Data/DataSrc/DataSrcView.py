@@ -1,28 +1,31 @@
 # coding=utf-8
+from PySide.QtCore import Qt
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QSplitter
 from PySide.QtGui import QWidget
 
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTheme import get_theme
+from OrcView.Lib.LibBaseWidget import OrcBoxWidget
 
 from .DataSrcListView import DataSrcListView
 from .DataSrcDispView import DataSrcDispView
 from .DataDebugView import DataDebugView
 
 
-class DataSrcMain(QWidget):
+class DataSrcMain(QSplitter):
     """
     主界面
     """
     def __init__(self):
 
-        QWidget.__init__(self)
+        QSplitter.__init__(self, Qt.Horizontal)
 
         self.title = u'数据源'
 
         # 数据源列表
-        self.wid_src_lis = DataSrcListView()
+        self.wid_src_list = DataSrcListView()
 
         # 数据源详细信息
         self.wid_src_det = DataSrcDispView()
@@ -39,26 +42,27 @@ class DataSrcMain(QWidget):
             dict(id="connect", name=u"连接"),
         ])
 
-        layout_left = QVBoxLayout()
-        layout_left.addWidget(self.wid_src_lis)
-        layout_left.addWidget(self.wid_src_det)
-        layout_left.addWidget(self.buttons)
+        layout_det = OrcBoxWidget('V')
+        layout_det.add_widget(self.wid_src_det)
+        layout_det.add_widget(self.buttons)
 
-        layout_main = QHBoxLayout()
-        layout_main.addLayout(layout_left)
-        layout_main.addWidget(self.wid_sql_debug)
+        layout_left = QSplitter(Qt.Vertical)
+        layout_left.addWidget(self.wid_src_list)
+        layout_left.addWidget(layout_det)
 
-        self.setLayout(layout_main)
+        self.addWidget(layout_left)
+        self.addWidget(self.wid_sql_debug)
+        self.setContentsMargins(0, 0, 0, 0)
 
         self.setStyleSheet(get_theme('Input'))
 
         self.editable(False)
 
         # 列表界面点击显示详细信息
-        self.wid_src_lis.sig_selected.connect(self.wid_src_det.set_data)
+        self.wid_src_list.sig_selected.connect(self.wid_src_det.set_data)
 
         # 点击后设置当前 DB
-        self.wid_src_lis.sig_selected.connect(self.wid_sql_debug.set_db)
+        self.wid_src_det.sig_db_changed.connect(self.wid_sql_debug.set_db)
 
         # 点击按钮
         self.buttons.sig_clicked.connect(self.operate)
@@ -75,11 +79,11 @@ class DataSrcMain(QWidget):
             db_data = self.wid_src_det.get_data()
 
             # 增加
-            self.wid_src_lis.model.mod_add(db_data)
+            self.wid_src_list.model.mod_add(db_data)
 
         elif 'delete' == p_flag:
 
-            self.wid_src_lis.model.mod_delete()
+            self.wid_src_list.model.mod_delete()
 
         elif 'push' == p_flag:
 
@@ -87,12 +91,10 @@ class DataSrcMain(QWidget):
             db_data = self.wid_src_det.get_data()
 
             # 更新
-            self.wid_src_lis.model.mod_update(db_data)
+            self.wid_src_list.model.mod_update(db_data)
 
         elif 'update' == p_flag:
-
-            status = self.buttons.get_status('update')
-
+            status = self.buttons.basic_editable('update')
             self.editable(status)
 
         else:
@@ -104,8 +106,8 @@ class DataSrcMain(QWidget):
         :param p_flag:
         :return:
         """
-        self.wid_src_lis.editable(p_flag)
-        self.wid_src_det.editable(p_flag)
+        self.wid_src_list.editable(p_flag)
+        self.wid_src_det.set_editable(p_flag)
 
         if p_flag:
             self.buttons.set_enable('add')

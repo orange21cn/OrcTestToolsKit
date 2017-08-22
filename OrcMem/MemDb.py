@@ -37,7 +37,7 @@ class RunTime(Base):
         if p_def is None:
             return
 
-        field = OrcFactory.create_dict(p_def)
+        field = OrcFactory.create_default_dict(p_def)
 
         self.id = field.value('id')
         self.module = field.value('module')
@@ -85,7 +85,7 @@ class RunData(Base):
         if p_def is None:
             return
 
-        field = OrcFactory.create_dict(p_def)
+        field = OrcFactory.create_default_dict(p_def)
 
         self.id = field.value('id')
         self.test_env = field.value('test_env')
@@ -228,7 +228,7 @@ class RunTimeDB(object):
 
         try:
             _item = session.query(RunTime).filter_by(id=item_id)
-            _field = OrcFactory.create_dict(p_data)
+            _field = OrcFactory.create_default_dict(p_data)
 
             _item.module = _field.value('', _item.module)
             _item.data_flag = _field.value('', _item.data_flag)
@@ -372,7 +372,7 @@ class RunDataDB(object):
 
         try:
             _item = session.query(RunData).filter_by(id=item_id)
-            _field = OrcFactory.create_dict(p_data)
+            _field = OrcFactory.create_default_dict(p_data)
 
             _item.test_env = _field.value('', _item.test_env)
             _item.src_id = _field.value('', _item.src_id)

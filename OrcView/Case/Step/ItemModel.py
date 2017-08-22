@@ -157,12 +157,10 @@ class ItemModel(ModelTable):
             for _item in result_list.data:
 
                 if "item_operate" in _item:
-
                     item_cmd = OrcDriverCmd()
                     item_cmd.set_type(_item['item_type'])
                     item_cmd.set_mode(_item['item_mode'])
                     item_cmd.set_cmd(eval(_item["item_operate"]))
-
                     _item["item_operate_text"] = item_cmd.get_disp_text()
 
         # 打印成功信息
@@ -235,6 +233,7 @@ class ItemNormalModel(ItemModel):
         :param p_data:
         :return:
         """
+        print 1000, p_data
         return super(ItemNormalModel, self).service_add(p_data)
 
     def service_delete(self, p_list):

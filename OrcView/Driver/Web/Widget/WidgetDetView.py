@@ -5,8 +5,7 @@ from PySide.QtGui import QVBoxLayout
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibViewDef import def_view_widget_det
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .WidgetDetModel import WidgetDetModel
@@ -29,7 +28,7 @@ class WidgetDetView(QWidget):
         self.__widget_info = None
 
         # Data result display widget
-        self.display = ViewTable('WidgetDet', WidgetDetModel, WidgetDetControl)
+        self.display = ViewTable(WidgetDetModel, WidgetDetControl)
 
         # Buttons widget
         wid_buttons = OrcButtons([
@@ -39,9 +38,6 @@ class WidgetDetView(QWidget):
             dict(id="up", name=u"上移"),
             dict(id="down", name=u"下移")
         ])
-
-        # win_add
-        self.__win_add = ViewAdd(def_view_widget_det)
 
         # Layout
         layout_main = QVBoxLayout()
@@ -54,27 +50,6 @@ class WidgetDetView(QWidget):
 
         # 点击按钮
         wid_buttons.sig_clicked.connect(self.operate)
-
-        # 新增
-        self.__win_add.sig_submit[dict].connect(self.add)
-
-    def add_show(self):
-        """
-        显示新增弹出框
-        :return:
-        """
-        if self.__widget_info is not None:
-            self.__win_add.show()
-
-    def add(self, p_data):
-        """
-        新增
-        :param p_data:
-        :return:
-        """
-        _data = p_data
-        _data["widget_id"] = self.__widget_info['id']
-        self.display.model.mod_add(_data)
 
     def set_widget(self, p_widget_info):
         """
@@ -101,15 +76,39 @@ class WidgetDetView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            if self.__widget_info is None:
+                return
+            _data = WidgetDetAdder.static_get_data()
+            if _data is not None:
+                _data["widget_id"] = self.__widget_info['id']
+                self.display.model.mod_add(_data)
         elif "delete" == p_flag:
             if OrcMessage.question(self, u"确认删除"):
                 self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "up" == p_flag:
             self.display.model.mod_up()
         elif "down" == p_flag:
             self.display.model.mod_down()
         else:
             pass
+
+
+class WidgetDetAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'WidgetDet')
+
+        self.setWindowTitle(u'新增控件属性')
+
+    @staticmethod
+    def static_get_data():
+
+        view = WidgetDetAdder()
+        view.exec_()
+
+        return view._data

@@ -8,7 +8,7 @@ from .Run.RunDetView import RunDetView
 from OrcLib.LibProgram import orc_singleton
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTheme import get_theme
-from OrcView.Lib.LibViewDef import def_view_run_def
+from OrcView.Lib.LibViewDef import view_run_def
 from OrcView.Run.Report.ReportDet import ViewReportDet
 from OrcView.Run.Run.RunDefView import RunDefView
 from OrcView.Run.Debug.DebugMain import DebugMain
@@ -36,8 +36,7 @@ class RunMainView(QWidget):
         self.__wid_debug = DebugMain()
 
         # 查询控件
-        self.__wid_search_cond = ViewSearch(def_view_run_def)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_run_def)
 
         # 显示控件 layout
         layout_right = QTabWidget()

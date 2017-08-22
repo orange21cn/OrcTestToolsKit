@@ -11,6 +11,8 @@ from OrcLib.LibLog import OrcLog
 from OrcLib import get_config
 from OrcApi import orc_db
 
+from OrcLib.LibProgram import OrcFactory
+
 _logger = OrcLog("basic.lib_net")
 
 
@@ -32,7 +34,8 @@ class OrcResourceBase(object):
             StepDet=dict(config='CASE', path="OrcApi.Case.StepApi"),
             Item=dict(config='CASE', path="OrcApi.Case.ItemApi"),
             Data=dict(config='DATA', path="OrcApi.Data.DataApi"),
-            DataSrc=dict(config='DATA', path="OrcApi.DataSrc.DataSrcApi"),
+            DataSrc=dict(config='DATA', path="OrcApi.DataBase.DataSrcApi"),
+            DataBase=dict(config='DATA', path="OrcApi.DataBase.DataBaseApi"),
             PageDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             PageDet=dict(config='WEB_LIB', path="OrcApi.Driver.Web.PageApi"),
             WindowDef=dict(config='WEB_LIB', path="OrcApi.Driver.Web.WindowApi"),
@@ -152,41 +155,54 @@ class OrcSocketResource(OrcResourceBase):
         :param p_para:
         :return:
         """
-        import time
-
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((self._ip, self._port))
 
-        # time.sleep(2)
         sock.send(json.dumps(p_para))
         _msg = sock.recv(1024)
         sock.close()
 
-        return _msg
+        return OrcResult(_msg)
 
 
-class OrcSocketBasic(object):
+class OrcDriverResource(object):
 
-    def __init__(self, ip, port):
+    def __init__(self, p_name):
 
         object.__init__(self)
 
-        self._ip = ip
-        self._port = int(port)
+        self._configer_driver = get_config('run')
+
+        # 驱动名称
+        self._name = p_name.replace(' ', '')
+
+        # IP
+        self._ip = self._configer_driver.get_option(self._name, 'ip')
+
+        # port
+        self._port = int(self._configer_driver.get_option(self._name, 'port'))
 
     def get(self, p_para):
+        """
 
-        import time
-
+        :param p_para:
+        :return:
+        """
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((self._ip, self._port))
 
-        time.sleep(2)
-        sock.send(json.dumps(p_para))
-        _msg = sock.recv(1024)
-        sock.close()
+        try:
 
-        return _msg
+            sock.connect((self._ip, self._port))
+
+            sock.send(json.dumps(p_para))
+            _msg = sock.recv(1024)
+            sock.close()
+
+        except Exception:
+            _logger.error("Connect to socket server(%s:%s) Failed" % (self._ip, self._port))
+            _msg = None
+
+        return OrcResult(_msg)
 
 
 class OrcResource(OrcResourceBase):
@@ -196,6 +212,8 @@ class OrcResource(OrcResourceBase):
     def __init__(self, module, mode=None):
 
         OrcResourceBase.__init__(self, module)
+
+        self._logger = OrcLog('basic.lib_net.orc_resource')
 
         self.__mode = "JSON" if mode is None else mode
 
@@ -250,6 +268,10 @@ class OrcResource(OrcResourceBase):
         :param p_parameter:
         :return:
         """
+        if (p_path is None) and (p_parameter is None):
+            self._logger.warning('Path and parameter is none.')
+            p_parameter = dict()
+
         result = None
         url_path = p_path if not isinstance(p_path, tuple) else "/".join(p_path)
 
@@ -477,7 +499,6 @@ class OrcParameter:
     """
     参数处理,防止非 dict 类型无法传输
     """
-
     def __init__(self):
         pass
 
@@ -512,21 +533,28 @@ class OrcResult(object):
 
         object.__init__(self)
 
+        # 状态,调用状态
         self.status = False
+
+        # 信息,返回的文字信息
         self.message = None
+
+        # 数据,返回值
         self.data = None
 
         # 加载并处理返回值
         if p_res is not None:
 
-            _res = p_res
-
             if not isinstance(p_res, dict):
                 _res = json.loads(p_res)
+            else:
+                _res = p_res
 
-            self.status = _res["STATUS"]
-            self.message = _res["MESSAGE"]
-            self.data = _res["DATA"]
+            _res = OrcFactory.create_default_dict(_res)
+
+            self.status = _res.value("STATUS")
+            self.message = _res.value("MESSAGE")
+            self.data = _res.value("DATA")
 
     def set_status(self, p_status):
         """
@@ -566,6 +594,15 @@ class OrcResult(object):
         :return:
         """
         self.message = p_message
+
+    def reset(self):
+        """
+        重置数据
+        :return:
+        """
+        self.status = False
+        self.data = None
+        self.message = None
 
     def rtn(self):
         """
@@ -607,6 +644,9 @@ def orc_api(p_func):
                 result.set_data(_rtn)
 
         except OrcApiModelFailException:
+            result.set_status(False)
+
+        except Exception:
             result.set_status(False)
 
         return result.rtn()

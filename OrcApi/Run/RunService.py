@@ -1,11 +1,16 @@
 # coding=utf-8
+import os
+
+from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
+from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibNet import ResourceCheck
+from OrcLib.LibCmd import OrcCmd
 from OrcLib.LibDatabase import TabItem
 from OrcLib.LibProgram import OrcDataStruct
 
-from RunData import RunCmdType
+from OrcLib.LibCmd import OrcRecordCmd
 
 
 class RunCoreService(object):
@@ -19,58 +24,21 @@ class RunCoreService(object):
         self.__logger = OrcLog("resource.run.run_core.service")
 
         self.__resource_web_driver = OrcResource("Driver")
+
+        self.__resource_driver = OrcSocketResource('Driver')
         self.__resource_item = OrcResource("Item")
         self.__resource_data = OrcResource("Data")
 
-    def launch_web_step(self, p_step_info):
+    def new_launch_web_step(self, p_cmd):
         """
-        WEB 类型用例执行项
-        :param p_step_info:
+        执行一个命令
+        :param p_cmd:
+        :type p_cmd: OrcCmd
         :return:
         """
-        result = self.__resource_web_driver.post(parameter=p_step_info)
+        result = self.__resource_driver.get(p_cmd.get_cmd_dict())
 
-        # 检查结果
-        if not ResourceCheck.result_status(result, u"执行WEB执行项", self.__logger):
-            return False
-
-        # 打印成功信息
-        ResourceCheck.result_success(u"执行WEB执行项", self.__logger)
-
-        return result.status
-
-    def check_web_step(self, p_step_info):
-        """
-        WEB 类型步骤检查项
-        :param p_step_info:
-        :return:
-        """
-        if "DATA" in p_step_info:
-            step_data = p_step_info["DATA"]
-            result = self.__resource_web_driver.post(parameter=p_step_info)
-
-            # 检查结果
-            if not ResourceCheck.result_status(result, u"获取WEB执行结果数据", self.__logger):
-                return False
-
-            # 打印成功信息
-            ResourceCheck.result_success(u"获取WEB执行结果数据", self.__logger)
-
-            result_data = result.data
-
-            return step_data == result_data
-
-        else:
-            result = self.__resource_web_driver.post(parameter=p_step_info)
-
-            # 检查结果
-            if not ResourceCheck.result_status(result, u"获取WEB执行结果", self.__logger):
-                return False
-
-            # 打印成功信息
-            ResourceCheck.result_success(u"获取WEB执行结果", self.__logger)
-
-            return result.status
+        return result
 
     def get_web_pic(self, p_name):
         """
@@ -108,7 +76,7 @@ class RunCoreService(object):
         """
         for _node in OrcDataStruct.iterator_reversed_list(p_def_list):
 
-            _cmd = RunCmdType(_node)
+            _cmd = OrcRecordCmd(_node)
 
             if _cmd.is_batch_type():
                 _type = 'BATCH'

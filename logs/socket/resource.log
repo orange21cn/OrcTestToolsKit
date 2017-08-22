@@ -1,0 +1,196 @@
+[2017-02-06 16:50:49 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'3000000001'}
+[2017-02-06 16:50:49 resource.driver.service] INFO 获取页面信息成功
+[2017-02-14 14:53:50 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'PRD', 'page_id': u'300000001'}
+[2017-02-14 14:53:50 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 14:41:45 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'PRD', 'page_id': u'300000002'}
+[2017-02-15 14:41:45 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 14:46:36 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'PRD', 'page_id': u'300000002'}
+[2017-02-15 14:46:36 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 14:47:39 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-15 14:47:39 resource.driver.service] INFO 获取控件定义成功
+[2017-02-15 14:47:39 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-15 14:47:39 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-15 14:47:39 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-15 14:47:39 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 14:47:39 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-15 14:47:39 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 14:47:50 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-15 14:47:50 resource.driver.service] INFO 获取控件定义成功
+[2017-02-15 14:47:50 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-15 14:47:50 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-15 14:47:50 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-15 14:47:50 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 14:47:50 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-15 14:47:50 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 16:20:40 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-15 16:20:40 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 16:41:35 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-15 16:41:35 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 16:54:22 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-15 16:54:22 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 16:54:36 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-15 16:54:36 resource.driver.service] INFO 获取控件定义成功
+[2017-02-15 16:54:36 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-15 16:54:36 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-15 16:54:36 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-15 16:54:36 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 16:54:36 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-15 16:54:36 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 17:01:56 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-15 17:01:57 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 17:02:01 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-15 17:02:01 resource.driver.service] INFO 获取页面信息成功
+[2017-02-15 17:02:07 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-15 17:02:07 resource.driver.service] INFO 获取控件定义成功
+[2017-02-15 17:02:07 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-15 17:02:07 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-15 17:02:07 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-15 17:02:07 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 17:02:07 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-15 17:02:07 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 17:02:12 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-15 17:02:12 resource.driver.service] INFO 获取控件定义成功
+[2017-02-15 17:02:12 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-15 17:02:12 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-15 17:02:12 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-15 17:02:12 resource.driver.service] INFO 获取控件信息成功
+[2017-02-15 17:02:12 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-15 17:02:12 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 15:49:06 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 15:49:06 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 15:49:19 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 15:49:19 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 15:49:19 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 15:49:19 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 15:49:19 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 15:49:19 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 15:49:19 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 15:49:19 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:07:44 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:07:44 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:08:11 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:08:11 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:08:11 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:08:11 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:08:11 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:08:11 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:08:11 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:08:11 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:19:31 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:19:31 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:19:53 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:19:53 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:19:53 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:19:53 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:19:53 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:19:53 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:19:53 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:19:53 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:20:36 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:20:36 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:20:48 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:20:48 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:20:48 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:20:48 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:20:48 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:20:48 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:20:48 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:20:48 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:21:14 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:21:14 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:21:47 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:21:47 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:27:29 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:27:29 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:27:54 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:27:54 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:28:03 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:28:03 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:28:03 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:28:03 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:28:03 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:28:03 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:28:03 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:28:03 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:35:17 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:35:17 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:36:53 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:36:53 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:37:04 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:37:04 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:37:04 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:37:04 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:37:04 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:37:04 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:37:04 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:37:04 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:38:08 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:38:08 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:38:19 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:38:19 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:38:19 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:38:19 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:38:19 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:38:19 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:38:19 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:38:19 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:40:33 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:40:33 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:40:44 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:40:44 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:40:44 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:40:44 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:40:44 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:40:44 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:40:44 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:40:44 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:43:32 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:43:32 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:43:42 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:43:42 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:43:43 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:43:43 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:43:43 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:43:43 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:43:43 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:43:43 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:47:05 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:47:05 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:52:37 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-17 17:52:37 resource.driver.service] INFO 获取页面信息成功
+[2017-02-17 17:52:53 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-17 17:52:53 resource.driver.service] INFO 获取控件定义成功
+[2017-02-17 17:52:53 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-17 17:52:53 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-17 17:52:53 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-17 17:52:53 resource.driver.service] INFO 获取控件信息成功
+[2017-02-17 17:52:53 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-17 17:52:53 resource.driver.service] INFO 获取控件信息成功
+[2017-02-20 13:37:48 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-20 13:37:48 resource.driver.service] INFO 获取页面信息成功
+[2017-02-20 13:40:52 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-20 13:40:52 resource.driver.service] INFO 获取页面信息成功
+[2017-02-20 13:43:27 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-20 13:43:27 resource.driver.service] INFO 获取控件定义成功
+[2017-02-20 13:43:27 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-20 13:43:27 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-20 13:43:27 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-20 13:43:27 resource.driver.service] INFO 获取控件信息成功
+[2017-02-20 13:43:27 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-20 13:43:27 resource.driver.service] INFO 获取控件信息成功
+[2017-02-20 13:43:55 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-20 13:43:55 resource.driver.service] INFO 获取页面信息成功
+[2017-02-20 13:46:46 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-20 13:46:46 resource.driver.service] INFO 获取页面信息成功
+[2017-02-23 17:53:58 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-02-23 17:53:58 resource.driver.service] INFO 获取页面信息成功
+[2017-02-23 17:54:35 resource.widget_def.api] INFO Search widget_def, parameter is: 330000002
+[2017-02-23 17:54:35 resource.driver.service] INFO 获取控件定义成功
+[2017-02-23 17:54:35 resource.widget_defs.api] INFO Search widget_def, parameter is: {'type': 'path', 'id': u'330000002'}
+[2017-02-23 17:54:35 resource.driver.service] INFO 获取控件定义树成功
+[2017-02-23 17:54:35 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000001'}
+[2017-02-23 17:54:35 resource.driver.service] INFO 获取控件信息成功
+[2017-02-23 17:54:35 resource.widget_dets.api] INFO Search widget_det, parameter is: {'widget_id': '330000002'}
+[2017-02-23 17:54:35 resource.driver.service] INFO 获取控件信息成功
+[2017-03-08 13:52:04 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000002'}
+[2017-03-08 13:52:04 resource.driver.service] INFO 获取页面信息成功

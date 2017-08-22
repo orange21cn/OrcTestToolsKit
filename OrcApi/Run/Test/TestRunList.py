@@ -5,6 +5,7 @@ from OrcApi.Run.RunCore import RunCore
 
 
 class TestModel(unittest.TestCase):
+
     def test_add_01(self):
         """
         增加测试集目录
@@ -23,5 +24,27 @@ class TestModel(unittest.TestCase):
         _model.load_list(_file)
 
         OrcTest.test_print_result(_model.list)
+
+        OrcTest.test_print_end()
+
+    def test_run_data_01(self):
+        """
+        增加测试集目录
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcApi.Run.RunData import RunData
+        from OrcLib.LibCmd import OrcRecordCmd
+
+        obj = RunData()
+        obj.load_list('/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/run_home/CASE_200000008/2017071201/default.res')
+
+        cmd = OrcRecordCmd(dict(desc="", flag="10", id="240000029", pid="", run_det_type="WEB", status="PASS"))
+        obj.update_status(cmd)
+
+        obj.update_list('/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/run_home/CASE_200000008/2017071201/default_01.res')
+
+        # OrcTest.test_print_result(_model.list)
 
         OrcTest.test_print_end()

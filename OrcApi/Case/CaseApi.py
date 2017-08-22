@@ -60,7 +60,7 @@ class CaseDetAPI(OrcAPI):
     def api_post(self, p_id, p_para):
         """
         POST
-        :param p_id:
+        :param p_para:
         :return:
         """
         self._logger.info("Move step %s, parameter is: %s" % (p_para, p_id))

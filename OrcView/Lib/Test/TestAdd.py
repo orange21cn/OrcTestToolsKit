@@ -3,7 +3,7 @@ import unittest
 from OrcLib.LibTest import OrcTest
 from OrcView.Case.Case import ViewCaseDefMag
 from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibViewDef import def_view_batch_def
+from OrcView.Lib.LibViewDef import view_batch_def
 
 
 class TestDict(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestDict(unittest.TestCase):
 
         main = QApplication(sys.argv)
 
-        _view = ViewAdd(def_view_batch_def)
+        _view = ViewAdd(view_batch_def)
         _view.sig_clicked.connect(test)
         _view.show()
 

@@ -28,7 +28,7 @@ class RunDetView(QWidget):
         self.title = u"执行"
 
         # Data result display widget
-        self.display = ViewTree('RunDet', RunDetModel, RunDetControl)
+        self.display = ViewTree(RunDetModel, RunDetControl)
 
         # 进度条
         self.__progress = OrcProcess()

@@ -7,9 +7,10 @@ from xml.etree.ElementTree import Element
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
-from OrcLib.LibProgram import OrcFactory
-from OrcLib.LibState import RunStatus
 from OrcLib.LibDataStruct import ListTree
+from OrcLib.LibCmd import OrcRecordCmd
+from OrcLib.LibStatus import RecordStatus
+from OrcLib.LibType import RunRecordType
 from OrcLib.LibDatabase import TabBatchDef
 from OrcLib.LibDatabase import TabBatchDet
 from OrcLib.LibDatabase import TabCaseDef
@@ -28,18 +29,18 @@ class RunData(ListTree):
         ListTree.__init__(self)
 
         # Log
-        self.__logger = OrcLog("resource.run.run_data")
+        self._logger = OrcLog("resource.run.run_data")
 
         # Source
-        self.__resource_batch_def = OrcResource("BatchDef")
-        self.__resource_batch_det = OrcResource("BatchDet")
-        self.__resource_case_def = OrcResource("CaseDef")
-        self.__resource_case_det = OrcResource("CaseDet")
-        self.__resource_step_def = OrcResource("StepDef")
-        self.__resource_step_det = OrcResource("StepDet")
-        self.__resource_item = OrcResource("Item")
+        self._resource_batch_def = OrcResource("BatchDef")
+        self._resource_batch_det = OrcResource("BatchDet")
+        self._resource_case_def = OrcResource("CaseDef")
+        self._resource_case_det = OrcResource("CaseDet")
+        self._resource_step_def = OrcResource("StepDef")
+        self._resource_step_det = OrcResource("StepDet")
+        self._resource_item = OrcResource("Item")
 
-        self.__root_id = ''
+        self._root_id = ''
 
     def search_list(self, p_type, p_id):
         """
@@ -48,7 +49,7 @@ class RunData(ListTree):
         :param p_type:
         :return:
         """
-        self.__root_id = p_id
+        self._root_id = p_id
 
         # 查找计划数据
         if "BATCH" == p_type:
@@ -58,7 +59,7 @@ class RunData(ListTree):
         else:
             _list = self.get_case_list(p_id)
 
-        self.resolve("LIST", _list)
+        self.load("LIST", _list)
 
     def get_batch_list(self, p_id):
         """
@@ -70,12 +71,12 @@ class RunData(ListTree):
         rtn = list()
 
         # 命令,用于将数据库数据转换为执行的命令
-        cmd = RunCmdType()
+        cmd = OrcRecordCmd()
 
         # 获取批数据
-        batch_defs = self.__resource_batch_def.get(parameter=dict(id=p_id, type="tree"))
+        batch_defs = self._resource_batch_def.get(parameter=dict(id=p_id, type="tree"))
 
-        if not ResourceCheck.result_status(batch_defs, u"查询计划列表", self.__logger):
+        if not ResourceCheck.result_status(batch_defs, u"查询计划列表", self._logger):
             return list()
 
         # 循环获取用例
@@ -94,9 +95,9 @@ class RunData(ListTree):
             if cmd.is_batch():
 
                 # 获取 case 列表(batch_det)
-                batch_dets = self.__resource_batch_det.get(parameter=dict(batch_id=_batch_def.id))
+                batch_dets = self._resource_batch_det.get(parameter=dict(batch_id=_batch_def.id))
 
-                if not ResourceCheck.result_status(batch_dets, u"查询用例列表", self.__logger):
+                if not ResourceCheck.result_status(batch_dets, u"查询用例列表", self._logger):
                     return list()
 
                 # 加入 case 及其内容
@@ -122,15 +123,15 @@ class RunData(ListTree):
         rtn = list()
 
         # 命令,用于将数据库数据转换为执行的命令
-        cmd = RunCmdType()
+        cmd = OrcRecordCmd()
 
         # 模式,CASE 时不查找 FUNC 数据, STEP 时查找步骤
         mode = 'CASE' if p_mode is None else p_mode
 
         # 用例列表
-        case_defs = self.__resource_case_def.get(parameter=dict(id=p_id, type="tree"))
+        case_defs = self._resource_case_def.get(parameter=dict(id=p_id, type="tree"))
 
-        if not ResourceCheck.result_status(case_defs, u"查询用例列表", self.__logger):
+        if not ResourceCheck.result_status(case_defs, u"查询用例列表", self._logger):
             return list()
 
         # 循环获取子用例及步骤
@@ -152,12 +153,12 @@ class RunData(ListTree):
 
             # 加入 step
             if cmd.is_case() or cmd.is_func():
-                _step_list = self.__get_step_list(cmd.id)
+                _step_list = self.get_step_list(cmd.id)
                 rtn.extend(_step_list)
 
         return rtn
 
-    def __get_step_list(self, p_id):
+    def get_step_list(self, p_id):
         """
         获取步骤及其所有子元素
         :param p_id:
@@ -168,29 +169,29 @@ class RunData(ListTree):
         rtn = list()
 
         # 命令,用于将数据库数据转换为执行的命令
-        cmd = RunCmdType()
+        cmd = OrcRecordCmd()
 
         # 获取用例步骤数据
-        case_dets = self.__resource_case_det.get(parameter=dict(case_id=p_id))
+        case_dets = self._resource_case_det.get(parameter=dict(case_id=p_id))
 
-        if not ResourceCheck.result_status(case_dets, u"查询用例步骤列表", self.__logger):
+        if not ResourceCheck.result_status(case_dets, u"查询用例步骤列表", self._logger):
             return list()
 
         for _case_det_data in case_dets.data:
 
             _case_det = TabCaseDet(_case_det_data)
 
-            _step = self.__resource_step_def.get(path=_case_det.step_id)
+            _step = self._resource_step_def.get(path=_case_det.step_id)
 
             # 检查结果
-            if not ResourceCheck.result_status(case_dets, u"查询步骤列表", self.__logger):
+            if not ResourceCheck.result_status(case_dets, u"查询步骤列表", self._logger):
                 return list()
 
             cmd.step(_step.data, _case_det.step_no, _case_det.case_id)
             rtn.append(cmd.to_dict())
 
             if cmd.is_normal_step():
-                rtn.extend(self.__get_item_list(cmd.id))
+                rtn.extend(self.get_item_list(cmd.id))
             elif cmd.is_func_step():
                 rtn.extend(self.__get_func_list(cmd.id))
             else:
@@ -207,9 +208,9 @@ class RunData(ListTree):
         rtn = list()
 
         # 获取步骤数据
-        step_dets = self.__resource_step_det.get(parameter=dict(step_id=p_id))
+        step_dets = self._resource_step_det.get(parameter=dict(step_id=p_id))
 
-        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self._logger):
             return list()
 
         # 循环获取步骤内容
@@ -221,7 +222,7 @@ class RunData(ListTree):
 
         return rtn
 
-    def __get_item_list(self, p_id):
+    def get_item_list(self, p_id):
         """
         获致操作项列表
         :param p_id:
@@ -229,22 +230,22 @@ class RunData(ListTree):
         :rtype: list
         """
         rtn = list()
-        cmd = RunCmdType()
+        cmd = OrcRecordCmd()
 
         # 检查结果
-        step_dets = self.__resource_step_det.get(parameter=dict(step_id=p_id))
+        step_dets = self._resource_step_det.get(parameter=dict(step_id=p_id))
 
-        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+        if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self._logger):
             return list()
 
         for _step_det_data in step_dets.data:
 
             _step_det = TabStepDet(_step_det_data)
 
-            _item = self.__resource_item.get(path=_step_det.item_id)
+            _item = self._resource_item.get(path=_step_det.item_id)
 
             # 检查结果
-            if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self.__logger):
+            if not ResourceCheck.result_status(step_dets, u"查询步骤项列表", self._logger):
                 return list()
 
             cmd.item(_item.data, _step_det.item_no, _step_det.step_id)
@@ -313,6 +314,8 @@ class RunData(ListTree):
         else:
             _node = p_node
 
+        # Todo 如果 _node 格式不正确,报错,原因可能是没有进行查询
+
         content = _node["content"]
         if content["pid"] is None:
             content["pid"] = ""
@@ -343,7 +346,7 @@ class RunData(ListTree):
         _list = self.__xml2list(element.getroot())
 
         # 解析成 tree
-        self.resolve("LIST", _list)
+        self.load("LIST", _list)
 
         # 去重
         self._clean_duplication()
@@ -364,312 +367,43 @@ class RunData(ListTree):
 
         return res
 
-
-class RunCmdType(object):
-    """
-    测试条目类型
-    """
-    class Status(object):
+    def update_status(self, p_cmd, p_node=None):
         """
-        执行状态, new -> waiting -> running -> pass/fail
-        """
-        def __init__(self, p_status=None):
-
-            object.__init__(self)
-
-            if p_status is None:
-                self._status = RunStatus.new_
-            else:
-                self._status = p_status
-
-        def reset(self):
-            """
-            重置为 new
-            :return:
-            """
-            self._status = RunStatus.new_
-
-        def set_waiting(self):
-            """
-            设置为 waiting 状态
-            :return:
-            """
-            self._status = RunStatus.waiting_
-
-        def set_running(self):
-            """
-            设置为 running 状态
-            :return:
-            """
-            self._status = RunStatus.running_
-
-        def set_pass(self):
-            """
-            设置为通过
-            :return:
-            """
-            self._status = RunStatus.pass_
-
-        def set_fail(self):
-            """
-            设置为 fail
-            :return:
-            """
-            self._status = RunStatus.fail_
-
-        def is_new(self):
-            """
-            new
-            :return:
-            """
-            return RunStatus.new_ == self._status
-
-        def is_waiting(self):
-            """
-            waiting status
-            :return:
-            """
-            return RunStatus.waiting_ == self._status
-
-        def is_running(self):
-            """
-            running status
-            :return:
-            """
-            return RunStatus.running_ == self._status
-
-        def is_pass(self):
-            """
-            pass status
-            :return:
-            """
-            return RunStatus.pass_ == self._status
-
-        def is_fail(self):
-            """
-            fail status
-            :return:
-            """
-            return RunStatus.fail_ == self._status
-
-        def get_status(self):
-            """
-            获取状态
-            :return:
-            """
-            return self._status
-
-    def __init__(self, p_cmd=None):
-        """
-        init, cmd str to type
+        更新状态
         :param p_cmd:
+        :type p_cmd: OrcRecordCmd
+        :param p_node:
         :return:
         """
-        object.__init__(self)
+        current_node = self.tree if p_node is None else p_node
+        if not current_node:
+            return
 
-        inp = OrcFactory.create_dict(p_cmd)
+        current_content = current_node['content']
+        current_children = current_node['children']
+        current_status = RecordStatus(current_node['content']['status'])
 
-        # id
-        self.id = inp.value('id')
+        len_child = len(current_children)
 
-        # parent id
-        self.pid = inp.value('pid')
+        # 当前节点是要更新的节点
+        if (current_content['run_det_type'] == p_cmd.run_det_type) and (current_content['id'] == p_cmd.id):
+            current_content['status'] = p_cmd.status.status
+            return p_cmd.status
 
-        # type
-        self.run_det_type = inp.value('run_det_type')
+        # 不是当前节点,根据子节点状态更新
+        for _index in range(len_child):
 
-        # flag
-        self.flag = inp.value('flag')
+            _child = current_node['children'][_index]
+            _result = self.update_status(p_cmd, _child)
 
-        # description
-        self.desc = inp.value('desc')
+            if _result is None:
+                continue
 
-        # status
-        self.status = self.Status(inp.value('status'))
+            # 子节点为pass状态,非最后一节点时,不更新父节点状态
+            if (len_child - 1 == _index and _result.is_pass()) or not _result.is_pass():
 
-    def batch(self, p_data):
-        """
-        batch init func, database data to type
-        :param p_data:
-        :return:
-        """
-        _data = TabBatchDef(p_data)
+                current_status.plus(_result)
+                current_node['content']['status'] = current_status.status
+                return current_status
 
-        self.id = _data.id
-        self.pid = _data.pid
-        self.run_det_type = _data.batch_type
-        self.flag = _data.batch_no
-        self.desc = _data.batch_desc
-
-    def case(self, p_data, p_pid=None):
-        """
-        case init func, database data to type
-        :param p_pid:
-        :param p_data:
-        :return:
-        """
-        _data = TabCaseDef(p_data)
-
-        self.id = _data.id
-        self.pid = _data.pid
-        self.run_det_type = _data.case_type
-        self.flag = _data.case_no
-        self.desc = _data.case_desc
-
-        if p_pid is not None:
-            self.pid = p_pid
-
-    def step(self, p_data, p_no, p_pid=None):
-        """
-        step init func, database data to type
-        :param p_no:
-        :param p_pid:
-        :param p_data:
-        :return:
-        """
-        _data = TabStepDef(p_data)
-
-        self.id = _data.id
-        self.run_det_type = _data.step_type
-        self.flag = p_no
-        self.desc = _data.step_desc
-
-        if p_pid is not None:
-            self.pid = p_pid
-
-    def item(self, p_data, p_no, p_pid=None):
-        """
-        item init func database data to type
-        :param p_pid:
-        :param p_no:
-        :param p_data:
-        :return:
-        """
-        _data = TabItem(p_data)
-
-        self.id = _data.id
-        self.run_det_type = _data.item_type
-        self.flag = p_no
-        self.desc = _data.item_desc
-
-        if p_pid is not None:
-            self.pid = p_pid
-
-    def is_batch_type(self):
-        """
-        batch type, include batch and batch suit
-        :return:
-        """
-        return self.run_det_type in ('BATCH_SUITE', 'BATCH')
-
-    def is_batch_suite(self):
-        """
-        batch suite
-        :return:
-        """
-        return self.run_det_type == 'BATCH_SUITE'
-
-    def is_batch(self):
-        """
-        batch
-        :return:
-        """
-        return self.run_det_type == 'BATCH'
-
-    def is_case_type(self):
-        """
-        case type, include case and case suite
-        :return:
-        """
-        return self.run_det_type in ('CASE_SUITE', 'CASE', 'FUNC_SUITE', 'FUNC')
-
-    def is_cases(self):
-        """
-        case suit, case
-        :return:
-        """
-        return self.run_det_type in ('CASE_SUITE', 'CASE')
-
-    def is_funcs(self):
-        """
-        function suit, function
-        :return:
-        """
-        return self.run_det_type in ('FUNC_SUITE', 'FUNC')
-
-    def is_case_suite(self):
-        """
-        case suite
-        :return:
-        """
-        return self.run_det_type == 'CASE_SUITE'
-
-    def is_case(self):
-        """
-        case
-        :return:
-        """
-        return self.run_det_type == 'CASE'
-
-    def is_func_suite(self):
-        """
-        function suite
-        :return:
-        """
-        return self.run_det_type == 'FUNC_SUITE'
-
-    def is_func(self):
-        """
-        function
-        :return:
-        """
-        return self.run_det_type == 'FUNC'
-
-    def is_step_type(self):
-        """
-        normal step and function step
-        :return:
-        """
-        return self.run_det_type in ('STEP_NORMAL', 'STEP_FUNC')
-
-    def is_normal_step(self):
-        """
-        normal step
-        :return:
-        """
-        return self.run_det_type == 'STEP_NORMAL'
-
-    def is_func_step(self):
-        """
-        function step
-        :return:
-        """
-        return self.run_det_type == 'STEP_FUNC'
-
-    def is_item_type(self):
-        """
-        item type, include ....
-        :return:
-        """
-        return self.run_det_type in ('WEB',)
-
-    def is_web_item(self):
-        """
-        web item
-        :return:
-        """
-        return self.run_det_type == 'WEB'
-
-    def to_dict(self):
-        """
-        转换为 json/dict
-        :return:
-        """
-        return dict(
-            id=self.id,
-            pid=self.pid,
-            run_det_type=self.run_det_type,
-            flag=self.flag,
-            desc=self.desc,
-            status=self.status.get_status()
-        )
+        return None

@@ -15,10 +15,11 @@ from OrcView.Data.Data.DataModel import DataControl
 from OrcView.Data.Data.DataModel import DataModel
 from OrcView.Run.Run.RunDetModel import RunDetControl
 from OrcView.Run.Run.RunDetModel import RunDetModel
-from OrcView.Data.Data.DataAdd import ViewDataAdd
-from OrcApi.Run.RunData import RunCmdType
-from OrcLib.LibNet import OrcResource
+from OrcView.Data.Data.DataAdd import DataAdder
+from OrcView.Driver.Cmd.DataFlagSelector import DataFlagView
 
+from OrcLib.LibCmd import OrcRecordCmd
+from OrcLib.LibNet import OrcResource
 
 from .DebugService import DebugService
 
@@ -84,19 +85,20 @@ class DebugMain(QWidget):
         self.title = u'调试'
 
         # 执行显示
-        self.run_det = ViewTree('RunDet', RunDetModel, RunDetControl)
+        self.run_det = ViewTree(RunDetModel, RunDetControl)
 
         # 数据标识控件显示
-        self.object_disp = ViewTable('', DebugObjectModel, DebugObjectControl)
+        # self.object_disp = ViewTable('', DebugObjectModel, DebugObjectControl)
+        self.object_disp = DataFlagView()
 
         # 数据显示
-        self.data_disp = ViewTable("Data", DataModel, DataControl)
+        self.data_disp = ViewTable(DataModel, DataControl)
 
         # 数据增加
-        self.data_add = ViewDataAdd()
+        self.data_add = DataAdder()
 
         # Buttons window
-        self.__wid_buttons = OrcButtons([
+        self.buttons = OrcButtons([
             dict(id="add", name=u'增加数据'),
             dict(id="delete", name=u"删除数据"),
             dict(id="update", name=u"修改数据")
@@ -114,38 +116,42 @@ class DebugMain(QWidget):
 
         layout_main = QVBoxLayout()
         layout_main.addWidget(layout_disp)
-        layout_main.addWidget(self.__wid_buttons)
+        layout_main.addWidget(self.buttons)
 
         layout_main.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(layout_main)
 
-        # 单击后更新界面数据
+        # +---- connection ----+
+        # 单击测试记录后更新界面数据
         self.run_det.sig_selected.connect(self.usr_update_data)
 
+        # 点击数据对象后更新数据标识
         self.object_disp.sig_selected.connect(self.set_object)
 
-        self.__wid_buttons.sig_clicked.connect(self.operate)
+        # 点击按钮后操作
+        self.buttons.sig_clicked.connect(self._operate)
 
-        self.data_add.sig_submit.connect(self.data_disp.model.mod_refresh)
+        # self.data_add.sig_submit.connect()
 
         # service
         self.service = DebugService()
 
-    def operate(self, p_flag):
+    def _operate(self, p_flag):
         """
-
+        点击按钮后制作
         :param p_flag:
         :return:
         """
         if 'add' == p_flag:
             self.data_add.show()
+            self.data_disp.model.mod_refresh
 
         elif 'delete' == p_flag:
             self.data_disp.model.mod_delete()
 
         elif 'update' == p_flag:
-            self.data_disp.model.editable()
+            self.data_disp.model.set_enable()
 
         else:
             pass
@@ -173,14 +179,14 @@ class DebugMain(QWidget):
         :param p_data:
         :return:
         """
-        run_cmd = RunCmdType(p_data)
+        run_cmd = OrcRecordCmd(p_data)
 
         # 获取对象列表
-        object_list = self.service.get_objects(
-            self.run_det.model.service_get_item_list(run_cmd.id))
+        item_ids = [item['id'] for item in self.run_det.model.service_get_item_list(run_cmd.id)]
+        item_ids = list(set(item_ids))
 
         # 更新对象界面
-        self.object_disp.model.mod_search(dict(id=object_list))
+        self.object_disp.model.mod_search(dict(IDS=item_ids))
 
         # 获取数据源列表
         path_list = self.service.get_src_ids(
@@ -207,7 +213,8 @@ class DebugMain(QWidget):
 
     def set_object(self, p_data):
         """
-
+        设置对象
+        :param p_data:
         :return:
         """
         self.data_add.set_flag(p_data)

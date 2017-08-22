@@ -89,7 +89,7 @@ class OrcAPI(OrcBaseAPI):
         OrcBaseAPI.__init__(self, p_flag, p_bus)
 
     def dispatch_request(self, *args, **kwargs):
-        return super(Resource, self).dispatch_request(*args, **kwargs)
+        return super(OrcAPI, self).dispatch_request(*args, **kwargs)
 
     def get(self, p_id):
         """
@@ -244,6 +244,7 @@ class OrcBus(object):
         try:
             result = self._model.usr_search(dict(id=p_id))
             result = None if not result else result[0]
+
         except Exception:
             self._logger.error("Search %s error, input: %s" % (self._flag, p_id))
             raise OrcApiModelFailException

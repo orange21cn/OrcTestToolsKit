@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Sqlite (Xerial) - orc_data.s3db" uuid="3a11f20b-07db-4d0c-8fef-d5a28938557f">
+    <database-info product="SQLite" version="3.8.9" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
+    <schema name="" catalog=""/>
+    <table name="lib_dictionary" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="dict_flag" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dict_order" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dict_value" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dict_text" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dict_param" sqlType="VARCHAR(128)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dict_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="lib_sequence" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="field_name" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="field_seq" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="lib_widget_operation" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="type_name" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="ope_order" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="ope_name" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="ope_text" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="operate_text" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="check_text" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="ope_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="lib_widget_type" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="type_order" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="type_mode" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="type_name" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="type_text" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="type_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id),unique (type_name"/>
+    </table>
+    <table name="tab_batch_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="pid" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="batch_no" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="batch_type" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="batch_name" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="batch_desc" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(1024)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_batch_det" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="batch_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="case_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_case_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="pid" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="case_no" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="case_path" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="case_type" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="case_name" sqlType="VARCHAR(64)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="case_desc" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(1024)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_case_det" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="case_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="step_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="step_no" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_data" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="test_env" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="src_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="src_type" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="step_order" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="data_flag" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="data_order" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="data_type" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="data_mode" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="data_value" sqlType="VARCHAR(128)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_item" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="item_type" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="item_mode" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="item_operate" sqlType="VARCHAR(256)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="item_desc" sqlType="VARCHAR(256)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_run_time" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="module" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="data_flag" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="data_index" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="data_value" sqlType="VARCHAR(128)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_step_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="step_type" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="step_desc" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(1024)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="tab_step_det" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="step_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="item_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="item_no" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="web_page_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="page_flag" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="page_desc" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="web_page_det" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="page_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="test_env" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="page_url" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id,page_id"/>
+    </table>
+    <table name="web_widget_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="pid" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="widget_flag" sqlType="VARCHAR(8)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_path" sqlType="VARCHAR(32)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_type" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="web_widget_det" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="widget_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="widget_order" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_attr_type" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_attr_value" sqlType="VARCHAR(64)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="widget_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="web_window_def" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="window_mark" sqlType="VARCHAR(16)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="window_desc" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="VARCHAR(512)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="create_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="modify_time" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+  </data-source>
+</component>

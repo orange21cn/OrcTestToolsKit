@@ -9,9 +9,9 @@ from OrcView.Lib.LibTable import ModelTable
 
 class StepModel(ModelTable):
 
-    def __init__(self):
+    def __init__(self, p_def='Step'):
 
-        ModelTable.__init__(self, 'Step')
+        ModelTable.__init__(self, p_def)
 
         self.__logger = LogClient()
 

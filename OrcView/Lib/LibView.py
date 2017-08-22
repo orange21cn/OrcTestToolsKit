@@ -856,3 +856,46 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+
+
+class OrcRow(QHBoxLayout):
+    """
+    模拟 FromLayout 的row
+    """
+    clicked = OrcSignal()
+
+    def __init__(self, p_label, p_widget):
+
+        QHBoxLayout.__init__(self)
+
+        label = QLabel(p_label)
+
+        self._widget = p_widget
+
+        self.addWidget(label)
+        self.addWidget(self._widget)
+
+        self._widget.clicked.connect(self.clicked.emit)
+
+    def set_data(self, p_data):
+        """
+        设置数据
+        :param p_data:
+        :return:
+        """
+        try:
+            func = getattr(self._widget, 'set_data')
+            func(p_data)
+        except AttributeError:
+            _logger.error("widget has no func set_data")
+
+    def get_data(self):
+        """
+        获取数据
+        :return:
+        """
+        try:
+            func = getattr(self._widget, 'get_data')
+            return func()
+        except AttributeError:
+            _logger.error("widget has no func get_widget")

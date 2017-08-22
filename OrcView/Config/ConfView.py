@@ -85,14 +85,14 @@ class ConfMenuView(ViewTree):
 
     def __init__(self):
 
-        ViewTree.__init__(self, 'ConfMenu', ConfMenuModel, ConfMenuControl)
+        ViewTree.__init__(self, ConfMenuModel, ConfMenuControl)
 
         self.model.mod_search(dict())
 
         self.clicked.connect(self.emit_id)
 
     def emit_id(self):
-        self.sig_conf_now.emit(self.model.mod_get_current_data().content['id'])
+        self.sig_conf_now.emit(self.model.mod_get_current_data()['id'])
 
 
 class ConfContentView(QStackedWidget):

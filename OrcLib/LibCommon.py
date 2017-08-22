@@ -73,3 +73,22 @@ class OrcCovert:
         except AttributeError:
             _res = None
         return _res
+
+
+class DataStr(object):
+
+    def __init__(self):
+
+        object.__init__(self)
+
+    @staticmethod
+    def get_data_str():
+        return time.strftime("%Y%m%d")
+
+    @staticmethod
+    def get_long_str():
+        """
+        生成一个长的日期字符串,至毫秒,低重复率
+        :return:
+        """
+        return time.strftime("%Y%m%d%H%M%S")

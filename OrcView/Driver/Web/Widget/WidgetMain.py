@@ -8,7 +8,7 @@ from PySide.QtGui import QSizePolicy
 
 from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefView
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibViewDef import def_view_widget_def
+from OrcView.Lib.LibViewDef import view_widget_def
 
 
 class WidgetContainer(QWidget):
@@ -22,9 +22,7 @@ class WidgetContainer(QWidget):
         self.title = u"控件"
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_widget_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_widget_def, 2)
 
         # Column widget
         self.__wid_widget_def = WidgetDefView()

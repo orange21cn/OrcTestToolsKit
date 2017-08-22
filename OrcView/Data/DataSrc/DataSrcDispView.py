@@ -1,51 +1,88 @@
 # coding=utf-8
+from PySide.QtCore import Signal as OrcSignal
+from PySide.QtGui import QFormLayout
 from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QLabel
 from PySide.QtGui import QStackedWidget
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
 from OrcLib import get_config
-from OrcView.Lib.LibView import OrcSelect
+from OrcLib.LibProgram import OrcFactory
+from OrcView.Lib.LibBaseWidget import WidgetCreator
 
+from .DataSrc import DataSrcEmpty
 from .DataSrc import DataSrcSqlite
 from .DataSrc import DataSrcMySql
 from .DataSrc import DataSrcOracle
+
+from DataSrcDispModel import DataSrcDispModel
 
 
 class DataSrcDispView(QWidget):
     """
     数据源详细信息显示
     """
+    sig_db_changed = OrcSignal(str)
+
     def __init__(self):
 
         QWidget.__init__(self)
 
         self.__configer = get_config('data_src')
 
-        self.wid_src_type = OrcSelect('data_src_type')
-        self.wid_src_sqlite = DataSrcSqlite()
-        self.wid_src_mysql = DataSrcMySql()
-        self.wid_src_oracle = DataSrcOracle()
+        # 环境显示
+        self.env = WidgetCreator.create_select('test_env', True)
 
-        self.wid_src_current = self.wid_src_sqlite
+        # 数据库类型
+        self.wid_src_type = WidgetCreator.create_select('data_src_type', True)
 
+        self._widget_lib = [
+            DataSrcEmpty(),
+            DataSrcSqlite(),
+            DataSrcMySql(),
+            DataSrcOracle()]
+
+        # Model
+        self._model = DataSrcDispModel()
+
+        # 显示控件
         self.wid_src = QStackedWidget()
-        self.wid_src.addWidget(self.wid_src_sqlite)
-        self.wid_src.addWidget(self.wid_src_mysql)
-        self.wid_src.addWidget(self.wid_src_oracle)
+        for _wid in self._widget_lib:
+            self.wid_src.addWidget(_wid)
 
-        layout_type = QHBoxLayout()
-        layout_type.addWidget(QLabel(u'数据库类型:'))
-        layout_type.addWidget(self.wid_src_type)
+        # 控件来源属性布局
+        layout_env = QFormLayout()
+        layout_env.addRow(u'环境:', self.env)
+        layout_env.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
 
+        layout_type = QFormLayout()
+        layout_type.addRow(u'数据库类型:', self.wid_src_type)
+        layout_type.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
+
+        layout_property = QHBoxLayout()
+        layout_property.addLayout(layout_env)
+        layout_property.addLayout(layout_type)
+
+        # 主布局
         layout_main = QVBoxLayout()
-        layout_main.addLayout(layout_type)
+        layout_main.addLayout(layout_property)
         layout_main.addWidget(self.wid_src)
 
         self.setLayout(layout_main)
 
+        # 数据源类型变化更新数据源信息
         self.wid_src_type.currentIndexChanged.connect(self.switch_data_src)
+
+        # 测试环境变化
+        self.env.currentIndexChanged.connect(self.set_data)
+
+    def _current_widget(self):
+        """
+        当前数据库显示控件
+        :return:
+        """
+        index = self.wid_src_type.currentIndex()
+        return self._widget_lib[index]
 
     def switch_data_src(self, p_index):
         """
@@ -55,44 +92,53 @@ class DataSrcDispView(QWidget):
         """
         self.wid_src.setCurrentIndex(p_index)
 
-        if 0 == p_index:
-            self.wid_src_current = self.wid_src_sqlite
-        elif 1 == p_index:
-            self.wid_src_current = self.wid_src_mysql
-        elif 2 == p_index:
-            self.wid_src_current = self.wid_src_oracle
-        else:
-            pass
+        # 设置基本数据
+        self._current_widget().set_data(self._model.mod_search())
 
-    def set_data(self, p_id):
+    def set_data(self, p_info=None):
         """
         设置数据
-        :param p_id:
+        :param p_info:
         :return:
         """
+        self.clean()
 
-        database_type = self.__configer.get_option(p_id, 'type')
+        result = self._model.mod_search(p_info, self.env.get_data())
+        db_info = OrcFactory.create_default_dict(result)
 
-        self.wid_src_type.set_data(database_type)
-        self.wid_src_current.set_data(p_id)
+        # 设置数据库类型
+        self.wid_src_type.set_data(db_info.value('type', ''))
+
+        # 设置数据库信息
+        self._current_widget().set_data(db_info.dict())
+
+        self.sig_db_changed.emit(self._model.mod_get_db_id())
 
     def get_data(self):
         """
         获取数据
         :return:
         """
-        db_data = self.wid_src_current.get_data()
+        db_data = self._current_widget().get_data()
         db_data['type'] = self.wid_src_type.get_data()
+        db_data['env'] = self.env.get_data()
 
         return db_data
 
-    def editable(self, p_flag):
+    def clean(self):
+        """
+        清空
+        :return:
+        """
+        for _widget in self._widget_lib:
+            _widget.clean()
+
+    def set_editable(self, p_flag):
         """
         设置可编辑状态
         :param p_flag:
         :return:
         """
         self.wid_src_type.setEnabled(p_flag)
-        self.wid_src_sqlite.editable(p_flag)
-        self.wid_src_mysql.editable(p_flag)
-        self.wid_src_oracle.editable(p_flag)
+        for _widget in self._widget_lib:
+            _widget.set_enable(p_flag)

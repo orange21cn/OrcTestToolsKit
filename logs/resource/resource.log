@@ -1,0 +1,5 @@
+[2017-07-25 08:48:59 resource.page_dets.api] INFO Search page_det, parameter is: {u'test_env': u'TEST', u'page_id': u'300000002'}
+[2017-07-25 08:49:26 resource.page_def.api] INFO Search page_def, parameter is: 300000002
+[2017-07-25 08:49:31 resource.page_dets.api] INFO Search page_det, parameter is: {u'page_env': u'TEST', u'page_id': u'300000002'}
+[2017-07-25 16:17:35 resource.page_def.api] INFO Search page_def, parameter is: 300000002
+[2017-07-25 16:17:35 resource.page_dets.api] INFO Search page_det, parameter is: {u'page_env': u'TEST', u'page_id': u'300000002'}

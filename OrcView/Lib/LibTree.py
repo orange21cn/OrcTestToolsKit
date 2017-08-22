@@ -17,11 +17,13 @@ from OrcLib import LibCommon
 from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibDataStruct import ListTree
+from OrcLib.LibDataStruct import TreeNode
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibMain import LogClient
+from OrcView.Lib.LibControl import ControlBase
 
 
 class OrcMimeData(QMimeData):
@@ -69,81 +71,23 @@ class OrcMimeData(QMimeData):
         return None
 
 
-class TreeNode(object):
-    """
-    Tree data management
-    """
-    def __init__(self, p_content, p_parent=None):
-
-        self.content = p_content
-        self.parent = p_parent
-        self.children = []
-
-    def append_child(self, p_content):
-        """
-        Append child
-        :param p_content:
-        :return:
-        """
-        self.children.append(TreeNode(p_content, self))
-
-    def append_node(self, p_node):
-        """
-        Append a child node
-        :param p_node:
-        :return:
-        """
-        p_node.parent = self
-        self.children.append(p_node)
-
-    def get_child(self, row):
-        """
-        Get the child
-        :param row:
-        :return:
-        """
-        return self.children[row]
-
-    def get_index(self, child):
-        """
-        Get the index of child
-        :param child:
-        :return:
-        """
-        for _index, item in enumerate(self.children):
-            if item == child:
-                return _index
-
-        return -1
-
-    def remove_child(self, row):
-        """
-        Remove Child of row
-        :param row:
-        :return:
-        """
-        value = self.children[row]
-        self.children.remove(value)
-
-        return True
-
-    def __len__(self):
-        return len(self.children)
-
-
 class ModelTreeBase(QAbstractItemModel):
     """
     Model
     """
-    def __init__(self, p_flag):
+    def __init__(self, p_def):
         """
         :return:
         """
         QAbstractItemModel.__init__(self)
 
-        # resource_dict = OrcResource("Dict")
-
         self.__logger = OrcLog("view.tree.model")
+
+        # 界面字段定义
+        if isinstance(p_def, ViewDefinition):
+            self._definition = p_def
+        else:
+            self._definition = ViewDefinition(p_def)
 
         # 数据
         self._data = list()
@@ -169,28 +113,6 @@ class ModelTreeBase(QAbstractItemModel):
         # 可选择状态
         self._state_checkable = True
 
-        # 界面字段定义
-        self._definition = ViewDefinition(p_flag)
-
-        # SELECT 类型的字段
-        # self._definition_select = dict()
-
-        # 获取 SELECT 类型 value/text 数据对
-        # {id: {value: text}, id: ....}
-        # for _field in self._definition.fields_display:
-        #
-        #     assert isinstance(_field, FieldDefinition)
-        #
-        #     if _field.display and "SELECT" == _field.type:
-        #
-        #         _res = resource_dict.get(parameter=dict(dict_flag=_field.id))
-        #
-        #         if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
-        #             break
-        #
-        #         self._definition_select[_field.id] =\
-        #             {item['dict_value']: item['dict_text'] for item in _res.data}
-
     def supportedDropActions(self):
         """
         支持拖拽
@@ -208,7 +130,7 @@ class ModelTreeBase(QAbstractItemModel):
 
         if index.isValid():
 
-            _field = self._definition.get_field_display_by_index(index.column())
+            _field = self._definition.get_field_display(index.column())
             assert isinstance(_field, FieldDefinition)
 
             if self._state_editable and _field.edit:
@@ -239,7 +161,7 @@ class ModelTreeBase(QAbstractItemModel):
 
             if orientation == Qt.Horizontal:
 
-                _field = self._definition.get_field_display_by_index(section)
+                _field = self._definition.get_field_display(section)
 
                 if _field is None:
                     return None
@@ -322,7 +244,7 @@ class ModelTreeBase(QAbstractItemModel):
         # 显示数据
         if role == Qt.DisplayRole:
 
-            _field = self._definition.get_field_display_by_index(index.column())
+            _field = self._definition.get_field_display(index.column())
             assert isinstance(_field, FieldDefinition)
 
             try:
@@ -379,7 +301,7 @@ class ModelTreeBase(QAbstractItemModel):
         if role == Qt.EditRole:
 
             _cond = {}
-            _field = self._definition.get_field_display_by_index(index.column())
+            _field = self._definition.get_field_display(index.column())
 
             _cond["id"] = self.node(index).content["id"]
             _cond[_field.id] = value
@@ -406,7 +328,7 @@ class ModelTreeBase(QAbstractItemModel):
         :param parent:
         :return:
         """
-        return self._definition.display_length
+        return self._definition.length_display
 
     def rowCount(self, parent):
         """
@@ -455,9 +377,10 @@ class ModelTreeBase(QAbstractItemModel):
         else:
             return self._root
 
-    def editable(self, p_value=None):
+    def basic_editable(self, p_value=None):
         """
         设置编辑状态
+        :param p_value:
         :return:
         """
         if p_value is None:
@@ -466,7 +389,7 @@ class ModelTreeBase(QAbstractItemModel):
             assert isinstance(p_value, bool)
             self._state_editable = p_value
 
-    def checkable(self, p_value=None):
+    def basic_checkable(self, p_value=None):
         """
         设置可选择
         :param p_value:
@@ -564,7 +487,7 @@ class ModelTree(ModelTreeBase):
         self._data = result
 
         # list 数据转化为 tree
-        self._data_struct.resolve_list(self._data)
+        self._data_struct.load_list(self._data)
 
         if not isinstance(self._data, list):
             self._data = list()
@@ -643,12 +566,7 @@ class ModelTree(ModelTreeBase):
         获取可选择列表
         :return:
         """
-        _checked = []
-
-        for t_index in self._checked_list:
-            _checked.append(self.node(t_index).content["id"])
-
-        return _checked
+        return [self.node(_index).content for _index in self._checked_list]
 
     def mod_get_editable(self):
         """
@@ -663,7 +581,7 @@ class ModelTree(ModelTreeBase):
         :param p_index:
         :return:
         """
-        self._data_selected = self.node(p_index)
+        self._data_selected = self.node(p_index).content
 
     def mod_get_current_data(self):
         """
@@ -779,21 +697,27 @@ class ViewTree(QTreeView):
     sig_context = OrcSignal(str)
     sig_selected = OrcSignal(dict)
 
-    def __init__(self, p_flag, p_model, p_control):
+    def __init__(self, p_model, p_control=None):
 
         QTreeView.__init__(self)
 
         self._configer = get_config()
         self._logger = LogClient()
 
-        self._flag = p_flag
-
         # Model
-        self.model = p_model()
+        if isinstance(p_model, ModelTree):
+            self.model = p_model
+        elif issubclass(p_model, ModelTree):
+            self.model = p_model()
+        else:
+            return
         self.setModel(self.model)
 
         # Control
-        self.control = p_control()
+        if isinstance(p_control, ControlBase):
+            self.control = p_control
+        elif issubclass(p_control, ControlBase):
+            self.control = p_control()
         self.setItemDelegate(self.control)
 
         # MVC
@@ -819,17 +743,34 @@ class ViewTree(QTreeView):
         self.setStyleSheet(get_theme("TreeView"))
 
         # 单击设置当前数据
-        self.clicked.connect(self.model.mod_set_current_data)
         self.clicked.connect(self.select)
 
         # 展开
-        self.expanded.connect(self.model.mod_add_expanded)
+        self.expanded.connect(self.add_expanded)
 
         # 收起
-        self.collapsed.connect(self.model.mod_remove_expanded)
+        self.collapsed.connect(self.remove_expanded)
 
         # 重置
         self.model.sig_reset.connect(self.reset_expand)
+
+    def add_expanded(self, p_index):
+        """
+        展开时重记录展开节点并重置第一列宽度
+        :param p_index:
+        :return:
+        """
+        self.model.mod_add_expanded(p_index)
+        self.resizeColumnToContents(0)
+
+    def remove_expanded(self, p_index):
+        """
+        折叠时重删除展开节点并重置第一列宽度
+        :param p_index:
+        :return:
+        """
+        self.model.mod_remove_expanded(p_index)
+        self.resizeColumnToContents(0)
 
     def create_context_menu(self, p_def):
         """
@@ -853,9 +794,14 @@ class ViewTree(QTreeView):
         for _index in self.model.mod_get_expanded():
             self.expand(_index)
 
-    def select(self):
+    def sizeHintForColumn(self, *args, **kwargs):
+        return super(ViewTree, self).sizeHintForColumn(*args, **kwargs)
+
+    def select(self, p_index):
+
+        self.model.mod_set_current_data(p_index)
 
         current_data = self.model.mod_get_current_data()
 
         if current_data is not None:
-            self.sig_selected.emit(current_data.content)
+            self.sig_selected.emit(current_data)

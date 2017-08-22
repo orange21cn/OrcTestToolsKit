@@ -3,22 +3,16 @@ from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
-from OrcView.Case.Case.CaseView import CaseView
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Case.Case.CaseSelector import CaseSelector
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibView import OrcPagination
-from OrcView.Lib.LibViewDef import def_view_batch_det
+from OrcView.Lib.LibViewDef import view_batch_det
 from OrcView.Lib.LibMessage import OrcMessage
+
 from .BatchDetModel import BatchDetModel
-
-
-class BatchDetControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'BatchDet')
+from .BatchDetModel import BatchDetControl
 
 
 class BatchDetView(QWidget):
@@ -32,11 +26,10 @@ class BatchDetView(QWidget):
         self.title = _batch_no
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_batch_det)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_batch_det)
 
         # Data result display widget
-        self.display = ViewTable('BatchDet', BatchDetModel, BatchDetControl)
+        self.display = ViewTable(BatchDetModel, BatchDetControl)
 
         # pagination
         self.__wid_pagination = OrcPagination()
@@ -47,9 +40,6 @@ class BatchDetView(QWidget):
             dict(id="delete", name=u"删除"),
             dict(id="search", name=u"查询")
         ])
-
-        # win_add
-        self.__win_add = CaseView('MULTI')
 
         # button layout
         layout_bottom = QHBoxLayout()
@@ -71,9 +61,6 @@ class BatchDetView(QWidget):
         # 分页
         self.__wid_pagination.sig_page.connect(self.search)
 
-        # 新增
-        self.__win_add.sig_selected.connect(self.add)
-
     def search(self):
         """
         查询
@@ -84,16 +71,6 @@ class BatchDetView(QWidget):
 
         self.display.model.mod_search(_cond)
 
-    def add(self, p_data):
-        """
-        新增
-        :param p_data:
-        :return:
-        """
-        _data = {"batch_id": self.__batch_id, "case": p_data}
-
-        self.display.model.mod_add(_data)
-
     def operate(self, p_flag):
         """
         点击按钮时操作
@@ -101,7 +78,13 @@ class BatchDetView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            _data = CaseSelector.static_get_multi_data()
+            if _data is None:
+                return
+
+            ids = [_item['id'] for _item in _data]
+            self.display.model.mod_add(dict(batch_id=self.__batch_id, case=ids))
+
         elif "delete" == p_flag:
             if OrcMessage.question(self, u"确认删除"):
                 self.display.model.mod_delete()

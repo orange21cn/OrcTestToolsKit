@@ -32,7 +32,7 @@ class RunDefView(QWidget):
         self.__threads = []
 
         # Data result display widget
-        self.display = ViewTree('RunDef', RunDefModel, RunDefControl)
+        self.display = ViewTree(RunDefModel, RunDefControl)
 
         # Buttons window
         self.__wid_buttons = OrcButtons([
@@ -99,10 +99,8 @@ class RunDefView(QWidget):
         if 'add' == p_flg:
             # {id, run_def_type, result}
             data = self.display.model.mod_get_current_data()
-            if data is None:
-                return
-
-            self.display.model.mod_add(dict(run_def_type=data.content["run_def_type"]))
+            if data:
+                self.display.model.mod_add(dict(run_def_type=data["run_def_type"]))
 
         elif 'delete' == p_flg:
             if OrcMessage.question(self, u"确认删除"):
@@ -119,8 +117,8 @@ class RunDefView(QWidget):
 
             if item_data is not None:
 
-                _id = item_data.content["id"]
-                _pid = item_data.content["pid"]
+                _id = item_data["id"]
+                _pid = item_data["pid"]
 
                 if _pid is None:
                     return
@@ -129,14 +127,14 @@ class RunDefView(QWidget):
                 self.display.model.service_run(_pid, _id)
 
                 # 更改按钮状态
-                self.btn_status_stop()
+                self.btn_status_start()
 
         elif 'stop' == p_flg:
             # 停止
             self.display.model.service_stop()
 
             # 按钮状态停止
-            self.btn_status_start()
+            self.btn_status_stop()
 
         else:
             pass

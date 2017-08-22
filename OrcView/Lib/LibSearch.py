@@ -9,9 +9,11 @@ from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
 from PySide.QtCore import Signal as OrcSignal
 
+from OrcLib.LibProgram import OrcFactory
 from OrcView.Lib.LibView import WidgetFactory
-# from OrcView.Lib.LibView import create_editor
+from OrcView.Lib.LibView import OrcRow
 from OrcView.Lib.LibTheme import get_theme
+from OrcView.Lib.LibViewDef import ViewDefinition
 
 
 class OrcButtons(QWidget):
@@ -115,73 +117,55 @@ class ViewSearch(QWidget):
     """
     Search widget
     """
-
-    def __init__(self, p_def):
+    def __init__(self, p_def, p_num=None):
         """
         :param p_def: {id, name, type}
         :return:
         """
         QWidget.__init__(self)
 
-        # 控件定义
-        self.__fields_def = p_def
+        # 可以输入字段类,或者标识
+        if isinstance(p_def, ViewDefinition):
+            self._def = p_def
+        else:
+            self._def = ViewDefinition(p_def)
 
         # 每行默认控件数
-        self.__columns = 4
+        self._columns = 4 if p_num is None else p_num
 
         # 控件字典
-        self.__inputs = {}
+        self._conditions = OrcFactory.create_ordered_dict()
 
-        # 布局
-        self.__layout_srh = QGridLayout()
-        self.setLayout(self.__layout_srh)
+        # 生成控件字典
+        for _key in self._def.search_keys:
 
-        self.setStyleSheet(get_theme("Input"))
-        self.__layout_srh.setContentsMargins(0, 0, 0, 0)
-
-    def set_col_num(self, p_num):
-        """
-        设置每行控件数
-        :param p_num:
-        :type p_num: int
-        :return:
-        """
-        self.__columns = p_num
-
-    def create(self):
-
-        items = []
-
-        for t_def in self.__fields_def:
-
-            if not t_def['SEARCH']:
-                continue
-
-            # 控件标签
-            _label = QLabel(t_def['NAME'] + ":")
+            _field = self._def.field(_key)
 
             # 控件
-            _def = dict(TYPE=t_def["TYPE"], SOURCE="SEARCH", FLAG=t_def["ID"])
+            _widget_def = dict(TYPE=_field.type, SOURCE="SEARCH", FLAG=_field.id)
+            _widget = OrcRow(_field.name + ":", WidgetFactory.create_widget(_widget_def))
 
-            self.__inputs[t_def['ID']] = WidgetFactory.create_widget(_def)
+            self._conditions.append(_field.id, _widget)
 
-            # 控件布局
-            _layout = QHBoxLayout()
-            _layout.addWidget(_label)
-            _layout.addWidget(self.__inputs[t_def['ID']])
-
-            items.append(_layout)
+        # 布局
+        self._layout_main = QGridLayout()
 
         # 控件及其 label 加入主布局
-        for _index in range(len(items)):
-            _row = _index % self.__columns
-            _column = _index / self.__columns
+        for _index in range(self._def.length_search):
+            _row = _index % self._columns
+            _column = _index / self._columns
 
-            self.__layout_srh.addLayout(items[_index], _column, _row)
+            self._layout_main.addLayout(self._conditions.value_by_index(_index), _column, _row)
+
+        self.setLayout(self._layout_main)
+
+        # 样式
+        self._layout_main.setContentsMargins(0, 0, 0, 0)
+        self.setStyleSheet(get_theme("Input"))
 
     def get_cond(self):
         """
         获取 条件
         :return: {name:value, ...}
         """
-        return {_inp: self.__inputs[_inp].get_data() for _inp in self.__inputs}
+        return {_key: self._conditions.value(_key).get_data() for _key in self._conditions.keys()}

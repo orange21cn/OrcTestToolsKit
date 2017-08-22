@@ -15,9 +15,11 @@ class RunDefModel(ModelTree):
 
         self.__logger = LogClient()
 
-        self.__resource_run_def = OrcResource("RunDef")
-        self.__resource_run = OrcResource("Run")
-        self.__configer = get_config("server")
+        self.__resource_run_def = OrcResource('RunDef')
+        self.__resource_run = OrcResource('Run')
+
+        self.__configer_server = get_config('server')
+        self.__configer_driver = get_config('driver')
 
     def service_add(self, p_cond):
         """
@@ -92,9 +94,9 @@ class RunDefModel(ModelTree):
         :param p_id:
         :return:
         """
-        pro_ip = self.__configer.get_option("VIEW", "ip")
-        pro_port = self.__configer.get_option("VIEW", "port")
-        result = self.__resource_run.put(parameter=dict(pid=p_pid, id=p_id, ip=pro_ip, port=pro_port))
+        _env = self.__configer_driver.get_option("DEFAULT", "environment")
+
+        result = self.__resource_run.put(parameter=dict(env=_env, pid=p_pid, id=p_id))
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"运行测试项", self.__logger):
@@ -103,7 +105,7 @@ class RunDefModel(ModelTree):
         # 打印成功信息
         ResourceCheck.result_success(u"运行测试项", self.__logger)
 
-        return
+        return True
 
     def service_stop(self):
         """

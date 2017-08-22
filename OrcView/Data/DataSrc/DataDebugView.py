@@ -1,20 +1,23 @@
 # coding=utf-8
+from PySide.QtCore import Qt
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
+from PySide.QtGui import QSplitter
 
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibView import OrcTextArea
+from OrcView.Lib.LibBaseWidget import OrcBoxWidget
 
 from DataResDispView import DataResDispView
 
 
-class DataDebugView(QWidget):
+class DataDebugView(QSplitter):
     """
     SQL 编辑与调试窗口
     """
     def __init__(self):
 
-        QWidget.__init__(self)
+        QSplitter.__init__(self, Qt.Vertical)
 
         # SQL 编辑窗口
         self.sql_editor = OrcTextArea()
@@ -27,12 +30,15 @@ class DataDebugView(QWidget):
             dict(id="search", name=u"增加")
         ])
 
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.sql_editor)
-        layout_main.addWidget(self.res_disp)
-        layout_main.addWidget(self.buttons)
+        layout_res = OrcBoxWidget('V')
+        layout_res.add_widget(self.res_disp)
+        layout_res.add_widget(self.buttons)
 
-        self.setLayout(layout_main)
+        # 主布局
+        self.addWidget(self.sql_editor)
+        self.addWidget(layout_res)
+
+        self.setContentsMargins(0, 0, 0, 0)
 
         self.buttons.sig_clicked.connect(self.operate)
 
@@ -44,7 +50,7 @@ class DataDebugView(QWidget):
         """
         if 'search' == p_flag:
             sql_text = self.sql_editor.get_data()
-            self.res_disp.display.model.mod_search(dict(SQL=sql_text))
+            self.res_disp.model.mod_search(dict(SQL=sql_text))
 
     def set_db(self, p_id):
         """
@@ -52,4 +58,5 @@ class DataDebugView(QWidget):
         :param p_id:
         :return:
         """
-        self.res_disp.display.model.service_set_db(p_id)
+        print ">>>>>>..", p_id
+        self.res_disp.model.service_set_db(p_id)

@@ -4,22 +4,16 @@ from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QWidget
 
-from OrcView.Data.Data.DataAdd import ViewDataAdd
-from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import def_view_case_def
+from OrcView.Lib.LibViewDef import view_case_def
+from OrcView.Data.Data.DataAdd import DataAdder
+
 from .CaseModel import CaseModel
-
-
-class CaseControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'Case')
+from .CaseModel import CaseControl
 
 
 class CaseView(QWidget):
@@ -36,12 +30,10 @@ class CaseView(QWidget):
         self._type = p_type
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_case_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_case_def, 2)
 
         # Data result display widget
-        self.display = ViewTree('Case', CaseModel, CaseControl)
+        self.display = ViewTree(CaseModel, CaseControl)
 
         # Context menu
         if self._type is None:
@@ -74,7 +66,7 @@ class CaseView(QWidget):
                 dict(id="cancel", name=u"取消")
             ])
 
-            self.display.model.checkable()
+            self.display.model.basic_checkable()
 
             # 双击选择用例
             self.display.doubleClicked.connect(self.select_one)
@@ -89,12 +81,6 @@ class CaseView(QWidget):
         else:
             wid_buttons = OrcButtons([])
 
-        # win add case
-        self.__win_add = ViewAdd(def_view_case_def)
-
-        # win add data
-        self.__win_data = ViewDataAdd()
-
         # Layout
         layout_main = QVBoxLayout()
         layout_main.addWidget(self.__wid_search_cond)
@@ -106,23 +92,12 @@ class CaseView(QWidget):
         # 点击按钮操作
         wid_buttons.sig_clicked.connect(self.operate)
 
-        # 增加
-        self.__win_add.sig_submit[dict].connect(self.add)
-
     def search(self):
         """
         查询
         :return:
         """
         self.display.model.mod_search(self.__wid_search_cond.get_cond())
-
-    def add(self, p_data):
-        """
-        增加用例
-        :param p_data:
-        :return:
-        """
-        self.display.model.mod_add(p_data)
 
     def operate(self, p_flag):
         """
@@ -131,20 +106,20 @@ class CaseView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            _data = CaseDefAdder.static_get_data()
+            if _data is not None:
+                self.display.model.mod_add(_data)
         elif "delete" == p_flag:
             if OrcMessage.question(self, u'确认删除'):
                 self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "search" == p_flag:
             self.search()
         if "select" == p_flag:
             self.select()
         elif "cancel" == p_flag:
             self.close()
-        elif "test" == p_flag:
-            self.test()
         else:
             pass
 
@@ -169,16 +144,11 @@ class CaseView(QWidget):
         :return:
         """
         if "sig_data" == p_flag:
-
-            _id = self.display.model.mod_get_current_data().content["id"]
-
-            self.__win_data.show()
-            self.__win_data.set_src_type("CASE")
-            self.__win_data.set_src_id(_id)
+            _id = self.display.model.mod_get_current_data()['id']
+            DataAdder.static_add_data("CASE", _id)
 
         elif "sig_run" == p_flag:
-
-            case_id = self.display.model.mod_get_current_data().content["id"]
+            case_id = self.display.model.mod_get_current_data()["id"]
             self.display.model.service_run(case_id)
 
     def select(self):
@@ -195,30 +165,25 @@ class CaseView(QWidget):
         选择一个用例
         :return:
         """
-        _res = self.display.model.mod_get_current_data().content["id"]
+        _res = self.display.model.mod_get_current_data()["id"]
         self.sig_selected[dict].emit([_res])
         self.close()
 
 
-# @orc_singleton
-# class CaseView(CaseBaseView):
-#
-#     def __init__(self):
-#
-#         CaseBaseView.__init__(self)
-#
-#
-# class CaseSelectView(CaseBaseView):
-#
-#     def __init__(self):
-#
-#         CaseBaseView.__init__(self, 'MULTI')
-#
-#
-# class FuncSelectView(CaseBaseView):
-#
-#     def __init__(self):
-#
-#         CaseBaseView.__init__(self, 'SINGLE')
-#
-#         self.display.model.set_checkable(False)
+class CaseDefAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'Case')
+
+        self.setWindowTitle(u'新增用例')
+
+    @staticmethod
+    def static_get_data():
+
+        view = CaseDefAdder()
+        view.exec_()
+
+        return view._data

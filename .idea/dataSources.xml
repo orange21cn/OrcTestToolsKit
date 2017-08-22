@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="588893674">
+    <data-source source="LOCAL" name="Sqlite (Xerial) - orc_data.s3db" uuid="3a11f20b-07db-4d0c-8fef-d5a28938557f">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/data/orc_data.s3db</jdbc-url>
+    </data-source>
+  </component>
+</project>

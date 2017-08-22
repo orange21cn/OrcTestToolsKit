@@ -1,13 +1,13 @@
 # coding=utf-8
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
-from OrcLib.LibRunTime import OrcRunStatus
+from OrcLib.LibStatus import OrcRunStatus
 
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTree import ModelTree
 from OrcView.Lib.LibControl import ControlBase
-from OrcApi.Run.RunData import RunCmdType
+from OrcLib.LibCmd import OrcRecordCmd
 
 
 class RunDetControl(ControlBase):
@@ -30,7 +30,7 @@ class RunDetModel(ModelTree):
 
         self.__run_status = OrcRunStatus()
 
-        self.checkable()
+        self.basic_checkable()
 
     def service_search(self, p_path):
         """
@@ -144,7 +144,7 @@ class RunDetModel(ModelTree):
 
         children = self.service_get_child_list(p_id)
         for _child_data in children:
-            _child = RunCmdType(_child_data)
+            _child = OrcRecordCmd(_child_data)
 
             if _child.is_item_type():
                 result.append(_child_data)

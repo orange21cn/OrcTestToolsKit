@@ -6,7 +6,7 @@ from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibViewDef import def_view_window_def
+from OrcView.Lib.LibViewDef import view_window_def
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .WindowModel import WindowModel
@@ -31,12 +31,10 @@ class WindowView(QWidget):
         self.__window_id = None
 
         # Data result display window
-        self.display = ViewTable('Window', WindowModel, WindowControl)
+        self.display = ViewTable(WindowModel, WindowControl)
 
         # Search condition
-        self.__wid_search_cond = ViewSearch(def_view_window_def)
-        self.__wid_search_cond.set_col_num(3)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_window_def, 3)
 
         # Buttons window
         btn_definition = [
@@ -73,7 +71,7 @@ class WindowView(QWidget):
         elif "refresh" == p_flg:
             self.display.model.mod_add(None)
         elif "update" == p_flg:
-            self.display.model.editable()
+            self.display.model.set_enable()
         elif "delete" == p_flg:
             if OrcMessage.question(self, u"确认删除"):
                 self.display.model.mod_delete()

@@ -1,181 +1,182 @@
 # coding=utf-8
-from PySide.QtGui import QGridLayout
-from PySide.QtGui import QLabel
+from PySide.QtGui import QFormLayout
 from PySide.QtGui import QWidget
 
 from OrcLib import get_config
+from OrcLib.LibProgram import OrcFactory
 
-from OrcView.Lib.LibView import OrcLineEdit
-from OrcView.Lib.LibView import OrcTextArea
+from OrcView.Lib.LibBaseWidget import WidgetCreator
 
 
-class DataSrcSqlite(QWidget):
+class DataSrcBasic(QWidget):
     """
-    mysql 界面
+    基础控件,其他数据源的基类
     """
     def __init__(self):
 
         QWidget.__init__(self)
 
-        self.__configer = get_config('data_src')
+        # 配置
+        self._configer = get_config('data_src')
 
-        self.inp_name = OrcLineEdit()
-        self.inp_file = OrcLineEdit()
-        self.inp_desc = OrcTextArea()
+        # 控件标识列表
+        self._widget_index = list()
 
-        layout_main = QGridLayout()
-        layout_main.addWidget(QLabel(u'名称:'), 0, 0)
-        layout_main.addWidget(self.inp_name, 0, 1)
-        layout_main.addWidget(QLabel(u'文件:'), 1, 0)
-        layout_main.addWidget(self.inp_file, 1, 1)
-        layout_main.addWidget(QLabel(u'描述:'), 2, 0)
-        layout_main.addWidget(self.inp_desc, 2, 1)
+        # 控件库
+        self._widget_lib = dict()
+
+        # 名称控件
+        self._add_widget('name', u'名称', WidgetCreator.create_line_text(), 0)
+
+        # 描述控件
+        self._add_widget('desc', u'描述', WidgetCreator.create_text_area(), 1)
+
+        # 所有控件默认处于不可用状态
+        self.set_enable(False)
+
+    def init_ui(self):
+        """
+        初始化界面
+        :return:
+        """
+        layout_main = QFormLayout()
+        layout_main.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
+        layout_main.setContentsMargins(0, 0, 0, 0)
+
+        for _key in self._widget_index:
+            layout_main.addRow(self._widget_lib[_key][0], self._widget_lib[_key][1])
 
         self.setLayout(layout_main)
 
-        self.editable(False)
-
-    def set_data(self, p_id):
+    def set_data(self, p_data):
         """
         设置数据
-        :param p_id:
+        :param p_data:
         :return:
         """
-        src_name = self.__configer.get_option(p_id, 'name')
-        src_desc = self.__configer.get_option(p_id, 'desc')
-        database_file = self.__configer.get_option(p_id, 'db_file')
+        if not isinstance(p_data, dict):
+            return False
 
-        self.inp_name.set_data(src_name)
-        self.inp_desc.set_data(src_desc)
-        self.inp_file.set_data(database_file)
+        data = OrcFactory.create_default_dict(p_data)
+        for _key in self._widget_index:
+            self.widget(_key).set_data(data.value(_key))
 
     def get_data(self):
         """
         获取数据
         :return:
         """
-        return dict(
-            name=self.inp_name.get_data(),
-            desc=self.inp_desc.get_data(),
-            db_file=self.inp_file.get_data()
-        )
+        return {_key: self.widget(_key).get_data() for _key in self._widget_index}
 
-    def editable(self, p_flag):
+    def clean(self):
         """
-        设置可编辑状态
+        清空数据
+        :return:
+        """
+        for _key in self._widget_index:
+            self.widget(_key).set_data(None)
+
+    def set_enable(self, p_flag):
+        """
+        设置控件是否可用
         :param p_flag:
         :return:
         """
-        self.inp_name.setEnabled(p_flag)
-        self.inp_file.setEnabled(p_flag)
-        self.inp_desc.setEnabled(p_flag)
+        if not isinstance(p_flag, bool):
+            return
+
+        for _key in self._widget_index:
+            self.widget(_key).setEnabled(p_flag)
+
+    def widget(self, p_key):
+        """
+        获取对应 p_key
+        :param p_key:
+        :return:
+        """
+        return self._widget_lib[p_key][1]
+
+    def _add_widget(self, p_key, p_name, p_widget, p_no):
+        """
+        增加控件
+        :return:
+        """
+        self._widget_index.insert(p_no, p_key)
+        self._widget_lib[p_key] = [p_name, p_widget]
 
 
-class DataSrcMySql(QWidget):
+class DataSrcEmpty(DataSrcBasic):
+    """
+    用于显示未定义的数据源
+    """
+    def __init__(self):
+
+        DataSrcBasic.__init__(self)
+
+        self.init_ui()
+
+
+class DataSrcSqlite(DataSrcBasic):
     """
     mysql 界面
     """
     def __init__(self):
 
-        QWidget.__init__(self)
+        DataSrcBasic.__init__(self)
 
-        self.__configer = get_config('data_src')
+        # 数据库文件
+        self._add_widget('file', u'文件', WidgetCreator.create_line_text(), 1)
 
-        self.inp_name = OrcLineEdit()
-        self.inp_host = OrcLineEdit()
-        self.inp_database = OrcLineEdit()
-        self.inp_user = OrcLineEdit()
-        self.inp_password = OrcLineEdit()
-        self.inp_desc = OrcTextArea()
-
-        layout_main = QGridLayout()
-        layout_main.addWidget(QLabel(u'名称:'), 0, 0)
-        layout_main.addWidget(self.inp_name, 0, 1)
-        layout_main.addWidget(QLabel(u'主机2:'), 1, 0)
-        layout_main.addWidget(self.inp_host, 1, 1)
-        layout_main.addWidget(QLabel(u'数据库:'), 2, 0)
-        layout_main.addWidget(self.inp_database, 2, 1)
-        layout_main.addWidget(QLabel(u'用户名:'), 3, 0)
-        layout_main.addWidget(self.inp_user, 3, 1)
-        layout_main.addWidget(QLabel(u'密码:'), 0, 2)
-        layout_main.addWidget(self.inp_password, 0, 3)
-        layout_main.addWidget(QLabel(u'描述:'), 1, 2)
-        layout_main.addWidget(self.inp_desc, 1, 3, 3, 1)
-
-        self.setLayout(layout_main)
-
-    def set_data(self, p_id):
-        """
-        设置数据
-        :param p_id:
-        :return:
-        """
-        name = self.__configer.get_option(p_id, 'name')
-        desc = self.__configer.get_option(p_id, 'desc')
-        database_host = self.__configer.get_option(p_id, 'db_host')
-        database_name = self.__configer.get_option(p_id, 'db_name')
-        database_user = self.__configer.get_option(p_id, 'db_user')
-        database_passwd = self.__configer.get_option(p_id, 'db_passwd')
-
-        self.inp_name.set_data(name)
-        self.inp_desc.set_data(desc)
-        self.inp_host.set_data(database_host)
-        self.inp_database.set_data(database_name)
-        self.inp_user.set_data(database_user)
-        self.inp_password.set_data(database_passwd)
-
-    def get_data(self):
-        """
-        获取数据
-        :return:
-        """
-        return dict(
-            name=self.inp_name.get_data(),
-            desc=self.inp_desc.get_data(),
-            db_host=self.inp_host.get_data(),
-            db_name=self.inp_database.get_data(),
-            db_user=self.inp_user.get_data(),
-            db_passwd=self.inp_password.get_data()
-        )
-
-    def editable(self, p_flag):
-        pass
+        # 初始化界面
+        self. init_ui()
 
 
-class DataSrcOracle(QWidget):
+class DataSrcMySql(DataSrcBasic):
     """
     mysql 界面
     """
     def __init__(self):
 
-        QWidget.__init__(self)
+        DataSrcBasic.__init__(self)
 
-        self.__configer = get_config('data_src')
+        # 主机
+        self._add_widget('host', u'主机', WidgetCreator.create_line_text(), 1)
 
-        inp_host = OrcLineEdit()
-        inp_str = OrcLineEdit()
-        inp_user = OrcLineEdit()
-        inp_password = OrcLineEdit()
+        # 数据库
+        self._add_widget('database', u'数据库', WidgetCreator.create_line_text(), 2)
 
-        layout_main = QGridLayout()
-        layout_main.addWidget(QLabel(u'主机3:'), 0, 0)
-        layout_main.addWidget(inp_host, 0, 1)
-        layout_main.addWidget(QLabel(u'数据库:'), 1, 0)
-        layout_main.addWidget(inp_str, 1, 1)
-        layout_main.addWidget(QLabel(u'用户名:'), 2, 0)
-        layout_main.addWidget(inp_user, 2, 1)
-        layout_main.addWidget(QLabel(u'密码:'), 3, 0)
-        layout_main.addWidget(inp_password, 3, 1)
+        # 用户名
+        self._add_widget('user', u'用户名', WidgetCreator.create_line_text(), 3)
 
-        self.setLayout(layout_main)
+        # 密码
+        self._add_widget('password', u'密码', WidgetCreator.create_line_text(), 4)
 
-    def set_data(self, p_id):
-        """
-        设置数据
-        :param p_id:
-        :return:
-        """
-        pass
+        # 初始化界面
+        self. init_ui()
 
-    def editable(self, p_flag):
-        pass
+
+class DataSrcOracle(DataSrcBasic):
+    """
+    mysql 界面
+    """
+    def __init__(self):
+
+        DataSrcBasic.__init__(self)
+
+        # IP
+        self._add_widget('ip', u'IP', WidgetCreator.create_line_text(), 1)
+
+        # 端口
+        self._add_widget('port', u'端口', WidgetCreator.create_line_text(), 2)
+
+        # 用户名
+        self._add_widget('user', u'用户名', WidgetCreator.create_line_text(), 3)
+
+        # 密码
+        self._add_widget('password', u'密码', WidgetCreator.create_line_text(), 4)
+
+        # 服务
+        self._add_widget('service', u'服务', WidgetCreator.create_line_text(), 5)
+
+        # 初始化界面
+        self.init_ui()

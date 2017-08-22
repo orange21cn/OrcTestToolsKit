@@ -9,9 +9,9 @@ from PySide.QtCore import Signal as OrcSignal
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibAdd import ViewAdd
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibViewDef import def_view_widget_def
+from OrcView.Lib.LibViewDef import view_widget_def
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .WidgetDefModel import WidgetDefModel
@@ -42,12 +42,10 @@ class WidgetDefView(QWidget):
 
         # Search
         if self.__type is not None:
-            self.__wid_search_cond = ViewSearch(def_view_widget_def)
-            self.__wid_search_cond.set_col_num(2)
-            self.__wid_search_cond.create()
+            self.__wid_search_cond = ViewSearch(view_widget_def, 2)
 
         # Data result display widget
-        self.display = ViewTree('WidgetDef', WidgetDefModel, WidgetDefControl)
+        self.display = ViewTree(WidgetDefModel, WidgetDefControl)
 
         # Buttons window
         if self.__type is None:
@@ -67,16 +65,13 @@ class WidgetDefView(QWidget):
             ])
 
             # 禁止选择
-            self.display.model.checkable(False)
+            self.display.model.basic_checkable(False)
 
             # 双击选择
             self.display.doubleClicked[QModelIndex].connect(self.widget_sig)
 
         else:
             wid_buttons = OrcButtons([])
-
-        # win_add
-        self.__win_add = ViewAdd(def_view_widget_def)
 
         # Layout
         layout_main = QVBoxLayout()
@@ -91,9 +86,6 @@ class WidgetDefView(QWidget):
 
         self.setLayout(layout_main)
 
-        # 新增
-        self.__win_add.sig_submit[dict].connect(self.display.model.mod_add)
-
         # 点击按钮
         wid_buttons.sig_clicked.connect(self.operate)
 
@@ -104,7 +96,9 @@ class WidgetDefView(QWidget):
         :return:
         """
         if "add" == p_flg:
-            self.__win_add.show()
+            _data = WidgetDefAdder.static_get_data()
+            if _data is not None:
+                self.display.model.mod_add(_data)
 
         elif "delete" == p_flg:
             if OrcMessage.question(self, u"确认删除"):
@@ -112,7 +106,7 @@ class WidgetDefView(QWidget):
                 self.sig_delete.emit()
 
         elif "update" == p_flg:
-            self.display.model.editable()
+            self.display.model.basic_editable()
 
         elif "search" == p_flg:
             if self.__type is None:
@@ -143,6 +137,25 @@ class WidgetDefView(QWidget):
             self.close()
 
 
+class WidgetDefAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'WidgetDef')
+
+        self.setWindowTitle(u'新增控件')
+
+    @staticmethod
+    def static_get_data():
+
+        view = WidgetDefAdder()
+        view.exec_()
+
+        return view._data
+
+
 class WidgetDefSelector(QDialog):
     """
 
@@ -152,12 +165,10 @@ class WidgetDefSelector(QDialog):
         QDialog.__init__(self)
 
         # Search
-        self.__wid_search_cond = ViewSearch(def_view_widget_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_widget_def, 2)
 
         # Data result display widget
-        self.display = ViewTree('WidgetDef', WidgetDefModel, WidgetDefControl)
+        self.display = ViewTree(WidgetDefModel, WidgetDefControl)
 
         # Buttons window
         wid_buttons = OrcButtons([
@@ -165,7 +176,7 @@ class WidgetDefSelector(QDialog):
         ])
 
         # 禁止选择
-        self.display.model.checkable(False)
+        self.display.model.basic_checkable(False)
 
         # Layout
         layout_main = QVBoxLayout()
@@ -202,4 +213,4 @@ class WidgetDefSelector(QDialog):
         view = WidgetDefSelector()
         view.exec_()
 
-        return view.display.model.mod_get_current_data().content
+        return view.display.model.mod_get_current_data()

@@ -1,4 +1,5 @@
 # coding=utf-8
+import re
 import json
 
 from OrcLib import LibCommon
@@ -118,8 +119,12 @@ class DataModel(ModelTable):
             # 增加数据标识显示
             _item['src_id_text'] = get_mark(_item['src_type'], _item['src_id'])
 
-            # 增加控件标识显示
-            _item['data_flag_text'] = get_widget_mark(_item['data_flag'])
+            # 增加数据标识显示,由于没有记录类型,暂时通过编号特点来区分控件或数据 Todo
+            data_flag = _item['data_flag']
+            if re.match('3300.*', data_flag):
+                _item['data_flag_text'] = get_mark('WIDGET', data_flag)
+            else:
+                _item['data_flag_text'] = get_mark('DATA', data_flag)
 
         # 打印成功信息
         ResourceCheck.result_success(u"查询数据", self.__logger)

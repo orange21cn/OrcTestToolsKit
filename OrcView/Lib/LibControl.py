@@ -3,7 +3,6 @@ from PySide.QtGui import QStyledItemDelegate
 from PySide.QtCore import Qt
 from OrcView.Lib.LibBaseWidget import WidgetCreator
 from OrcView.Lib.LibViewDef import ViewDefinition
-from OrcView.Lib.LibViewDef import FieldDefinition
 
 
 class ControlBase(QStyledItemDelegate):
@@ -12,7 +11,10 @@ class ControlBase(QStyledItemDelegate):
 
         QStyledItemDelegate.__init__(self)
 
-        self._definition = ViewDefinition(p_flag)
+        if isinstance(p_flag, ViewDefinition):
+            self._definition = p_flag
+        else:
+            self._definition = ViewDefinition(p_flag)
 
     def createEditor(self, parent, option, index):
         """
@@ -22,8 +24,7 @@ class ControlBase(QStyledItemDelegate):
         :param index:
         :return:
         """
-        field = self._definition.fields_display[index.column()]
-        assert isinstance(field, FieldDefinition)
+        field = self._definition.get_field_display(index.column())
 
         _def = dict(TYPE=field.type,
                     SOURCE="EDITOR",

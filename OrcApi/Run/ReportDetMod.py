@@ -2,17 +2,16 @@
 import os
 from RunCore import RunCore
 from OrcLib import get_config
-from flask import redirect
-from flask import url_for
+
 
 class ReportDetMod:
 
     def __init__(self):
 
-        self.__core = RunCore()
+        self._core = RunCore()
 
-        self.__configer = get_config()
-        self.__home = self.__configer.get_option("RUN", "home")
+        self._configer = get_config()
+        self._home = self._configer.get_option("RUN", "home")
 
     def usr_search(self, p_path):
         """
@@ -29,7 +28,7 @@ class ReportDetMod:
         :param p_time:
         :return:
         """
-        report_path = "%s/%s/%s" % (self.__home, p_id, p_time)
+        report_path = "%s/%s/%s" % (self._home, p_id, p_time)
         report_file = "%s/report.html" % report_path
         result_file = "%s/default.res" % report_path
 
@@ -48,7 +47,7 @@ class ReportDetMod:
         """
         from lxml import etree
 
-        template_path = "%s/report/basic/basic.xml" % self.__configer.get_option("TEMPLATE", "template_root_path")
+        template_path = "%s/report/basic/basic.xml" % self._configer.get_option("TEMPLATE", "template_root_path")
 
         with open(p_res, "r") as result_file, open(template_path, "r") as template_file:
             result_content = etree.XML(result_file.read())

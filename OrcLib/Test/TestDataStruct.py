@@ -97,7 +97,7 @@ class TestListTree(unittest.TestCase):
                            'children': []}]}]}
 
         _model = ListTree()
-        _model.resolve_tree(_list)
+        _model.load_tree(_list)
 
         print _model.get_children_tree(106)
 
@@ -127,7 +127,7 @@ class TestListTree(unittest.TestCase):
                            'children': []}]}]}
 
         _model = ListTree()
-        _model.resolve_tree(_list)
+        _model.load_tree(_list)
 
         print _model.get_path(101)
         print _model.get_path(102)

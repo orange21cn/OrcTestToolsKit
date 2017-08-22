@@ -1,22 +1,20 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
-
 from PySide.QtGui import QSplitter
 from PySide.QtGui import QTabWidget
 
 from OrcLib.LibProgram import orc_singleton
+from OrcView.Driver.Cmd.WebDebug import WebDebug
 from OrcView.Driver.Web.Page.PageMain import PageContainer
 from OrcView.Driver.Web.Widget.WidgetMain import WidgetContainer
 from OrcView.Driver.Web.Window.WindowView import WindowView
 from OrcView.Lib.LibTheme import get_theme
 
-from .Cmd.WebDebug import WebDebug
-
 
 @orc_singleton
 class ViewWebMain(QSplitter):
     """
-
+    主界面
     """
     sig_page_selected = OrcSignal(str)
 

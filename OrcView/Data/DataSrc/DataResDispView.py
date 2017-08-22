@@ -17,18 +17,10 @@ class DataResDispControl(ControlBase):
         ControlBase.__init__(self, '')
 
 
-class DataResDispView(QWidget):
+class DataResDispView(ViewTable):
     """
     sql 结果显示
     """
     def __init__(self):
 
-        QWidget.__init__(self)
-
-        self.display = ViewTable('', DataResDispModel, DataResDispControl)
-
-        layout_main = QVBoxLayout()
-
-        layout_main.addWidget(self.display)
-
-        self.setLayout(layout_main)
+        ViewTable.__init__(self, DataResDispModel, DataResDispControl)

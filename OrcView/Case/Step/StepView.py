@@ -3,21 +3,21 @@ from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QWidget
 
-from OrcView.Data.Data.DataAdd import ViewDataAdd
-from OrcView.Lib.LibAdd import ViewAdd
+from OrcView.Data.Data.DataAdd import DataAdder
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import def_view_step
+
 from .StepModel import StepModel
 
 
 class StepControl(ControlBase):
 
-    def __init__(self):
+    def __init__(self, p_def='Step'):
 
-        ControlBase.__init__(self, 'Step')
+        ControlBase.__init__(self, p_def)
 
 
 class StepView(QWidget):
@@ -33,7 +33,7 @@ class StepView(QWidget):
         self.__case_id = p_id
 
         # Data result display widget
-        self.display = ViewTable('Step', StepModel, StepControl)
+        self.display = ViewTable(StepModel, StepControl)
 
         # Context menu
         menu_def = [dict(NAME=u"增加", STR="sig_add"),
@@ -50,12 +50,6 @@ class StepView(QWidget):
             dict(id="up", name=u"上移"),
             dict(id="down", name=u"下移")
         ], "VER")
-
-        # win_add
-        self.__win_add = ViewAdd(def_view_step)
-
-        # win add data
-        self.__win_data = ViewDataAdd()
 
         # Layout
         layout_main = QHBoxLayout()
@@ -75,20 +69,8 @@ class StepView(QWidget):
         # 单击发出单击事件
         self.display.clicked.connect(self.selected)
 
-        # 新增
-        self.__win_add.sig_submit.connect(self.add)
-
         # 右键菜单
         self.display.sig_context.connect(self.context)
-
-    def add(self, p_data):
-        """
-        新增
-        :param p_data:
-        :return:
-        """
-        self.display.model.mod_add(
-            dict(case_det={"case_id": self.__case_id}, step=p_data))
 
     def operate(self, p_flag):
         """
@@ -97,13 +79,15 @@ class StepView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            _data = StepAdder.static_get_data()
+            if _data is not None:
+                self.display.model.mod_add(dict(case_det=dict(case_id=self.__case_id), step=_data))
         elif "delete" == p_flag:
             if OrcMessage.question(self, u'确认删除'):
                 self.display.model.mod_delete()
                 self.sig_delete.emit()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "up" == p_flag:
             self.display.model.mod_up()
         elif "down" == p_flag:
@@ -129,9 +113,24 @@ class StepView(QWidget):
         :return:
         """
         if "sig_data" == p_flag:
-
             _step_id = self.display.model.mod_get_current_data()["step_id"]
+            DataAdder.static_add_data("STEP", _step_id)
 
-            self.__win_data.show()
-            self.__win_data.set_src_type("STEP")
-            self.__win_data.set_src_id(_step_id)
+
+class StepAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'Step')
+
+        self.setWindowTitle(u'新增步骤')
+
+    @staticmethod
+    def static_get_data():
+
+        view = StepAdder()
+        view.exec_()
+
+        return view._data

@@ -6,6 +6,7 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QPushButton
 from PySide.QtGui import QSizePolicy
 from PySide.QtGui import QHBoxLayout
+from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QLabel
 from PySide.QtGui import QComboBox
 from PySide.QtGui import QLineEdit
@@ -182,9 +183,12 @@ class WidgetCreator(object):
 
 class OrcLabel(QLabel):
 
-    def __init__(self, parent=None):
+    def __init__(self, p_text=None, parent=None):
 
         super(OrcLabel, self).__init__(parent)
+
+        if p_text is not None:
+            self.set_data(p_text)
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
@@ -667,3 +671,30 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+
+
+class OrcBoxWidget(QWidget):
+    """
+    layout 控件,用于某不没有 addlayout 的控件
+    """
+    def __init__(self, p_type=None):
+
+        QWidget.__init__(self)
+
+        if 'V' == p_type:
+            self._layout = QVBoxLayout()
+        else:
+            self._layout = QHBoxLayout()
+
+        self.setLayout(self._layout)
+
+        self._layout.setContentsMargins(0, 0, 0, 0)
+
+    def add_widget(self, p_widget):
+        """
+        增加控件
+        :param p_widget:
+        :return:
+        """
+        if isinstance(p_widget, QWidget):
+            self._layout.addWidget(p_widget)

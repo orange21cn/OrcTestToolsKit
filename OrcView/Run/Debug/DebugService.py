@@ -1,9 +1,7 @@
 # coding=utf-8
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
-from OrcLib.LibNet import ResourceCheck
-from OrcApi.Run.RunData import RunCmdType
-from OrcLib.LibDatabase import TabItem
+from OrcLib.LibCmd import OrcRecordCmd
 
 
 class DebugService(object):
@@ -20,37 +18,6 @@ class DebugService(object):
         self.__resource_data = OrcResource('Data')
 
         self.__root_path = list()
-
-    def get_objects(self, p_item_list):
-        """
-        获取相关的控件 list
-        :param p_item_list:
-        :return:
-        """
-        web_item_id = list()
-
-        for _item_data in p_item_list:
-
-            _cmd = RunCmdType(_item_data)
-            if _cmd.is_web_item():
-                web_item_id.append(_cmd.id)
-
-        # 检查结果
-        result = self.__resource_item.get(parameter=dict(id=web_item_id))
-        if not ResourceCheck.result_status(result, u"查询控件", self.__logger):
-            return dict()
-
-        object_id = list()
-        for _item_data in result.data:
-
-            _item = TabItem(_item_data)
-
-            _operation = eval(_item.item_operate)
-
-            if "DATA" in _operation:
-                object_id.append(_operation['OBJECT'])
-
-        return object_id
 
     def get_src_ids(self, p_path):
         """
@@ -71,7 +38,7 @@ class DebugService(object):
         :param p_root_data:
         :return:
         """
-        root_cmd = RunCmdType(p_root_data)
+        root_cmd = OrcRecordCmd(p_root_data)
 
         if root_cmd.is_batch_type():
             self.__root_path = self.__resource_batch_def.get(

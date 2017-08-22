@@ -1,0 +1,1406 @@
+1500972017489	geckodriver	INFO	Listening on 127.0.0.1:53231
+1500972018585	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1500972019655	Marionette	INFO	Listening on port 53237
+1500972019807	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-25 16:40:21.846 plugin-container[3037:234553] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e43, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 16:40:21.847 plugin-container[3037:234553] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x952f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 16:40:21.847 plugin-container[3037:234553] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1500973109920	geckodriver	INFO	Listening on 127.0.0.1:53522
+1500973111095	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1500973112517	Marionette	INFO	Listening on port 53528
+1500973112790	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-25 16:58:35.642 plugin-container[3139:242797] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8d57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 16:58:35.643 plugin-container[3139:242797] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4c27, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 16:58:35.643 plugin-container[3139:242797] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1500973287436	geckodriver	INFO	Listening on 127.0.0.1:53653
+1500973288607	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1500973289971	Marionette	INFO	Listening on port 53659
+1500973290225	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-25 17:01:32.867 plugin-container[3169:245122] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4f4b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:01:32.868 plugin-container[3169:245122] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x9317, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:01:32.868 plugin-container[3169:245122] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1500973334485	geckodriver	INFO	Listening on 127.0.0.1:53778
+1500973334693	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1500973336797	Marionette	INFO	Listening on port 53782
+1500973337078	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-25 17:02:20.672 plugin-container[3185:245953] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x504b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:02:20.674 plugin-container[3185:245953] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x922b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:02:20.674 plugin-container[3185:245953] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1500973508125	geckodriver	INFO	Listening on 127.0.0.1:53930
+1500973509293	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1500973510667	Marionette	INFO	Listening on port 53936
+1500973510968	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-25 17:05:13.524 plugin-container[3229:248371] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4f4b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:05:13.525 plugin-container[3229:248371] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x921b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:05:13.525 plugin-container[3229:248371] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+2017-07-25 17:16:58.739 plugin-container[3374:253774] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f5b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:16:58.740 plugin-container[3374:253774] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x9023, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-25 17:16:58.740 plugin-container[3374:253774] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1501030731729	geckodriver	INFO	Listening on 127.0.0.1:49615
+1501030732834	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1501030734091	Marionette	INFO	Listening on port 49624
+1501030734237	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-26 08:58:56.233 plugin-container[1377:43302] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f5b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 08:58:56.234 plugin-container[1377:43302] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4f33, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 08:58:56.234 plugin-container[1377:43302] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1501030855613	geckodriver	INFO	Listening on 127.0.0.1:49755
+1501030856700	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1501030857686	Marionette	INFO	Listening on port 49761
+1501030857814	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-26 09:00:59.702 plugin-container[1403:44467] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:00:59.702 plugin-container[1403:44467] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4e17, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:00:59.702 plugin-container[1403:44467] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1501031317577	geckodriver	INFO	Listening on 127.0.0.1:49885
+1501031318670	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1501031319629	Marionette	INFO	Listening on port 49891
+1501031319770	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-26 09:08:41.676 plugin-container[1456:46953] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:08:41.676 plugin-container[1456:46953] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4f1b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:08:41.676 plugin-container[1456:46953] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1501031432760	geckodriver	INFO	Listening on 127.0.0.1:50086
+1501031433843	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1501031434795	Marionette	INFO	Listening on port 50092
+1501031436169	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-26 09:10:36.852 plugin-container[1486:48471] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x9043, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:10:36.853 plugin-container[1486:48471] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x9727, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:10:36.853 plugin-container[1486:48471] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x2C0085,name=PBrowser::Msg_Destroy) Channel error: cannot send/recv
+
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1501031535444	geckodriver	INFO	Listening on 127.0.0.1:50220
+1501031536536	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1501031537554	Marionette	INFO	Listening on port 50226
+1501031537687	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-07-26 09:12:19.781 plugin-container[1514:49584] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8d57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:12:19.782 plugin-container[1514:49584] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f37, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-07-26 09:12:19.782 plugin-container[1514:49584] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+2017-08-05 17:45:23.617 geckodriver[1511:1966985] Metadata.framework [Error]: server port invalidated for uid 501
+2017-08-05 17:45:23.630 geckodriver[1511:1966996] Metadata.framework [Error]: server port went dead for query 0x7fdad4804c00 (restarting)
+2017-08-05 17:45:23.632 geckodriver[1511:1966994] Metadata.framework [Error]: client check-in failed: (268435459) (ipc/send) invalid destination port
+2017-08-05 17:45:23.632 geckodriver[1511:1966996] Metadata.framework [Error]: couldn't get the client port
+1503309845667	geckodriver	INFO	Listening on 127.0.0.1:60569
+1503309846789	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503309847770	Marionette	INFO	Listening on port 60575
+1503309847929	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:04:09.776 plugin-container[3093:419652] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:04:09.777 plugin-container[3093:419652] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e23, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:04:09.777 plugin-container[3093:419652] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+2017-08-21 18:06:21.447 plugin-container[3107:421374] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:06:21.458 plugin-container[3107:421374] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x480f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:06:21.458 plugin-container[3107:421374] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503310053988	geckodriver	INFO	Listening on 127.0.0.1:61211
+1503310055108	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503310056032	Marionette	INFO	Listening on port 61217
+1503310056193	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:07:38.014 plugin-container[3125:422747] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:07:38.014 plugin-container[3125:422747] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x894b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:07:38.014 plugin-container[3125:422747] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503310210727	geckodriver	INFO	Listening on 127.0.0.1:61682
+1503310211833	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503310212793	Marionette	INFO	Listening on port 61688
+1503310212961	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:10:14.769 plugin-container[3157:424418] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8957, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:10:14.770 plugin-container[3157:424418] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a33, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:10:14.770 plugin-container[3157:424418] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503310399463	geckodriver	INFO	Listening on 127.0.0.1:62261
+1503310400594	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503310401763	Marionette	INFO	Listening on port 62267
+1503310401940	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:13:24.031 plugin-container[3197:426204] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x895b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:13:24.032 plugin-container[3197:426204] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x883b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:13:24.032 plugin-container[3197:426204] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: chrome://marionette/content/listener.js, line 921: TypeError: can't access dead object
+1503310611021	geckodriver	INFO	Listening on 127.0.0.1:62686
+1503310612130	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503310613261	Marionette	INFO	Listening on port 62692
+1503310613423	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:16:55.482 plugin-container[3216:429895] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a5b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:16:55.483 plugin-container[3216:429895] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b1b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:16:55.483 plugin-container[3216:429895] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+[Child 3216] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3216] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503310769800	geckodriver	INFO	Listening on 127.0.0.1:63297
+1503310771039	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503310772177	Marionette	INFO	Listening on port 63303
+1503310772346	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:19:34.330 plugin-container[3231:432736] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:19:34.331 plugin-container[3231:432736] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f27, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:19:34.331 plugin-container[3231:432736] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503311028471	geckodriver	INFO	Listening on 127.0.0.1:63924
+1503311029584	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503311030686	Marionette	INFO	Listening on port 63930
+1503311030827	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:23:53.091 plugin-container[3241:437568] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b43, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:23:53.094 plugin-container[3241:437568] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4a13, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:23:53.094 plugin-container[3241:437568] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x4600AB,name=PContent::Msg_ConsoleMessage) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xFE0006,name=PWebSocket::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
+1503311123730	geckodriver	INFO	Listening on 127.0.0.1:64497
+1503311124841	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503311125947	Marionette	INFO	Listening on port 64503
+1503311126109	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:25:28.149 plugin-container[3249:438230] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8943, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:25:28.150 plugin-container[3249:438230] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8947, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:25:28.150 plugin-container[3249:438230] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: chrome://marionette/content/listener.js, line 921: TypeError: can't access dead object
+1503311267475	geckodriver	INFO	Listening on 127.0.0.1:65382
+1503311268588	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503311269689	Marionette	INFO	Listening on port 65388
+1503311269870	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:27:51.866 plugin-container[3262:440854] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x895b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:27:51.867 plugin-container[3262:440854] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a17, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:27:51.867 plugin-container[3262:440854] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: http://www.sina.com.cn/, line 7828: ReferenceError: suds_init is not defined
+JavaScript error: https://sax.sina.com.cn/newimpress?rotate_count=82&TIMESTAMP=j6m0pulo&referral=http%3A%2F%2Fwww.sina.com.cn%2F&adunitid=PDPS000000045982&am=%7Bds%3A1680x1050%2Cfv%3A0%2Cov%3AMacIntel%7D&callback=_sinaads_cbs_ympa6k, line 1: ReferenceError: _sinaads_cbs_ympa6k is not defined
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[Child 3262] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3262] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503311482362	geckodriver	INFO	Listening on 127.0.0.1:49617
+1503311483464	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503311484519	Marionette	INFO	Listening on port 49623
+1503311484676	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:31:26.612 plugin-container[3281:444262] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8653, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:31:26.613 plugin-container[3281:444262] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4817, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:31:26.613 plugin-container[3281:444262] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503311769342	geckodriver	INFO	Listening on 127.0.0.1:50309
+1503311770450	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503311771675	Marionette	INFO	Listening on port 50315
+1503311771847	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:36:13.988 plugin-container[3295:448541] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x885b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:36:13.989 plugin-container[3295:448541] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x891b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:36:13.989 plugin-container[3295:448541] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+2017-08-21 18:40:34.139 plugin-container[3301:451912] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x474b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:40:34.140 plugin-container[3301:451912] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4647, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:40:34.140 plugin-container[3301:451912] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503312079742	geckodriver	INFO	Listening on 127.0.0.1:50956
+1503312080846	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503312081925	Marionette	INFO	Listening on port 50962
+1503312082073	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:41:23.994 plugin-container[3314:452552] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8957, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:41:23.996 plugin-container[3314:452552] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4917, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:41:23.996 plugin-container[3314:452552] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503312198333	geckodriver	INFO	Listening on 127.0.0.1:51533
+1503312199474	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503312200964	Marionette	INFO	Listening on port 51539
+1503312201236	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:43:23.867 plugin-container[3325:453355] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:43:23.868 plugin-container[3325:453355] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8933, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:43:23.868 plugin-container[3325:453355] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503312257891	geckodriver	INFO	Listening on 127.0.0.1:52097
+1503312258994	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503312260495	Marionette	INFO	Listening on port 52103
+1503312260696	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-21 18:44:24.242 plugin-container[3333:454664] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8757, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:44:24.244 plugin-container[3333:454664] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x461f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-21 18:44:24.244 plugin-container[3333:454664] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+[Child 3333] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3333] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: n.connection is null
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: n.connection is null
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: this.connection is null
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: this.connection is null
+1503365495755	geckodriver	INFO	Listening on 127.0.0.1:52820
+1503365496845	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503365498046	Marionette	INFO	Listening on port 52826
+1503365498211	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 09:31:40.240 plugin-container[3429:468999] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:31:40.241 plugin-container[3429:468999] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4717, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:31:40.241 plugin-container[3429:468999] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503366060000	geckodriver	INFO	Listening on 127.0.0.1:53372
+1503366061091	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503366062134	Marionette	INFO	Listening on port 53378
+1503366062270	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 09:41:04.185 plugin-container[3443:471988] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:41:04.186 plugin-container[3443:471988] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b3f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:41:04.186 plugin-container[3443:471988] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+JavaScript error: http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js, line 2: TypeError: t is null
+JavaScript error: http://ad.doubleclick.net/ddm/adi/N5751.139303.4006058940521/B11527232.153474030;dc_ver=39.103;dc_eid=40004001;sz=300x250;u_sd=1;dc_adk=2973613024;ord=devbwv;dc_rfl=2,http%3A%2F%2Fblog.csdn.net%2Falchaochao%2Farticle%2Fdetails%2F45457651$0;xdt=1;crlt=Zy5z_o0yFF;sttr=1195;prcl=h?, line 1: NS_ERROR_FAILURE: 
+JavaScript error: http://bdimg.share.baidu.com/static/api/js/trans/logger.js?v=d16ec0e3.js, line 1: TypeError: n.ajax.request is not a function
+JavaScript error: , line 0: uncaught exception: undefined
+1503366502339	geckodriver	INFO	Listening on 127.0.0.1:54166
+1503366502479	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503366503795	Marionette	INFO	Listening on port 54170
+1503366503936	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 09:48:25.899 plugin-container[3461:476460] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:48:25.900 plugin-container[3461:476460] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8c1b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:48:25.900 plugin-container[3461:476460] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: http://bdimg.share.baidu.com/static/api/js/trans/logger.js?v=d16ec0e3.js, line 1: TypeError: n.ajax.request is not a function
+JavaScript warning: http://www.360doc.com/js/jquery1.js, line 1: unreachable code after return statement
+JavaScript warning: http://www.360doc.com/js/jquery1.js, line 1: unreachable code after return statement
+JavaScript warning: http://pos.baidu.com/rcwm?rdid=2898860&dc=3&di=u2898860&dri=0&dis=1&dai=1&ps=4690x21&dcb=___adblockplus&dtm=HTML_POST&dvi=0.0&dci=-1&dpt=none&tsr=0&tpr=1503366837812&ti=selenium%20webdriver(5)%E2%80%94%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE&ari=2&dbv=0&drs=1&pcs=1280x818&pss=1280x4930&cfv=0&cpl=7&chi=1&cce=true&cec=UTF-8&tlm=1487662299&rw=320&ltu=http%3A%2F%2Fwww.360doc.com%2Fcontent%2F14%2F0913%2F10%2F13497042_409106015.shtml&liu=http%3A%2F%2Fwww.360doc.com%2Fad%2Funderad.html%3Ft%3D2017022201&ltr=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DuL31o4foyEk6WHceH2Sv5My72fSf_ib1aG_ewALWF7uFMWEyGZHCmh7lTw0lqY0hEEN440HZLK5nvPwQ4Fz2NSxYc666_-hZkfOiR6CsyLy%26wd%3D%26eqid%3D8e4b79d300007da200000004599b8d0c&ecd=1&uc=1680x1023&pis=676x100&sr=1680x1050&tcn=1503366838&qn=177c030d06b3f88c&tt=1503366837872.70.378.383, line 117: unreachable code after return statement
+JavaScript warning: http://pos.baidu.com/rcwm?rdid=2898860&dc=3&di=u2898860&dri=0&dis=1&dai=1&ps=4690x21&dcb=___adblockplus&dtm=HTML_POST&dvi=0.0&dci=-1&dpt=none&tsr=0&tpr=1503366837812&ti=selenium%20webdriver(5)%E2%80%94%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE&ari=2&dbv=0&drs=1&pcs=1280x818&pss=1280x4930&cfv=0&cpl=7&chi=1&cce=true&cec=UTF-8&tlm=1487662299&rw=320&ltu=http%3A%2F%2Fwww.360doc.com%2Fcontent%2F14%2F0913%2F10%2F13497042_409106015.shtml&liu=http%3A%2F%2Fwww.360doc.com%2Fad%2Funderad.html%3Ft%3D2017022201&ltr=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DuL31o4foyEk6WHceH2Sv5My72fSf_ib1aG_ewALWF7uFMWEyGZHCmh7lTw0lqY0hEEN440HZLK5nvPwQ4Fz2NSxYc666_-hZkfOiR6CsyLy%26wd%3D%26eqid%3D8e4b79d300007da200000004599b8d0c&ecd=1&uc=1680x1023&pis=676x100&sr=1680x1050&tcn=1503366838&qn=177c030d06b3f88c&tt=1503366837872.70.378.383, line 117: unreachable code after return statement
+1503366906527	geckodriver	INFO	Listening on 127.0.0.1:54943
+1503366907650	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503366908938	Marionette	INFO	Listening on port 54949
+1503366909092	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 09:55:11.864 plugin-container[3475:480538] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:55:11.866 plugin-container[3475:480538] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e2f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 09:55:11.866 plugin-container[3475:480538] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: https://cdn.sstatic.net/Js/stub.en.js?v=f34a56f92674, line 1: ReferenceError: $ is not defined
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 42: TypeError: StackExchange.ready is not a function
+JavaScript error: https://cdn.sstatic.net/Js/stub.en.js?v=f34a56f92674, line 1: ReferenceError: $ is not defined
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 74: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 85: ReferenceError: $ is not defined
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 288: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 322: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1142: TypeError: StackExchange.ifUsing is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1153: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1221: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1262: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1357: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1586: TypeError: StackExchange.ready is not a function
+JavaScript error: https://stackoverflow.com/questions/17533024/how-to-set-selenium-python-webdriver-default-timeout, line 1814: ReferenceError: $ is not defined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503367247103	geckodriver	INFO	Listening on 127.0.0.1:55627
+1503367248228	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503367249561	Marionette	INFO	Listening on port 55633
+1503367249770	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:00:52.341 plugin-container[3488:483177] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:00:52.344 plugin-container[3488:483177] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4747, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:00:52.344 plugin-container[3488:483177] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: chrome://marionette/content/listener.js, line 921: TypeError: can't access dead object
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x4600AC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+JavaScript warning: https://zhidao.baidu.com/question/1737641667737447987.html, line 1377: SyntaxError: 09 is not a legal ECMA-262 octal constant
+JavaScript warning: https://pos.baidu.com/mcgm?mpdi=227509&rtbid=1972219&rdid=9223372032564532863&dc=2&di=968278&dri=0&dis=0&dai=0&ps=628x915&dcb=___adblockplus&dtm=HTML_POST&dvi=0.0&dci=-1&dpt=none&tsr=0&tpr=1503367311797&cop=zdclassid%3D1249%26zhidaoqid%3D1737641667737447987%26zdquery%3Dselenium%2520set_page_load_timeout&ti=python%20selenium%20%E9%9C%80%E8%A6%81%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%E5%A6%82%E6%9E%9C10%E7%A7%92%E5%86%85%E6%9C%AA%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90%EF%BC%8C%E5%B0%B1%E5%81%9C%E6%AD%A2%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%84%B6%E5%90%8E%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F_%E7%99%BE%E5%BA%A6%E7%9F%A5%E9%81%93&ari=2&dbv=0&drs=3&pcs=1280x818&pss=1280x2191&cfv=0&cpl=7&chi=1&cce=true&cec=gbk&tlm=1503367314&prot=2&rw=818&ltu=https%3A%2F%2Fzhidao.baidu.com%2Fquestion%2F1737641667737447987.html&ltr=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DKFWS_KV9bnP2hHnv39W788ltk1Dz9Uy1-Q7VhpSUk3Q7QIFbWcmSzjdZviyAt7e7I5Hv1SKo0NpLoLejojt9L8UZfAQ_QyzJVO5TD1UFdNq%26wd%3D%26eqid%3D8e4b79d300007da200000004599b8d0c&ecd=1&uc=1680x1023&pis=-1x-1&sr=1680x1050&tcn=1503367314&qn=2c2c29ddf2931085&dpv=2c2c29ddf2931085&tt=1503367311601.2535.2728.2735, line 83: unreachable code after return statement
+JavaScript warning: https://pos.baidu.com/mcgm?mpdi=227509&rtbid=1972219&rdid=9223372032564532863&dc=2&di=968278&dri=0&dis=0&dai=0&ps=628x915&dcb=___adblockplus&dtm=HTML_POST&dvi=0.0&dci=-1&dpt=none&tsr=0&tpr=1503367311797&cop=zdclassid%3D1249%26zhidaoqid%3D1737641667737447987%26zdquery%3Dselenium%2520set_page_load_timeout&ti=python%20selenium%20%E9%9C%80%E8%A6%81%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%E5%A6%82%E6%9E%9C10%E7%A7%92%E5%86%85%E6%9C%AA%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90%EF%BC%8C%E5%B0%B1%E5%81%9C%E6%AD%A2%E5%8A%A0%E8%BD%BD%EF%BC%8C%E7%84%B6%E5%90%8E%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F_%E7%99%BE%E5%BA%A6%E7%9F%A5%E9%81%93&ari=2&dbv=0&drs=3&pcs=1280x818&pss=1280x2191&cfv=0&cpl=7&chi=1&cce=true&cec=gbk&tlm=1503367314&prot=2&rw=818&ltu=https%3A%2F%2Fzhidao.baidu.com%2Fquestion%2F1737641667737447987.html&ltr=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DKFWS_KV9bnP2hHnv39W788ltk1Dz9Uy1-Q7VhpSUk3Q7QIFbWcmSzjdZviyAt7e7I5Hv1SKo0NpLoLejojt9L8UZfAQ_QyzJVO5TD1UFdNq%26wd%3D%26eqid%3D8e4b79d300007da200000004599b8d0c&ecd=1&uc=1680x1023&pis=-1x-1&sr=1680x1050&tcn=1503367314&qn=2c2c29ddf2931085&dpv=2c2c29ddf2931085&tt=1503367311601.2535.2728.2735, line 83: unreachable code after return statement
+1503367412342	geckodriver	INFO	Listening on 127.0.0.1:56256
+1503367413435	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503367414939	Marionette	INFO	Listening on port 56263
+1503367415103	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:03:37.719 plugin-container[3505:485643] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x484b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:03:37.722 plugin-container[3505:485643] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x892f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:03:37.722 plugin-container[3505:485643] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+[Child 3505] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3505] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+2017-08-22 10:04:37.317 firefox-bin[3442:471858] -deltaZ is deprecated for NSEventTypeMagnify.  Please use -magnification.
+1503367481008	geckodriver	INFO	Listening on 127.0.0.1:56820
+1503367482171	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503367483503	Marionette	INFO	Listening on port 56826
+1503367483779	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:04:46.234 plugin-container[3519:486885] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:04:46.237 plugin-container[3519:486885] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f27, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:04:46.237 plugin-container[3519:486885] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript error: http://www.sina.com.cn/, line 7836: ReferenceError: suds_init is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503367535327	geckodriver	INFO	Listening on 127.0.0.1:57369
+1503367536436	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503367537749	Marionette	INFO	Listening on port 57375
+1503367538059	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:05:39.949 plugin-container[3529:487957] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8757, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:05:39.950 plugin-container[3529:487957] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:05:39.950 plugin-container[3529:487957] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x4600AC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+1503368053712	geckodriver	INFO	Listening on 127.0.0.1:58113
+1503368054826	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368055937	Marionette	INFO	Listening on port 58119
+1503368056091	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:14:18.883 plugin-container[3577:495013] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:14:18.888 plugin-container[3577:495013] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4813, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:14:18.888 plugin-container[3577:495013] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503368082761	geckodriver	INFO	Listening on 127.0.0.1:58151
+1503368084034	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368085060	Marionette	INFO	Listening on port 58157
+1503368085187	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:14:47.077 plugin-container[3589:495482] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:14:47.079 plugin-container[3589:495482] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e23, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:14:47.079 plugin-container[3589:495482] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503368105312	geckodriver	INFO	Listening on 127.0.0.1:58188
+1503368106552	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368107595	Marionette	INFO	Listening on port 58194
+1503368107722	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:15:09.707 plugin-container[3599:495835] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:15:09.708 plugin-container[3599:495835] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8953, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:15:09.708 plugin-container[3599:495835] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503368307513	geckodriver	INFO	Listening on 127.0.0.1:58769
+1503368308626	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368310085	Marionette	INFO	Listening on port 58775
+1503368310246	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:18:33.143 plugin-container[3626:498423] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x464f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:18:33.145 plugin-container[3626:498423] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4737, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:18:33.145 plugin-container[3626:498423] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503368344238	geckodriver	INFO	Listening on 127.0.0.1:58816
+1503368345373	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368346587	Marionette	INFO	Listening on port 58822
+1503368346747	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:19:09.624 plugin-container[3637:498910] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a43, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:19:09.626 plugin-container[3637:498910] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:19:09.626 plugin-container[3637:498910] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503368412448	geckodriver	INFO	Listening on 127.0.0.1:59360
+1503368413567	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368415317	Marionette	INFO	Listening on port 59366
+1503368415675	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:20:19.277 plugin-container[3645:500065] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8553, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:20:19.279 plugin-container[3645:500065] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x461f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:20:19.279 plugin-container[3645:500065] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript error: https://sax.sina.com.cn/newimpress?rotate_count=81&TIMESTAMP=j6myqqrw&referral=http%3A%2F%2Fwww.sina.com.cn%2F&adunitid=PDPS000000058041&am=%7Bds%3A1680x1050%2Cfv%3A0%2Cov%3AMacIntel%7D&callback=_sinaads_cbs_npaa4d, line 1: ReferenceError: _sinaads_cbs_npaa4d is not defined
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3645] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x9A0025,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x4600AC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x4600AC,name=PContent::Msg_ScriptError) Channel closing: too late to send/recv, messages will be lost
+
+1503368654185	geckodriver	INFO	Listening on 127.0.0.1:59822
+1503368655319	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368656960	Marionette	INFO	Listening on port 59829
+1503368657181	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:24:19.982 plugin-container[3680:501931] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x864b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:24:19.983 plugin-container[3680:501931] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:24:19.983 plugin-container[3680:501931] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+[Child 3680] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3680] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503368756032	geckodriver	INFO	Listening on 127.0.0.1:60442
+1503368757198	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503368758834	Marionette	INFO	Listening on port 60448
+1503368759075	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:26:01.914 plugin-container[3697:503621] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4943, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:26:01.915 plugin-container[3697:503621] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x902b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:26:01.915 plugin-container[3697:503621] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: https://sax.sina.com.cn/newimpress?rotate_count=48&TIMESTAMP=j6myy1p9&referral=http%3A%2F%2Fwww.sina.com.cn%2F&adunitid=PDPS000000058040&am=%7Bds%3A1680x1050%2Cfv%3A0%2Cov%3AMacIntel%7D&callback=_sinaads_cbs_t5jcjm, line 1: ReferenceError: _sinaads_cbs_t5jcjm is not defined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503369053854	geckodriver	INFO	Listening on 127.0.0.1:61039
+1503369054106	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503369057110	Marionette	INFO	Listening on port 61043
+1503369057590	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:31:02.526 plugin-container[3715:506940] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4b4b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:31:02.527 plugin-container[3715:506940] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x483f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:31:02.527 plugin-container[3715:506940] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: chrome://marionette/content/listener.js, line 921: TypeError: can't access dead object
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503369909486	geckodriver	INFO	Listening on 127.0.0.1:61714
+1503369910636	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503369912366	Marionette	INFO	Listening on port 61720
+1503369912562	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:45:15.414 plugin-container[3739:517012] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:45:15.415 plugin-container[3739:517012] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e2b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:45:15.416 plugin-container[3739:517012] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript error: http://d3.sina.com.cn/litong/zhitou/sinaads/demo/jiliang/toutiaobao/toutiaobao.js, line 235: ReferenceError: sinaadToolkit is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+[GFX1]: ValidateTile failed
+[Child 3739] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3739] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 3739] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3739] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+1503370076859	geckodriver	INFO	Listening on 127.0.0.1:62348
+1503370077996	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503370079466	Marionette	INFO	Listening on port 62354
+1503370079655	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 10:48:02.144 plugin-container[3755:520257] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:48:02.145 plugin-container[3755:520257] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f2b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 10:48:02.145 plugin-container[3755:520257] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+[Child 3755] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3755] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503371157374	geckodriver	INFO	Listening on 127.0.0.1:62517
+1503371158518	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503371160007	Marionette	INFO	Listening on port 62523
+1503371160167	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:06:02.932 plugin-container[3789:529671] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8657, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:06:02.932 plugin-container[3789:529671] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:06:02.933 plugin-container[3789:529671] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503371632839	geckodriver	INFO	Listening on 127.0.0.1:62748
+1503371633968	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503371635397	Marionette	INFO	Listening on port 62754
+1503371635608	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:13:58.169 plugin-container[3805:537016] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x885b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:13:58.171 plugin-container[3805:537016] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x463b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:13:58.171 plugin-container[3805:537016] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503371657157	geckodriver	INFO	Listening on 127.0.0.1:62802
+1503371658363	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503371659902	Marionette	INFO	Listening on port 62808
+1503371660106	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:14:22.758 plugin-container[3815:537598] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8757, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:14:22.759 plugin-container[3815:537598] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x482b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:14:22.759 plugin-container[3815:537598] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 3815] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3815] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503371875652	geckodriver	INFO	Listening on 127.0.0.1:62932
+1503371876761	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503371878316	Marionette	INFO	Listening on port 62938
+1503371878647	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:18:02.142 plugin-container[3846:540914] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8657, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:18:02.143 plugin-container[3846:540914] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:18:02.143 plugin-container[3846:540914] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503372118304	geckodriver	INFO	Listening on 127.0.0.1:63034
+1503372119428	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372120989	Marionette	INFO	Listening on port 63040
+1503372121228	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:22:04.361 plugin-container[3860:544462] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:22:04.363 plugin-container[3860:544462] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8933, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:22:04.363 plugin-container[3860:544462] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503372174448	geckodriver	INFO	Listening on 127.0.0.1:63093
+1503372175553	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372176872	Marionette	INFO	Listening on port 63099
+1503372177094	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:22:59.901 plugin-container[3873:545187] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x885b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:22:59.902 plugin-container[3873:545187] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8923, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:22:59.902 plugin-container[3873:545187] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503372208950	geckodriver	INFO	Listening on 127.0.0.1:63150
+1503372210039	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372211308	Marionette	INFO	Listening on port 63156
+1503372211460	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:23:34.116 plugin-container[3885:545900] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:23:34.116 plugin-container[3885:545900] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4717, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:23:34.116 plugin-container[3885:545900] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503372251692	geckodriver	INFO	Listening on 127.0.0.1:63203
+1503372252809	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372254062	Marionette	INFO	Listening on port 63209
+1503372254301	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:24:17.192 plugin-container[3901:546367] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x464f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:24:17.194 plugin-container[3901:546367] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4933, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:24:17.194 plugin-container[3901:546367] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+[Child 3901] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 3901] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503372464283	geckodriver	INFO	Listening on 127.0.0.1:63302
+1503372465415	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372466950	Marionette	INFO	Listening on port 63308
+1503372467161	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:27:49.520 plugin-container[3930:548955] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:27:49.520 plugin-container[3930:548955] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x461f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:27:49.521 plugin-container[3930:548955] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503372593308	geckodriver	INFO	Listening on 127.0.0.1:63396
+1503372594434	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503372596345	Marionette	INFO	Listening on port 63403
+1503372596667	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 11:29:59.580 plugin-container[3947:550307] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:29:59.582 plugin-container[3947:550307] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 11:29:59.582 plugin-container[3947:550307] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: n.connection is null
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: n.connection is null
+JavaScript error: http://woocall.sina.com.cn/lib/IO.WebPush4.js, line 1: TypeError: n.connection is null
+1503378203789	geckodriver	INFO	Listening on 127.0.0.1:63756
+1503378204930	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378206347	Marionette	INFO	Listening on port 63762
+1503378206536	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:03:29.510 plugin-container[3998:581212] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8653, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:03:29.512 plugin-container[3998:581212] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x883b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:03:29.512 plugin-container[3998:581212] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503378359687	geckodriver	INFO	Listening on 127.0.0.1:63824
+1503378360913	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378362331	Marionette	INFO	Listening on port 63830
+1503378362619	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:06:05.500 plugin-container[4010:582062] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8937, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:06:05.501 plugin-container[4010:582062] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8d37, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:06:05.501 plugin-container[4010:582062] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503378412778	geckodriver	INFO	Listening on 127.0.0.1:63877
+1503378413891	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378415314	Marionette	INFO	Listening on port 63883
+1503378415519	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:06:58.399 plugin-container[4021:582560] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x464f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:06:58.400 plugin-container[4021:582560] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a23, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:06:58.400 plugin-container[4021:582560] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503378479086	geckodriver	INFO	Listening on 127.0.0.1:63939
+1503378480217	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378481746	Marionette	INFO	Listening on port 63947
+1503378481986	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:08:05.870 plugin-container[4036:583084] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8557, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:08:05.872 plugin-container[4036:583084] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8d1b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:08:05.872 plugin-container[4036:583084] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503378623009	geckodriver	INFO	Listening on 127.0.0.1:64009
+1503378624152	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378625546	Marionette	INFO	Listening on port 64015
+1503378625795	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:10:28.777 plugin-container[4059:584648] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8953, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:10:28.778 plugin-container[4059:584648] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x481b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:10:28.778 plugin-container[4059:584648] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503378662899	geckodriver	INFO	Listening on 127.0.0.1:64063
+1503378664057	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378665658	Marionette	INFO	Listening on port 64069
+1503378665864	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:11:08.437 plugin-container[4072:585219] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8c57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:11:08.438 plugin-container[4072:585219] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4817, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:11:08.438 plugin-container[4072:585219] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+JavaScript error: http://bdimg.share.baidu.com/static/api/js/trans/logger.js?v=d16ec0e3.js, line 1: TypeError: n.ajax.request is not a function
+1503378991113	geckodriver	INFO	Listening on 127.0.0.1:64156
+1503378992220	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503378993314	Marionette	INFO	Listening on port 64162
+1503378993463	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:16:35.571 plugin-container[4107:589051] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8857, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:16:35.572 plugin-container[4107:589051] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x873f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:16:35.572 plugin-container[4107:589051] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503379021943	geckodriver	INFO	Listening on 127.0.0.1:64204
+1503379023023	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379024133	Marionette	INFO	Listening on port 64210
+1503379024273	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:17:06.116 plugin-container[4119:589675] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8837, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:17:06.116 plugin-container[4119:589675] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x875f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:17:06.116 plugin-container[4119:589675] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+1503379057540	geckodriver	INFO	Listening on 127.0.0.1:64267
+1503379058634	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379059727	Marionette	INFO	Listening on port 64274
+1503379059855	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:17:41.883 plugin-container[4132:590134] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x895b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:17:41.883 plugin-container[4132:590134] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4737, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:17:41.883 plugin-container[4132:590134] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js, line 4: ReferenceError: c is not defined
+JavaScript error: https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=o&json=1&p=3&sid=1433_19035_21081_20930&csor=1&cb=jQuery11020009354557259668939_1503379064772&_=1503379064774, line 1: TypeError: jQuery11020009354557259668939_1503379064772 is not a function
+1503379350346	geckodriver	INFO	Listening on 127.0.0.1:64537
+1503379351468	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379352570	Marionette	INFO	Listening on port 64543
+1503379352702	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:22:34.616 plugin-container[4162:594248] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b5b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:22:34.618 plugin-container[4162:594248] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8c1b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:22:34.619 plugin-container[4162:594248] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/plugin5/ui-calendar-v5.js?vs=v2017081812, line 341: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search-new.js?vs=v2017081812, line 3445: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search.js?vs=v2017081812, line 3124: unreachable code after return statement
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 75: TypeError: this._recipeManager is null
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 75: TypeError: this._recipeManager is null
+JavaScript error: resource://gre/modules/LoginManagerParent.jsm, line 75: TypeError: this._recipeManager is null
+1503379485288	geckodriver	INFO	Listening on 127.0.0.1:64700
+1503379486405	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379488189	Marionette	INFO	Listening on port 64706
+1503379488639	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:24:51.826 plugin-container[4176:595589] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x454f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:24:51.827 plugin-container[4176:595589] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8c27, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:24:51.827 plugin-container[4176:595589] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503379502991	geckodriver	INFO	Listening on 127.0.0.1:64756
+1503379504099	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379505198	Marionette	INFO	Listening on port 64762
+1503379505329	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:25:07.294 plugin-container[4184:595939] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:25:07.295 plugin-container[4184:595939] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8847, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:25:07.295 plugin-container[4184:595939] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+1503379533248	geckodriver	INFO	Listening on 127.0.0.1:64810
+1503379534342	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379535475	Marionette	INFO	Listening on port 64816
+1503379535607	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:25:37.865 plugin-container[4211:596955] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x885b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:25:37.871 plugin-container[4211:596955] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x472f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:25:37.871 plugin-container[4211:596955] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/plugin5/ui-calendar-v5.js?vs=v2017081812, line 341: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search-new.js?vs=v2017081812, line 3445: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search.js?vs=v2017081812, line 3124: unreachable code after return statement
+2017-08-22 13:26:18.304 plugin-container[4214:597646] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x895b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:26:18.305 plugin-container[4214:597646] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a27, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:26:18.305 plugin-container[4214:597646] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+1503379603808	geckodriver	INFO	Listening on 127.0.0.1:65007
+1503379604891	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379605986	Marionette	INFO	Listening on port 65013
+1503379606130	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:26:48.400 plugin-container[4220:598206] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a4f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:26:48.401 plugin-container[4220:598206] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8f2b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:26:48.401 plugin-container[4220:598206] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/plugin5/ui-calendar-v5.js?vs=v2017081812, line 341: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search-new.js?vs=v2017081812, line 3445: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search.js?vs=v2017081812, line 3124: unreachable code after return statement
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+1503379674939	geckodriver	INFO	Listening on 127.0.0.1:65142
+1503379676026	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379677150	Marionette	INFO	Listening on port 65148
+1503379677285	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:27:59.668 plugin-container[4233:599907] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8957, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:27:59.669 plugin-container[4233:599907] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:27:59.669 plugin-container[4233:599907] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+[Child 4233] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 4233] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503379818056	geckodriver	INFO	Listening on 127.0.0.1:65293
+1503379819141	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503379820228	Marionette	INFO	Listening on port 65299
+1503379820355	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:30:22.284 plugin-container[4243:601690] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8643, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:30:22.285 plugin-container[4243:601690] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8817, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:30:22.285 plugin-container[4243:601690] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/plugin5/ui-calendar-v5.js?vs=v2017081812, line 341: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search-new.js?vs=v2017081812, line 3445: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search.js?vs=v2017081812, line 3124: unreachable code after return statement
+1503380049695	geckodriver	INFO	Listening on 127.0.0.1:65435
+1503380050783	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503380051934	Marionette	INFO	Listening on port 65441
+1503380052063	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:34:14.368 plugin-container[4269:604020] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8743, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:34:14.371 plugin-container[4269:604020] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8e2b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:34:14.371 plugin-container[4269:604020] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript warning: https://static-ssl.mediav.com/mv.js, line 1: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/plugin5/ui-calendar-v5.js?vs=v2017081812, line 341: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search-new.js?vs=v2017081812, line 3445: unreachable code after return statement
+JavaScript warning: https://ajax.springairlines.com/cache/js/modules/site5/main-search.js?vs=v2017081812, line 3124: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1503380871751	geckodriver	INFO	Listening on 127.0.0.1:49203
+1503380872853	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503380873751	Marionette	INFO	Listening on port 49209
+1503380873875	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:47:55.634 plugin-container[4338:608146] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:47:55.635 plugin-container[4338:608146] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x472b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:47:55.635 plugin-container[4338:608146] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503380999819	geckodriver	INFO	Listening on 127.0.0.1:49765
+1503381000985	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503381002354	Marionette	INFO	Listening on port 49771
+1503381002569	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:50:05.280 plugin-container[4363:609860] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8957, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:50:05.281 plugin-container[4363:609860] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x451b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:50:05.281 plugin-container[4363:609860] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503381147736	geckodriver	INFO	Listening on 127.0.0.1:50339
+1503381148994	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503381151246	Marionette	INFO	Listening on port 50345
+1503381151589	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:52:35.820 plugin-container[4382:611514] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:52:35.821 plugin-container[4382:611514] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:52:35.822 plugin-container[4382:611514] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: http://www.sina.com.cn/, line 7832: ReferenceError: suds_init is not defined
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4382] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 4382] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503381312687	geckodriver	INFO	Listening on 127.0.0.1:50911
+1503381313788	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503381314780	Marionette	INFO	Listening on port 50917
+1503381314938	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:55:16.713 plugin-container[4410:613807] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8843, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:55:16.714 plugin-container[4410:613807] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8a17, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:55:16.715 plugin-container[4410:613807] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://adm.leju.com/get_abp_list/PG_514AC419D66F33?callback=lejuDataCallback, line 1: ReferenceError: lejuDataCallback is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+JavaScript error: http://www.sina.com.cn/, line 7832: ReferenceError: suds_init is not defined
+[Child 4410] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4410] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 4410] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503381529734	geckodriver	INFO	Listening on 127.0.0.1:51463
+1503381530831	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503381531734	Marionette	INFO	Listening on port 51469
+1503381531854	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 13:58:53.558 plugin-container[4438:617026] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x883f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:58:53.559 plugin-container[4438:617026] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x892b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 13:58:53.559 plugin-container[4438:617026] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+[Child 4438] WARNING: pipe error: Broken pipe: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+JavaScript error: chrome://marionette/content/listener.js, line 921: TypeError: can't access dead object
+[Child 4438] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+[Child 4438] ###!!! ABORT: Aborting on channel error.: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/glue/MessageChannel.cpp, line 2143
+1503381604309	geckodriver	INFO	Listening on 127.0.0.1:52073
+1503381605396	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503381606332	Marionette	INFO	Listening on port 52079
+1503381606469	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 14:00:08.217 plugin-container[4461:618342] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8637, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:00:08.217 plugin-container[4461:618342] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x471f, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:00:08.217 plugin-container[4461:618342] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+[Child 4461] WARNING: pipe error: Socket is not connected: file /builds/slave/m-esr52-m64-000000000000000000/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 685
+1503383664149	geckodriver	INFO	Listening on 127.0.0.1:52758
+1503383665239	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503383666144	Marionette	INFO	Listening on port 52764
+1503383666270	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 14:34:28.074 plugin-container[4503:629945] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8757, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:34:28.074 plugin-container[4503:629945] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4817, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:34:28.074 plugin-container[4503:629945] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+1503383800780	geckodriver	INFO	Listening on 127.0.0.1:53435
+1503383801922	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin with args ["-marionette"]
+1503383803163	Marionette	INFO	Listening on port 53441
+1503383803381	Marionette	WARN	TLS certificate errors will be ignored for this session
+2017-08-22 14:36:46.311 plugin-container[4522:632571] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x8b57, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:36:46.312 plugin-container[4522:632571] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x4733, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-08-22 14:36:46.312 plugin-container[4522:632571] Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+JavaScript error: http://beacon.sina.com.cn/h.js, line 1: ReferenceError: etag_ngx_str is not defined
+JavaScript warning: http://www.sina.com.cn/js/79/index2016/v0503/shms.js, line 288: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************

@@ -28,6 +28,8 @@ def get_mark(p_flag, p_id):
         return get_page_det_mark(p_id)
     elif "WIDGET" == p_flag:
         return get_widget_mark(p_id)
+    elif 'DATA' == p_flag:
+        return get_data_mark(p_id)
     else:
         return None
 
@@ -198,3 +200,12 @@ def get_widget_mark(p_widget_id):
         return None
 
     return widget_def_info.data['widget_path']
+
+
+def get_data_mark(p_id):
+    """
+    获取数据标识
+    :param p_id:
+    :return:
+    """
+    return p_id

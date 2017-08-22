@@ -132,7 +132,7 @@ class TestView(unittest.TestCase):
         Test get root
         :return:
         """
-        from OrcView.Driver.Web.Cmd.WebDebug import WidgetDebug
+        from OrcView.Driver.Cmd import WidgetDebug
 
         OrcTest.test_print_begin()
 

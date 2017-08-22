@@ -3,7 +3,11 @@ from PySide.QtGui import QMessageBox
 
 
 class OrcMessage(object):
+    """
+
+    """
     def __init__(self):
+
         object.__init__(self)
 
     @staticmethod

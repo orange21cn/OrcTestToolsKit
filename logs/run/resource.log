@@ -1,0 +1,93 @@
+[2017-07-25 08:40:00 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:40:00 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {'module': 'DRIVER'}
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:26 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.OCCUPY', u'module': u'DRIVER'}
+[2017-07-25 08:49:26 resource.run_time.api] INFO Update run_time, parameter is: 1, {u'data_value': u'2017072508492600'}
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:26 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 08:49:26 resource.item.api] INFO Search item, parameter is: 240000029
+[2017-07-25 08:49:26 resource.run.run_core.service] INFO 获取对象成功
+[2017-07-25 08:49:26 resource.datas.api] INFO Search data, parameter is: {'src_type': 'ITEM', 'data_flag': u'300000002', 'src_id': '240000029'}
+[2017-07-25 08:49:26 resource.run.run_core.service] INFO 获取ITEM数据成功
+[2017-07-25 08:49:26 resource.datas.api] INFO Search data, parameter is: {'src_type': 'STEP', 'data_flag': u'300000002', 'src_id': '220000016'}
+[2017-07-25 08:49:26 resource.run.run_core.service] INFO 获取STEP数据成功
+[2017-07-25 08:49:26 resource.datas.api] INFO Search data, parameter is: {'src_type': 'CASE', 'data_flag': u'300000002', 'src_id': '200000022'}
+[2017-07-25 08:49:26 resource.run.run_core.service] INFO 获取CASE数据成功
+[2017-07-25 08:49:26 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:26 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 08:49:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 08:49:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 08:49:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.OCCUPY', u'module': u'DRIVER'}
+[2017-07-25 08:49:40 resource.run_time.api] INFO Update run_time, parameter is: 1, {u'data_value': u'WAITING'}
+[2017-07-25 08:49:40 resource.run.run_core] INFO Finished all cases...
+[2017-07-25 08:49:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 08:49:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 16:17:35 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:35 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 16:17:35 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.OCCUPY', u'module': u'DRIVER'}
+[2017-07-25 16:17:35 resource.run_time.api] INFO Update run_time, parameter is: 1, {u'data_value': u'2017072516173500'}
+[2017-07-25 16:17:35 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:35 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 16:17:35 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:35 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 16:17:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-07-25 16:17:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'BUSY'}
+[2017-07-25 16:17:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.OCCUPY', u'module': u'DRIVER'}
+[2017-07-25 16:17:40 resource.run_time.api] INFO Update run_time, parameter is: 1, {u'data_value': u'WAITING'}
+[2017-07-25 16:17:40 resource.run_times.api] INFO Search run_time, parameter is: {u'data_flag': u'DRI01.RUNNING', u'module': u'DRIVER'}
+[2017-07-25 16:17:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {u'data_value': u'IDLE'}
+[2017-08-07 09:26:18 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:28:17 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:29:16 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:29:38 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:30:01 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:31:07 resource.data_src.api] INFO Search data_src, parameter is: 1.PRE
+[2017-08-07 09:32:32 resource.data_base.api] INFO Search data_base, parameter is: 1.PRE
+[2017-08-07 09:34:48 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRe', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:36:40 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRe', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:37:07 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRe', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:38:31 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRe', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:38:51 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:40:04 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:41:16 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:45:15 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:46:13 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:46:32 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:46:48 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:55:16 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:55:24 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:55:59 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 09:59:28 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:00:27 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:00:43 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:01:03 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:01:18 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:03:50 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:04:02 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:04:35 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:07:22 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:09:08 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:09:09 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:10:08 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:10:27 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:10:45 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:10:59 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:11:08 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:11:37 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:13:50 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:14:41 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:17:02 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 10:17:35 resource.data_bases.api] INFO Search data_base, parameter is: {'ID': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 11:02:21 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 11:07:36 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 11:08:02 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 13:53:43 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-07 14:02:38 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}
+[2017-08-15 13:26:10 resource.data_bases.api] INFO Search data_base, parameter is: {'DATA_SRC': '1.PRE', 'SQL': 'select * from tab_item;'}

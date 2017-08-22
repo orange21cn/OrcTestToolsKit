@@ -16,38 +16,40 @@ class DataResDispModel(ModelTable):
 
         ModelTable.__init__(self)
 
-        self.__logger = LogClient()
+        self._logger = LogClient()
 
-        self.__configer = get_config('data_src')
-        self.__resource = OrcResource('DataSrc')
-        self.__db_id = None
+        self._configer = get_config('data_src')
+        self._resource = OrcResource('DataBase')
+        self._db_id = None
 
     def service_search(self, p_cond):
         """
         查询
         :param p_cond:
+        :type p_cond: dict
         :return:
         """
-        if self.__db_id is None:
+        if self._db_id is None:
             return list()
 
-        result = self.__resource.post(
-            path=self.__db_id,
-            parameter=p_cond)
+        condition = p_cond.copy()
+        condition['DATA_SRC'] = self._db_id
+        condition['TYPE'] = 'DEBUG'
+
+        result = self._resource.get(parameter=condition)
 
         # 检查结果
-        if not ResourceCheck.result_status(result, u"查询结果", self.__logger):
+        if not ResourceCheck.result_status(result, u"查询结果", self._logger):
             return dict()
 
         # 打印成功信息
-        ResourceCheck.result_success(u"查询结果", self.__logger)
+        ResourceCheck.result_success(u"查询结果", self._logger)
 
         # 表头
         fields = result.data['FIELDS']
 
         self._definition = ViewDefinition([dict(
-            ID=item, NAME=item, TYPE="LINETEXT", DISPLAY=True, EDIT=False,
-            SEARCH=False, ADD=False, ESSENTIAL=False) for item in fields])
+            ID=item, NAME=item, TYPE="LINETEXT", DISPLAY=True) for item in fields])
 
         # 表数据
         data = result.data['DATA']
@@ -89,4 +91,4 @@ class DataResDispModel(ModelTable):
         :param p_id:
         :return:
         """
-        self.__db_id = p_id
+        self._db_id = p_id

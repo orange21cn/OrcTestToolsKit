@@ -80,7 +80,7 @@ class RunTimeDispView(QWidget):
         QWidget.__init__(self)
 
         # 数据显示
-        self.display = ViewTable('Data', RunTimeDispModel, RunTimeDispControl)
+        self.display = ViewTable(RunTimeDispModel, RunTimeDispControl)
 
         # 按钮
         self.__wid_buttons = OrcButtons([

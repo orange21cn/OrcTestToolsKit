@@ -1,6 +1,68 @@
 # coding=utf-8
 
 
+class TreeNode(object):
+    """
+    Tree data management
+    """
+    def __init__(self, p_content, p_parent=None):
+
+        self.content = p_content
+        self.parent = p_parent
+        self.children = []
+
+    def append_child(self, p_content):
+        """
+        Append child
+        :param p_content:
+        :return:
+        """
+        self.children.append(TreeNode(p_content, self))
+
+    def append_node(self, p_node):
+        """
+        Append a child node
+        :param p_node:
+        :return:
+        """
+        p_node.parent = self
+        self.children.append(p_node)
+
+    def get_child(self, row):
+        """
+        Get the child
+        :param row:
+        :return:
+        """
+        return self.children[row]
+
+    def get_index(self, child):
+        """
+        Get the index of child
+        :param child:
+        :return:
+        """
+        for _index, item in enumerate(self.children):
+            if item == child:
+                return _index
+
+        return -1
+
+    def remove_child(self, row):
+        """
+        Remove Child of row
+        :param row:
+        :return:
+        """
+        value = self.children[row]
+        self.children.remove(value)
+
+        return True
+
+    def __len__(self):
+        return len(self.children)
+
+
 class ListTree(object):
 
     def __init__(self):
@@ -10,37 +72,63 @@ class ListTree(object):
         self.list = list()
         self.tree = dict()
 
-    def resolve_list(self, p_value):
+    def load_list(self, p_value):
         """
         读入 list 数据
         :param p_value:
         :return:
         """
-        self.list = p_value
-        self._clean_duplication()
-        self.tree = dict()
-        self.tree = self._list2tree(self._list_get_root())
+        self.load('LIST', p_value)
 
-    def resolve_tree(self, p_value):
+    def load_tree(self, p_value):
         """
         读入 tree 数据
         :param p_value:
         :return:
         """
-        self.tree = p_value
-        self.list = self._tree2list(self.tree)
-        self._clean_duplication()
+        self.load('TREE', p_value)
 
-    def resolve(self, p_type, p_value):
+    def load(self, p_type, p_value):
 
         if "LIST" == p_type:
             self.list = p_value
+            self.resolve_list()
+
+        elif "TREE" == p_type:
+            self.tree = p_value
+            self.resolve_tree()
+
+        else:
+            pass
+
+    def resolve_list(self):
+        """
+        解析已读入 list 数据
+        :param p_value:
+        :return:
+        """
+        self.resolve('LIST')
+
+    def resolve_tree(self):
+        """
+        解析已读入 tree 数据
+        :param p_value:
+        :return:
+        """
+        self.resolve('TREE')
+
+    def resolve(self, p_type):
+        """
+        解析已读入的数据
+        :param p_type:
+        :return:
+        """
+        if "LIST" == p_type:
             self._clean_duplication()
             self.tree = dict()
             self.tree = self._list2tree(self._list_get_root())
 
         elif "TREE" == p_type:
-            self.tree = p_value
             self.list = self._tree2list(self.tree)
             self._clean_duplication()
 
@@ -161,23 +249,22 @@ class ListTree(object):
                 if temp is not None:
                     result.extend(temp)
                     return result
+
             return None
 
-
-
-    def steps(self, p_node=None):
-        """
-        形成列表迭代,可能没有用
-        :param p_node:
-        :return:
-        """
-        if p_node is None:
-            node = self.tree
-        else:
-            node = p_node
-
-        for _item in node["children"]:
-            for _sub in self.steps(_item):
-                yield _sub
-
-        yield node["content"]
+    # def steps(self, p_node=None):
+    #     """
+    #     形成列表迭代,可能没有用
+    #     :param p_node:
+    #     :return:
+    #     """
+    #     if p_node is None:
+    #         node = self.tree
+    #     else:
+    #         node = p_node
+    #
+    #     for _item in node["children"]:
+    #         for _sub in self.steps(_item):
+    #             yield _sub
+    #
+    #     yield node["content"]

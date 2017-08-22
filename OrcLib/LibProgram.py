@@ -1,6 +1,5 @@
 # coding=utf-8
 import abc
-import json
 import socket
 from OrcLib.LibLog import OrcLog
 
@@ -136,23 +135,168 @@ class OrcSwitch(object):
             return None
 
 
-class OrcMap(object):
+class OrcDefaultDict(object):
     """
-    dict 类型 none 判断
+    有默认值字典
     """
-    def __init__(self, p_data, p_default=None):
+    def __init__(self, p_data=None, p_default=None):
 
-        self._data = p_data
+        # 字典数据
+        self._data = dict()
+
+        # 默认值
         self._default = p_default
 
-    def value(self, p_key, p_default=None):
+        if isinstance(p_data, dict):
+            self._data = p_data
 
+    def value(self, p_key, p_default=None):
+        """
+        值
+        :param p_key:
+        :param p_default:
+        :return:
+        """
         self._default = p_default
 
         if not isinstance(self._data, dict):
             return self._default
 
         return self._default if p_key not in self._data else self._data[p_key]
+
+    def add(self, p_key, p_value):
+        """
+        增加一条数据
+        :param p_key:
+        :param p_value:
+        :return:
+        """
+        self._data[p_key] = p_value
+
+    def delete(self, p_key):
+        """
+        删除
+        :param p_key:
+        :return:
+        """
+        self._data.pop(p_key)
+
+    def items(self):
+        """
+        迭代器
+        :return:
+        """
+        return self._data.items()
+
+    def keys(self):
+        """
+        迭代 Key
+        :return:
+        """
+        return self._data.keys()
+
+    def dict(self):
+        """
+        返回字典
+        :return:
+        """
+        return self._data
+
+
+class OrcOrderedDict(object):
+    """
+    有序字典
+    """
+    def __init__(self):
+
+        object.__init__(self)
+
+        # 保存数据
+        self._order = list()
+
+        # 保存字典
+        self._data = OrcDefaultDict()
+
+    def value(self, p_key):
+        """
+        获取值
+        :param p_key:
+        :return:
+        """
+        return self._data.value(p_key)
+
+    def value_by_index(self, p_index):
+        """
+        通过索引获取值
+        :param p_index:
+        :type p_index: int
+        :return:
+        """
+        try:
+            key = self._order[p_index]
+            return self._data.value(key)
+        except(TypeError, IndexError):
+            _logger.error("Wrong index %s" % p_index)
+            return None
+
+    def append(self, p_key, p_value):
+        """
+        增加一个值
+        :return:
+        """
+        self._order.append(p_key)
+        self._data.add(p_key, p_value)
+
+    def pop(self):
+        """
+        删除一个值
+        :return:
+        """
+        key = self._order[-1]
+        self._order.pop()
+        self._data.delete(key)
+
+    def insert(self, p_index, p_key, p_value):
+        """
+        插入一个值
+        :param p_value:
+        :param p_key:
+        :param p_index:
+        :return:
+        """
+        self._order.insert(p_index, p_key)
+        self._data.add(p_key, p_value)
+
+    def delete(self, p_index):
+        """
+        删除一个值
+        :param p_index:
+        :return:
+        """
+        self._order.remove(self._order[p_index])
+
+    def items(self):
+        """
+        迭代器
+        :return:
+        """
+        for _key in self._order:
+            yield _key, self._data.value(_key)
+
+    def keys(self):
+        """
+        迭代 key
+        :return:
+        """
+        for _key in self._order:
+            yield _key
+
+    def dict(self):
+        """
+        输出 dict
+        :return:
+        """
+        return self._data.dict()
 
 
 class OrcEnum(set):
@@ -173,8 +317,8 @@ class OrcFactory(object):
         object.__init__(self)
 
     @staticmethod
-    def create_dict(p_data):
-        return OrcMap(p_data)
+    def create_default_dict(p_data=None, p_default=None):
+        return OrcDefaultDict(p_data, p_default)
 
     @staticmethod
     def create_switch(p_def):
@@ -183,3 +327,7 @@ class OrcFactory(object):
     @staticmethod
     def create_enum(p_def):
         return OrcEnum(p_def)
+
+    @staticmethod
+    def create_ordered_dict():
+        return OrcOrderedDict()

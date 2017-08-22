@@ -41,3 +41,47 @@ class TestModel(unittest.TestCase):
         view.exec_()
 
         OrcTest.test_print_end()
+
+    def test_creator(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        from OrcView.Batch.BatchDefView import BatchDefSelector
+
+        OrcTest.display_widget(BatchDefSelector)
+
+        OrcTest.test_print_end()
+
+    def test_add(self):
+        """
+        Test get root
+        :return:
+        """
+        OrcTest.test_print_begin()
+
+        def test(a):
+            print a
+
+        import sys
+        from OrcView.Case.Case.CaseSelector import CaseSelector
+        from OrcView.Batch.BatchSelector import BatchSelector
+        from OrcView.Lib.LibAdd import ViewNewAdd
+        from OrcView.Driver.Web.Page.PageSelector import PageSelector
+        from PySide.QtGui import QApplication
+
+        main = QApplication(sys.argv)
+
+        # _view = Add()
+        # _view.show()
+
+        # _view.sig_submit.connect(test)
+        # _view.sig_clicked.connect(test)
+
+        print "======>", PageSelector.static_get_data()
+
+        main.exec_()
+
+        OrcTest.test_print_end()

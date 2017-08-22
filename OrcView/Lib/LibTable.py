@@ -11,6 +11,7 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibLog import OrcLog
 from OrcView.Lib.LibViewDef import ViewDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
+from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibContextMenu import ViewContextMenu
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibMain import LogClient
@@ -20,12 +21,17 @@ class ModelTableBase(QAbstractTableModel):
     """
     Base model
     """
-
-    def __init__(self):
+    def __init__(self, p_def):
 
         QAbstractTableModel.__init__(self)
 
-        self.__logger = OrcLog("view.table.model.base")
+        self._logger = OrcLog("view.table.model.base")
+
+        # 界面字段定义
+        if isinstance(p_def, ViewDefinition):
+            self._definition = p_def
+        else:
+            self._definition = ViewDefinition(p_def)
 
         # 模型数据
         self._data = list()
@@ -39,17 +45,11 @@ class ModelTableBase(QAbstractTableModel):
         # 当前选择列表
         self._checked_list = list()
 
-        # 界面字段定义
-        self._definition = ViewDefinition('')
-
         # 当前可编辑状态
         self._state_editable = False
 
         # 可选择状态
         self._state_checkable = True
-
-        # SELECT 类型的字段
-        self._definition_select = dict()
 
         # 记录数
         self._record_num = 0
@@ -67,7 +67,7 @@ class ModelTableBase(QAbstractTableModel):
             # 水平列显示列名
             if orientation == Qt.Horizontal:
 
-                _field = self._definition.get_field_display_by_index(section)
+                _field = self._definition.get_field_display(section)
 
                 if _field is None:
                     return None
@@ -85,7 +85,7 @@ class ModelTableBase(QAbstractTableModel):
         :return:
         """
         flag = super(ModelTableBase, self).flags(index)
-        field = self._definition.get_field_display_by_index(index.column())
+        field = self._definition.get_field_display(index.column())
 
         if self._state_editable and field.edit:
             flag |= Qt.ItemIsEditable
@@ -110,7 +110,7 @@ class ModelTableBase(QAbstractTableModel):
         :param parent:
         :return:
         """
-        return self._definition.display_length
+        return self._definition.length_display
 
     def data(self, index, role):
         """
@@ -124,7 +124,7 @@ class ModelTableBase(QAbstractTableModel):
 
         if role == Qt.DisplayRole:
 
-            _field = self._definition.get_field_display_by_index(index.column())
+            _field = self._definition.get_field_display(index.column())
             assert isinstance(_field, FieldDefinition)
 
             if _field.id not in self._data[index.row()]:
@@ -135,9 +135,9 @@ class ModelTableBase(QAbstractTableModel):
             # Combobox 类型数据
             if "SELECT" == _field.type:
                 try:
-                    return self._definition_select[_field.id][_value]
+                    return self._definition.select_def[_field.id][_value]
                 except KeyError:
-                    self.__logger.error("select value error: %s, %s" % (_field.id, _value))
+                    self._logger.error("select value error: %s, %s" % (_field.id, _value))
 
             # OPERATE/DISPLAY 类型数据
             elif _field.type in ('OPE_DISP', 'DISPLAY'):
@@ -172,7 +172,7 @@ class ModelTableBase(QAbstractTableModel):
         """
         if role == Qt.EditRole:
             _cond = dict()
-            _id = self._definition.fields_display[index.column()].id
+            _id = self._definition.display_keys[index.column()]
 
             _cond["id"] = self._data[index.row()]["id"]
             _cond[_id] = value
@@ -191,7 +191,7 @@ class ModelTableBase(QAbstractTableModel):
 
             return True
 
-    def checkable(self, p_flag):
+    def basic_checkable(self, p_flag):
         """
         设置可选择状态
         :param p_flag:
@@ -199,7 +199,7 @@ class ModelTableBase(QAbstractTableModel):
         """
         self._state_checkable = p_flag
 
-    def editable(self):
+    def basic_editable(self):
         """
         设置可编辑状态
         :return:
@@ -211,28 +211,10 @@ class ModelTable(ModelTableBase):
 
     def __init__(self, p_flag=None):
 
-        ModelTableBase.__init__(self)
+        ModelTableBase.__init__(self, p_flag)
 
-        self.__logger = OrcLog("view.table.model")
+        self._logger = OrcLog("view.table.model")
         self.__resource_dict = OrcResource("Dict")
-
-        # 界面字段定义
-        self._definition = ViewDefinition(p_flag)
-
-        # 获取 SELECT 类型 value/text 数据对
-        # {id: {value: text}, id: ....}
-        for _field in self._definition.fields_display:
-
-            assert isinstance(_field, FieldDefinition)
-
-            if _field.display and "SELECT" == _field.type:
-
-                _res = self.__resource_dict.get(parameter=dict(dict_flag=_field.id))
-
-                if not ResourceCheck.result_status(_res, u"获取字典值", self.__logger):
-                    break
-
-                self._definition_select[_field.id] = {item['dict_value']: item['dict_text'] for item in _res.data}
 
     def mod_search(self, p_cond=None):
         """
@@ -442,26 +424,31 @@ class ViewTable(QTableView):
     sig_context = OrcSignal(str)
     sig_selected = OrcSignal(dict)
 
-    def __init__(self, p_flag, p_model, p_control):
+    def __init__(self, p_model, p_control):
 
         QTableView.__init__(self)
 
         self._configer = get_config()
         self._logger = LogClient()
 
-        self._flag = p_flag
-
         # Model
-        self.model = p_model()
+        if isinstance(p_model, ModelTable):
+            self.model = p_model
+        elif issubclass(p_model, ModelTable):
+            self.model = p_model()
         self.setModel(self.model)
 
         # Control
-        self.control = p_control()
+        if isinstance(p_control, ControlBase):
+            self.control = p_control
+        elif issubclass(p_control, ControlBase):
+            self.control = p_control()
+        else:
+            return
         self.setItemDelegate(self.control)
 
         # ---- Connection ----
         # 设置当前数据
-        self.clicked.connect(self.model.mod_set_current_data)
         self.clicked.connect(self.select)
 
         # ---- Style ----
@@ -490,8 +477,13 @@ class ViewTable(QTableView):
         self.customContextMenuRequested.connect(_context_menu.show_menu)
         _context_menu.sig_clicked.connect(self.sig_context.emit)
 
-    def select(self):
-
+    def select(self, p_index):
+        """
+        单击
+        :param p_index:
+        :return:
+        """
+        self.model.mod_set_current_data(p_index)
         current_data = self.model.mod_get_current_data()
 
         if current_data is not None:

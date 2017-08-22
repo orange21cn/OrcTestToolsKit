@@ -7,7 +7,7 @@ from PySide.QtGui import QWidget
 
 from OrcView.Driver.Web.Page.PageDefView import PageDefView
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibViewDef import def_view_page_def
+from OrcView.Lib.LibViewDef import view_page_def
 
 
 class PageContainer(QWidget):
@@ -22,9 +22,7 @@ class PageContainer(QWidget):
         self.title = u"页面"
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_page_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_page_def, 2)
 
         # Column widget
         self.__wid_page_def = PageDefView()

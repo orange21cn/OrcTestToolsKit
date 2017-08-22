@@ -6,6 +6,8 @@ from PySide.QtGui import QPushButton
 
 from OrcLib import get_config
 from OrcLib.LibNet import OrcSocketResource
+from OrcLib.LibCmd import OrcCmd
+from OrcLib.LibCmd import OrcSysCmd
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibMain import LogClient
 
@@ -197,6 +199,9 @@ class ServerDriver(ServerBase):
 
         ServerBase.__init__(self, 'DRIVER', u'驱动')
 
+        if 'LOCAL' == self._mode:
+            self.start_service()
+
     def manage_service(self):
         """
         管理 api 起停
@@ -204,17 +209,50 @@ class ServerDriver(ServerBase):
         """
         # 客户端设置为远程
         if self.isChecked():
+            # 关闭本地服务
+            if self._service is not None:
+                self.stop_service()
+
             self._set_client_remote('DRIVER')
             self._logger.info(u"关闭执行服务器")
 
         # 客户端设置为本地
         else:
+            # 起动服务
+            self.start_service()
+
             self._set_client_local('DRIVER')
             self._logger.info(u"起动执行服务器")
 
+    def start_service(self):
+        """
+        起动服务
+        :return:
+        """
+        self._service = subprocess.Popen(["python", "%s/start_driver.py" % self._home])
 
+    def stop_service(self):
+        """
+        关闭 socket 服务
+        :return:
+        """
+        sys_command = OrcSysCmd()
+        sys_command.set_quit()
+
+        command = OrcCmd()
+        command.set_cmd(sys_command)
+
+        resource_debug = OrcSocketResource("Driver")
+        resource_debug.get(command.get_cmd_dict())
+
+        # 关闭进程
+        self._service.kill()
+
+# Todo 删除,已合并
 class ServerDebug(ServerBase):
+    """
 
+    """
     def __init__(self):
 
         ServerBase.__init__(self, 'SERVER_WEB_001', u'调试')
@@ -240,7 +278,7 @@ class ServerDebug(ServerBase):
                 self.stop_service()
 
             # 客户端设置为远程
-            self._set_client_remote('SERVER_WEB_001')
+            self._set_client_remote('DRIVER')
 
             self._logger.info(u"关闭调试服务器")
 
@@ -250,8 +288,8 @@ class ServerDebug(ServerBase):
             self.start_service()
 
             # 客户端设置为本地
-            self._set_client_local('SERVER_WEB_001', 'IP')
-            self._set_client_local('SERVER_WEB_001', 'MODE')
+            self._set_client_local('DRIVER', 'IP')
+            self._set_client_local('DRIVER', 'MODE')
 
             self._logger.info(u"起动调试服务器")
 

@@ -1,4 +1,5 @@
 # coding=utf-8
+from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
@@ -8,31 +9,94 @@ class FieldDefinition(object):
     """
     字段定义
     """
-    def __init__(self, p_field_def):
+    def __init__(self, p_field_def=None):
+
+        data = OrcFactory.create_default_dict(p_field_def, False)
 
         # 字段 id
-        self.id = None if 'ID' not in p_field_def else p_field_def["ID"]
+        self.id = data.value('ID')
 
         # 字段名称
-        self.name = None if 'NAME' not in p_field_def else p_field_def["NAME"]
+        self.name = data.value('NAME')
 
         # 字段类型
-        self.type = None if 'TYPE' not in p_field_def else p_field_def["TYPE"]
+        self.type = data.value('TYPE')
 
         # 字段是否显示
-        self.display = None if 'DISPLAY' not in p_field_def else p_field_def["DISPLAY"]
+        self.display = data.value('DISPLAY')
 
         # 字段是否可显示
-        self.edit = None if 'EDIT' not in p_field_def else p_field_def["EDIT"]
+        self.edit = data.value('EDIT')
 
         # 字段是否可查询
-        self.search = None if 'SEARCH' not in p_field_def else p_field_def["SEARCH"]
+        self.search = data.value('SEARCH')
 
         # 字段是否在新增中显示
-        self.add = None if 'ADD' not in p_field_def else p_field_def["ADD"]
+        self.add = data.value('ADD')
 
         # 字段在新增是是否必填字段
-        self.essential = None if 'ESSENTIAL' not in p_field_def else p_field_def["ESSENTIAL"]
+        self.essential = data.value('ESSENTIAL')
+
+    def set_displayable(self, p_flag):
+        """
+        设置字段可显示
+        :param p_flag:
+        :return:
+        """
+        if isinstance(p_flag, bool):
+            self.display = p_flag
+
+    def set_editable(self, p_flag):
+        """
+        设置字段可编辑
+        :param p_flag:
+        :return:
+        """
+        if isinstance(p_flag, bool):
+            self.edit = p_flag
+
+    def set_searchable(self, p_flag):
+        """
+        设置可查询
+        :param p_flag:
+        :return:
+        """
+        if isinstance(p_flag, bool):
+            self.search = p_flag
+
+    def set_addable(self, p_flag):
+        """
+        设置增加时显示
+        :param p_flag:
+        :return:
+        """
+        if isinstance(p_flag, bool):
+            self.add = p_flag
+
+    def set_essential(self, p_flag):
+        """
+        设置为增加是必须有数据字段
+        :param p_flag:
+        :return:
+        """
+        if isinstance(p_flag, bool):
+            self.essential = p_flag
+
+    def to_dict(self):
+        """
+        生成 dict
+        :return:
+        """
+        return dict(
+            ID=self.id,
+            NAME=self.name,
+            TYPE=self.type,
+            DISPLAY=self.display,
+            EDIT=self.edit,
+            SEARCH=self.search,
+            ADD=self.add,
+            ESSENTIAL=self.essential
+        )
 
 
 class ViewDefinition(object):
@@ -41,14 +105,11 @@ class ViewDefinition(object):
     """
     def __init__(self, p_flag=None):
 
-        # 字段定义
-        self.fields = list()
-
-        # 显示的字段定义
-        self.fields_display = list()
-
         # 表原始定义
         self._def = list()
+
+        # 字段定义
+        self.fields = OrcFactory.create_ordered_dict()
 
         # 下拉框定义
         self.select_def = dict()
@@ -67,11 +128,44 @@ class ViewDefinition(object):
         else:
             pass
 
-        self._get_definition()
+        self._load_definition()
+
+    # 长度
+    @property
+    def length(self):
+        return len(self.fields)
+
+    # 显示属性
+    @property
+    def length_display(self):
+        return len(self.display_keys)
 
     @property
-    def display_length(self):
-        return len(self.fields_display)
+    def display_keys(self):
+        return [item for item in self.fields.keys() if self.field(item).display]
+
+    # 查询属性
+    @property
+    def length_search(self):
+        return len(self.search_keys)
+
+    @property
+    def search_keys(self):
+        return [item for item in self.fields.keys() if self.field(item).search]
+
+    # 新增属性
+    @property
+    def length_add(self):
+        return len(self.add_keys)
+
+    @property
+    def add_keys(self):
+        return [item for item in self.fields.keys() if self.field(item).add]
+
+    # 必须字段
+    @property
+    def essential_keys(self):
+        return [item for item in self.fields.keys() if self.field(item).essential]
 
     def get_field_by_index(self, p_index):
         """
@@ -79,60 +173,65 @@ class ViewDefinition(object):
         :param p_index:
         :return:
         """
-        try:
-            return self.fields[p_index]
-        except IndexError:
-            self._logger.error("field index is out of range.")
+        return self.fields.value_by_index(p_index)
 
-        return None
-
-    def get_field_display_by_index(self, p_index):
+    def get_field_display(self, p_index):
         """
         通过索引获取可显示字段定义
         :param p_index:
         :return:
         """
-        try:
-            return self.fields_display[p_index]
-        except IndexError:
-            self._logger.error("field index is out of range.")
+        return self.field(self.display_keys[p_index])
 
-        return None
+    def get_field_search(self, p_index):
+        """
+        通过索引获取可显示字段定义
+        :param p_index:
+        :return:
+        """
+        return self.field(self.search_keys[p_index])
 
-    def get_field_by_id(self, p_id):
+    def get_field_add(self, p_index):
+        """
+        通过索引获取可显示字段定义
+        :param p_index:
+        :return:
+        """
+        return self.field(self.add_keys[p_index])
+
+    def field(self, p_id):
         """
         通过 id 获取字段定义
         :param p_id:
         :return:
+        :rtype: FieldDefinition
         """
-        for _field in self.fields:
-            if p_id == _field.id:
-                return _field
+        if p_id in self.fields.keys():
+            return self.fields.value(p_id)
+        else:
+            return FieldDefinition()
 
-        return None
-
-    def _get_definition(self):
+    def _load_definition(self):
         """
          生成表定义
         :return:
         """
         # 生成列定义及显示的列
-        for _field_def in self._def:
+        for _field_data in self._def:
 
-            _field = FieldDefinition(_field_def)
-            self.fields.append(_field)
+            _field = FieldDefinition(_field_data)
+            self.fields.append(_field.id, _field)
 
-            if _field.display:
+            if 'SELECT' == _field.type:
+                self._load_select(_field.id)
 
-                self.fields_display.append(_field)
+            elif _field.type in ('TYPE_SELECT',):
+                self._load_complex(_field.id)
 
-                if 'SELECT' == _field.type:
-                    self._get_select_definition(_field.id)
+            else:
+                pass
 
-                elif _field.type in ('TYPE_SELECT',):
-                    self._get_complex_definition(_field.id)
-
-    def _get_complex_definition(self, p_id):
+    def _load_complex(self, p_id):
         """
 
         :param p_id:
@@ -148,9 +247,9 @@ class ViewDefinition(object):
 
         self.select_def[p_id].update({item['type_name']: item['type_text'] for item in _res.data})
 
-    def _get_select_definition(self, p_id):
+    def _load_select(self, p_id):
         """
-        生成下拉列表定义
+        生成下拉框定义
         :param p_id:
         :return:
         """
@@ -166,13 +265,22 @@ class ViewDefinition(object):
             self.select_def[p_id].update({item['dict_value']: item['dict_text'] for item in _res.data})
 
         if p_id in multi_select_definition:
+
             self.select_def[p_id] = dict()
             for _id in multi_select_definition[p_id]:
                 get_def(_id)
         else:
             get_def(p_id)
 
-def_view_batch_def = [
+    def to_dict(self):
+        """
+        输出 dict
+        :return:
+        """
+        return [self.field(_key).to_dict() for _key in self.fields.keys()]
+
+
+view_batch_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -192,7 +300,7 @@ def_view_batch_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_batch_det = [
+view_batch_det = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="case_id", NAME=u"用例ID", TYPE="LINETEXT", DISPLAY=False, EDIT=True,
@@ -204,7 +312,7 @@ def_view_batch_det = [
     dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_case_def = [
+view_case_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -226,11 +334,11 @@ def_view_case_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_step = [
+view_step = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="step_no", NAME=u"步骤编号", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
-         SEARCH=True, ADD=False, ESSENTIAL=True),
+         SEARCH=True, ADD=False, ESSENTIAL=False),
     dict(ID="step_type", NAME=u"步骤类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="step_desc", NAME=u"步骤描述", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
@@ -242,7 +350,7 @@ def_view_step = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_item = [
+view_item = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="item_no", NAME=u"条目编号", TYPE="LINETEXT", DISPLAY=True, EDIT=False,
@@ -262,7 +370,7 @@ def_view_item = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_page_def = [
+view_page_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="page_flag", NAME=u"页面标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
@@ -276,7 +384,7 @@ def_view_page_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_page_det = [
+view_page_det = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="page_id", NAME=u"页面ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -293,7 +401,7 @@ def_view_page_det = [
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # DataDef 界面
-def_view_data = [
+view_data = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT",
          DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="test_env", NAME=u"测试环境", TYPE="SELECT",
@@ -320,7 +428,7 @@ def_view_data = [
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # DataSrc 界面
-def_view_data_src = [
+view_data_src = [
     dict(ID="id", NAME=u"序号", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="name", NAME=u"名称", TYPE="LINETEXT",
@@ -328,7 +436,7 @@ def_view_data_src = [
     dict(ID="desc", NAME=u"描述", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_run_time = [
+view_run_time = [
     dict(ID="id", NAME=u"序号", TYPE="LINETEXT",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="module", NAME=u"模块", TYPE="LINETEXT",
@@ -341,7 +449,7 @@ def_view_run_time = [
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # WidgetDef 界面定义
-def_view_widget_def = [
+view_widget_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT",
          DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"父ID", TYPE="LINETEXT",
@@ -361,7 +469,7 @@ def_view_widget_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME",
          DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_widget_det = [
+view_widget_det = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="widget_id", NAME=u"控件ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -381,7 +489,7 @@ def_view_widget_det = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_window_def = [
+view_window_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="window_flag", NAME=u"窗口标识", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
@@ -397,7 +505,7 @@ def_view_window_def = [
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
-def_view_run_def = [
+view_run_def = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -407,7 +515,7 @@ def_view_run_def = [
     dict(ID="run_def_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=True)]
 
-def_view_run_det = [
+view_run_det = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -421,7 +529,7 @@ def_view_run_det = [
     dict(ID="status", NAME=u"状态", TYPE="LINETEXT", DISPLAY=True, EDIT=True,
          SEARCH=True, ADD=True, ESSENTIAL=True)]
 
-def_view_conf_menu = [
+view_conf_menu = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="pid", NAME=u"PID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -429,25 +537,47 @@ def_view_conf_menu = [
     dict(ID="name", NAME=u"名称", TYPE="LINETEXT", DISPLAY=True, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
+# 数据标识界面定义,用于运行调试界面及数据新增,只读表,没有增删改
+view_data_flag = [
+    # 使用 item 界面的 item_id
+    dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False),
+
+    # 标识,WEB 用控件标识, DATA 用 data_id
+    dict(ID="flag", NAME=u"标识", TYPE="LINETEXT", DISPLAY=True),
+
+    # 类型,条目类型 WEB/DATA
+    dict(ID="data_flag_type", NAME=u"类型", TYPE="SELECT", DISPLAY=True),
+
+    # 模式
+    dict(ID="item_mode", NAME=u"模式", TYPE="SELECT", DISPLAY=True),
+
+    # 数据个数
+    dict(ID="num", NAME=u"数量", TYPE="LINETEXT", DISPLAY=True),
+
+    # 描述
+    dict(ID="desc", NAME=u"描述", TYPE="LINETEXT", DISPLAY=True)]
+
 rel_list = dict(
-    BatchDef=def_view_batch_def,
-    BatchDet=def_view_batch_det,
-    Case=def_view_case_def,
-    Step=def_view_step,
-    Item=def_view_item,
-    Data=def_view_data,
-    DataSrc=def_view_data_src,
-    RunTime=def_view_run_time,
-    PageDef=def_view_page_def,
-    PageDet=def_view_page_det,
-    WidgetDef=def_view_widget_def,
-    WidgetDet=def_view_widget_det,
-    Window=def_view_window_def,
-    RunDef=def_view_run_def,
-    RunDet=def_view_run_det,
-    ConfMenu=def_view_conf_menu)
+    BatchDef=view_batch_def,
+    BatchDet=view_batch_det,
+    Case=view_case_def,
+    Step=view_step,
+    Item=view_item,
+    Data=view_data,
+    DataSrc=view_data_src,
+    RunTime=view_run_time,
+    PageDef=view_page_def,
+    PageDet=view_page_det,
+    WidgetDef=view_widget_def,
+    WidgetDet=view_widget_det,
+    Window=view_window_def,
+    RunDef=view_run_def,
+    RunDet=view_run_det,
+    ConfMenu=view_conf_menu,
+    DataFlag=view_data_flag)
 
 multi_select_definition = dict(
     run_def_type=('batch_type', 'case_type', 'run_def'),
-    run_det_type=('batch_type', 'case_type', 'step_type', 'item_type')
+    run_det_type=('batch_type', 'case_type', 'step_type', 'item_type'),
+    data_flag_type=('operate_object_type', 'item_type')
 )

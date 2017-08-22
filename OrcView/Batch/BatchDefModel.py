@@ -4,13 +4,20 @@ from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTree import ModelTree
+from OrcView.Lib.LibControl import ControlBase
 
+
+class BatchDefControl(ControlBase):
+
+    def __init__(self, p_def):
+
+        ControlBase.__init__(self, p_def)
 
 class BatchDefModel(ModelTree):
 
-    def __init__(self):
+    def __init__(self, p_def='BatchDef'):
 
-        ModelTree.__init__(self, 'BatchDef')
+        ModelTree.__init__(self, p_def)
 
         self.__logger = LogClient()
 

@@ -1,0 +1,143 @@
+[2017-08-21 18:06:47 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 85, in start
+    print 100, res_data
+IOError: [Errno 32] Broken pipe
+
+[2017-08-21 18:07:24 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-21 18:07:33 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-21 18:10:00 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-21 18:10:10 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:47:38 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:47:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:48:20 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-08-22 13:49:48 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:49:59 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:50:38 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-08-22 13:52:18 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:52:27 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:54:48 driver.web.selenium] ERROR Driver run command failed!
+[2017-08-22 13:54:48 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
+    self.save_screen()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 225, in save_screen
+    return
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
+    return self.get_screenshot_as_file(filename)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
+    png = self.get_screenshot_as_png()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
+    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
+    return self.execute(Command.SCREENSHOT)['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: Tried to run command without establishing a connection
+
+
+[2017-08-22 13:54:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-08-22 13:54:51 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-08-22 13:54:53 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:55:03 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:55:12 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:58:19 driver.web.selenium] ERROR Driver run command failed!
+[2017-08-22 13:58:19 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
+    self.save_screen()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 227, in save_screen
+    self._root.save_screenshot(self._pic_name)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
+    return self.get_screenshot_as_file(filename)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
+    png = self.get_screenshot_as_png()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
+    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
+    return self.execute(Command.SCREENSHOT)['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: Tried to run command without establishing a connection
+
+
+[2017-08-22 13:58:22 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-08-22 13:58:22 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-08-22 13:58:23 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:58:34 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:58:49 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 13:59:40 driver.web.selenium] ERROR Driver run command failed!
+[2017-08-22 13:59:40 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
+    self.save_screen()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 227, in save_screen
+    self._root.save_screenshot(self._pic_name)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
+    return self.get_screenshot_as_file(filename)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
+    png = self.get_screenshot_as_png()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
+    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
+    return self.execute(Command.SCREENSHOT)['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: Tried to run command without establishing a connection
+
+
+[2017-08-22 13:59:41 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-08-22 13:59:41 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-08-22 13:59:42 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 13:59:50 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 14:00:04 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 14:00:57 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-08-22 14:34:14 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 14:34:24 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 14:35:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-08-22 14:36:24 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 14:36:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 14:37:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-08-22 14:38:28 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-08-22 14:38:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-08-22 14:38:39 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 14:49:05 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 14:49:26 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-08-22 14:49:27 driver.web.selenium] ERROR Open browser failed.
+[2017-08-22 14:49:27 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 162, in __get_page
+    self._root = webdriver.Chrome(executable_path=driver_path)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/chrome/webdriver.py", line 69, in __init__
+    desired_capabilities=desired_capabilities)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 98, in __init__
+    self.start_session(desired_capabilities, browser_profile)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 188, in start_session
+    response = self.execute(Command.NEW_SESSION, parameters)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: chromeOptions was not a the name of a known capability or a valid extension capability
+
+
+[2017-08-22 14:49:28 driver.web.selenium] ERROR Driver run command failed!
+[2017-08-22 14:49:28 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
+    self.save_screen()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 224, in save_screen
+    self._root.save_screenshot(self._pic_name)
+AttributeError: 'NoneType' object has no attribute 'save_screenshot'
+
+[2017-08-22 15:10:53 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 15:12:09 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-08-22 15:26:11 driver.web.selenium] INFO Start driver server on localhost:5001

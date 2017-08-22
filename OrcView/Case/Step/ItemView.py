@@ -1,19 +1,20 @@
 # coding=utf-8
-import json
 
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QStackedWidget
 from PySide.QtGui import QWidget
 
-from OrcView.Case.Case.CaseView import CaseView
-from OrcView.Data.Data.DataAdd import ViewDataAdd
-from OrcView.Lib.LibAdd import ViewAdd
+from OrcLib.LibType import DriverType
+from OrcView.Case.Case.CaseSelector import CaseSelector
+from OrcView.Data.Data.DataAdd import DataAdder
+from OrcView.Driver.Cmd.CmdCreator import DataCmdCreator
+from OrcView.Driver.Cmd.CmdCreator import WebCmdCreator
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibMessage import OrcMessage
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import def_view_item
-from OrcView.Driver.Web.Cmd.WebCmd import WebCmdCreator
+
 from .ItemModel import ItemFuncModel
 from .ItemModel import ItemNormalModel
 
@@ -38,10 +39,10 @@ class ItemView(QWidget):
 
         # Item ----
         # 步骤项显示
-        self.item_display = ViewTable('Item', ItemNormalModel, ItemControl)
+        self.item_display = ViewTable(ItemNormalModel, ItemControl)
 
         # Func --
-        self.func_display = ViewTable('CaseDef', ItemFuncModel, ItemControl)
+        self.func_display = ViewTable(ItemFuncModel, ItemControl)
 
         # current display
         self.display = self.item_display
@@ -68,15 +69,6 @@ class ItemView(QWidget):
             dict(id="down", name=u"下移"),
         ], "VER")
 
-        # 新增 item 窗口
-        self.__win_add_item = ViewAdd(def_view_item)
-
-        # 新增 func 窗口
-        self.__win_add_func = CaseView("SINGLE")
-
-        # win add data
-        self.__win_data = ViewDataAdd()
-
         # Layout
         main_layout = QHBoxLayout()
         main_layout.addWidget(self.main_display)
@@ -86,39 +78,12 @@ class ItemView(QWidget):
 
         self.setLayout(main_layout)
 
-        # 显示操作选择框
-        self.__win_add_item.sig_operate.connect(self.set_operate)
-
-        # 新增 item
-        self.__win_add_item.sig_submit.connect(self.add_item)
-
-        # 新增 func
-        self.__win_add_func.sig_selected.connect(self.add_func)
-
         # 点击按钮操作
         wid_buttons.sig_clicked.connect(self.operate)
 
         # 右键菜单
         self.item_display.sig_context.connect(self.context)
         self.func_display.sig_context.connect(self.context)
-
-    def add_show(self):
-        """
-        显示增加界面
-        :return:
-        """
-        if self.__step_id is not None:
-
-            _type = self.display.model.service_get_step_type(self.__step_id)
-
-            if "STEP_FUNC" == _type:
-                self.__win_add_func.show()
-
-            elif "STEP_NORMAL" == _type:
-                self.__win_add_item.show()
-
-            else:
-                pass
 
     def add_item(self, p_data):
         """
@@ -183,12 +148,30 @@ class ItemView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.add_show()
+
+            if self.__step_id is None:
+                return
+
+            _type = self.display.model.service_get_step_type(self.__step_id)
+
+            if "STEP_FUNC" == _type:
+                _data = CaseSelector.static_get_data()
+                if _data is not None:
+                    self.add_func(_data)
+
+            elif "STEP_NORMAL" == _type:
+                _data = ItemAdder.static_get_data()
+                if _data is not None:
+                    self.add_item(_data)
+
+            else:
+                pass
+
         elif "delete" == p_flag:
             if OrcMessage.question(self, u'确认删除'):
                 self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "up" == p_flag:
             self.display.model.mod_up()
         elif "down" == p_flag:
@@ -203,19 +186,44 @@ class ItemView(QWidget):
         :return:
         """
         if "sig_data" == p_flag:
-
             _id = self.display.model.mod_get_current_data()["item_id"]
+            DataAdder.static_add_data("ITEM", _id)
 
-            self.__win_data.show()
-            self.__win_data.set_src_type("ITEM")
-            self.__win_data.set_src_id(_id)
 
-    def set_operate(self):
+class ItemAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'Item')
+
+        self.setWindowTitle(u'新增步骤项')
+
+    def _action(self, p_flag):
         """
-        获取操作字符串
+        点击控件后操作
+        :param p_flag:
         :return:
         """
-        mode = self.__win_add_item.get_data('item_mode')
-        cmd = WebCmdCreator.get_cmd(mode)
+        if 'item_operate' == p_flag:
 
-        self.__win_add_item.set_data("item_operate", cmd)
+            item_mode = self.get_data('item_mode')
+            item_type = self.get_data('item_type')
+
+            if item_type == DriverType.WEB:
+                cmd = WebCmdCreator.get_cmd(item_mode)
+            elif item_type == DriverType.DATA:
+                cmd = DataCmdCreator.get_cmd(item_mode)
+            else:
+                cmd = None
+
+            self.set_data("item_operate", cmd)
+
+    @staticmethod
+    def static_get_data():
+
+        view = ItemAdder()
+        view.exec_()
+        print "abcdef", view._data
+        return view._data

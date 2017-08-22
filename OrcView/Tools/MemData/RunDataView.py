@@ -75,7 +75,7 @@ class RunDataDispView(QWidget):
         QWidget.__init__(self)
 
         # 数据显示
-        self.display = ViewTable('Data', RunDataDispModel, RunDataDispControl)
+        self.display = ViewTable(RunDataDispModel, RunDataDispControl)
 
         # 按钮
         self.__wid_buttons = OrcButtons([

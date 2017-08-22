@@ -250,7 +250,7 @@ class TestView(unittest.TestCase):
 
         main = QApplication(sys.argv)
 
-        print '---->', PageDefSelector.get_page()
+        print '---->', PageDefSelector.static_get_data()
 
         main.exec_()
 
@@ -263,7 +263,7 @@ class TestView(unittest.TestCase):
         """
         OrcTest.test_print_begin()
 
-        from OrcView.Driver.Web.Cmd.WebDebug import WebDebug
+        from OrcView.Driver.Cmd import WebDebug
         OrcTest.display_widget(WebDebug)
 
         OrcTest.test_print_end()

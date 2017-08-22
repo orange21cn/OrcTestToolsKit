@@ -6,13 +6,14 @@ from PySide.QtGui import QWidget
 from OrcLib.LibProgram import orc_singleton
 from OrcView.Data.Data.DataModel import DataModel
 from OrcView.Lib.LibAdd import ViewAdd
+from OrcView.Data.Data.DataAdd import DataAdder
 
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibView import OrcPagination
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import def_view_data
+from OrcView.Lib.LibViewDef import view_data
 
 from .DataModel import DataControl
 
@@ -29,12 +30,10 @@ class DataView(QWidget):
         self.title = u"数据管理"
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_data)
-        self.__wid_search_cond.set_col_num(3)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_data, 3)
 
         # Data result display widget
-        self.display = ViewTable("Data", DataModel, DataControl)
+        self.display = ViewTable(DataModel, DataControl)
 
         # pagination
         self.__wid_pagination = OrcPagination()
@@ -54,7 +53,7 @@ class DataView(QWidget):
         layout_bottom.addWidget(self.__wid_pagination)
 
         # 新增窗口
-        self.__win_add = ViewAdd(def_view_data)
+        self.__win_add = ViewAdd(view_data)
 
         # Layout
         layout_main = QVBoxLayout()
@@ -80,12 +79,13 @@ class DataView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            DataAdder.static_add_data()
+            self.display.model.mod_refresh()
         elif "delete" == p_flag:
             if OrcMessage.question(self, u'确认删除'):
                 self.display.model.mod_delete()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "search" == p_flag:
             self.search()
         else:

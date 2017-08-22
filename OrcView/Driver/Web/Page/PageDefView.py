@@ -7,20 +7,13 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibAdd import ViewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibAdd import ViewNewAdd
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibViewDef import def_view_page_def
+from OrcView.Lib.LibViewDef import view_page_def
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .PageDefModel import PageDefModel
-
-
-class PageDefControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'PageDef')
+from .PageDefModel import PageDefControl
 
 
 class PageDefView(QWidget):
@@ -38,12 +31,10 @@ class PageDefView(QWidget):
         self.__type = p_type
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_page_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_page_def, 2)
 
         # Data result display widget
-        self.display = ViewTable('PageDef', PageDefModel, PageDefControl)
+        self.display = ViewTable(PageDefModel, PageDefControl)
 
         # Buttons widget
         if p_type is None:
@@ -60,9 +51,6 @@ class PageDefView(QWidget):
             wid_buttons = OrcButtons([dict(id="search", name=u"查询")])
             self.display.doubleClicked.connect(self.select)
 
-        # win_add
-        self.__win_add = ViewAdd(def_view_page_def)
-
         # Layout
         layout_main = QVBoxLayout()
         if self.__type is not None:
@@ -77,9 +65,6 @@ class PageDefView(QWidget):
         # 点击按钮操作
         wid_buttons.sig_clicked.connect(self.operate)
 
-        # 新增
-        self.__win_add.sig_submit[dict].connect(self.add)
-
     def search(self, p_cond):
         """
         查询
@@ -88,14 +73,6 @@ class PageDefView(QWidget):
         """
         self.display.model.mod_search(p_cond)
 
-    def add(self, p_data):
-        """
-        新增
-        :param p_data:
-        :return:
-        """
-        self.display.model.mod_add(p_data)
-
     def operate(self, p_flag):
         """
         点击按钮操作
@@ -103,13 +80,15 @@ class PageDefView(QWidget):
         :return:
         """
         if "add" == p_flag:
-            self.__win_add.show()
+            _data = PageDefAdder.static_get_data()
+            if _data is not None:
+                self.display.model.mod_add(_data)
         elif "delete" == p_flag:
             if OrcMessage.question(self, u"确认删除"):
                 self.display.model.mod_delete()
                 self.sig_delete.emit()
         elif "update" == p_flag:
-            self.display.model.editable()
+            self.display.model.basic_editable()
         elif "search" == p_flag:
             if self.__type is None:
                 self.sig_search.emit()
@@ -131,6 +110,25 @@ class PageDefView(QWidget):
             self.close()
 
 
+class PageDefAdder(ViewNewAdd):
+    """
+    新增计划控件
+    """
+    def __init__(self):
+
+        ViewNewAdd.__init__(self, 'PageDef')
+
+        self.setWindowTitle(u'新增页面')
+
+    @staticmethod
+    def static_get_data():
+
+        view = PageDefAdder()
+        view.exec_()
+
+        return view._data
+
+
 class PageDefSelector(QDialog):
 
     sig_submit = OrcSignal(str)
@@ -142,12 +140,10 @@ class PageDefSelector(QDialog):
         self.title = u"用例管理"
 
         # Search condition widget
-        self.__wid_search_cond = ViewSearch(def_view_page_def)
-        self.__wid_search_cond.set_col_num(2)
-        self.__wid_search_cond.create()
+        self.__wid_search_cond = ViewSearch(view_page_def, 2)
 
         # Data result display widget
-        self.display = ViewTable('PageDef', PageDefModel, PageDefControl)
+        self.display = ViewTable(PageDefModel, PageDefControl)
 
         # Buttons widget
         wid_buttons = OrcButtons([dict(id="search", name=u"查询")])
@@ -178,7 +174,7 @@ class PageDefSelector(QDialog):
             pass
 
     @staticmethod
-    def get_page():
+    def static_get_data():
         """
         获取选择的页面
         :return:
