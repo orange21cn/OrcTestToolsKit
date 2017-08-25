@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from OrcLib.LibCommon import gen_date_str
+from OrcLib.LibCommon import DateStr
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 
@@ -87,7 +87,7 @@ class PageDefMod:
         Create a no, like batch_no
         :return:
         """
-        _no = gen_date_str()
+        _no = DateStr.get_data_str()
         t_item = self.__session.query(WebPageDef).filter(WebPageDef.batch_no == _no).first()
 
         if t_item is not None:

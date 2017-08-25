@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from OrcApi.OrcDriver.Web import WebDriverService
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibRunTime import OrcRunTime
+from OrcLibFrame.LibRunTime import OrcRunTime
 
 
 class OrcWidget(object):

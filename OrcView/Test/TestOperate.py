@@ -68,7 +68,7 @@ class TestModel(unittest.TestCase):
         import sys
         from OrcView.Case.Case.CaseSelector import CaseSelector
         from OrcView.Batch.BatchSelector import BatchSelector
-        from OrcView.Lib.LibAdd import ViewNewAdd
+        from OrcView.Lib.LibAdd import BaseAdder
         from OrcView.Driver.Web.Page.PageSelector import PageSelector
         from PySide.QtGui import QApplication
 

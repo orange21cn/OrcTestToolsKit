@@ -94,7 +94,7 @@ class DataSrcMain(QSplitter):
             self.wid_src_list.model.mod_update(db_data)
 
         elif 'update' == p_flag:
-            status = self.buttons.basic_editable('update')
+            status = self.buttons.get_status('update')
             self.editable(status)
 
         else:
@@ -110,10 +110,8 @@ class DataSrcMain(QSplitter):
         self.wid_src_det.set_editable(p_flag)
 
         if p_flag:
-            self.buttons.set_enable('add')
-            self.buttons.set_enable('push')
-            self.buttons.set_enable('delete')
+            for _id in 'add', 'push', 'delete':
+                self.buttons.set_enable(_id)
         else:
-            self.buttons.set_disable('add')
-            self.buttons.set_disable('push')
-            self.buttons.set_disable('delete')
+            for _id in 'add', 'push', 'delete':
+                self.buttons.set_disable(_id)

@@ -5,7 +5,15 @@ from OrcLib.LibApi import connect_list
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibControl import ControlBase
 from OrcLib.LibCmd import OrcDriverCmd
+
+
+class ItemControl(ControlBase):
+
+    def __init__(self, p_def='Item'):
+
+        ControlBase.__init__(self, p_def)
 
 
 class ItemModel(ModelTable):
@@ -156,18 +164,20 @@ class ItemModel(ModelTable):
 
             for _item in result_list.data:
 
-                if "item_operate" in _item:
+                if 'item_operate' in _item:
                     item_cmd = OrcDriverCmd()
                     item_cmd.set_type(_item['item_type'])
                     item_cmd.set_mode(_item['item_mode'])
                     item_cmd.set_cmd(eval(_item["item_operate"]))
-                    _item["item_operate_text"] = item_cmd.get_disp_text()
+                    _item['item_operate_text'] = item_cmd.get_disp_text()
 
         # 打印成功信息
         ResourceCheck.result_success(u" 查询步骤", self.__logger)
 
         # 连接数据
-        return connect_list(result_step_det.data, result_list.data, "item_id")
+        result = connect_list(result_step_det.data, result_list.data, "item_id")
+        print 100, result
+        return result
 
     def service_up(self, p_id):
         """
@@ -223,9 +233,9 @@ class ItemModel(ModelTable):
 
 class ItemNormalModel(ItemModel):
 
-    def __init__(self):
+    def __init__(self, p_def='Item'):
 
-        ItemModel.__init__(self, 'Item')
+        ItemModel.__init__(self, p_def)
 
     def service_add(self, p_data):
         """
@@ -233,7 +243,6 @@ class ItemNormalModel(ItemModel):
         :param p_data:
         :return:
         """
-        print 1000, p_data
         return super(ItemNormalModel, self).service_add(p_data)
 
     def service_delete(self, p_list):

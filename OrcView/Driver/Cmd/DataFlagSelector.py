@@ -9,7 +9,8 @@ from OrcLib.LibCmd import DataCmd
 from OrcView.Lib.LibTable import ModelTable
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibShell import OrcBasicSelector
+from OrcView.Lib.LibShell import OrcDialogView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
 from OrcLibFrame.LibCaseData import CaseData
 
@@ -193,28 +194,52 @@ class DataFlagView(ViewTable):
         return self.model.mod_get_current_data()
 
 
-class DataFlagSelector(OrcBasicSelector):
+class DataFlagSelector(OrcDialogView):
     """
     弹出框选择器
     """
     def __init__(self):
 
-        OrcBasicSelector.__init__(self)
+        OrcDialogView.__init__(self)
 
-        self.display = DataFlagView()
+        self.title = u'数据标识选择'
 
-        self.init_view()
+        # 控件定义
+        self._def = WidgetDefinition('DataFlag')
+        self.main.definition.widget_def = self._def
+
+        # 主控件
+        self.main.display = DataFlagView()
+
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_submit", name=u"提交"),
+            dict(id="act_cancel", name=u"取消")]
+
+        # 初始化控件
+        self.main.init_view()
+
+        # +---- Connection ----+
+        self.main.display.doubleClicked.connect(self.act_submit)
+
+    def act_submit(self):
+        """
+        提交
+        :return:
+        """
+        self._data = self.main.display.get_data()
+        self.close()
 
     @staticmethod
     def static_get_data(p_id, p_type=None):
         """
-
+        获取数据
         :param p_type:
         :param p_id:
         :return:
         """
         view = DataFlagSelector()
-        view.display.search(p_id, p_type)
+        view.main.display.search(p_id, p_type)
         view.exec_()
 
         return view._data

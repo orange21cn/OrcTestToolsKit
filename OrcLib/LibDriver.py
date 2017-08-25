@@ -1,16 +1,14 @@
 # coding=utf-8
 import re
 
-from OrcLib.LibLog import OrcLog
-from OrcLib.LibCommon import DataStr
-from OrcLib.LibRunTime import OrcRunTime
+from OrcLib.LibCmd import DataCmd
 from OrcLib.LibCmd import OrcCmd
 from OrcLib.LibCmd import OrcSysCmd
-from OrcLib.LibCmd import OrcDriverCmd
-from OrcLib.LibCmd import DataCmd
-from OrcLib.LibCmd import WebCmd
+from OrcLib.LibCommon import DateStr
+from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcSocketResource
 from OrcLib.LibNet import ResourceCheck
+from OrcLibFrame.LibRunTime import OrcRunTime
 
 
 class DriverSession(OrcRunTime):
@@ -34,7 +32,7 @@ class DriverSession(OrcRunTime):
 
         for i in range(100):
             _seq = "0%s" % i if 10 > i else str(i)
-            session = "%s%s" % (DataStr.get_long_str(), _seq)
+            session = "%s%s" % (DateStr.get_long_str(), _seq)
 
             if session in exist_sessions:
                 continue

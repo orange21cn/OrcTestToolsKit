@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from OrcLib.LibCommon import gen_date_str
+from OrcLib.LibCommon import DateStr
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabBatchDef
@@ -54,7 +54,8 @@ class BatchDefMod(TabBatchDef):
 
         if 'batch_desc' in cond:
             result = result.filter(TabBatchDef.batch_desc.ilike(_like('batch_desc')))
-
+        for i in result.all():
+            print i.to_json()
         return result.all()
 
     def usr_search_all(self, p_cond):
@@ -181,7 +182,7 @@ class BatchDefMod(TabBatchDef):
         Create a no
         :return:
         """
-        base_no = gen_date_str()
+        base_no = DateStr.get_data_str()
 
         for _index in range(100):
 
@@ -220,6 +221,7 @@ class BatchDefMod(TabBatchDef):
         :param p_id:
         :return:
         """
+        print "-=-=", p_id
         self.__session.query(TabBatchDef).filter(TabBatchDef.id == p_id).delete()
         self.__session.commit()
 

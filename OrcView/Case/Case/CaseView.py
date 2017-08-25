@@ -1,182 +1,150 @@
 # coding=utf-8
-from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
 
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import view_case_def
 from OrcView.Data.Data.DataAdd import DataAdder
 
 from .CaseModel import CaseModel
 from .CaseModel import CaseControl
 
 
-class CaseView(QWidget):
+class CaseView(OrcDisplayView):
 
     sig_case_det = OrcSignal(dict)
-    sig_selected = OrcSignal([dict])
 
-    def __init__(self, p_type=None):
+    def __init__(self):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
         self.title = u"用例管理"
 
-        self._type = p_type
+        # 控件定义
+        self._def = WidgetDefinition('Case')
+        self.main.definition.widget_def = self._def
 
-        # Search condition widget
-        self.__wid_search_cond = ViewSearch(view_case_def, 2)
+        # 查询
+        self.main.definition.search_enable = True
 
-        # Data result display widget
-        self.display = ViewTree(CaseModel, CaseControl)
+        # 主控件
+        self.model = CaseModel(self._def)
+        self.control = CaseControl(self._def)
+        self.view = ViewTree(self.model, self.control)
 
-        # Context menu
-        if self._type is None:
+        self.main.display = self.view
 
-            self.display.create_context_menu([
-                dict(NAME=u"增加", STR="sig_add"),
-                dict(NAME=u"删除", STR="sig_del"),
-                dict(NAME=u"增加数据", STR="sig_data"),
-                dict(NAME=u"添加至运行", STR="sig_run")])
+        # 按钮
+        self.main.definition.buttons_def = [
+                dict(id='act_add', name=u'增加'),
+                dict(id='act_delete', name=u'删除'),
+                dict(id='act_update', name=u'修改', type='CHECK'),
+                dict(id='act_search', name=u'查询')]
 
-            # 右键菜单
-            self.display.sig_context.connect(self.context)
+        # 右键菜单
+        self.main.definition.context_def = [
+                dict(NAME=u'增加', STR='act_add'),
+                dict(NAME=u'复制', STR='act_duplicate'),
+                dict(NAME=u'删除', STR='act_delete'),
+                dict(NAME=u'增加数据', STR='act_data'),
+                dict(NAME=u'添加至运行', STR='act_run')]
 
-        # Buttons widget
-        if self._type is None:
-            wid_buttons = OrcButtons([
-                dict(id="add", name=u"增加"),
-                dict(id="delete", name=u"删除"),
-                dict(id="update", name=u"修改", type="CHECK"),
-                dict(id="search", name=u"查询"),
-                dict(id="test", name=u"取消")
-            ])
+        # 初始化界面
+        self.main.init_view()
 
-            # 双击打开用例发双击信号
-            self.display.doubleClicked[QModelIndex].connect(self.case_detail)
+        # +---- Connection ----+
+        # 双击打开用例发双击信号
+        self.view.doubleClicked.connect(self.act_detail)
 
-        elif 'SINGLE' == self._type:
-            wid_buttons = OrcButtons([
-                dict(id="search", name=u"查询"),
-                dict(id="cancel", name=u"取消")
-            ])
+    def act_add(self):
+        """
+        新增
+        :return:
+        """
+        _data = CaseDefAdder.static_get_data()
+        if _data is not None:
+            self.model.mod_add(_data)
 
-            self.display.model.basic_checkable()
+    def act_duplicate(self):
+        """
+        复制
+        :return:
+        """
+        _data = self.model.mod_get_current_data()
+        if not _data:
+            return
+        _data.pop('id')
+        self.model.mod_add(_data)
 
-            # 双击选择用例
-            self.display.doubleClicked.connect(self.select_one)
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u'确认删除'):
+            self.model.mod_delete()
 
-        elif 'MULTI' == self._type:
-            wid_buttons = OrcButtons([
-                dict(id="select", name=u"选择"),
-                dict(id="search", name=u"查询"),
-                dict(id="cancel", name=u"取消")
-            ])
+    def act_update(self):
+        """
+        更新
+        :return:
+        """
+        self.model.basic_editable()
 
-        else:
-            wid_buttons = OrcButtons([])
-
-        # Layout
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.__wid_search_cond)
-        layout_main.addWidget(self.display)
-        layout_main.addWidget(wid_buttons)
-
-        self.setLayout(layout_main)
-
-        # 点击按钮操作
-        wid_buttons.sig_clicked.connect(self.operate)
-
-    def search(self):
+    def act_search(self):
         """
         查询
         :return:
         """
-        self.display.model.mod_search(self.__wid_search_cond.get_cond())
+        self.main.basic_search(self.model.mod_search)
 
-    def operate(self, p_flag):
+    def act_data(self):
         """
-        点击按钮操作
-        :param p_flag:
+        增加数据
         :return:
         """
-        if "add" == p_flag:
-            _data = CaseDefAdder.static_get_data()
-            if _data is not None:
-                self.display.model.mod_add(_data)
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u'确认删除'):
-                self.display.model.mod_delete()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        elif "search" == p_flag:
-            self.search()
-        if "select" == p_flag:
-            self.select()
-        elif "cancel" == p_flag:
-            self.close()
-        else:
-            pass
+        _data = self.model.mod_get_current_data()
+        if _data:
+            DataAdder.static_add_data('CASE', _data['id'])
 
-    def case_detail(self, p_index):
+    def act_run(self):
+        """
+        添加至执行
+        :return:
+        """
+        _data = self.display.model.mod_get_current_data()
+        if _data:
+            self.display.model.service_run(_data['id'])
+
+    def act_detail(self, p_index):
         """
         双击信号用于展开用例步骤界面
         :param p_index:
         :return:
         """
-        if not self.display.model.mod_get_editable():
+        if self.model.mod_get_editable():
+            return
 
-            _id = self.display.model.node(p_index).content["id"]
-            _no = self.display.model.node(p_index).content["case_no"]
-            _data = {"id": _id, "no": _no}
+        _data = self.model.node(p_index).content
 
-            self.sig_case_det[dict].emit(_data)
+        if not _data:
+            return
 
-    def context(self, p_flag):
-        """
-        右键菜单
-        :param p_flag:
-        :return:
-        """
-        if "sig_data" == p_flag:
-            _id = self.display.model.mod_get_current_data()['id']
-            DataAdder.static_add_data("CASE", _id)
+        if _data['case_type'] in ('CASE_SUITE', 'FUNC_SUITE'):
+            return
 
-        elif "sig_run" == p_flag:
-            case_id = self.display.model.mod_get_current_data()["id"]
-            self.display.model.service_run(case_id)
-
-    def select(self):
-        """
-        选择多个用例
-        :return:
-        """
-        _res = self.display.model.mod_get_checked()
-        self.sig_selected[dict].emit(_res)
-        self.close()
-
-    def select_one(self):
-        """
-        选择一个用例
-        :return:
-        """
-        _res = self.display.model.mod_get_current_data()["id"]
-        self.sig_selected[dict].emit([_res])
-        self.close()
+        self.sig_case_det[dict].emit(dict(id=_data['id'], no=_data['case_no']))
 
 
-class CaseDefAdder(ViewNewAdd):
+class CaseDefAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'Case')
+        BaseAdder.__init__(self, 'Case')
 
         self.setWindowTitle(u'新增用例')
 

@@ -1,92 +1,79 @@
 # coding=utf-8
-from PySide.QtGui import QWidget
-from PySide.QtGui import QVBoxLayout
-from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibMessage import OrcMessage
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
 from .PageDetModel import PageDetModel
+from .PageDetModel import PageDetControl
 
 
-class PageDetControl(ControlBase):
+class PageDetView(OrcDisplayView):
+    """
+    页面定义
+    """
+    sig_selected = OrcSignal()
 
     def __init__(self):
 
-        ControlBase.__init__(self, 'PageDet')
-
-
-class PageDetView(QWidget):
-    """
-
-    """
-    sig_selected = OrcSignal(str)
-
-    def __init__(self):
-
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
         # Current page id
-        self.__page_id = None
+        self._page_id = None
 
-        # Data result display widget
-        self.display = ViewTable(PageDetModel, PageDetControl)
+        # 控件定义
+        self._def = WidgetDefinition('PageDet')
+        self.main.definition.widget_def = self._def
 
-        # Buttons widget
-        wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK")
-        ])
+        # 主控件
+        self.model = PageDetModel(self._def)
+        self.control = PageDetControl(self._def)
+        self.view = ViewTable(self.model, self.control)
+        self.main.display = self.view
 
-        # Layout
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.display)
-        layout_main.addWidget(wid_buttons)
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK")]
 
-        layout_main.setContentsMargins(0, 0, 0, 0)
-
-        self.setLayout(layout_main)
-
-        # 点击按钮操作
-        wid_buttons.sig_clicked.connect(self.operate)
+        # 初始化界面
+        self.main.init_view()
 
         # 单击发送点击事件
-        self.display.clicked[QModelIndex].connect(self.page_select)
+        self.view.clicked.connect(self.selected)
 
-    def operate(self, p_flag):
+        self.main.setContentsMargins(0, 0, 0, 0)
+
+    def act_add(self):
         """
-        点击按钮操作
-        :param p_flag:
+        新增
         :return:
         """
-        if "add" == p_flag:
-            if self.__page_id is None:
-                return
-            _data = PageDetAdder.static_get_data()
-            if _data is not None:
-                _data["page_id"] = self.__page_id
-                self.display.model.mod_add(_data)
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u"确认删除"):
-                self.display.model.mod_delete()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        else:
-            pass
+        if self._page_id is None:
+            return
+        page_det_data = PageDetAdder.static_get_data()
+        if page_det_data is not None:
+            page_det_data["page_id"] = self._page_id
+            self.model.mod_add(page_det_data)
 
-    def page_select(self, p_index):
+    def act_delete(self):
         """
-        发送点击事件
-        :param p_index:
+        删除
         :return:
         """
-        page_det_id = self.display.model.mod_get_data(p_index.row())["id"]
-        self.sig_selected.emit(page_det_id)
+        if OrcMessage.question(self, u"确认删除"):
+            self.model.mod_delete()
+
+    def act_update(self):
+        """
+        修改
+        :return:
+        """
+        self.model.basic_editable()
 
     def set_page_id(self, p_page_id):
         """
@@ -94,24 +81,31 @@ class PageDetView(QWidget):
         :param p_page_id:
         :return:
         """
-        self.__page_id = p_page_id
-        self.display.model.mod_search({"page_id": self.__page_id})
+        self._page_id = p_page_id
+        self.model.mod_search(dict(page_id=self._page_id))
+
+    def selected(self):
+        """
+        选择后发信号
+        :return:
+        """
+        self.sig_selected.emit()
 
     def clean(self):
         """
         清理
         :return:
         """
-        self.display.model.mod_clean()
+        self.model.mod_clean()
 
 
-class PageDetAdder(ViewNewAdd):
+class PageDetAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'PageDet')
+        BaseAdder.__init__(self, 'PageDet')
 
         self.setWindowTitle(u'新增页面')
 

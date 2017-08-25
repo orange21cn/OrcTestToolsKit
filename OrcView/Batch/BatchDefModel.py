@@ -13,6 +13,7 @@ class BatchDefControl(ControlBase):
 
         ControlBase.__init__(self, p_def)
 
+
 class BatchDefModel(ModelTree):
 
     def __init__(self, p_def='BatchDef'):

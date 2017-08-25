@@ -9,7 +9,7 @@ from OrcLib.LibNet import get_config
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibLog import OrcLog
-from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibViewDef import WidgetDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibControl import ControlBase
 from OrcView.Lib.LibContextMenu import ViewContextMenu
@@ -28,10 +28,10 @@ class ModelTableBase(QAbstractTableModel):
         self._logger = OrcLog("view.table.model.base")
 
         # 界面字段定义
-        if isinstance(p_def, ViewDefinition):
+        if isinstance(p_def, WidgetDefinition):
             self._definition = p_def
         else:
-            self._definition = ViewDefinition(p_def)
+            self._definition = WidgetDefinition(p_def)
 
         # 模型数据
         self._data = list()

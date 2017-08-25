@@ -5,22 +5,22 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QGridLayout
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QLabel
 from PySide.QtGui import QPushButton
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcLib.LibProgram import OrcFactory
+from OrcLib.LibType import DirType
 from OrcView.Lib.LibView import WidgetFactory
 from OrcView.Lib.LibView import OrcRow
 from OrcView.Lib.LibTheme import get_theme
-from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
 
 class OrcButtons(QWidget):
 
     sig_clicked = OrcSignal(str)
 
-    def __init__(self, p_def, p_direction="HOR", p_align="BACK"):
+    def __init__(self, p_def, p_direction=DirType.HORIZON, p_align=DirType.BACK):
         """
         生成一个按钮组
         :param p_def: [{id, name, type=None}]
@@ -35,7 +35,7 @@ class OrcButtons(QWidget):
         self.__buttons = dict()
 
         # 设置方向
-        if "HOR" == p_direction:
+        if DirType.HORIZON == p_direction:
             self.__layout = QHBoxLayout()
         else:
             self.__layout = QVBoxLayout()
@@ -62,12 +62,15 @@ class OrcButtons(QWidget):
             self.__layout.addWidget(_button)
 
         # 默认向右对齐
-        if "BACK" == p_align:
+        if DirType.BACK == p_align:
             self.align_back()
-        else:
+        elif DirType.FRONT:
             self.align_front()
+        else:
+            pass
 
         self.__layout.setContentsMargins(0, 0, 0, 0)
+        self.__layout.setSpacing(0)
 
         # 设置样式
         self.setStyleSheet(get_theme("Buttons"))
@@ -125,10 +128,10 @@ class ViewSearch(QWidget):
         QWidget.__init__(self)
 
         # 可以输入字段类,或者标识
-        if isinstance(p_def, ViewDefinition):
+        if isinstance(p_def, WidgetDefinition):
             self._def = p_def
         else:
-            self._def = ViewDefinition(p_def)
+            self._def = WidgetDefinition(p_def)
 
         # 每行默认控件数
         self._columns = 4 if p_num is None else p_num

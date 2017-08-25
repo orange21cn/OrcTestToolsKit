@@ -120,13 +120,11 @@ class WebDebug(QWidget):
         driver_command.set_cmd(cls_cmd)
 
         command.set_cmd(driver_command)
-        print '102', command.get_cmd_dict()
-        _resource = OrcSocketResource('Driver')
-        print "------>"
-        _result = _resource.get(command.get_cmd_dict())
-        print "<------"
 
-        if 'True' == _result.data:
+        _resource = OrcSocketResource('Driver')
+        _result = _resource.get(command.get_cmd_dict())
+
+        if _result.data:
             self._set_result('PASS')
         else:
             self._set_result('FAIL')

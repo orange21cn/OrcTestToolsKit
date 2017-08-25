@@ -99,7 +99,7 @@ class FieldDefinition(object):
         )
 
 
-class ViewDefinition(object):
+class WidgetDefinition(object):
     """
     表定义
     """
@@ -379,9 +379,9 @@ view_page_def = [
          SEARCH=True, ADD=True, ESSENTIAL=False),
     dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
          SEARCH=False, ADD=True, ESSENTIAL=False),
-    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
-    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 view_page_det = [
@@ -395,9 +395,9 @@ view_page_det = [
          SEARCH=True, ADD=True, ESSENTIAL=True),
     dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
          SEARCH=False, ADD=True, ESSENTIAL=False),
-    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
-    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 # DataDef 界面
@@ -465,9 +465,9 @@ view_widget_def = [
     dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA",
          DISPLAY=True, EDIT=True, SEARCH=False, ADD=True, ESSENTIAL=False),
     dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME",
-         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
+         DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False),
     dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME",
-         DISPLAY=True, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
+         DISPLAY=False, EDIT=False, SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 view_widget_det = [
     dict(ID="id", NAME=u"ID", TYPE="LINETEXT", DISPLAY=False, EDIT=False,
@@ -484,9 +484,9 @@ view_widget_det = [
          SEARCH=False, ADD=True, ESSENTIAL=False),
     dict(ID="comment", NAME=u"备注", TYPE="TEXTAREA", DISPLAY=True, EDIT=True,
          SEARCH=False, ADD=True, ESSENTIAL=False),
-    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="create_time", NAME=u"创建时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False),
-    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=True, EDIT=False,
+    dict(ID="modify_time", NAME=u"修改时间", TYPE="DATETIME", DISPLAY=False, EDIT=False,
          SEARCH=False, ADD=False, ESSENTIAL=False)]
 
 view_window_def = [

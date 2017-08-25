@@ -5,6 +5,14 @@ from OrcLib.LibApi import connect_list
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibControl import ControlBase
+
+
+class StepControl(ControlBase):
+
+    def __init__(self, p_def='Step'):
+
+        ControlBase.__init__(self, p_def)
 
 
 class StepModel(ModelTable):

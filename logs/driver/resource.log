@@ -1,76 +1,13 @@
-[2017-08-22 13:58:34 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 13:58:34 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:58:34 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 13:58:49 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:58:49 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 13:58:49 resource.page_def.api] INFO Search page_def, parameter is: 300000004
-[2017-08-22 13:58:53 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000004'}
-[2017-08-22 13:58:53 resource.driver.service] INFO 获取页面信息成功
-[2017-08-22 13:59:41 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:59:41 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 13:59:41 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:59:41 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 13:59:42 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 13:59:42 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 13:59:42 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:59:42 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 13:59:50 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 13:59:50 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 13:59:50 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 13:59:50 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:00:04 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:00:04 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 14:00:04 resource.page_def.api] INFO Search page_def, parameter is: 300000004
-[2017-08-22 14:00:08 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000004'}
-[2017-08-22 14:00:08 resource.driver.service] INFO 获取页面信息成功
-[2017-08-22 14:00:57 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:00:57 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:34:14 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 14:34:14 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 14:34:14 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:34:14 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:34:24 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:34:24 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 14:34:24 resource.page_def.api] INFO Search page_def, parameter is: 300000004
-[2017-08-22 14:34:27 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000004'}
-[2017-08-22 14:34:27 resource.driver.service] INFO 获取页面信息成功
-[2017-08-22 14:35:16 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:35:16 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:36:24 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 14:36:24 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 14:36:24 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:36:24 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:36:40 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:36:40 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 14:36:40 resource.page_def.api] INFO Search page_def, parameter is: 300000004
-[2017-08-22 14:36:46 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': u'300000004'}
-[2017-08-22 14:36:46 resource.driver.service] INFO 获取页面信息成功
-[2017-08-22 14:37:33 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:37:33 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:38:28 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:38:28 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 14:38:28 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:38:28 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:38:39 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 14:38:39 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 14:38:39 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:38:39 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:49:05 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 14:49:05 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 14:49:05 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:49:05 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 14:49:26 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 14:49:26 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
-[2017-08-22 14:49:26 resource.page_def.api] INFO Search page_def, parameter is: 300000004
-[2017-08-22 15:10:53 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 15:10:53 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 15:10:53 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 15:10:53 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 15:12:09 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 15:12:09 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 15:12:09 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 15:12:09 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
-[2017-08-22 15:26:11 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
-[2017-08-22 15:26:11 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
-[2017-08-22 15:26:11 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
-[2017-08-22 15:26:11 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
+[2017-08-25 14:18:53 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
+[2017-08-25 14:18:53 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
+[2017-08-25 14:20:01 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01.OCCUPY', 'module': 'DRIVER'}
+[2017-08-25 14:20:01 resource.run_time.api] INFO Update run_time, parameter is: 1, {'data_value': 'WAITING'}
+[2017-08-25 14:20:01 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
+[2017-08-25 14:20:01 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}
+[2017-08-25 14:20:10 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
+[2017-08-25 14:20:10 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'BUSY'}
+[2017-08-25 14:20:10 resource.page_def.api] INFO Search page_def, parameter is: 300000002
+[2017-08-25 14:20:15 resource.page_dets.api] INFO Search page_det, parameter is: {'page_env': 'TEST', 'page_id': 300000002}
+[2017-08-25 14:20:15 resource.driver.service] INFO 获取页面信息成功
+[2017-08-25 14:20:22 resource.run_times.api] INFO Search run_time, parameter is: {'data_flag': 'DRI01-RUNNING', 'module': 'DRIVER'}
+[2017-08-25 14:20:22 resource.run_time.api] INFO Update run_time, parameter is: 2, {'data_value': 'IDLE'}

@@ -1,55 +1,84 @@
 # coding=utf-8
-from PySide.QtGui import QWidget
-from PySide.QtGui import QVBoxLayout
-
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibAdd import ViewNewAdd
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibMessage import OrcMessage
+from OrcView.Lib.LibShell import OrcDisplayView
 
 from .WidgetDetModel import WidgetDetModel
+from .WidgetDetModel import WidgetDetControl
 
 
-class WidgetDetControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'WidgetDet')
-
-
-class WidgetDetView(QWidget):
+class WidgetDetView(OrcDisplayView):
 
     def __init__(self):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
         # Current widget id
-        self.__widget_info = None
+        self._widget_info = None
 
-        # Data result display widget
-        self.display = ViewTable(WidgetDetModel, WidgetDetControl)
+        # 控件定义
+        self._def = 'WidgetDet'
+        self.main.definition.widget_def = self._def
 
-        # Buttons widget
-        wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK"),
-            dict(id="up", name=u"上移"),
-            dict(id="down", name=u"下移")
-        ])
+        # 主控件
+        self.model = WidgetDetModel(self._def)
+        self.control = WidgetDetControl(self._def)
+        self.view = ViewTable(self.model, self.control)
+        self.main.display = self.view
 
-        # Layout
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.display)
-        layout_main.addWidget(wid_buttons)
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK"),
+            dict(id="act_up", name=u"上移"),
+            dict(id="act_down", name=u"下移")]
 
-        layout_main.setContentsMargins(0, 0, 0, 0)
+        # 初始化界面
+        self.main.setContentsMargins(0, 0, 0, 0)
+        self.main.init_view()
 
-        self.setLayout(layout_main)
+    def act_add(self):
+        """
+        新增
+        :return:
+        """
+        if self._widget_info is None:
+            return
+        _data = WidgetDetAdder.static_get_data()
+        if _data is not None:
+            _data["widget_id"] = self._widget_info['id']
+            self.model.mod_add(_data)
 
-        # 点击按钮
-        wid_buttons.sig_clicked.connect(self.operate)
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u"确认删除"):
+            self.model.mod_delete()
+
+    def act_update(self):
+        """
+        修改
+        :return:
+        """
+        self.model.basic_editable()
+
+    def act_up(self):
+        """
+        上移
+        :return:
+        """
+        self.model.mod_up()
+
+    def act_down(self):
+        """
+        下移
+        :return:
+        """
+        self.model.mod_down()
 
     def set_widget(self, p_widget_info):
         """
@@ -57,51 +86,17 @@ class WidgetDetView(QWidget):
         :param p_widget_info:
         :return:
         """
-
-        self.__widget_info = p_widget_info
-        self.display.model.mod_search({"widget_id": self.__widget_info['id']})
-
-    def clean(self):
-        """
-        清空
-        :return:
-        """
-        self.__widget_info = None
-        self.display.model.mod_clean()
-
-    def operate(self, p_flag):
-        """
-        点击按钮操作
-        :param p_flag:
-        :return:
-        """
-        if "add" == p_flag:
-            if self.__widget_info is None:
-                return
-            _data = WidgetDetAdder.static_get_data()
-            if _data is not None:
-                _data["widget_id"] = self.__widget_info['id']
-                self.display.model.mod_add(_data)
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u"确认删除"):
-                self.display.model.mod_delete()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        elif "up" == p_flag:
-            self.display.model.mod_up()
-        elif "down" == p_flag:
-            self.display.model.mod_down()
-        else:
-            pass
+        self._widget_info = p_widget_info
+        self.model.mod_search({"widget_id": self._widget_info['id']})
 
 
-class WidgetDetAdder(ViewNewAdd):
+class WidgetDetAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'WidgetDet')
+        BaseAdder.__init__(self, 'WidgetDet')
 
         self.setWindowTitle(u'新增控件属性')
 

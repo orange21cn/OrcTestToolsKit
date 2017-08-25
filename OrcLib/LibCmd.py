@@ -11,7 +11,7 @@ from OrcLib.LibDatabase import TabBatchDef
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import TabStepDef
 from OrcLib.LibDatabase import TabItem
-from OrcLib.LibCommon import DataStr
+from OrcLib.LibCommon import DateStr
 
 
 class OrcCmd(object):
@@ -254,7 +254,7 @@ class DataCmd(object):
         object.__init__(self)
 
         # 数据标识
-        self.cmd_object = DataStr.get_long_str()
+        self.cmd_object = DateStr.get_long_str()
 
         # 数据个数
         self.data = None

@@ -10,16 +10,16 @@ from OrcView.Lib.LibControl import ControlBase
 
 class BatchDetControl(ControlBase):
 
-    def __init__(self):
+    def __init__(self, p_def='BatchDet'):
 
-        ControlBase.__init__(self, 'BatchDet')
+        ControlBase.__init__(self, p_def)
 
 
 class BatchDetModel(ModelTable):
 
-    def __init__(self):
+    def __init__(self, p_def='BatchDet'):
 
-        ModelTable.__init__(self, 'BatchDet')
+        ModelTable.__init__(self, p_def)
 
         self.__logger = LogClient()
 

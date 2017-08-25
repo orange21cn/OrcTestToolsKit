@@ -1,129 +1,150 @@
 # coding=utf-8
 from PySide.QtCore import Signal as OrcSignal
-from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QWidget
 
+from OrcLib.LibType import DirType
 from OrcView.Data.Data.DataAdd import DataAdder
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibControl import ControlBase
-from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .StepModel import StepModel
+from .StepModel import StepControl
 
 
-class StepControl(ControlBase):
+class StepView(OrcDisplayView):
+    """
+    步骤显示界面
+    """
+    # 单击信号,用于外部更新步骤项
+    sig_select = OrcSignal(int)
 
-    def __init__(self, p_def='Step'):
-
-        ControlBase.__init__(self, p_def)
-
-
-class StepView(QWidget):
-
-    sig_select = OrcSignal(str)
-    sig_search = OrcSignal()
+    # 删除信号,用于外部更新界面
     sig_delete = OrcSignal()
 
     def __init__(self, p_id):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
-        self.__case_id = p_id
+        self._case_id = p_id
 
-        # Data result display widget
-        self.display = ViewTable(StepModel, StepControl)
+        # 布局方向
+        self.main.definition.direction = DirType.HORIZON
 
-        # Context menu
-        menu_def = [dict(NAME=u"增加", STR="sig_add"),
-                    dict(NAME=u"删除", STR="sig_del"),
-                    dict(NAME=u"增加数据", STR="sig_data")]
+        # 控件定义
+        self._def = WidgetDefinition('Step')
+        self.main.definition.widget_def = self._def
 
-        self.display.create_context_menu(menu_def)
+        # 主显示区
+        self.model = StepModel()
+        self.control = StepControl()
+        self.view = ViewTable(self.model, self.control)
+        self.main.display = self.view
 
-        # Buttons widget
-        wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK"),
-            dict(id="up", name=u"上移"),
-            dict(id="down", name=u"下移")
-        ], "VER")
-
-        # Layout
-        layout_main = QHBoxLayout()
-        layout_main.addWidget(self.display)
-        layout_main.addWidget(wid_buttons)
-
-        layout_main.setContentsMargins(0, 0, 0, 0)
-
-        self.setLayout(layout_main)
-
-        # 生成界面初始数据
-        self.display.model.mod_search(dict(case_id=p_id))
-
-        # 按钮点击操作
-        wid_buttons.sig_clicked.connect(self.operate)
-
-        # 单击发出单击事件
-        self.display.clicked.connect(self.selected)
+        # 按钮
+        self.main.definition.buttons_dir = DirType.VERTICAL
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK"),
+            dict(id="act_up", name=u"上移"),
+            dict(id="act_down", name=u"下移")]
 
         # 右键菜单
-        self.display.sig_context.connect(self.context)
+        self.main.definition.context_def = [
+            dict(NAME=u"增加", STR="act_add"),
+            dict(NAME=u"复制", STR="act_duplicate"),
+            dict(NAME=u"删除", STR="act_delete"),
+            dict(NAME=u"增加数据", STR="act_data")]
 
-    def operate(self, p_flag):
+        # 初始化界面
+        self.main.init_view()
+        self.main.setContentsMargins(0, 0, 0, 0)
+
+        # 初始化界面数据
+        self.model.mod_search(dict(case_id=p_id))
+
+        # +---- Connection ----+
+        # 单击发出单击事件
+        self.view.clicked.connect(self.act_selected)
+
+    def act_add(self):
         """
-        点击按钮操作
-        :param p_flag:
+        新增
         :return:
         """
-        if "add" == p_flag:
-            _data = StepAdder.static_get_data()
-            if _data is not None:
-                self.display.model.mod_add(dict(case_det=dict(case_id=self.__case_id), step=_data))
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u'确认删除'):
-                self.display.model.mod_delete()
-                self.sig_delete.emit()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        elif "up" == p_flag:
-            self.display.model.mod_up()
-        elif "down" == p_flag:
-            self.display.model.mod_down()
-        else:
-            pass
+        _data = StepAdder.static_get_data()
+        if _data is not None:
+            self.model.mod_add(dict(case_det=dict(case_id=self._case_id), step=_data))
 
-    def selected(self, p_index):
+    def act_duplicate(self):
+        """
+        复制
+        :return:
+        """
+        _data = self.model.mod_get_current_data()
+        if not _data:
+            return
+        _data.pop('id')
+        self.model.mod_add(_data)
+
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u'确认删除'):
+            self.model.mod_delete()
+            self.sig_delete.emit()
+
+    def act_update(self):
+        """
+        更新
+        :return:
+        """
+        self.model.basic_editable()
+
+    def act_up(self):
+        """
+        上移
+        :return:
+        """
+        self.model.mod_up()
+
+    def act_down(self):
+        """
+        下移
+        :return:
+        """
+        self.model.mod_down()
+
+    def act_data(self):
+        """
+        增加数据
+        :return:
+        """
+        _data = self.model.mod_get_current_data()
+        if _data is not None:
+            DataAdder.static_add_data("STEP", _data['step_id'])
+
+    def act_selected(self):
         """
         发出单击事件用于显示步骤执行项
-        :param p_index:
         :return:
         """
-        _index = p_index.row()
-        _step_id = self.display.model.mod_get_data(_index)["step_id"]
-
-        self.sig_select.emit(_step_id)
-
-    def context(self, p_flag):
-        """
-        右键菜单
-        :param p_flag:
-        :return:
-        """
-        if "sig_data" == p_flag:
-            _step_id = self.display.model.mod_get_current_data()["step_id"]
-            DataAdder.static_add_data("STEP", _step_id)
+        _data = self.model.mod_get_current_data()
+        if _data:
+            self.sig_select.emit(_data['step_id'])
 
 
-class StepAdder(ViewNewAdd):
+class StepAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'Step')
+        BaseAdder.__init__(self, 'Step')
 
         self.setWindowTitle(u'新增步骤')
 

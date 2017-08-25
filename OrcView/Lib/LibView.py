@@ -395,8 +395,6 @@ class OrcSelectBase(QComboBox):
         :param p_data:
         :return:
         """
-        print "==-->>", p_data
-        print self.__names
         if p_data in self.__texts:
             self.setCurrentIndex(self.__texts.index(p_data))
         elif p_data in self.__names:
@@ -719,7 +717,10 @@ class OrcPagination(QWidget):
     """
     分页类
     """
+    # 旧式的方式,主动发送信息,更新完后删除 Todo
     sig_page = OrcSignal(tuple)
+
+    sig_search = OrcSignal()
 
     def __init__(self):
 
@@ -814,6 +815,7 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+        self.sig_search.emit()
 
     def last_page(self):
         """
@@ -824,6 +826,7 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+        self.sig_search.emit()
 
     def previous_page(self):
         """
@@ -835,6 +838,7 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+        self.sig_search.emit()
 
     def next_page(self):
         """
@@ -846,6 +850,7 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+        self.sig_search.emit()
 
     def jump_to_page(self):
         """
@@ -856,6 +861,7 @@ class OrcPagination(QWidget):
         number = self._number.text()
 
         self.sig_page.emit((self.__page, number))
+        self.sig_search.emit()
 
 
 class OrcRow(QHBoxLayout):

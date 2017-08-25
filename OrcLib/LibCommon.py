@@ -3,9 +3,6 @@ import sys
 import time
 
 
-dict_value = lambda dict_data, dict_key: None if dict_key not in dict_data else dict_data[dict_key]
-
-
 def is_equal_str(str_a, str_b):
     """
     判断字符串相等，None 作为空串处理
@@ -49,10 +46,6 @@ def set_default_encoding():
     sys.setdefaultencoding('utf-8')
 
 
-def gen_date_str():
-    return time.strftime("%Y%m%d")
-
-
 class OrcCovert:
 
     def __init__(self):
@@ -75,7 +68,7 @@ class OrcCovert:
         return _res
 
 
-class DataStr(object):
+class DateStr(object):
 
     def __init__(self):
 

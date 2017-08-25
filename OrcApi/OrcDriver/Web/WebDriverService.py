@@ -6,9 +6,11 @@ from OrcLib.LibDatabase import WebWidgetDef
 from OrcLib.LibDatabase import WebWidgetDet
 
 
-class WebDriverService:
+class WebDriverService(object):
 
     def __init__(self):
+
+        object.__init__(self)
 
         # Log
         self.__logger = OrcLog("resource.driver.service")

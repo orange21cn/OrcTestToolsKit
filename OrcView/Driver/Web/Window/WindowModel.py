@@ -5,13 +5,21 @@ from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
+from OrcView.Lib.LibControl import ControlBase
+
+
+class WindowControl(ControlBase):
+
+    def __init__(self, p_def='Window'):
+
+        ControlBase.__init__(self, p_def)
 
 
 class WindowModel(ModelTable):
 
-    def __init__(self):
+    def __init__(self, p_def='Window'):
 
-        ModelTable.__init__(self, 'Window')
+        ModelTable.__init__(self, p_def)
 
         self.__logger = LogClient()
 

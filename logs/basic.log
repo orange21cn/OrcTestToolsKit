@@ -1,4 +1,117 @@
-[2017-08-18 16:34:18 basic.lib_net.orc_resource] WARNING Path and parameter is none.
-[2017-08-18 16:37:38 basic.lib_net.orc_resource] WARNING Path and parameter is none.
-[2017-08-21 15:43:03 basic.lib_net.orc_resource] WARNING Path and parameter is none.
-[2017-08-21 17:16:47 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
+    self.view_widget_det.set_widget(widget_def_data)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
+    self.mod_search({"widget_id": self._widget_info['id']})
+AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+
+[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
+    self.view_widget_det.set_widget(widget_def_data)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
+    self.mod_search({"widget_id": self._widget_info['id']})
+AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+
+[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
+    self.view_widget_det.set_widget(widget_def_data)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
+    self.mod_search({"widget_id": self._widget_info['id']})
+AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+
+[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
+    self.view_widget_det.set_widget(widget_def_data)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
+    self.mod_search({"widget_id": self._widget_info['id']})
+AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+
+[2017-08-24 16:27:19 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 16:27:19 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 68, in act_search
+    self.view_widget_det.model.clean()
+AttributeError: 'WidgetDetModel' object has no attribute 'clean'
+
+[2017-08-24 16:37:18 basic.lib_net] ERROR 获取字典信息失败, None
+[2017-08-24 16:37:18 basic.lib_net] ERROR None
+
+[2017-08-24 16:42:29 basic.lib_net] ERROR 获取字典信息失败, None
+[2017-08-24 16:42:29 basic.lib_net] ERROR None
+
+[2017-08-24 17:19:26 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-08-24 17:19:26 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 284, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 353, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-08-24 18:19:48 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 18:19:48 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 316, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 112, in act_add
+    _data = ItemAdder.static_get_data()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 240, in static_get_data
+    view = ItemAdder()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 213, in __init__
+    BaseAdder.__init__(self, 'Item')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibAdd.py", line 34, in __init__
+    OrcDialogView.__init__(self)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 359, in __init__
+    self.view.doubleClicked.connect(self.act_submit)
+AttributeError: 'ItemAdder' object has no attribute 'view'
+
+[2017-08-24 18:19:50 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 18:19:50 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 316, in _dispatch_action
+    func()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 112, in act_add
+    _data = ItemAdder.static_get_data()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 240, in static_get_data
+    view = ItemAdder()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 213, in __init__
+    BaseAdder.__init__(self, 'Item')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibAdd.py", line 34, in __init__
+    OrcDialogView.__init__(self)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 359, in __init__
+    self.view.doubleClicked.connect(self.act_submit)
+AttributeError: 'ItemAdder' object has no attribute 'view'
+
+[2017-08-24 18:23:52 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 18:23:52 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
+    getattr(self, "%s" % p_flag)()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
+    self.model.mod_search(self.searcher.get_cond())
+AttributeError: 'PageSelector' object has no attribute 'searcher'
+
+[2017-08-24 18:23:53 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 18:23:53 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
+    getattr(self, "%s" % p_flag)()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
+    self.model.mod_search(self.searcher.get_cond())
+AttributeError: 'PageSelector' object has no attribute 'searcher'
+
+[2017-08-24 18:23:54 basic.view.lib.shell] ERROR Button clicked but no func founded
+[2017-08-24 18:23:54 basic.view.lib.shell] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
+    getattr(self, "%s" % p_flag)()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
+    self.model.mod_search(self.searcher.get_cond())
+AttributeError: 'PageSelector' object has no attribute 'searcher'
+

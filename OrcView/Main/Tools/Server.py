@@ -44,7 +44,7 @@ class ServerBase(QPushButton):
         self.pressed.connect(self.manage_service)
 
         # 设置样式
-        self.setStyleSheet(get_theme("Buttons"))
+        self.setStyleSheet(get_theme("Server"))
 
     def __del__(self):
 
@@ -244,69 +244,6 @@ class ServerDriver(ServerBase):
 
         resource_debug = OrcSocketResource("Driver")
         resource_debug.get(command.get_cmd_dict())
-
-        # 关闭进程
-        self._service.kill()
-
-# Todo 删除,已合并
-class ServerDebug(ServerBase):
-    """
-
-    """
-    def __init__(self):
-
-        ServerBase.__init__(self, 'SERVER_WEB_001', u'调试')
-
-        if 'LOCAL' == self._mode:
-            self.start_service()
-
-    def __del__(self):
-
-        if self._service is not None:
-            self.stop_service()
-
-    def manage_service(self):
-        """
-        管理 socket 起停
-        :return:
-        """
-        # 当前为本地
-        if self.isChecked():
-
-            # 关闭本地服务
-            if self._service is not None:
-                self.stop_service()
-
-            # 客户端设置为远程
-            self._set_client_remote('DRIVER')
-
-            self._logger.info(u"关闭调试服务器")
-
-        # 当前为远程
-        else:
-            # 起动服务
-            self.start_service()
-
-            # 客户端设置为本地
-            self._set_client_local('DRIVER', 'IP')
-            self._set_client_local('DRIVER', 'MODE')
-
-            self._logger.info(u"起动调试服务器")
-
-    def start_service(self):
-        """
-        起动服务
-        :return:
-        """
-        self._service = subprocess.Popen(["python", "%s/OrcDriver/start_socket.py" % self._home])
-
-    def stop_service(self):
-        """
-        关闭 socket 服务
-        :return:
-        """
-        resource_debug = OrcSocketResource("DriverWeb")
-        resource_debug.get(dict(quit="QUIT"))
 
         # 关闭进程
         self._service.kill()

@@ -1,119 +1,79 @@
 # coding=utf-8
-from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
-
 from OrcLib.LibProgram import orc_singleton
 from OrcView.Data.Data.DataModel import DataModel
-from OrcView.Lib.LibAdd import ViewAdd
 from OrcView.Data.Data.DataAdd import DataAdder
-
-from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Lib.LibShell import OrcDisplayView
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibView import OrcPagination
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibViewDef import view_data
 
 from .DataModel import DataControl
 
 
 @orc_singleton
-class DataView(QWidget):
+class DataView(OrcDisplayView):
     """
     View of table
     """
     def __init__(self):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
         self.title = u"数据管理"
 
-        # Search condition widget
-        self.__wid_search_cond = ViewSearch(view_data, 3)
+        # 控件定义
+        self._def = WidgetDefinition('Data')
+        self.main.definition.widget_def = self._def
 
-        # Data result display widget
-        self.display = ViewTable(DataModel, DataControl)
+        # 查询框
+        self.main.definition.search_enable = True
+        self.main.definition.search_column = 3
 
-        # pagination
-        self.__wid_pagination = OrcPagination()
-
-        # Buttons widget
-        _wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK"),
-            dict(id="search", name=u"查询")
-        ], p_align="FRONT")
-
-        # bottom layout
-        layout_bottom = QHBoxLayout()
-        layout_bottom.addWidget(_wid_buttons)
-        layout_bottom.addStretch()
-        layout_bottom.addWidget(self.__wid_pagination)
-
-        # 新增窗口
-        self.__win_add = ViewAdd(view_data)
-
-        # Layout
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.__wid_search_cond)
-        layout_main.addWidget(self.display)
-        layout_main.addLayout(layout_bottom)
-
-        self.setLayout(layout_main)
-
-        # 按钮动作
-        _wid_buttons.sig_clicked.connect(self.operate)
+        # 主控件
+        self.model = DataModel(self._def)
+        self.control = DataControl(self._def)
+        self.view = ViewTable(self.model, self.control)
+        self.main.display = self.view
 
         # 分页
-        self.__wid_pagination.sig_page.connect(self.search)
+        self.main.definition.pagination_enable = True
 
-        # 新增窗口点击新增
-        self.__win_add.sig_submit[dict].connect(self.display.model.mod_add)
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK"),
+            dict(id="act_search", name=u"查询")]
 
-    def operate(self, p_flag):
+        # 初始化界面
+        self.main.init_view()
+
+    def act_add(self):
         """
-        按钮点击后操作函数
-        :param p_flag:
+        新增
         :return:
         """
-        if "add" == p_flag:
-            DataAdder.static_add_data()
-            self.display.model.mod_refresh()
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u'确认删除'):
-                self.display.model.mod_delete()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        elif "search" == p_flag:
-            self.search()
-        else:
-            pass
+        DataAdder.static_add_data()
+        self.model.mod_refresh()
 
-    def search(self, p_data=None):
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u'确认删除'):
+            self.model.mod_delete()
+
+    def act_update(self):
+        """
+        修改
+        :return:
+        """
+        self.model.basic_editable()
+
+    def act_search(self):
         """
         查询
-        :param p_data:
         :return:
         """
-        # 默认查询,查第一页
-        if p_data is None:
-            _page = 1
-            _number = int(self.__wid_pagination.get_number())
-
-        # 分页查询
-        else:
-            _page = p_data[0]
-            _number = int(p_data[1])
-
-        self.display.model.mod_search(dict(
-            page=_page,
-            number=_number,
-            condition=self.__wid_search_cond.get_cond()
-        ))
-
-        _number = 1 if _number < 1 else _number
-        record_num = int(self.display.model.mod_get_record_num())
-
-        self.__wid_pagination.set_data(_page, record_num / _number)
+        self.main.basic_search(self.model.mod_search)

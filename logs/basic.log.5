@@ -1,258 +1,306 @@
-[2017-04-20 15:43:16 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 272, in db_search
-    result = result.all()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2588, in all
-    return list(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2736, in __iter__
-    return self._execute_and_instances(context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2749, in _execute_and_instances
-    close_with_result=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2740, in _connection_from_session
-    **kw)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 905, in connection
-    execution_options=execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 910, in _connection_for_bind
-    engine, execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 313, in _connection_for_bind
-    self._assert_active()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 214, in _assert_active
-    % self._rollback_exception
-InvalidRequestError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-18 18:16:52 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:16:54 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:16:54 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:16:54 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:16:54 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:16:56 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:16:56 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:23:14 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:23:14 basic.lib_net] INFO 获取操作文字成功
+[2017-05-18 18:23:18 basic.lib_net] INFO 获取控件路径成功
+[2017-05-18 18:23:18 basic.lib_net] INFO 获取操作文字成功
+[2017-05-23 16:25:54 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:25:54 basic.lib_net] ERROR None
 
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 201, in db_add
-    self.__logger.info('%s result: %s' % (self.db_add.__name__, result))
-NameError: global name 'result' is not defined
+[2017-05-23 16:37:23 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:37:23 basic.lib_net] ERROR None
 
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
-    print "----", self._db.session.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
-    self.transaction.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
-    self._prepare_impl()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
-    self.session.flush()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
-    self._flush(objects)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
-    flush_context.execute()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
-    rec.execute(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
-    uow
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
-    mapper, table, insert)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
-    execute(statement, multiparams)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
-    return meth(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
-    compiled_sql, distilled_params
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
-    exc_info
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
-    cursor.execute(statement, parameters)
-IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:37:43 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:37:43 basic.lib_net] ERROR None
 
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({},) {}
-[2017-04-20 15:44:00 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 272, in db_search
-    result = result.all()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2588, in all
-    return list(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2736, in __iter__
-    return self._execute_and_instances(context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2749, in _execute_and_instances
-    close_with_result=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2740, in _connection_from_session
-    **kw)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 905, in connection
-    execution_options=execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 910, in _connection_for_bind
-    engine, execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 313, in _connection_for_bind
-    self._assert_active()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 214, in _assert_active
-    % self._rollback_exception
-InvalidRequestError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:41:00 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:41:00 basic.lib_net] ERROR None
 
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 203, in db_add
-    self.__logger.info('%s result: %s' % (self.db_add.__name__, result))
-NameError: global name 'result' is not defined
+[2017-05-23 16:41:01 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:41:01 basic.lib_net] ERROR None
 
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 203, in db_add
-    self.__logger.info('%s result: %s' % (self.db_add.__name__, result))
-NameError: global name 'result' is not defined
+[2017-05-23 16:41:27 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:41:27 basic.lib_net] ERROR None
 
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({},) {}
-[2017-04-20 15:45:38 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 274, in db_search
-    result = result.all()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2588, in all
-    return list(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2736, in __iter__
-    return self._execute_and_instances(context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2749, in _execute_and_instances
-    close_with_result=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2740, in _connection_from_session
-    **kw)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 905, in connection
-    execution_options=execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 910, in _connection_for_bind
-    engine, execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 313, in _connection_for_bind
-    self._assert_active()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 214, in _assert_active
-    % self._rollback_exception
-InvalidRequestError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:41:28 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:41:28 basic.lib_net] ERROR None
 
-[2017-04-20 15:45:56 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({},) {}
-[2017-04-20 15:45:56 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 274, in db_search
-    result = result.all()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2588, in all
-    return list(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2736, in __iter__
-    return self._execute_and_instances(context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2749, in _execute_and_instances
-    close_with_result=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2740, in _connection_from_session
-    **kw)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 905, in connection
-    execution_options=execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 910, in _connection_for_bind
-    engine, execution_options)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 313, in _connection_for_bind
-    self._assert_active()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 214, in _assert_active
-    % self._rollback_exception
-InvalidRequestError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:41:31 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:41:31 basic.lib_net] ERROR None
 
-[2017-04-20 15:50:32 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:50:32 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
-    self._db.session.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
-    self.transaction.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
-    self._prepare_impl()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
-    self.session.flush()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
-    self._flush(objects)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
-    flush_context.execute()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
-    rec.execute(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
-    uow
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
-    mapper, table, insert)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
-    execute(statement, multiparams)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
-    return meth(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
-    compiled_sql, distilled_params
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
-    exc_info
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
-    cursor.execute(statement, parameters)
-IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:51:53 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:51:53 basic.lib_net] ERROR None
 
-[2017-04-20 15:51:57 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
-[2017-04-20 15:51:57 basic.lib.lib_program] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibProgram.py", line 68, in run
-    return self._operator[p_flag](*args, **kwargs)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcMem/MemDb.py", line 199, in db_add
-    self._db.session.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 813, in commit
-    self.transaction.commit()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 392, in commit
-    self._prepare_impl()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 372, in _prepare_impl
-    self.session.flush()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2027, in flush
-    self._flush(objects)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2145, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2109, in _flush
-    flush_context.execute()
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 373, in execute
-    rec.execute(self)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 532, in execute
-    uow
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 174, in save_obj
-    mapper, table, insert)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 767, in _emit_insert_statements
-    execute(statement, multiparams)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
-    return meth(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
-    compiled_sql, distilled_params
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
-    exc_info
-  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 200, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
-    context)
-  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
-    cursor.execute(statement, parameters)
-IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: tab_run_time.id [SQL: u'INSERT INTO tab_run_time (id, module, data_flag, data_index, data_value) VALUES (?, ?, ?, ?, ?)'] [parameters: (u'1', u'WEB', None, None, None)]
+[2017-05-23 16:51:55 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:51:55 basic.lib_net] ERROR None
 
-[2017-04-20 15:55:40 basic.lib.lib_program] ERROR File OrcLib.LibProgram, class OrcSwitch, func run, parameter ({u'id': u'1', u'module': u'WEB'},) {}
+[2017-05-23 16:51:56 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:51:56 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:18 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:18 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:18 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:18 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:19 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:19 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:20 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:20 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:21 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:21 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:22 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:22 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:22 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:22 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:24 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:24 basic.lib_net] ERROR None
+
+[2017-05-23 16:55:25 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:55:25 basic.lib_net] ERROR None
+
+[2017-05-23 16:56:53 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:56:53 basic.lib_net] ERROR None
+
+[2017-05-23 16:56:54 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:56:54 basic.lib_net] ERROR None
+
+[2017-05-23 16:56:56 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-23 16:56:56 basic.lib_net] ERROR None
+
+[2017-05-25 15:39:57 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-25 15:39:57 basic.lib_net] ERROR None
+
+[2017-05-25 15:39:58 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-25 15:39:58 basic.lib_net] ERROR None
+
+[2017-05-25 15:42:57 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-25 15:42:57 basic.lib_net] ERROR None
+
+[2017-05-25 15:42:58 basic.lib_net] ERROR Invoke http://localhost:5005/api/1.0/Report failed, response is False
+[2017-05-25 15:42:58 basic.lib_net] ERROR None
+
+[2017-05-25 17:34:30 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-05-25 17:34:30 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 262, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-05-25 17:34:32 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-05-25 17:34:32 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 262, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-05-27 09:57:29 basic.lib_net] INFO 获取控件路径成功
+[2017-05-27 09:57:29 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:06:11 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:06:11 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:06:26 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:06:26 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:08:45 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:08:45 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:08:58 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:08:58 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:09:14 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:09:14 basic.lib_net] INFO 获取操作文字成功
+[2017-06-05 17:23:15 basic.lib_net] INFO 获取页面标识成功
+[2017-06-05 17:23:15 basic.lib_net] INFO 获取操作文字成功
+[2017-06-12 17:16:25 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-06-12 17:16:25 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 262, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-06-12 17:16:26 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-06-12 17:16:26 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 262, in action
+    _module = self.__get_module(p_path)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 331, in __get_module
+    return getattr(__import__(self._path, fromlist=True), _name)()
+AttributeError: 'module' object has no attribute 'WindowDefAPI'
+
+[2017-06-14 11:15:26 basic.lib_net] INFO 获取控件路径成功
+[2017-06-14 11:15:26 basic.lib_net] INFO 获取操作文字成功
+[2017-06-14 13:55:40 basic.lib_net] INFO 获取控件路径成功
+[2017-06-14 13:55:40 basic.lib_net] INFO 获取操作文字成功
+[2017-06-14 15:14:17 basic.lib_net] INFO 获取控件路径成功
+[2017-06-14 15:14:17 basic.lib_net] INFO 获取操作文字成功
+[2017-06-14 15:18:09 basic.lib_net] INFO 获取页面标识成功
+[2017-06-14 15:18:09 basic.lib_net] INFO 获取操作文字成功
+[2017-06-14 16:33:58 basic.lib_net] INFO 获取页面标识成功
+[2017-06-14 16:33:58 basic.lib_net] INFO 获取操作文字成功
+[2017-06-14 16:35:18 basic.lib_net] INFO 获取页面标识成功
+[2017-06-16 13:01:55 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:01:55 basic.run_time] ERROR None
+
+[2017-06-16 13:05:39 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:05:39 basic.run_time] ERROR None
+
+[2017-06-16 13:05:48 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:05:48 basic.run_time] ERROR None
+
+[2017-06-16 13:06:00 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:00 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:06:15 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:15 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:06:22 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:22 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:06:29 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:29 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:06:43 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:43 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:06:49 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:06:49 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:07:34 basic.run_time] ERROR 获取实时数据出错,取值为: []
+[2017-06-16 13:07:34 basic.run_time] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 81, in start
+    _result = self.__execute(_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 109, in __execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/WebDriver.py", line 154, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcDriver/Web/Widget/OrcWidget.py", line 297, in basic_execute
+    self._widget.click()
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 77, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webelement.py", line 493, in _execute
+    return self._parent.execute(command, params)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+ElementNotInteractableException: Message: 
+
+
+[2017-06-16 13:08:19 basic.run_time] ERROR 获取实时数据出错,取值为: []

@@ -5,6 +5,7 @@ from PySide.QtGui import QWidget
 from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QVBoxLayout
 
+from OrcLib.LibType import DirType
 from OrcLib.LibNet import OrcSocketResource
 from OrcView.Lib.LibTable import ViewTable
 from OrcView.Lib.LibTable import ModelTable
@@ -86,7 +87,7 @@ class RunTimeDispView(QWidget):
         self.__wid_buttons = OrcButtons([
             dict(id="update", name=u"更新"),
             dict(id="auto", name=u"自动更新", type="CHECK")
-        ], p_align="FRONT")
+        ], p_align=DirType.FRONT)
 
         # 分页
         self.__wid_pagination = OrcPagination()

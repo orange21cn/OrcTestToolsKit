@@ -2,11 +2,10 @@
 import re
 import json
 
-from OrcLib import LibCommon
+from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibProcess import get_mark
-from OrcLib.LibProcess import get_widget_mark
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTable import ModelTable
@@ -15,16 +14,16 @@ from OrcView.Lib.LibControl import ControlBase
 
 class DataControl(ControlBase):
 
-    def __init__(self):
+    def __init__(self, p_def='Data'):
 
-        ControlBase.__init__(self, 'Data')
+        ControlBase.__init__(self, p_def)
 
 
 class DataModel(ModelTable):
 
-    def __init__(self):
+    def __init__(self, p_def='Data'):
 
-        ModelTable.__init__(self, 'Data')
+        ModelTable.__init__(self, p_def)
 
         self.__logger = LogClient()
 
@@ -98,8 +97,10 @@ class DataModel(ModelTable):
         :param p_cond:
         :return:
         """
-        page = LibCommon.dict_value(p_cond, "page")
-        number = LibCommon.dict_value(p_cond, "page")
+        condition = OrcFactory.create_default_dict(p_cond)
+
+        page = condition.value('page')
+        number = condition.value('page')
 
         # 查询 data 数据
         data_list = self.__resource_data.get(parameter=p_cond)

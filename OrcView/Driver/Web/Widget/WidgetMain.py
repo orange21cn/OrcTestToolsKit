@@ -1,59 +1,80 @@
 # coding=utf-8
-from OrcView.Driver.Web.Widget.WidgetDetView import WidgetDetView
 from PySide.QtCore import Signal as OrcSignal
-from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QSplitter
-from PySide.QtGui import QWidget
 from PySide.QtGui import QSizePolicy
 
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Driver.Web.Widget.WidgetDetView import WidgetDetView
 from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefView
-from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibViewDef import view_widget_def
 
 
-class WidgetContainer(QWidget):
+class WidgetContainer(OrcDisplayView):
 
     sig_selected = OrcSignal(dict)
 
     def __init__(self):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
         self.title = u"控件"
 
-        # Search condition widget
-        self.__wid_search_cond = ViewSearch(view_widget_def, 2)
+        # 控件定义
+        self._def = WidgetDefinition('WidgetDef')
+        self.main.definition.widget_def = self._def
 
-        # Column widget
-        self.__wid_widget_def = WidgetDefView()
-        self.__wid_widget_det = WidgetDetView()
+        # 查询条
+        self.main.definition.search_enable = True
+        self.main.definition.search_column = 2
 
-        # Layout bottom
-        _layout_bottom = QSplitter()
-        _layout_bottom.addWidget(self.__wid_widget_def)
-        _layout_bottom.addWidget(self.__wid_widget_det)
+        # 主控件
+        self.view_widget_def = WidgetDefView()
+        self.view_widget_det = WidgetDetView()
+        self.view = QSplitter()
 
-        _layout_bottom.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.view.addWidget(self.view_widget_def)
+        self.view.addWidget(self.view_widget_det)
+        self.view.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        # Layout main
-        _layout_main = QVBoxLayout()
-        _layout_main.addWidget(self.__wid_search_cond)
-        _layout_main.addWidget(_layout_bottom)
+        self.main.display = self.view
 
-        _layout_main.setContentsMargins(0, 0, 0, 0)
+        # 初始化控件
+        self.view.setContentsMargins(0, 0, 0, 0)
+        self.main.setContentsMargins(0, 0, 0, 0)
+        self.main.init_view()
 
-        self.setLayout(_layout_main)
+        # +---- Connection ----+
+        self.view_widget_def.sig_action.connect(self._dispatch_action)
 
-        self.__wid_widget_def.sig_selected.connect(self.__wid_widget_det.set_widget)
-        self.__wid_widget_def.sig_selected.connect(self.sig_selected.emit)
-        self.__wid_widget_def.sig_search.connect(self.search_definition)
-        self.__wid_widget_def.sig_delete.connect(self.__wid_widget_det.clean)
-
-    def search_definition(self):
+    def act_add(self):
         """
-
+        新增
         :return:
         """
-        _cond = self.__wid_search_cond.get_cond()
-        self.__wid_widget_def.search(_cond)
-        self.__wid_widget_det.clean()
+        self.view_widget_det.model.mod_clean()
+
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        self.view_widget_det.model.mod_clean()
+
+    def act_search(self):
+        """
+        查询
+        :return:
+        """
+        self.view_widget_def.model.mod_search(self.main.searcher.get_cond())
+        self.view_widget_det.model.mod_clean()
+
+    def act_select(self):
+        """
+        选择
+        :return:
+        """
+        widget_def_data = self.view_widget_def.model.mod_get_current_data()
+        if not widget_def_data:
+            return
+        self.view_widget_det.set_widget(widget_def_data)
+        self.sig_selected.emit(widget_def_data)

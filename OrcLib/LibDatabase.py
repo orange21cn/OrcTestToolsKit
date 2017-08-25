@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from OrcLib.LibCommon import OrcCovert
+from OrcLib.LibProgram import OrcFactory
 from OrcApi import orc_db
 
 
@@ -34,12 +35,14 @@ class TabRunTime(orc_db.Model):
     data_value = orc_db.Column(orc_db.String(128))
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.module = p_def["module"] if p_def else None
-        self.data_flag = p_def["data_flag"] if p_def else None
-        self.data_index = p_def["data_flag"] if p_def else None
-        self.data_value = p_def["data_flag"] if p_def else None
+        self.id = data.value('id')
+        self.module = data.value('module')
+        self.data_flag = data.value('data_flag')
+        self.data_index = data.value('data_flag')
+        self.data_value = data.value('data_flag')
 
     def to_json(self):
 
@@ -69,22 +72,24 @@ class TabBatchDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.pid = p_def["pid"] if p_def else None
-        self.batch_no = p_def["batch_no"] if p_def else None
-        self.batch_type = p_def["batch_type"] if p_def else None
-        self.batch_name = p_def["batch_name"] if p_def else None
-        self.batch_desc = p_def["batch_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.pid = data.value('pid')
+        self.batch_no = data.value('batch_no')
+        self.batch_type = data.value('batch_type')
+        self.batch_name = data.value('batch_name')
+        self.batch_desc = data.value('batch_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            pid=str(self.pid),
+            id=self.id,
+            pid=self.pid,
             batch_no=self.batch_no,
             batch_type=self.batch_type,
             batch_name=self.batch_name,
@@ -107,18 +112,20 @@ class TabBatchDet(orc_db.Model):
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.batch_id = p_def["batch_id"] if p_def else None
-        self.case_id = p_def["case_id"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.id = data.value('id')
+        self.batch_id = data.value('batch_id')
+        self.case_id = data.value('case_id')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            batch_id=str(self.batch_id),
-            case_id=str(self.case_id),
+            id=self.id,
+            batch_id=self.batch_id,
+            case_id=self.case_id,
             create_time=OrcCovert.time2str(self.create_time)
         )
 
@@ -141,24 +148,26 @@ class TabCaseDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.pid = p_def["pid"] if p_def else None
-        self.case_no = p_def["case_no"] if p_def else None
-        self.case_path = p_def["case_path"] if p_def else None
-        self.case_type = p_def["case_type"] if p_def else None
-        self.case_name = p_def["case_name"] if p_def else None
-        self.case_desc = p_def["case_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.pid = data.value('pid')
+        self.case_no = data.value('case_no')
+        self.case_path = data.value('case_path')
+        self.case_type = data.value('case_type')
+        self.case_name = data.value('case_name')
+        self.case_desc = data.value('case_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            pid=str(self.pid),
-            case_no=str(self.case_no),
+            id=self.id,
+            pid=self.pid,
+            case_no=self.case_no,
             case_path=self.case_path,
             case_type=self.case_type,
             case_name=self.case_name,
@@ -182,19 +191,21 @@ class TabCaseDet(orc_db.Model):
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.case_id = p_def["case_id"] if p_def else None
-        self.step_id = p_def["step_id"] if p_def else None
-        self.step_no = p_def["step_no"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.id = data.value('id')
+        self.case_id = data.value('case_id')
+        self.step_id = data.value('step_id')
+        self.step_no = data.value('step_no')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            case_id=str(self.case_id),
-            step_id=str(self.step_id),
+            id=self.id,
+            case_id=self.case_id,
+            step_id=self.step_id,
             step_no=self.step_no,
             create_time=OrcCovert.time2str(self.create_time)
         )
@@ -214,17 +225,20 @@ class TabStepDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
-        self.id = p_def["id"] if p_def else None
-        self.step_type = p_def["step_type"] if p_def else None
-        self.step_desc = p_def["step_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        
+        data = OrcFactory.create_default_dict(p_def)
+        
+        self.id = data.value('id')
+        self.step_type = data.value('step_type')
+        self.step_desc = data.value('step_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             step_type=self.step_type,
             step_desc=self.step_desc,
             comment=self.comment,
@@ -246,19 +260,21 @@ class TabStepDet(orc_db.Model):
     create_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.step_id = p_def["step_id"] if p_def else None
-        self.item_id = p_def["item_id"] if p_def else None
-        self.item_no = p_def["item_no"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
+        self.id = data.value('id')
+        self.step_id = data.value('step_id')
+        self.item_id = data.value('item_id')
+        self.item_no = data.value('item_no')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            step_id=str(self.step_id),
-            item_id=str(self.item_id),
+            id=self.id,
+            step_id=self.step_id,
+            item_id=self.item_id,
             item_no=self.item_no,
             create_time=OrcCovert.time2str(self.create_time)
         )
@@ -280,20 +296,22 @@ class TabItem(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.item_type = p_def["item_type"] if p_def else None
-        self.item_mode = p_def["item_mode"] if p_def else None
-        self.item_operate = p_def["item_operate"] if p_def else None
-        self.item_desc = p_def["item_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.item_type = data.value('item_type')
+        self.item_mode = data.value('item_mode')
+        self.item_operate = data.value('item_operate')
+        self.item_desc = data.value('item_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             item_type=self.item_type,
             item_mode=self.item_mode,
             item_operate=self.item_operate,
@@ -325,31 +343,33 @@ class TabData(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.test_env = p_def["test_env"] if p_def else None
-        self.src_id = p_def["src_id"] if p_def else None
-        self.src_type = p_def["src_type"] if p_def else None
-        self.step_order = p_def["step_order"] if p_def else None
-        self.data_flag = p_def["data_flag"] if p_def else None
-        self.data_order = p_def["data_order"] if p_def else None
-        self.data_type = p_def["data_type"] if p_def else None
-        self.data_mode = p_def["data_mode"] if p_def else None
-        self.data_value = p_def["data_value"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.test_env = data.value('test_env')
+        self.src_id = data.value('src_id')
+        self.src_type = data.value('src_type')
+        self.step_order = data.value('step_order')
+        self.data_flag = data.value('data_flag')
+        self.data_order = data.value('data_order')
+        self.data_type = data.value('data_type')
+        self.data_mode = data.value('data_mode')
+        self.data_value = data.value('data_value')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             test_env=self.test_env,
-            src_id=str(self.src_id),
+            src_id=self.src_id,
             src_type=self.src_type,
             step_order=self.step_order,
             data_flag=self.data_flag,
-            data_order=str(self.data_order),
+            data_order=self.data_order,
             data_type=self.data_type,
             data_mode=self.data_mode,
             data_value=self.data_value,
@@ -373,18 +393,20 @@ class WebPageDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.page_flag = p_def["page_flag"] if p_def else None
-        self.page_desc = p_def["page_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.page_flag = data.value('page_flag')
+        self.page_desc = data.value('page_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             page_flag=self.page_flag,
             page_desc=self.page_desc,
             comment=self.comment,
@@ -408,20 +430,22 @@ class WebPageDet(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.page_id = p_def["page_id"] if p_def else None
-        self.test_env = p_def["test_env"] if p_def else None
-        self.page_url = p_def["page_url"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.page_id = data.value('page_id')
+        self.test_env = data.value('test_env')
+        self.page_url = data.value('page_url')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            page_id=str(self.page_id),
+            id=self.id,
+            page_id=self.page_id,
             test_env=self.test_env,
             page_url=self.page_url,
             comment=self.comment,
@@ -447,22 +471,24 @@ class WebWidgetDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.pid = p_def["pid"] if p_def else None
-        self.widget_flag = p_def["widget_flag"] if p_def else None
-        self.widget_path = p_def["widget_path"] if p_def else None
-        self.widget_type = p_def["widget_type"] if p_def else None
-        self.widget_desc = p_def["widget_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.pid = data.value('pid')
+        self.widget_flag = data.value('widget_flag')
+        self.widget_path = data.value('widget_path')
+        self.widget_type = data.value('widget_type')
+        self.widget_desc = data.value('widget_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
-            pid=str(self.pid),
+            id=self.id,
+            pid=self.pid,
             widget_flag=self.widget_flag,
             widget_path=self.widget_path,
             widget_type=self.widget_type,
@@ -490,21 +516,23 @@ class WebWidgetDet(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.widget_id = p_def["widget_id"] if p_def else None
-        self.widget_order = p_def["widget_order"] if p_def else None
-        self.widget_attr_type = p_def["widget_attr_type"] if p_def else None
-        self.widget_attr_value = p_def["widget_attr_value"] if p_def else None
-        self.widget_desc = p_def["widget_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.widget_id = data.value('widget_id')
+        self.widget_order = data.value('widget_order')
+        self.widget_attr_type = data.value('widget_attr_type')
+        self.widget_attr_value = data.value('widget_attr_value')
+        self.widget_desc = data.value('widget_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             widget_id=self.widget_id,
             widget_order=self.widget_order,
             widget_attr_type=self.widget_attr_type,
@@ -530,18 +558,20 @@ class WebWindowDef(orc_db.Model):
     modify_time = orc_db.Column(orc_db.DateTime, default=datetime.now())
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = p_def["id"] if p_def else None
-        self.window_mark = p_def["window_mark"] if p_def else None
-        self.window_desc = p_def["window_desc"] if p_def else None
-        self.comment = p_def["comment"] if p_def else None
-        self.create_time = OrcCovert.str2time(p_def["create_time"]) if p_def else None
-        self.modify_time = OrcCovert.str2time(p_def["modify_time"]) if p_def else None
+        self.id = data.value('id')
+        self.window_mark = data.value('window_mark')
+        self.window_desc = data.value('window_desc')
+        self.comment = data.value('comment')
+        self.create_time = OrcCovert.str2time(data.value('create_time'))
+        self.modify_time = OrcCovert.str2time(data.value('modify_time'))
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             window_mark=self.window_mark,
             window_desc=self.window_desc,
             comment=self.comment,
@@ -565,22 +595,21 @@ class LibDictionary(orc_db.Model):
     dict_desc = orc_db.Column(orc_db.String(255))
 
     def __init__(self, p_def=None):
-        """
-        :param p_def: dict
-        :return: None
-        """
-        self.id = int(p_def["id"]) if p_def else None
-        self.dict_flag = p_def["dict_flag"] if p_def else None
-        self.dict_order = p_def["dict_order"] if p_def else None
-        self.dict_value = p_def["dict_value"] if p_def else None
-        self.dict_text = p_def["dict_text"] if p_def else None
-        self.dict_param = p_def["dict_param"] if p_def else None
-        self.dict_desc = p_def["dict_desc"] if p_def else None
+        
+        data = OrcFactory.create_default_dict(p_def)
+
+        self.id = data.value('id')
+        self.dict_flag = data.value('dict_flag')
+        self.dict_order = data.value('dict_order')
+        self.dict_value = data.value('dict_value')
+        self.dict_text = data.value('dict_text')
+        self.dict_param = data.value('dict_param')
+        self.dict_desc = data.value('dict_desc')
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             dict_flag=self.dict_flag,
             dict_order=self.dict_order,
             dict_value=self.dict_value,
@@ -604,18 +633,20 @@ class LibWidgetType(orc_db.Model):
     type_desc = orc_db.Column(orc_db.String(255))
 
     def __init__(self, p_def):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = int(p_def["id"]) if p_def else None
-        self.type_order = p_def["type_order"] if p_def else None
-        self.type_mode = p_def["type_mode"] if p_def else None
-        self.type_name = p_def["type_name"] if p_def else None
-        self.type_text = p_def["type_text"] if p_def else None
-        self.type_desc = p_def["type_desc"] if p_def else None
+        self.id = data.value('id')
+        self.type_order = data.value('type_order')
+        self.type_mode = data.value('type_mode')
+        self.type_name = data.value('type_name')
+        self.type_text = data.value('type_text')
+        self.type_desc = data.value('type_desc')
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             type_order=self.type_order,
             type_mode=self.type_mode,
             type_name=self.type_name,
@@ -640,20 +671,22 @@ class LibWidgetOperation(orc_db.Model):
     ope_desc = orc_db.Column(orc_db.String(255))
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = int(p_def["id"]) if p_def else None
-        self.type_name = p_def["type_name"] if p_def else None
-        self.ope_order = int(p_def["ope_order"]) if p_def else None
-        self.ope_name = p_def["ope_name"] if p_def else None
-        self.ope_text = p_def["ope_text"] if p_def else None
-        self.operate_text = p_def["operate_text"] if p_def else None
-        self.check_text = p_def["check_text"] if p_def else None
-        self.ope_desc = p_def["ope_desc"] if p_def else None
+        self.id = data.value('id')
+        self.type_name = data.value('type_name')
+        self.ope_order = data.value('ope_order')
+        self.ope_name = data.value('ope_name')
+        self.ope_text = data.value('ope_text')
+        self.operate_text = data.value('operate_text')
+        self.check_text = data.value('check_text')
+        self.ope_desc = data.value('ope_desc')
 
     def to_json(self):
 
         return dict(
-            id=str(self.id),
+            id=self.id,
             type_name=self.type_name,
             ope_order=self.ope_order,
             ope_name=self.ope_name,
@@ -675,7 +708,9 @@ class LibSequence(orc_db.Model):
     field_seq = orc_db.Column(orc_db.Integer)
 
     def __init__(self, p_def=None):
+        
+        data = OrcFactory.create_default_dict(p_def)
 
-        self.id = int(p_def["id"]) if p_def else None
-        self.field_name = p_def["field_name"] if p_def else None
-        self.field_seq = p_def["field_seq"] if p_def else None
+        self.id = data.value('id')
+        self.field_name = data.value('field_name')
+        self.field_seq = data.value('field_seq')

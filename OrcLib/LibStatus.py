@@ -1,9 +1,9 @@
 # coding=utf-8
 from LibLog import OrcLog
-from LibRunTime import OrcRunTime
-from LibType import WebDriverRunningStatusType
-from LibType import WebDriverOccupyStatusType
 from LibType import RunRecordType
+from LibType import WebDriverOccupyStatusType
+from LibType import WebDriverRunningStatusType
+from OrcLibFrame.LibRunTime import OrcRunTime
 
 
 class OrcStatus(OrcRunTime):

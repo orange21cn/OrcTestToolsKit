@@ -1,115 +1,172 @@
 # coding=utf-8
-
-from PySide.QtGui import QHBoxLayout
 from PySide.QtGui import QStackedWidget
-from PySide.QtGui import QWidget
 
 from OrcLib.LibType import DriverType
+from OrcLib.LibType import DirType
 from OrcView.Case.Case.CaseSelector import CaseSelector
 from OrcView.Data.Data.DataAdd import DataAdder
 from OrcView.Driver.Cmd.CmdCreator import DataCmdCreator
 from OrcView.Driver.Cmd.CmdCreator import WebCmdCreator
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibTable import ViewTable
+from OrcView.Lib.LibShell import OrcDisplayView
 
 from .ItemModel import ItemFuncModel
 from .ItemModel import ItemNormalModel
+from .ItemModel import ItemControl
 
 
-class ItemControl(ControlBase):
-
-    def __init__(self):
-
-        ControlBase.__init__(self, 'Item')
-
-
-class ItemView(QWidget):
+class ItemView(OrcDisplayView):
 
     def __init__(self):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
-        self.__step_id = None
+        self._step_id = None
 
-        # Current case id
-        self.__step_type = None
+        # 布局方向
+        self.main.definition.direction = DirType.HORIZON
 
+        # 控件定义
+        self._def = WidgetDefinition('Item')
+
+        # 主显示控件
         # Item ----
-        # 步骤项显示
-        self.item_display = ViewTable(ItemNormalModel, ItemControl)
+        self.model_item = ItemNormalModel(self._def)
+        self.model_func = ItemFuncModel()
+        self.control = ItemControl(self._def)
 
-        # Func --
-        self.func_display = ViewTable(ItemFuncModel, ItemControl)
+        # Normal
+        self.item_display = ViewTable(self.model_item, self.control)
 
-        # current display
-        self.display = self.item_display
+        # Func
+        self.func_display = ViewTable(self.model_func, self.control)
 
         # stack widget
-        self.main_display = QStackedWidget()
-        self.main_display.addWidget(self.item_display)
-        self.main_display.addWidget(self.func_display)
+        self.view = QStackedWidget()
+        self.view.addWidget(self.item_display)
+        self.view.addWidget(self.func_display)
 
-        # Context menu
-        menu_def = [dict(NAME=u"增加", STR="sig_add"),
-                    dict(NAME=u"删除", STR="sig_del"),
-                    dict(NAME=u"增加数据", STR="sig_data")]
+        self.main.display = self.view
 
-        self.item_display.create_context_menu(menu_def)
-        self.func_display.create_context_menu(menu_def)
+        # 按钮
+        self.main.definition.buttons_dir = DirType.VERTICAL
+        self.main.definition.buttons_def = [
+            dict(id='act_add', name=u'增加'),
+            dict(id='act_delete', name=u'删除'),
+            dict(id='act_update', name=u'修改', type='CHECK'),
+            dict(id='act_up', name=u'上移'),
+            dict(id='act_down', name=u'下移')]
 
-        # Buttons widget
-        wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK"),
-            dict(id="up", name=u"上移"),
-            dict(id="down", name=u"下移"),
-        ], "VER")
+        # 右键菜单,默认方式不支持复杂界面,这里进行重写
+        context_item_def = [
+            dict(NAME=u'增加', STR='act_add'),
+            dict(NAME=u'复制', STR='act_duplicate'),
+            dict(NAME=u'删除', STR='act_delete'),
+            dict(NAME=u'增加数据', STR='act_data')]
 
-        # Layout
-        main_layout = QHBoxLayout()
-        main_layout.addWidget(self.main_display)
-        main_layout.addWidget(wid_buttons)
+        context_func_def = [
+            dict(NAME=u'增加', STR='act_add'),
+            dict(NAME=u'删除', STR='act_delete'),
+            dict(NAME=u'增加数据', STR='act_data')]
 
-        main_layout.setContentsMargins(0, 0, 0, 0)
+        self.item_display.create_context_menu(context_item_def)
+        self.func_display.create_context_menu(context_func_def)
 
-        self.setLayout(main_layout)
+        self.item_display.sig_context.connect(self._dispatch_context)
+        self.func_display.sig_context.connect(self._dispatch_context)
 
-        # 点击按钮操作
-        wid_buttons.sig_clicked.connect(self.operate)
+        # default
+        self.display = self.item_display
+        self.model = self.model_item
+        self.step_type = 'STEP_NORMAL'
 
-        # 右键菜单
-        self.item_display.sig_context.connect(self.context)
-        self.func_display.sig_context.connect(self.context)
+        self.main.init_view()
+        self.main.setContentsMargins(0, 0, 0, 0)
 
-    def add_item(self, p_data):
+    def _dispatch_context(self, p_flag):
         """
-        增加步骤项
-        :param p_data:
+        右键菜单操作
+        :param p_flag:
         :return:
         """
-        _data = dict(
-            type="ITEM",
-            step_id=self.__step_id,
-            data=p_data
-        )
-        self.display.model.mod_add(_data)
+        try:
+            getattr(self, p_flag)()
+        except AttributeError:
+            self._logger.error('Right clicked but no func founded')
 
-    def add_func(self, p_data):
+    def act_add(self):
         """
-        增加函数步骤
-        :param p_data:
+        新增
         :return:
         """
-        _data = dict(
-            type="FUNC",
-            step_id=self.__step_id,
-            data=p_data[0],
-        )
-        self.display.model.mod_add(_data)
+        if 'STEP_FUNC' == self.step_type:
+            _data = CaseSelector.static_get_data()
+            if _data is None:
+                return
+            self.model.mod_add(dict(type='FUNC', step_id=self._step_id, data=_data['id']))
+
+        elif 'STEP_NORMAL' == self.step_type:
+            _data = ItemAdder.static_get_data()
+            if _data is None:
+                return
+            self.model.mod_add(dict(type='ITEM', step_id=self._step_id, data=_data))
+
+        else:
+            pass
+
+    def act_duplicate(self):
+        """
+        复制
+        :return:
+        """
+        if 'STEP_NORMAL' == self.step_type:
+            item_data = self.model_item.mod_get_current_data()
+            if not item_data:
+                return
+            item_data.pop('id')
+            item_data['item_operate'] = eval(item_data['item_operate'])
+            _data = dict(type='ITEM', step_id=self._step_id, data=item_data)
+            self.model_item.mod_add(_data)
+
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u'确认删除'):
+            self.model.mod_delete()
+
+    def act_update(self):
+        """
+        更新
+        :return:
+        """
+        self.model.basic_editable()
+
+    def act_up(self):
+        """
+        上移
+        :return:
+        """
+        self.model.mod_up()
+
+    def act_down(self):
+        """
+        下移
+        :return:
+        """
+        self.model.mod_down()
+
+    def act_data(self):
+        """
+        增加数据
+        :return:
+        """
+        _id = self.model.mod_get_current_data()['item_id']
+        DataAdder.static_add_data('ITEM', _id)
 
     def set_step_id(self, p_step_id):
         """
@@ -117,86 +174,43 @@ class ItemView(QWidget):
         :param p_step_id:
         :return:
         """
-        self.__step_id = p_step_id
-        step_type = self.display.model.service_get_step_type(self.__step_id)
+        if p_step_id is None:
+            return
 
-        if "STEP_FUNC" == step_type:
+        self._step_id = p_step_id
+        self.step_type = self.model.service_get_step_type(self._step_id)
+
+        if 'STEP_FUNC' == self.step_type:
             self.display = self.func_display
-            self.main_display.setCurrentIndex(1)
+            self.model = self.model_func
+            self.view.setCurrentIndex(1)
 
-        elif "STEP_NORMAL" == step_type:
+        elif 'STEP_NORMAL' == self.step_type:
             self.display = self.item_display
-            self.main_display.setCurrentIndex(0)
+            self.model = self.model_item
+            self.view.setCurrentIndex(0)
 
         else:
             pass
 
-        self.display.model.mod_search({"step_id": self.__step_id})
+        self.model.mod_search({'step_id': self._step_id})
 
     def clean(self):
         """
         清理
         :return:
         """
-        self.__step_id = None
-        self.display.model.mod_clean()
-
-    def operate(self, p_flag):
-        """
-        按钮操作
-        :param p_flag:
-        :return:
-        """
-        if "add" == p_flag:
-
-            if self.__step_id is None:
-                return
-
-            _type = self.display.model.service_get_step_type(self.__step_id)
-
-            if "STEP_FUNC" == _type:
-                _data = CaseSelector.static_get_data()
-                if _data is not None:
-                    self.add_func(_data)
-
-            elif "STEP_NORMAL" == _type:
-                _data = ItemAdder.static_get_data()
-                if _data is not None:
-                    self.add_item(_data)
-
-            else:
-                pass
-
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u'确认删除'):
-                self.display.model.mod_delete()
-        elif "update" == p_flag:
-            self.display.model.basic_editable()
-        elif "up" == p_flag:
-            self.display.model.mod_up()
-        elif "down" == p_flag:
-            self.display.model.mod_down()
-        else:
-            pass
-
-    def context(self, p_flag):
-        """
-        右键菜单
-        :param p_flag:
-        :return:
-        """
-        if "sig_data" == p_flag:
-            _id = self.display.model.mod_get_current_data()["item_id"]
-            DataAdder.static_add_data("ITEM", _id)
+        self._step_id = None
+        self.model.mod_clean()
 
 
-class ItemAdder(ViewNewAdd):
+class ItemAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'Item')
+        BaseAdder.__init__(self, 'Item')
 
         self.setWindowTitle(u'新增步骤项')
 
@@ -218,12 +232,12 @@ class ItemAdder(ViewNewAdd):
             else:
                 cmd = None
 
-            self.set_data("item_operate", cmd)
+            self.set_data('item_operate', cmd)
 
     @staticmethod
     def static_get_data():
 
         view = ItemAdder()
         view.exec_()
-        print "abcdef", view._data
+
         return view._data

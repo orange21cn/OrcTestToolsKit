@@ -4,13 +4,21 @@ from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibMain import LogClient
 from OrcView.Lib.LibTree import ModelTree
+from OrcView.Lib.LibControl import ControlBase
+
+
+class WidgetDefControl(ControlBase):
+
+    def __init__(self, p_def='WidgetDef'):
+
+        ControlBase.__init__(self, p_def)
 
 
 class WidgetDefModel(ModelTree):
 
-    def __init__(self):
+    def __init__(self, p_def='WidgetDef'):
 
-        ModelTree.__init__(self, 'WidgetDef')
+        ModelTree.__init__(self, p_def)
 
         self.__logger = LogClient()
         self.__resource_widget_def = OrcResource('WidgetDef')

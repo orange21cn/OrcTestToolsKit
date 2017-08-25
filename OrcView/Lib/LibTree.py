@@ -18,7 +18,7 @@ from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibDataStruct import ListTree
 from OrcLib.LibDataStruct import TreeNode
-from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibViewDef import WidgetDefinition
 from OrcView.Lib.LibViewDef import FieldDefinition
 from OrcView.Lib.LibTheme import get_theme
 from OrcView.Lib.LibContextMenu import ViewContextMenu
@@ -84,10 +84,10 @@ class ModelTreeBase(QAbstractItemModel):
         self.__logger = OrcLog("view.tree.model")
 
         # 界面字段定义
-        if isinstance(p_def, ViewDefinition):
+        if isinstance(p_def, WidgetDefinition):
             self._definition = p_def
         else:
-            self._definition = ViewDefinition(p_def)
+            self._definition = WidgetDefinition(p_def)
 
         # 数据
         self._data = list()
@@ -440,6 +440,7 @@ class ModelTree(ModelTreeBase):
         :return:
         """
         del_list = [self.node(_index).content['id'] for _index in self._checked_list]
+
         self.service_delete(del_list)
 
         # 清空选取 list

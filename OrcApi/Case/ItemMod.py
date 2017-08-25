@@ -2,7 +2,6 @@
 import json
 from datetime import datetime
 
-from OrcLib.LibCommon import gen_date_str
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabItem

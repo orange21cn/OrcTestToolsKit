@@ -1,14 +1,19 @@
 # coding=utf-8
+from functools import partial
+
+from PySide.QtCore import Signal as OrcSignal
 from PySide.QtGui import QWidget
 from PySide.QtGui import QDialog
 from PySide.QtGui import QDockWidget
+from PySide.QtGui import QBoxLayout
 from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QHBoxLayout
 
-from OrcLib.LibLog import OrcLog
-
+from OrcLib.LibType import DirType
 from OrcLib.LibLog import OrcLog
 from OrcView.Lib.LibSearch import ViewSearch
 from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibView import OrcPagination
 
 _logger = OrcLog('basic.view.lib.shell')
 
@@ -27,98 +32,54 @@ class DockerCreator(QDockWidget):
         # self.setStyleSheet(get_theme('DockRight'))
 
 
-class ViewWithSearch(QWidget):
-    """
-    界面带有查询
-    """
-    def __init__(self):
-
-        QWidget.__init__(self)
-
-        self._logger = OrcLog('basic.shell.view_with_search')
-
-        # 控件定义
-        self._def = None
-
-        # 输入控件
-        self._widget = None
-
-        # 查询控件
-        self._searcher = None
-
-        # 左键菜单定义
-        self._context_def = None
-
-    def init_view(self, p_widget):
-        """
-        初始化界面
-        :param p_widget:
-        :return:
-        """
-        # 查询控件
-        if self._def is not None:
-            self._searcher = ViewSearch(self._def)
-
-        # 右键菜单
-        if self._context_def is not None:
-            try:
-                self._widget.create_context_menu(self._context_def)
-            except AttributeError:
-                self._logger.error('Widget has now method named create_context_menu')
-
-        # 布局
-        layout_main = QVBoxLayout()
-
-        if self._searcher is not None:
-            layout_main.addWidget(self._searcher)
-
-        if self._widget is not None:
-            layout_main.addWidget(self._widget)
-
-        self.setLayout(layout_main)
-
-
-class ViewWithButton(QWidget):
-    """
-    界面带有底部 button
-    """
-    def __init__(self):
-
-        QWidget.__init__(self)
-
-    def init_view(self, p_widget, p_button_def):
-        """
-        初始化控件
-        :param p_widget:
-        :param p_button_def:
-        :return:
-        """
-
-
-class ViewWithSearchAndButton(QWidget):
-
-    def __init__(self):
-
-        QWidget.__init__(self)
-
-    # def init_view(self, p_widget, p_buttons):
-
-
-class OrcBasicView(QWidget):
+class OrcViewWidget(QBoxLayout):
     """
     普通界面,含查询/显示及按钮,
     """
+    # 按钮信号
+    sig_action = OrcSignal(str)
+
+    # 右键信号
+    sig_context = OrcSignal(str)
+
+    class ViewDef(object):
+        """
+        普通界面,含查询/显示及按钮,
+        """
+        def __init__(self):
+
+            object.__init__(self)
+
+            # 字段定义
+            self.widget_def = None
+
+            # 是否有查询条
+            self.search_enable = False
+
+            # 查询条件列数
+            self.search_column = 4
+
+            # 界面布局方向
+            self.direction = DirType.VERTICAL
+
+            # 按钮定义
+            self.buttons_def = None
+            self.buttons_dir = DirType.HORIZON
+
+            # 分页
+            self.pagination_enable = False
+
+            # 右键菜单定义
+            self.context_def = None
+
     def __init__(self):
 
-        QWidget.__init__(self)
+        QBoxLayout.__init__(self, QBoxLayout.TopToBottom)
 
         self._logger = _logger
 
-        # 字段定义
-        self._def = None
-
-        # 是否有查询条
-        self._searcher_enable = False
+        # 界面定义
+        self.definition = self.ViewDef()
 
         # 查询条
         self.searcher = None
@@ -126,142 +87,200 @@ class OrcBasicView(QWidget):
         # 显示
         self.display = None
 
-        # 按钮定义
-        self._buttons_def = None
-
         # 按钮
         self.buttons = None
 
-        # 右键菜单定义
-        self._context_def = None
-
-        # layout
-        self._layout_main = QVBoxLayout()
-        self.setLayout(self._layout_main)
-
-        # 样式
-        self.setContentsMargins(0, 0, 0, 0)
-
-        # +---- Connection ----+
+        # 分页控件
+        self.pagination = None
 
     def init_view(self):
         """
         初始化界面
         :return:
         """
+        # 布局方向
+        if self.definition.direction == DirType.HORIZON:
+            self.setDirection(QBoxLayout.LeftToRight)
+
         # 查询框
-        if self._searcher_enable:
-            self.searcher = ViewSearch(self._def)
-            self._layout_main.addWidget(self.searcher)
+        if self.definition.search_enable:
+            self.searcher = ViewSearch(self.definition.widget_def, self.definition.search_column)
+            self.addWidget(self.searcher)
 
         # 显示区
         if self.display is not None:
-            self._layout_main.addWidget(self.display)
+            self.addWidget(self.display)
+
+        # button layout
+        if self.definition.buttons_dir == DirType.HORIZON:
+            layout_button = QHBoxLayout()
+        else:
+            layout_button = QVBoxLayout()
+
+        # 分页
+        if self.definition.pagination_enable:
+            self.pagination = OrcPagination()
+            layout_button.addWidget(self.pagination)
+            self.pagination.sig_search.connect(partial(self.sig_action.emit, 'search'))
 
         # 按钮
-        if self._buttons_def is not None:
-            self.buttons = OrcButtons(self._buttons_def)
-            self._layout_main.addWidget(self.buttons)
-            self.buttons.sig_clicked.connect(self._operate)
+        if self.definition.buttons_def is not None:
+            self.buttons = OrcButtons(self.definition.buttons_def, self.definition.buttons_dir)
+            layout_button.addStretch()
+            layout_button.addWidget(self.buttons)
+            self.addLayout(layout_button)
+            self.buttons.sig_clicked.connect(self.sig_action)
 
         # 右键菜单
-        if self._context_def is not None:
-            self.display.create_context_menu(self._context_def)
-            self.display.sig_context.connect(self._context)
+        if self.definition.context_def is not None:
+            self.display.create_context_menu(self.definition.context_def)
+            self.display.sig_context.connect(self.sig_context)
 
-    def _operate(self, p_flag):
+    def basic_search(self, p_callback, p_cond=None):
+        """
+        基本查询,含生成条件及查询
+        :param p_cond: 附加查询条件
+        :param p_callback: 外部查询条件
+        :return:
+        """
+        page = 1
+        number = 10
+        condition = dict()
+
+        # 有查询条
+        if self.definition.search_enable:
+            condition = self.searcher.get_cond()
+
+        # 合并外部查询条件
+        if isinstance(p_cond, dict):
+            condition.update(p_cond)
+
+        # 有分页条
+        if self.definition.pagination_enable:
+
+            page = self.pagination.get_page()
+            number = int(self.pagination.get_number())
+
+            if not page:
+                page = 1
+            else:
+                page = int(page)
+
+            condition = dict(page=page, number=number, condition=condition)
+
+        # 查询
+        p_callback(condition)
+
+        # 更新分页栏数据
+        if self.definition.pagination_enable:
+
+            number = 1 if number < 1 else number
+            record_num = int(self.display.model.mod_get_record_num())
+
+            self.pagination.set_data(page, record_num / number)
+
+
+class OrcDisplayView(QWidget):
+
+    def __init__(self):
+
+        QWidget.__init__(self)
+
+        self._logger = _logger
+
+        # 控件
+        self.main = OrcViewWidget()
+        self.setLayout(self.main)
+
+        # +---- Connection ----+
+        # 点击按钮
+        self.main.sig_action.connect(self._dispatch_action)
+
+        # 右键菜单
+        self.main.sig_context.connect(self._dispatch_context)
+
+    def _dispatch_action(self, p_flag):
         """
         点击按钮后操作
         :param p_flag:
         :return:
         """
-        pass
+        try:
+            func = getattr(self, "%s" % p_flag)
+            func()
+        except AttributeError:
+            self._logger.error("Button clicked but no func founded")
 
-    def _context(self, p_flag):
+    def _dispatch_context(self, p_flag):
         """
         右键菜单操作
         :param p_flag:
         :return:
         """
-        pass
+        try:
+            func = getattr(self, "%s" % p_flag)
+            func()
+        except AttributeError:
+            self._logger.error("Right clicked but no func founded")
 
 
-class OrcBasicSelector(QDialog):
-    """
-    普通界面,含查询/显示及按钮,
-    """
+class OrcDialogView(QDialog):
+
     def __init__(self):
 
         QDialog.__init__(self)
 
         self._logger = _logger
 
-        # 字段定义
-        self._def = None
+        # 控件
+        self.main = OrcViewWidget()
+        self.setLayout(self.main)
 
-        # 是否有查询条
-        self._search_enable = False
+        # 初始化控件
+        self.main.init_view()
 
-        # 查询条栏数
-        self._search_column = 4
+        # +---- Connection ----+
+        # 点击按钮
+        self.main.sig_action.connect(self._dispatch_action)
 
-        # 查询条
-        self.searcher = None
-
-        # 显示
-        self.display = None
-
-        # 按钮定义
-        self._buttons_def = None
-
-        # 按钮
-        self.buttons = None
-
-        # layout
-        self._layout_main = QVBoxLayout()
-        self.setLayout(self._layout_main)
-
-        # 样式
-        self.setContentsMargins(0, 0, 0, 0)
+        # 右键菜单
+        self.main.sig_context.connect(self._dispatch_context)
 
         # 数据,用于保存返回数据
         self._data = None
 
-        # +---- Connection ----+
-
-    def init_view(self):
-        """
-        初始化界面
-        :return:
-        """
-        # 查询框
-        if self._search_enable:
-            self.searcher = ViewSearch(self._def, self._search_column)
-            self._layout_main.addWidget(self.searcher)
-
-        # 显示区
-        if self.display is not None:
-            self._layout_main.addWidget(self.display)
-
-        # 按钮
-        if self._buttons_def is None:
-            self._buttons_def = [dict(id="submit", name=u"确定"), dict(id="cancel", name=u"取消")]
-
-        self.buttons = OrcButtons(self._buttons_def)
-
-        self._layout_main.addWidget(self.buttons)
-        self.buttons.sig_clicked.connect(self._operate)
-
-    def _operate(self, p_flag):
+    def _dispatch_action(self, p_flag):
         """
         点击按钮后操作
         :param p_flag:
         :return:
         """
-        if 'submit' == p_flag:
-            self._data = self.display.get_data()
-            self.close()
-        elif 'cancel' == p_flag:
-            self.close()
-        else:
-            pass
+        try:
+            getattr(self, "%s" % p_flag)()
+        except AttributeError:
+            self._logger.error("Button clicked but no func founded")
+
+    def _dispatch_context(self, p_flag):
+        """
+        右键菜单操作
+        :param p_flag:
+        :return:
+        """
+        try:
+            getattr(self, "%s" % p_flag)()
+        except AttributeError:
+            self._logger.error("Right clicked but no func founded")
+
+    def act_submit(self):
+        """
+        提交
+        :return:
+        """
+        pass
+
+    def act_cancel(self):
+        """
+        取消
+        :return:
+        """
+        self.close()

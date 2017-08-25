@@ -2,8 +2,8 @@
 from PySide.QtGui import QFormLayout
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QDialog
-from OrcView.Driver.Web.Page.PageDefView import PageDefSelector
-from OrcView.Driver.Web.Widget.WidgetDefView import WidgetDefSelector
+from OrcView.Driver.Web.Page.PageSelector import PageSelector
+from OrcView.Driver.Web.Widget.WidgetSelector import WidgetSelector
 from OrcView.Lib.LibBaseWidget import WidgetCreator
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibMessage import OrcMessage
@@ -133,7 +133,7 @@ class WebCmdCreator(CmdCreator):
         :return:
         """
         if self._cmd.is_widget():
-            self._cmd.set_widget_info(WidgetDefSelector().get_widget())
+            self._cmd.set_widget_info(WidgetSelector().get_widget())
 
             self.__widget_input.set_data(self._cmd.get_flag())
 
@@ -142,7 +142,7 @@ class WebCmdCreator(CmdCreator):
 
         elif self._cmd.is_page():
 
-            self._cmd.set_page_info(PageDefSelector.static_get_data())
+            self._cmd.set_page_info(PageSelector.static_get_data())
 
             self.__widget_input.set_data(self._cmd.get_flag())
 

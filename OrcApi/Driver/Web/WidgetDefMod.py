@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from OrcLib.LibCommon import gen_date_str
+from OrcLib.LibCommon import DateStr
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import WebWidgetDef
@@ -178,7 +178,7 @@ class WidgetDefMod:
         Create a no, like batch_no
         :return:
         """
-        _no = gen_date_str()
+        _no = DateStr.get_data_str()
         t_item = self.__session.query(WebWidgetDef).filter(WebWidgetDef.batch_no == _no).first()
 
         if t_item is not None:
@@ -203,38 +203,6 @@ class WidgetDefMod:
 
         self.__session.query(WebWidgetDef).filter(WebWidgetDef.id == p_id).delete()
         self.__session.commit()
-
-    # def __del_tree(self, p_id):
-    #
-    #     def _del(_id):
-    #         """
-    #         Delete widget detail
-    #         :param _id:
-    #         :return:
-    #         """
-    #         _widget_det_list = self.child.usr_search({"widget_id": _id})
-    #         _widget_det_ids = dict(list=list(value.id for value in _widget_det_list))
-    #
-    #         self.child.usr_delete(_widget_det_ids)
-    #
-    #     try:
-    #         # Delete children
-    #         _list = self.__session.query(WebWidgetDef.id).filter(WebWidgetDef.pid == p_id).all()
-    #
-    #         for t_id in _list:
-    #             _del(t_id)  # Delete widget detail
-    #             self.__del_tree(t_id)  # Delete widget definition
-    #
-    #         # Delete current item
-    #         _del(p_id)  # Delete detail
-    #         self.__session \
-    #             .query(WebWidgetDef) \
-    #             .filter(WebWidgetDef.id == p_id) \
-    #             .delete()  # Delete widget definition
-    #
-    #     except Exception:
-    #         # Todo
-    #         self.__session.rollback()
 
     def usr_get_path(self, p_id):
 

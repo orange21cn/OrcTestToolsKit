@@ -139,16 +139,19 @@ class OrcDefaultDict(object):
     """
     有默认值字典
     """
-    def __init__(self, p_data=None, p_default=None):
+    def __init__(self, data_dict=None, default=None, func=None):
 
         # 字典数据
         self._data = dict()
 
-        # 默认值
-        self._default = p_default
+        # 执行函数
+        self._func = func
 
-        if isinstance(p_data, dict):
-            self._data = p_data
+        # 默认值
+        self._default = default
+
+        if isinstance(data_dict, dict):
+            self._data = data_dict
 
     def value(self, p_key, p_default=None):
         """
@@ -162,7 +165,13 @@ class OrcDefaultDict(object):
         if not isinstance(self._data, dict):
             return self._default
 
-        return self._default if p_key not in self._data else self._data[p_key]
+        if p_key not in self._data:
+            return self._default
+
+        if self._func is None:
+            return self._data[p_key]
+        else:
+            return self._func(self._data[p_key])
 
     def add(self, p_key, p_value):
         """
@@ -317,8 +326,8 @@ class OrcFactory(object):
         object.__init__(self)
 
     @staticmethod
-    def create_default_dict(p_data=None, p_default=None):
-        return OrcDefaultDict(p_data, p_default)
+    def create_default_dict(data=None, default=None, func=None):
+        return OrcDefaultDict(data, default, func)
 
     @staticmethod
     def create_switch(p_def):

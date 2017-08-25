@@ -6,3 +6,57 @@
     return getattr(__import__(self._path, fromlist=True), _name)()
 ImportError: No module named Database.DataBaseApi
 
+[2017-08-24 16:33:00 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:33:00 basic.run_time] ERROR None
+
+[2017-08-24 16:33:00 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:33:00 basic.run_time] ERROR None
+
+[2017-08-24 16:34:46 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:34:46 basic.run_time] ERROR None
+
+[2017-08-24 16:34:46 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:34:46 basic.run_time] ERROR None
+
+[2017-08-24 16:35:28 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:35:28 basic.run_time] ERROR None
+
+[2017-08-24 16:35:28 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:35:28 basic.run_time] ERROR None
+
+[2017-08-24 16:37:15 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:37:15 basic.run_time] ERROR None
+
+[2017-08-24 16:37:15 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:37:15 basic.run_time] ERROR None
+
+[2017-08-24 16:39:24 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:39:24 basic.run_time] ERROR None
+
+[2017-08-24 16:39:24 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:39:24 basic.run_time] ERROR None
+
+[2017-08-24 16:42:25 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:42:25 basic.run_time] ERROR None
+
+[2017-08-24 16:42:25 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:42:25 basic.run_time] ERROR None
+
+[2017-08-24 16:46:21 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:46:21 basic.run_time] ERROR None
+
+[2017-08-24 16:46:21 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:46:21 basic.run_time] ERROR None
+
+[2017-08-24 16:47:25 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:47:25 basic.run_time] ERROR None
+
+[2017-08-24 16:47:25 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:47:25 basic.run_time] ERROR None
+
+[2017-08-24 16:48:44 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:48:44 basic.run_time] ERROR None
+
+[2017-08-24 16:48:44 basic.run_time] ERROR 新增实时数据失败, None
+[2017-08-24 16:48:44 basic.run_time] ERROR None
+

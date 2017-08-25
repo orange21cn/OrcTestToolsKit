@@ -3,114 +3,144 @@ from PySide.QtCore import Signal as OrcSignal
 
 from OrcLib.LibProgram import orc_singleton
 from OrcView.Data.Data.DataAdd import DataAdder
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibMessage import OrcMessage
-from OrcView.Lib.LibShell import OrcBasicView
-from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
 from .BatchDefModel import BatchDefModel
 from .BatchDefModel import BatchDefControl
 
 
 @orc_singleton
-class BatchDefView(OrcBasicView):
+class BatchDefView(OrcDisplayView):
 
     sig_batch_det = OrcSignal(dict)
 
     def __init__(self):
 
-        OrcBasicView.__init__(self)
+        OrcDisplayView.__init__(self)
 
         self.title = u"计划管理"
 
         # 显示定义
-        self._def = ViewDefinition('BatchDef')
+        self._def = WidgetDefinition('BatchDef')
+        self.main.definition.widget_def = self._def
 
         # 加入查询条
-        self._searcher_enable = True
+        self.main.definition.search_enable = True
 
         # 主显示区
         self.model = BatchDefModel(self._def)
         self.control = BatchDefControl(self._def)
-        self.display = ViewTree(self.model, self.control)
+        self.view = ViewTree(self.model, self.control)
+        self.main.display = self.view
 
         # 按钮定义
-        self._buttons_def = [
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="update", name=u"修改", type="CHECK"),
-            dict(id="search", name=u"查询")
-        ]
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK"),
+            dict(id="act_search", name=u"查询")]
 
         # 右键菜单
-        self._context_def = [
-            dict(NAME=u"增加", STR="sig_add"),
-            dict(NAME=u"删除", STR="sig_del"),
-            dict(NAME=u"增加数据", STR="sig_data"),
-            dict(NAME=u"添加至运行", STR="sig_run")]
+        self.main.definition.context_def = [
+            dict(NAME=u"增加", STR="act_add"),
+            dict(NAME=u"删除", STR="act_delete"),
+            dict(NAME=u"复制", STR="act_duplicate"),
+            dict(NAME=u"增加数据", STR="act_data"),
+            dict(NAME=u"添加至运行", STR="act_run")]
 
         # 初始化界面
-        self.init_view()
+        self.main.init_view()
 
         # +---- connection ----+
         # 打开明细界面
-        self.display.doubleClicked.connect(self._detail)
+        self.view.doubleClicked.connect(self.act_detail)
 
-    def _operate(self, p_flag):
+    def act_add(self):
         """
-        点击按钮操作
-        :param p_flag:
+        新增
         :return:
         """
-        if "add" == p_flag:
-            _data = BatchDefAdder.static_get_data()
-            if _data is not None:
-                self.model.mod_add(_data)
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u'确认删除'):
-                self.model.mod_delete()
-        elif "update" == p_flag:
-            self.model.basic_editable()
-        elif "search" == p_flag:
-            self.model.mod_search(self.searcher.get_cond())
-            self.display.resizeColumnToContents(0)
-        else:
-            pass
+        _data = BatchDefAdder.static_get_data()
+        if _data is not None:
+            self.model.mod_add(_data)
 
-    def _context(self, p_flag):
+    def act_delete(self):
         """
-        右键菜单
-        :param p_flag:
+        删除
         :return:
         """
-        if "sig_data" == p_flag:
-            _id = self.display.model.mod_get_current_data()["id"]
-            DataAdder.static_add_data('BATCH', _id)
+        if OrcMessage.question(self, u'确认删除'):
+            self.model.mod_delete()
 
-        elif "sig_run" == p_flag:
+    def act_update(self):
+        """
+        修改
+        :return:
+        """
+        self.model.basic_editable()
 
-            batch_id = self.display.model.mod_get_current_data()["id"]
-            self.model.service_run(batch_id)
+    def act_search(self):
+        """
+        查询
+        :return:
+        """
+        self.main.basic_search(self.model.mod_search)
 
-    def _detail(self, p_index):
+    def act_data(self):
+        """
+        增加数据
+        :return:
+        """
+        _id = self.model.mod_get_current_data()["id"]
+        DataAdder.static_add_data('BATCH', _id)
+
+    def act_duplicate(self):
+        """
+        复制
+        :return:
+        """
+        _data = self.model.mod_get_current_data()
+
+        if _data is not None:
+            _data.pop('id')
+            self.model.mod_add(_data)
+
+    def act_run(self):
+        """
+        运行
+        :return:
+        """
+        batch_id = self.display.model.mod_get_current_data()["id"]
+        self.model.service_run(batch_id)
+
+    def act_detail(self, p_index):
         """
         双击操作
+        :param p_index:
         :return:
         """
-        if not self.model.mod_get_editable():
-            _data = self.model.node(p_index).content
-            self.sig_batch_det[dict].emit(dict(id=_data['id'], no=_data['batch_no']))
+        if self.model.mod_get_editable():
+            return
+
+        _data = self.model.node(p_index).content
+
+        if 'BATCH_SUITE' == _data['batch_type']:
+            return
+
+        self.sig_batch_det[dict].emit(dict(id=_data['id'], no=_data['batch_no']))
 
 
-class BatchDefAdder(ViewNewAdd):
+class BatchDefAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'BatchDef')
+        BaseAdder.__init__(self, 'BatchDef')
 
     @staticmethod
     def static_get_data():

@@ -145,7 +145,7 @@ class DebugMain(QWidget):
         """
         if 'add' == p_flag:
             self.data_add.show()
-            self.data_disp.model.mod_refresh
+            self.data_disp.model.mod_refresh()
 
         elif 'delete' == p_flag:
             self.data_disp.model.mod_delete()

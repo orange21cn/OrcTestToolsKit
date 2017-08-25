@@ -1,94 +1,69 @@
 # coding=utf-8
-from PySide.QtGui import QHBoxLayout
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
-
-from OrcView.Case.Case.CaseSelector import CaseSelector
-from OrcView.Lib.LibSearch import OrcButtons
-from OrcView.Lib.LibSearch import ViewSearch
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibView import OrcPagination
-from OrcView.Lib.LibViewDef import view_batch_det
 from OrcView.Lib.LibMessage import OrcMessage
 
 from .BatchDetModel import BatchDetModel
 from .BatchDetModel import BatchDetControl
+from OrcView.Case.Case.CaseSelector import CaseSelector
 
 
-class BatchDetView(QWidget):
+class BatchDetView(OrcDisplayView):
 
     def __init__(self, p_data):
 
-        QWidget.__init__(self)
+        OrcDisplayView.__init__(self)
 
-        _batch_no = p_data["no"]
-        self.__batch_id = p_data["id"]
-        self.title = _batch_no
+        self._batch_id = p_data["id"]
+        self.title = p_data["no"]
 
-        # Search condition widget
-        self.__wid_search_cond = ViewSearch(view_batch_det)
+        # 控件定义
+        self._def = WidgetDefinition('BatchDet')
+        self.main.definition.widget_def = self._def
 
-        # Data result display widget
-        self.display = ViewTable(BatchDetModel, BatchDetControl)
+        # 查询条件
+        self.main.definition.search_enable = True
 
-        # pagination
-        self.__wid_pagination = OrcPagination()
+        # 主控件
+        self.model = BatchDetModel(self._def)
+        self.control = BatchDetControl(self._def)
+        self.view = ViewTable(self.model, self.control)
 
-        # Buttons widget
-        wid_buttons = OrcButtons([
-            dict(id="add", name=u"增加"),
-            dict(id="delete", name=u"删除"),
-            dict(id="search", name=u"查询")
-        ])
-
-        # button layout
-        layout_bottom = QHBoxLayout()
-        layout_bottom.addWidget(wid_buttons)
-        layout_bottom.addStretch()
-        layout_bottom.addWidget(self.__wid_pagination)
-
-        # main layout
-        layout_main = QVBoxLayout()
-        layout_main.addWidget(self.__wid_search_cond)
-        layout_main.addWidget(self.display)
-        layout_main.addLayout(layout_bottom)
-
-        self.setLayout(layout_main)
-
-        # 点击按钮事件
-        wid_buttons.sig_clicked.connect(self.operate)
+        self.main.display = self.view
 
         # 分页
-        self.__wid_pagination.sig_page.connect(self.search)
+        self.main.definition.pagination_enable = True
 
-    def search(self):
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u"增加"),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_search", name=u"查询")]
+
+    def act_add(self):
+        """
+        新增
+        :return:
+        """
+        _data = CaseSelector.static_get_multi_data()
+        if _data is None:
+            return
+
+        ids = [_item['id'] for _item in _data]
+        self.display.model.mod_add(dict(batch_id=self._batch_id, case=ids))
+
+    def act_delete(self):
+        """
+        删除
+        :return:
+        """
+        if OrcMessage.question(self, u"确认删除"):
+            self.display.model.mod_delete()
+
+    def act_search(self):
         """
         查询
         :return:
         """
-        _cond = self.__wid_search_cond.get_cond()
-        _cond["batch_id"] = self.__batch_id
-
-        self.display.model.mod_search(_cond)
-
-    def operate(self, p_flag):
-        """
-        点击按钮时操作
-        :param p_flag:
-        :return:
-        """
-        if "add" == p_flag:
-            _data = CaseSelector.static_get_multi_data()
-            if _data is None:
-                return
-
-            ids = [_item['id'] for _item in _data]
-            self.display.model.mod_add(dict(batch_id=self.__batch_id, case=ids))
-
-        elif "delete" == p_flag:
-            if OrcMessage.question(self, u"确认删除"):
-                self.display.model.mod_delete()
-        elif "search" == p_flag:
-            self.search()
-        else:
-            pass
+        self.main.basic_search(self.model.mod_search, dict(batch_id=self._batch_id))

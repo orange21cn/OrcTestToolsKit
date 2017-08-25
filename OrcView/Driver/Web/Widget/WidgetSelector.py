@@ -1,48 +1,41 @@
 # coding=utf-8
-from OrcView.Lib.LibTable import ViewTable
-from OrcView.Lib.LibViewDef import WidgetDefinition
+from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibShell import OrcDialogView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
-from .PageDefModel import PageDefModel
-from .PageDefModel import PageDefControl
+from .WidgetDefModel import WidgetDefModel
+from .WidgetDefModel import WidgetDefControl
 
 
-class PageSelector(OrcDialogView):
+class WidgetSelector(OrcDialogView):
     """
-    计划选取
+    控件选择器
     """
     def __init__(self):
 
         OrcDialogView.__init__(self)
 
-        self.title = u"页面选择"
-
-        # 界面定义
-        self._def = WidgetDefinition('PageDef')
-
-        self._def.field('create_time').set_displayable(False)
-        self._def.field('modify_time').set_displayable(False)
-        self._def.field('comment').set_displayable(False)
-
+        # 控件定义
+        self._def = WidgetDefinition('WidgetDef')
         self.main.definition.widget_def = self._def
 
-        # 查询条
+        # 查询
         self.main.definition.search_enable = True
         self.main.definition.search_column = 2
 
-        # 主显示控件
-        self.model = PageDefModel(self._def)
-        self.control = PageDefControl(self._def)
-        self.view = ViewTable(self.model, self.control)
+        # 主控件
+        self.model = WidgetDefModel(self._def)
+        self.control = WidgetDefControl(self._def)
+        self.view = ViewTree(self.model, self.control)
         self.main.display = self.view
 
         # 按钮
         self.main.definition.buttons_def = [
             dict(id="act_search", name=u"查询"),
-            dict(id="act_submit", name=u"提交"),
+            dict(id="act_submit", name=u"选择"),
             dict(id="act_cancel", name=u"取消")]
 
-        # 取消可选择选项
+        # 禁止选择
         self.model.basic_checkable(False)
 
         # 初始化界面
@@ -67,12 +60,12 @@ class PageSelector(OrcDialogView):
         self.close()
 
     @staticmethod
-    def static_get_data():
+    def get_widget():
         """
-        静态获取数据
+
         :return:
         """
-        view = PageSelector()
+        view = WidgetSelector()
         view.exec_()
 
         return view._data

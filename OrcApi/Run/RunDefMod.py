@@ -1,6 +1,7 @@
 # coding=utf-8
 import os
 import re
+from OrcLib.LibCommon import DateStr
 from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
@@ -101,8 +102,6 @@ class RunDefMod:
         # 建执行结果文件
         if _result:
 
-            from OrcLib.LibCommon import gen_date_str
-
             for _index in range(100):
 
                 _flag = _index + 1
@@ -110,7 +109,7 @@ class RunDefMod:
                 if 10 > _flag:
                     _flag = "%s%s" % (0, _flag)
 
-                res_folder = os.path.join(folder_root, "%s%s" % (gen_date_str(), _flag))
+                res_folder = os.path.join(folder_root, "%s%s" % (DateStr.get_data_str(), _flag))
                 res_file = os.path.join(res_folder, "default.res")
 
                 if os.path.exists(res_folder):

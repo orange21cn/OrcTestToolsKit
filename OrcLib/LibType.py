@@ -1,6 +1,29 @@
 # coding=utf-8
 
 
+class DirType:
+    """
+    方向
+    """
+    # 水平
+    HORIZON = 'HORIZON'
+
+    # 垂直
+    VERTICAL = 'VERTICAL'
+
+    # 向前
+    FRONT = 'FRONT'
+
+    # 向后
+    BACK = 'BACK'
+
+    # None
+    NONE = 'NONE'
+
+    def __init__(self):
+        pass
+
+
 class WebItemModeType:
     """
     操作项模式

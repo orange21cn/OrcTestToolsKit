@@ -28,9 +28,7 @@ class ViewReportDet(QWidget):
         self.__wid_display.setRenderHint(QPainter.TextAntialiasing)
 
         # buttons
-        wid_buttons = OrcButtons([
-            dict(id="export", name=u'导出')
-        ])
+        wid_buttons = OrcButtons([dict(id="export", name=u'导出')])
         wid_buttons.align_back()
 
         # main layout

@@ -4,7 +4,7 @@ from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 
 from OrcView.Lib.LibTable import ModelTable
-from OrcView.Lib.LibViewDef import ViewDefinition
+from OrcView.Lib.LibViewDef import WidgetDefinition
 from OrcView.Lib.LibMain import LogClient
 
 
@@ -48,7 +48,7 @@ class DataResDispModel(ModelTable):
         # 表头
         fields = result.data['FIELDS']
 
-        self._definition = ViewDefinition([dict(
+        self._definition = WidgetDefinition([dict(
             ID=item, NAME=item, TYPE="LINETEXT", DISPLAY=True) for item in fields])
 
         # 表数据

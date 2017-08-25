@@ -1,149 +1,104 @@
 # coding=utf-8
-import json
-from PySide.QtGui import QWidget
 from PySide.QtGui import QDialog
 from PySide.QtGui import QVBoxLayout
-from PySide.QtCore import QModelIndex
 from PySide.QtCore import Signal as OrcSignal
 
 from OrcView.Lib.LibTree import ViewTree
 from OrcView.Lib.LibSearch import OrcButtons
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibAdd import ViewNewAdd
-from OrcView.Lib.LibControl import ControlBase
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Lib.LibViewDef import view_widget_def
 from OrcView.Lib.LibMessage import OrcMessage
+from OrcView.Lib.LibShell import OrcDisplayView
+from OrcView.Lib.LibViewDef import WidgetDefinition
 
 from .WidgetDefModel import WidgetDefModel
+from .WidgetDefModel import WidgetDefControl
 
 
-class WidgetDefControl(ControlBase):
+class WidgetDefView(OrcDisplayView):
+    """
+    控件信息
+    """
+    sig_action = OrcSignal(str)
 
     def __init__(self):
 
-        ControlBase.__init__(self, 'WidgetDef')
+        OrcDisplayView.__init__(self)
 
+        # 查询
+        self._def = WidgetDefinition('WidgetDef')
 
-class WidgetDefView(QWidget):
+        # 主控件
+        self.model = WidgetDefModel(self._def)
+        self.control = WidgetDefControl(self._def)
+        self.view = ViewTree(self.model, self.control)
+        self.main.display = self.view
 
-    sig_selected = OrcSignal(dict)
-    sig_search = OrcSignal()
-    sig_delete = OrcSignal()
+        # 按钮
+        self.main.definition.buttons_def = [
+            dict(id="act_add", name=u'增加'),
+            dict(id="act_delete", name=u"删除"),
+            dict(id="act_update", name=u"修改", type="CHECK"),
+            dict(id="act_search", name=u"查询")]
 
-    def __init__(self, p_type=None):
+        # 初始化界面
+        self.main.setContentsMargins(0, 0, 0, 0)
+        self.main.init_view()
+
+        # +---- Connection ----+
+        # 点击发送页面选择消息
+        self.view.clicked.connect(self.act_select)
+
+    def act_add(self):
         """
-        支持选择类型,选择时按钮/查询条件/查询方式都有不同
-        :param p_type:
+        新增
         :return:
         """
-        QWidget.__init__(self)
+        _data = WidgetDefAdder.static_get_data()
+        if _data is not None:
+            self.model.mod_add(_data)
+        self.sig_action.emit('act_add')
 
-        self.__type = p_type
-
-        # Search
-        if self.__type is not None:
-            self.__wid_search_cond = ViewSearch(view_widget_def, 2)
-
-        # Data result display widget
-        self.display = ViewTree(WidgetDefModel, WidgetDefControl)
-
-        # Buttons window
-        if self.__type is None:
-            wid_buttons = OrcButtons([
-                dict(id="add", name=u'增加'),
-                dict(id="delete", name=u"删除"),
-                dict(id="update", name=u"修改", type="CHECK"),
-                dict(id="search", name=u"查询")
-            ])
-
-            # 界面单击操作
-            self.display.clicked[QModelIndex].connect(self.widget_sig)
-
-        elif 'SINGLE' == self.__type:
-            wid_buttons = OrcButtons([
-                dict(id="search", name=u"查询")
-            ])
-
-            # 禁止选择
-            self.display.model.basic_checkable(False)
-
-            # 双击选择
-            self.display.doubleClicked[QModelIndex].connect(self.widget_sig)
-
-        else:
-            wid_buttons = OrcButtons([])
-
-        # Layout
-        layout_main = QVBoxLayout()
-
-        if self.__type is not None:
-            layout_main.addWidget(self.__wid_search_cond)
-
-        layout_main.addWidget(self.display)
-        layout_main.addWidget(wid_buttons)
-
-        layout_main.setContentsMargins(0, 0, 0, 0)
-
-        self.setLayout(layout_main)
-
-        # 点击按钮
-        wid_buttons.sig_clicked.connect(self.operate)
-
-    def operate(self, p_flg):
+    def act_delete(self):
         """
-        点击按钮操作
-        :param p_flg:
+        删除
         :return:
         """
-        if "add" == p_flg:
-            _data = WidgetDefAdder.static_get_data()
-            if _data is not None:
-                self.display.model.mod_add(_data)
+        if OrcMessage.question(self, u"确认删除"):
+            self.model.mod_delete()
+            self.sig_action.emit('act_delete')
 
-        elif "delete" == p_flg:
-            if OrcMessage.question(self, u"确认删除"):
-                self.display.model.mod_delete()
-                self.sig_delete.emit()
+    def act_update(self):
+        """
+        修改
+        :return:
+        """
+        self.model.basic_editable()
 
-        elif "update" == p_flg:
-            self.display.model.basic_editable()
-
-        elif "search" == p_flg:
-            if self.__type is None:
-                self.sig_search.emit()
-            else:
-                self.search(self.__wid_search_cond.get_cond())
-        else:
-            pass
-
-    def search(self, p_cond):
+    def act_search(self):
         """
         查询
-        :param p_cond:
         :return:
         """
-        return self.display.model.mod_search(p_cond)
+        self.sig_action.emit('act_search')
 
-    def widget_sig(self, p_index):
+    def act_select(self):
         """
         发送点击信号
         :param p_index:
         :return:
         """
-        _widget_def = self.display.model.node(p_index).content
-        self.sig_selected.emit(_widget_def)
-
-        if self.__type is not None:
-            self.close()
+        self.sig_action.emit('act_select')
 
 
-class WidgetDefAdder(ViewNewAdd):
+class WidgetDefAdder(BaseAdder):
     """
     新增计划控件
     """
     def __init__(self):
 
-        ViewNewAdd.__init__(self, 'WidgetDef')
+        BaseAdder.__init__(self, 'WidgetDef')
 
         self.setWindowTitle(u'新增控件')
 
@@ -171,9 +126,7 @@ class WidgetDefSelector(QDialog):
         self.display = ViewTree(WidgetDefModel, WidgetDefControl)
 
         # Buttons window
-        wid_buttons = OrcButtons([
-            dict(id="search", name=u"查询")
-        ])
+        wid_buttons = OrcButtons([dict(id="search", name=u"查询")])
 
         # 禁止选择
         self.display.model.basic_checkable(False)

@@ -1,13 +1,13 @@
 # coding=utf-8
 from DataModel import DataModel
 from OrcLib.LibProcess import get_mark
-from OrcView.Lib.LibAdd import ViewNewAdd
+from OrcView.Lib.LibAdd import BaseAdder
 from OrcView.Driver.Cmd.DataFlagSelector import DataFlagSelector
 from OrcView.Case.Case.CaseSelector import CaseSelector
 from OrcView.Batch.BatchSelector import BatchSelector
 
 
-class DataAdder(ViewNewAdd):
+class DataAdder(BaseAdder):
     """
     View of table
     """
@@ -15,14 +15,11 @@ class DataAdder(ViewNewAdd):
         """
         :return:
         """
-        ViewNewAdd.__init__(self, 'Data')
+        BaseAdder.__init__(self, 'Data')
 
         self._model = DataModel()
 
         # +---- connection ----+
-        # 控件被点击
-        self.sig_clicked.connect(self._action)
-
         # 提交操作
         self.sig_submit.connect(self._save)
 

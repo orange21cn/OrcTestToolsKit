@@ -26,9 +26,7 @@ class DataDebugView(QSplitter):
         self.res_disp = DataResDispView()
 
         # 按钮
-        self.buttons = OrcButtons([
-            dict(id="search", name=u"增加")
-        ])
+        self.buttons = OrcButtons([dict(id="search", name=u"增加")])
 
         layout_res = OrcBoxWidget('V')
         layout_res.add_widget(self.res_disp)
@@ -58,5 +56,4 @@ class DataDebugView(QSplitter):
         :param p_id:
         :return:
         """
-        print ">>>>>>..", p_id
         self.res_disp.model.service_set_db(p_id)

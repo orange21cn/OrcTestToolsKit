@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from OrcLib import LibCommon
+from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 
@@ -28,13 +28,13 @@ class BatchDetMod(TabBatchDet):
         :param p_cond:
         :return:
         """
+        condition = OrcFactory.create_default_dict(data=p_cond, func=int)
+
         # 页码
-        page = LibCommon.dict_value(p_cond, "page")
-        page = None if not page else int(p_cond["page"])
+        page = condition.value('page')
 
         # 每页条数
-        number = LibCommon.dict_value(p_cond, "number")
-        number = None if not number else int(number)
+        number = condition.value('number')
 
         # 判断输入参数是否为空
         if p_cond is None:

@@ -1,7 +1,8 @@
 # coding=utf-8
 import unittest
+
 from OrcLib.LibTest import OrcTest
-from OrcLib.LibRunTime import OrcRunTime
+from OrcLibFrame.LibRunTime import OrcRunTime
 
 
 class TestRunTime(unittest.TestCase):

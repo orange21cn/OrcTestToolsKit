@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../test-tools/.idea/CommonTools.iml" filepath="$PROJECT_DIR$/../../test-tools/.idea/CommonTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DRI01/.idea/DRI01.iml" filepath="$PROJECT_DIR$/../DRI01/.idea/DRI01.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DRI02/.idea/DRI02.iml" filepath="$PROJECT_DIR$/../DRI02/.idea/DRI02.iml" />
       <module fileurl="file://$PROJECT_DIR$/../DRI03/.idea/DRI03.iml" filepath="$PROJECT_DIR$/../DRI03/.idea/DRI03.iml" />
