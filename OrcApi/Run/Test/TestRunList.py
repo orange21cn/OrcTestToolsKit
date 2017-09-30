@@ -38,7 +38,7 @@ class TestModel(unittest.TestCase):
         from OrcLib.LibCmd import OrcRecordCmd
 
         obj = RunData()
-        obj.load_list('/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/run_home/CASE_200000008/2017071201/default.res')
+        obj.load_data_list('/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/run_home/CASE_200000008/2017071201/default.res')
 
         cmd = OrcRecordCmd(dict(desc="", flag="10", id="240000029", pid="", run_det_type="WEB", status="PASS"))
         obj.update_status(cmd)

@@ -142,7 +142,7 @@ def get_page_def_mark(p_page_def_id):
 
     if not page_def_info.data:
         return None
-
+    print page_def_info.data
     return page_def_info.data['page_flag']
 
 
@@ -198,7 +198,7 @@ def get_widget_mark(p_widget_id):
 
     if not widget_def_info.data:
         return None
-
+    print "-=-=-=", widget_def_info.data
     return widget_def_info.data['widget_path']
 
 

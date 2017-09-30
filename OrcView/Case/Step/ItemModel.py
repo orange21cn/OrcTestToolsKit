@@ -176,7 +176,7 @@ class ItemModel(ModelTable):
 
         # 连接数据
         result = connect_list(result_step_det.data, result_list.data, "item_id")
-        print 100, result
+
         return result
 
     def service_up(self, p_id):

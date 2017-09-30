@@ -12,7 +12,7 @@ from PySide.QtGui import QHBoxLayout
 from OrcLib.LibType import DirType
 from OrcLib.LibLog import OrcLog
 from OrcView.Lib.LibSearch import ViewSearch
-from OrcView.Lib.LibSearch import OrcButtons
+from OrcView.Lib.LibSearch import OrcNewButtons
 from OrcView.Lib.LibView import OrcPagination
 
 _logger = OrcLog('basic.view.lib.shell')
@@ -121,11 +121,11 @@ class OrcViewWidget(QBoxLayout):
         if self.definition.pagination_enable:
             self.pagination = OrcPagination()
             layout_button.addWidget(self.pagination)
-            self.pagination.sig_search.connect(partial(self.sig_action.emit, 'search'))
+            self.pagination.sig_search.connect(partial(self.sig_action.emit, 'act_search'))
 
         # 按钮
         if self.definition.buttons_def is not None:
-            self.buttons = OrcButtons(self.definition.buttons_def, self.definition.buttons_dir)
+            self.buttons = OrcNewButtons(self.definition.buttons_def, self.definition.buttons_dir)
             layout_button.addStretch()
             layout_button.addWidget(self.buttons)
             self.addLayout(layout_button)
@@ -206,8 +206,7 @@ class OrcDisplayView(QWidget):
         :return:
         """
         try:
-            func = getattr(self, "%s" % p_flag)
-            func()
+            getattr(self, "%s" % p_flag)()
         except AttributeError:
             self._logger.error("Button clicked but no func founded")
 
@@ -218,8 +217,7 @@ class OrcDisplayView(QWidget):
         :return:
         """
         try:
-            func = getattr(self, "%s" % p_flag)
-            func()
+            getattr(self, "%s" % p_flag)()
         except AttributeError:
             self._logger.error("Right clicked but no func founded")
 

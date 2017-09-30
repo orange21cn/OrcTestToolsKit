@@ -32,7 +32,7 @@ from OrcApi.Data.DataApi import DataAPI
 
 from OrcApi.DataBase.DataSrcApi import DataSrcListAPI
 from OrcApi.DataBase.DataSrcApi import DataSrcAPI
-from OrcApi.DataBase.DataBaseApi import DatabaseListAPI
+from OrcApi.DataBase.DataBaseApi import DataBaseListAPI
 
 from OrcApi.Driver.Web.PageApi import PageDefListAPI
 from OrcApi.Driver.Web.PageApi import PageDefAPI
@@ -82,7 +82,7 @@ orc_api.add_resource(DataAPI, '/api/1.0/Data/<int:p_id>', endpoint='Data')
 # DataSrc
 orc_api.add_resource(DataSrcListAPI, '/api/1.0/DataSrc', endpoint='DataSrcs')
 orc_api.add_resource(DataSrcAPI, '/api/1.0/DataSrc/<int:p_id>', endpoint='DataSrc')
-orc_api.add_resource(DatabaseListAPI, '/api/1.0/DataBase', endpoint='DataBases')
+orc_api.add_resource(DataBaseListAPI, '/api/1.0/DataBase', endpoint='DataBases')
 
 # Page
 orc_api.add_resource(PageDefListAPI, '/api/1.0/PageDef', endpoint='PageDefs')

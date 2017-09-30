@@ -43,8 +43,8 @@ class DataModel(ModelTable):
         :return:
         """
         data = p_data
-        if 'SQL' == data['data_mode']:
-            data['data_value'] = json.dumps(dict(SRC=data['data_src_type'], VALUE=data['data_value']))
+        # if 'SQL' == data['data_mode']:
+        #     data['data_value'] = json.dumps(dict(SRC=data['data_src_type'], VALUE=data['data_value']))
 
         result = self.__resource_data.post(parameter=data)
 

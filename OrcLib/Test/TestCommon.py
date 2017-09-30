@@ -44,3 +44,16 @@ class TestCovert(unittest.TestCase):
 
         OrcTest.test_print_result(_res)
         OrcTest.test_print_end()
+
+
+class TestString(unittest.TestCase):
+
+    def test_fetch_string(self):
+
+        OrcTest.test_print_begin()
+
+        from OrcLib.LibCommon import OrcString
+
+        print OrcString.fetch_string('{', '}', 'abc{DEF}ddd{CCA}eee')
+
+        OrcTest.test_print_end()

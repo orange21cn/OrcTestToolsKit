@@ -114,9 +114,9 @@ class CaseView(OrcDisplayView):
         添加至执行
         :return:
         """
-        _data = self.display.model.mod_get_current_data()
+        _data = self.model.mod_get_current_data()
         if _data:
-            self.display.model.service_run(_data['id'])
+            self.model.service_run(_data['id'])
 
     def act_detail(self, p_index):
         """

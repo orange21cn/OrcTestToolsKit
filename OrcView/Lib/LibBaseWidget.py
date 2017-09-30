@@ -127,7 +127,7 @@ class WidgetCreator(object):
 
         if p_type not in view_conf:
             return None
-
+        print args, kwargs
         return getattr(__import__(widget_path, fromlist=True), widget_name)(parent)
 
     @staticmethod

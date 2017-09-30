@@ -6,10 +6,21 @@ QPushButton {
     padding-bottom: 6px;
     padding-left: 12px;
     padding-right: 12px;
-    margin-right: 11px;
+    margin-right: 0px;
+    margin-left: 6px;
     margin-bottom: 7px;
 	font-size: 13px;
 	text-align: center;
+}
+
+QPushButton#lastButton {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+QPushButton#firstButton {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 
 QPushButton:hover {

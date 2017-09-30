@@ -1,4 +1,5 @@
 import os
+import traceback
 
 from OrcLib import get_config
 from RunData import RunData
@@ -29,6 +30,6 @@ class RunDetMod(object):
         if not os.path.exists(res_file):
             return
 
-        self.__data.load_list(res_file)
+        self.__data.load_data_list(res_file)
 
         return self.__data.list

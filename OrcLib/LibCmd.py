@@ -1,17 +1,23 @@
 # coding=utf-8
-import copy
 from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibType import WebObjectType
 from OrcLib.LibType import WebItemModeType
 from OrcLib.LibType import DriverType
+from OrcLib.LibType import BatchType
+from OrcLib.LibType import CaseType
+from OrcLib.LibType import StepType
+from OrcLib.LibType import ItemType
+from OrcLib.LibType import DataScopeType
 from OrcLib.LibStatus import RecordStatus
 from OrcLib.LibDatabase import TabBatchDef
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import TabStepDef
 from OrcLib.LibDatabase import TabItem
-from OrcLib.LibCommon import DateStr
+from OrcLib.LibCommon import OrcString
+from OrcLib.LibProcess import get_page_def_mark
+from OrcLib.LibProcess import get_widget_mark
 
 
 class OrcCmd(object):
@@ -23,8 +29,6 @@ class OrcCmd(object):
 
         object.__init__(self)
 
-        _cmd = OrcFactory.create_default_dict(p_cmd)
-
         # 命令类型
         self.type = None
 
@@ -35,6 +39,8 @@ class OrcCmd(object):
         self.session = None
 
         # 初始化数据
+        _cmd = OrcFactory.create_default_dict(p_cmd)
+
         self.set_type(_cmd.value('TYPE'))
         self.set_cmd(_cmd.value('CMD'))
         self.set_session(_cmd.value('SESSION'))
@@ -222,23 +228,23 @@ class OrcSysCmd(object):
         """
         return self._data
 
-    def set_env(self, p_env):
+    def set_parameter(self):
         """
         设置环境
         :return:
         """
-        self._operation = 'ENV'
+        self._operation = 'PARAMETER'
 
-    def is_env(self):
+    def is_parameter(self):
         """
         是否设置环境
         :return:
         """
-        return 'ENV' == self._operation
+        return 'PARAMETER' == self._operation
 
     def get_cmd_dict(self):
         """
-
+        获取命令字典
         :return:
         """
         return dict(
@@ -254,7 +260,7 @@ class DataCmd(object):
         object.__init__(self)
 
         # 数据标识
-        self.cmd_object = DateStr.get_long_str()
+        self.cmd_object = OrcString.get_long_str()
 
         # 数据个数
         self.data = None
@@ -288,13 +294,23 @@ class DataCmd(object):
 
     def set_mode(self, operate_mode):
         """
-        设置操作模式
+        设置操作模式,非命令本身字段,用于计算data数
         :param operate_mode:
         :return:
         """
         self.mode = operate_mode
 
         self.__cal_data()
+
+    def set_cmd(self, p_data):
+        """
+        设置命令
+        :param p_data:
+        :return:
+        """
+        data = OrcFactory.create_default_dict(p_data)
+        self.cmd_object = data.value('OBJECT')
+        self.data = data.value('DATA')
 
     def get_cmd_dict(self):
         """
@@ -311,6 +327,9 @@ class DataCmd(object):
         获取显示文字
         :return:
         """
+        if self.cmd_object is None:
+            return ''
+
         return u"数据操作[%s].数据(%s)" % (self.cmd_object, self.data)
 
     def __cal_data(self):
@@ -488,31 +507,55 @@ class WebCmd(object):
 
         object.__init__(self)
 
+        # 资源
         self.__resource_page = OrcResource('PageDef')
-
         self.__resource_window = OrcResource('WindowDef')
-
         self.__resource_widget = OrcResource('WidgetDef')
 
         # 模式,操作项/检查项,由外部提供
         self.mode = None
 
-        _cmd = OrcFactory.create_default_dict(p_cmd)
-
         # 对象类型,PAGE/WINDOW/WIDGET
-        self.cmd_type = _cmd.value('TYPE')
+        self.cmd_type = None
 
-        # 对象 ＩＤ
-        self.cmd_object = _cmd.value('OBJECT')
+        # 对象 ＩＤ, 兼容多控件操作
+        self.cmd_object_ids = dict(FROM=None, TO=None)
 
         # 操作方法
-        self.cmd_operation = _cmd.value('OPERATION')
+        self.cmd_operation = None
 
         # 所需数据
-        self.data = _cmd.value('DATA')
+        self.data_num = None
+
+        # 输入数据
+        self.data_inp = None
+
+        # 对比数据
+        self.data_chk = None
 
         # 对象数据
-        self._object_info = self.__get_info(self.cmd_object)
+        self._object_info = dict(FROM=OrcFactory.create_default_dict(),
+                                 TO=OrcFactory.create_default_dict())
+
+        self.set_cmd(p_cmd)
+
+    @property
+    def cmd_object(self):
+        return self.cmd_object_ids['FROM']
+
+    @cmd_object.setter
+    def cmd_object(self, p_id):
+        self.cmd_object_ids['FROM'] = p_id
+        # self._object_info[0] = self.__get_info(p_id)
+
+    @property
+    def cmd_object_to(self):
+        return self.cmd_object_ids['TO']
+
+    @cmd_object_to.setter
+    def cmd_object_to(self, p_id):
+        self.cmd_object_ids['TO'] = p_id
+        # self._object_info['TO'] = self.__get_info(p_id)
 
     def set_mode(self, p_mode):
         """
@@ -527,16 +570,17 @@ class WebCmd(object):
 
     def set_cmd_type(self, p_type):
         """
-
+        设置命令类型
         :param p_type:
         :return:
         """
+        print ">>>>>>>", p_type
         if p_type in WebObjectType.all():
             self.cmd_type = p_type
 
     def set_page(self):
         """
-
+        设置为页面
         :return:
         """
         self.cmd_type = WebObjectType.PAGE
@@ -550,7 +594,7 @@ class WebCmd(object):
 
     def set_window(self):
         """
-
+        设置为窗口
         :return:
         """
         self.cmd_type = WebObjectType.WINDOW
@@ -564,7 +608,7 @@ class WebCmd(object):
 
     def set_widget(self):
         """
-
+        设置为控件
         :return:
         """
         self.cmd_type = WebObjectType.WIDGET
@@ -576,15 +620,35 @@ class WebCmd(object):
         """
         return WebObjectType.WIDGET == self.cmd_type
 
-    def set_cmd_object(self, p_cmd_object):
+    def set_driver(self):
+        """
+        设置为驱动
+        :return:
+        """
+        self.cmd_type = WebObjectType.DRIVER
+
+    def is_driver(self):
+        """
+        对象类型,是否驱动
+        :return:
+        """
+        return WebObjectType.DRIVER == self.cmd_type
+
+    def set_cmd_object(self, p_cmd_object, p_src=None):
         """
         设置命令对象
+        :param p_src:
         :param p_cmd_object:
         :return:
         """
-        self.cmd_object = p_cmd_object
+        _src = p_src or 'FROM'
 
-        self.__get_info(self.cmd_object)
+        if 'FROM' == _src:
+            self.cmd_object = p_cmd_object
+        elif 'TO' == _src:
+            self.cmd_object_to = p_cmd_object
+        else:
+            pass
 
     def set_cmd_operation(self, p_cmd_operation):
         """
@@ -600,9 +664,17 @@ class WebCmd(object):
         """
         设置数据,非 None 表示有数据,调试模式下为实际数据,正式情况下仅代表有数据
         :param p_data:
+        :type p_data: list
         :return:
         """
-        self.data = p_data
+        if len(p_data) != self.data_num:
+            pass
+
+        if self.data_inp:
+            self.data_inp = p_data[:int(self.data_inp)]
+
+        if self.data_chk:
+            self.data_chk = p_data[- int(self.data_chk):]
 
     def set_cmd(self, p_cmd):
         """
@@ -610,81 +682,119 @@ class WebCmd(object):
         :param p_cmd:
         :return:
         """
-        self.cmd_type = p_cmd['TYPE']
-        self.cmd_object = p_cmd['OBJECT']
-        self.cmd_operation = p_cmd['OPERATION']
+        _cmd = OrcFactory.create_default_dict(p_cmd)
+        _cmd_object = str(_cmd.value('OBJECT'))
+        if _cmd_object:
+            _cmd_object = _cmd_object.split('|')
+        else:
+            _cmd_object = ['']
 
-    def set_page_info(self, p_info):
+        self.cmd_type = _cmd.value('TYPE')
+        self.cmd_object = _cmd_object[0]
+        self.cmd_operation = _cmd.value('OPERATION')
+        self.data_num = _cmd.value('DATA')
+        self.data_inp = _cmd.value('DATA_INP')
+        self.data_chk = _cmd.value('DATA_CHK')
+
+        if 2 == len(_cmd_object):
+            self.cmd_object_to = _cmd_object[0]
+
+    def set_page_from_info(self, p_info):
         """
         设置页面信息
         :param p_info:
         :return:
         """
-        self._object_info = p_info
-        self.set_cmd_object(self._object_info['id'])
+        self._object_info['FROM'].init(p_info)
+        self.set_cmd_object(self._object_info['FROM'].value('id'))
         self.set_cmd_type(WebObjectType.PAGE)
 
-    def set_widget_info(self, p_info):
+    def set_widget_from_info(self, p_info):
         """
         设置控件信息
         :param p_info:
         :return:
         """
-        self._object_info = p_info
-        self.set_cmd_object(self._object_info['id'])
+        self._object_info['FROM'].init(p_info)
+        self.set_cmd_object(self._object_info['FROM'].value('id'))
         self.set_cmd_type(WebObjectType.WIDGET)
 
-    def get_flag(self):
+    def set_widget_to_info(self, p_info):
         """
-        获取对象标识
+        设置控件信息
+        :param p_info:
         :return:
         """
-        if self._object_info is None:
-            return ''
+        print 100, p_info
+        self._object_info['TO'].init(p_info)
+        self.set_cmd_object(self._object_info['TO'].value('id'), 'TO')
+
+    def get_flag(self, p_src=None):
+        """
+        获取对象标识
+        :param p_src:
+        :return:
+        """
+        _src = p_src or 'FROM'
 
         if self.is_page():
-            return self._object_info['page_flag']
+            return self._object_info[_src].value('page_flag') or get_page_def_mark(self.cmd_object)
         elif self.is_widget():
-            return self._object_info['widget_path']
+            return self._object_info[_src].value('widget_path') or get_widget_mark(self.cmd_object)
         elif self.is_window():
             return ''
         else:
             return ''
 
-    def get_widget_type(self):
+    def get_widget_type(self, p_src=None):
         """
 
+        :param p_src:
         :return:
         """
+        _src = p_src or 'FROM'
+
         if self.is_page():
             return None
 
-        return self._object_info['widget_type']
+        return self._object_info[_src].value('widget_type')
 
-    def get_object_info(self, p_flag):
+    def get_object_info(self, p_flag, p_src=None):
         """
         获取对象原始信息
+        :param p_src:
         :param p_flag:
         :return:
         """
-        if p_flag in self._object_info:
-            return self._object_info[p_flag]
+        _src = p_src or 'FROM'
 
-        return None
+        return self._object_info[_src].value(p_flag)
 
     def get_cmd_dict(self):
         """
         获取 operation 字典
         :return:
         """
+        print 1, self.cmd_object
+        print 2, self.cmd_object_to
+
+        _cmd_object = self.cmd_object
+        if self.cmd_object_to:
+            _cmd_object = "%s|%s" % (_cmd_object, self.cmd_object_to)
+
         res_dict = dict(
             TYPE=self.cmd_type,
-            OBJECT=self.cmd_object,
-            OPERATION=self.cmd_operation
-        )
+            OBJECT=_cmd_object,
+            OPERATION=self.cmd_operation)
 
-        if self.data is not None:
-            res_dict['DATA'] = self.data
+        if self.data_num is not None:
+            res_dict['DATA'] = self.data_num
+
+        if self.data_inp is not None:
+            res_dict['DATA_INP'] = self.data_inp
+
+        if self.data_chk is not None:
+            res_dict['DATA_CHK'] = self.data_chk
 
         return res_dict
 
@@ -693,27 +803,31 @@ class WebCmd(object):
         获取对象信息
         :return:
         """
+        rtn = OrcFactory.create_default_dict()
+
         if p_id is None:
-            return dict()
+            return rtn
 
         if self.is_page():
             result = self.__resource_page.get(path=p_id)
 
             if not ResourceCheck.result_status(result, '获取页面信息'):
-                return dict()
+                return rtn
 
-            return result.data
+            rtn.init(result.data)
 
         elif self.is_widget():
 
             result = self.__resource_widget.get(path=p_id)
 
             if not ResourceCheck.result_status(result, '获取控件信息'):
-                return None
+                return rtn
 
-            return result.data
+            rtn.init(result.data)
         else:
             pass
+
+        return rtn
 
     def get_disp_text(self):
         """
@@ -749,14 +863,20 @@ class WebCmd(object):
 
         # 控件命令
         elif self.is_widget():
-            res_text = u"控件[%s].%s" % (self.get_flag(), get_operation_text())
+
+            if self.cmd_object_to:
+                _flag = "%s|%s" % (self.get_flag(), self.get_flag('TO'))
+            else:
+                _flag = self.get_flag()
+
+            res_text = u"控件[%s].%s" % (_flag, get_operation_text())
 
         # 其他
         else:
             res_text = ''
 
-        if self.data is not None:
-            res_text = u"%s.数据(%s)" % (res_text, self.data)
+        if self.data_num is not None:
+            res_text = u"%s.数据(%s)" % (res_text, self.data_num)
 
         return res_text
 
@@ -765,15 +885,28 @@ class WebCmd(object):
         计算数据数量
         :return:
         """
+        # 已经设置过数据,不再重新计算数量
+        if isinstance(self.data_inp, list) or isinstance(self.data_chk, list):
+            return
+
         if WebItemModeType.OPERATE == self.mode:
-            if self.cmd_operation in ('INPUT',):
-                self.data = 1
+            if self.cmd_operation in ('INPUT', 'TEXT', 'LABEL', 'VALUE', 'SCRIPT', 'DEL_ATTR'):
+                self.data_num = 1
+                self.data_inp = 1
+            elif self.cmd_operation in ('SET_ATTR',):
+                self.data_num = 1
+                self.data_inp = 2
+            else:
+                pass
 
         elif WebItemModeType.CHECK == self.mode:
-            if self.cmd_operation in ('GET_TEXT', 'TEXT', 'LABEL', 'VALUE'):
-                self.data = 1
+            if self.cmd_operation in ('GET_TEXT',):
+                self.data_num = 1
+                self.data_chk = 1
             elif self.cmd_operation in ('GET_ATTR',):
-                self.data = 2
+                self.data_num = 2
+                self.data_inp = 1
+                self.data_chk = 1
             else:
                 pass
         else:
@@ -886,112 +1019,126 @@ class OrcRecordCmd(object):
         batch type, include batch and batch suit
         :return:
         """
-        return self.run_det_type in ('BATCH_SUITE', 'BATCH')
+        return self.run_det_type in BatchType.all()
 
     def is_batch_suite(self):
         """
         batch suite
         :return:
         """
-        return self.run_det_type == 'BATCH_SUITE'
+        return self.run_det_type == BatchType.BATCH_SUITE
 
     def is_batch(self):
         """
         batch
         :return:
         """
-        return self.run_det_type == 'BATCH'
+        return self.run_det_type == BatchType.BATCH
 
     def is_case_type(self):
         """
         case type, include case and case suite
         :return:
         """
-        return self.run_det_type in ('CASE_SUITE', 'CASE', 'FUNC_SUITE', 'FUNC')
+        return self.run_det_type in CaseType.all()
 
     def is_cases(self):
         """
         case suit, case
         :return:
         """
-        return self.run_det_type in ('CASE_SUITE', 'CASE')
+        return self.run_det_type in (CaseType.CASE_SUITE, CaseType.CASE)
 
     def is_funcs(self):
         """
         function suit, function
         :return:
         """
-        return self.run_det_type in ('FUNC_SUITE', 'FUNC')
+        return self.run_det_type in (CaseType.FUNC_SUITE, CaseType.FUNC)
 
     def is_case_suite(self):
         """
         case suite
         :return:
         """
-        return self.run_det_type == 'CASE_SUITE'
+        return self.run_det_type == CaseType.CASE_SUITE
 
     def is_case(self):
         """
         case
         :return:
         """
-        return self.run_det_type == 'CASE'
+        return self.run_det_type == CaseType.CASE
 
     def is_func_suite(self):
         """
         function suite
         :return:
         """
-        return self.run_det_type == 'FUNC_SUITE'
+        return self.run_det_type == CaseType.FUNC_SUITE
 
     def is_func(self):
         """
         function
         :return:
         """
-        return self.run_det_type == 'FUNC'
+        return self.run_det_type == CaseType.FUNC
 
     def is_step_type(self):
         """
         normal step and function step
         :return:
         """
-        return self.run_det_type in ('STEP_NORMAL', 'STEP_FUNC')
+        return self.run_det_type in StepType.all()
 
     def is_normal_step(self):
         """
         normal step
         :return:
         """
-        return self.run_det_type == 'STEP_NORMAL'
+        return self.run_det_type == StepType.STEP_NORMAL
 
     def is_func_step(self):
         """
         function step
         :return:
         """
-        return self.run_det_type == 'STEP_FUNC'
+        return self.run_det_type == StepType.STEP_FUNC
 
     def is_item_type(self):
         """
         item type, include ....
         :return:
         """
-        return self.run_det_type in ('WEB', 'DATA')
+        return self.run_det_type in ItemType.all()
 
     def is_web_item(self):
         """
         web item
         :return:
         """
-        return self.run_det_type == 'WEB'
+        return self.run_det_type == ItemType.WEB
 
     def is_data_item(self):
         """
         data item
         :return:
         """
-        return self.run_det_type == 'DATA'
+        return self.run_det_type == ItemType.DATA
+
+    def get_scope(self):
+        """
+
+        :return:
+        """
+        if self.is_batch():
+            return DataScopeType.BATCH
+        elif self.is_case():
+            return DataScopeType.CASE
+        elif self.is_step_type():
+            return DataScopeType.STEP
+        else:
+            return DataScopeType.ITEM
 
     def to_dict(self):
         """
@@ -1004,5 +1151,4 @@ class OrcRecordCmd(object):
             run_det_type=self.run_det_type,
             flag=self.flag,
             desc=self.desc,
-            status=self.status.get_status()
-        )
+            status=self.status.get_status())

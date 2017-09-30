@@ -127,14 +127,14 @@ class RunDefView(QWidget):
                 self.display.model.service_run(_pid, _id)
 
                 # 更改按钮状态
-                self.btn_status_start()
+                # self.btn_status_start()
 
         elif 'stop' == p_flg:
             # 停止
             self.display.model.service_stop()
 
             # 按钮状态停止
-            self.btn_status_stop()
+            # self.btn_status_stop()
 
         else:
             pass

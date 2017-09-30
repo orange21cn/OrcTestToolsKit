@@ -23,6 +23,8 @@ class DataAdder(BaseAdder):
         # 提交操作
         self.sig_submit.connect(self._save)
 
+        self.widget('data_mode').currentIndexChanged.connect(self.widget('data_value').set_editor)
+
     def _action(self, p_flag):
         """
         控件被点击时的操作

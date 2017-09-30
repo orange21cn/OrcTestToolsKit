@@ -9,15 +9,19 @@ from OrcLib.LibCmd import OrcDriverCmd
 from OrcLib.LibCmd import OrcRecordCmd
 from OrcLib.LibCmd import OrcSysCmd
 from OrcLib.LibCmd import WebCmd
+from OrcLib.LibCmd import DataCmd
 from OrcLib.LibDriver import DriverSession
 from OrcLib.LibLog import OrcLog
-from OrcLib.LibNet import OrcDriverResource
 from OrcLib.LibNet import ResourceCheck
-from OrcLib.LibStatus import OrcDriverStatus
+from OrcLib.LibNet import OrcDriverResource
+from OrcLib.LibProgram import OrcFactory
 from OrcLib.LibStatus import OrcRunStatus
-from OrcLib.LibThreadPool import NoResultsPending
+from OrcLib.LibStatus import OrcDriverStatus
 from OrcLib.LibThreadPool import ThreadPool
 from OrcLib.LibThreadPool import WorkRequest
+from OrcLib.LibThreadPool import NoResultsPending
+from OrcLibFrame.LibData import OrcDataClient
+
 from OrcLib.LibType import RunRecordType
 from RunData import RunData
 from RunLog import RunLog
@@ -66,10 +70,10 @@ class RunCore(object):
         """
         return self._status.status
 
-    def start(self, p_path):
+    def start(self, p_para):
         """
         读取运行记录文件并逐条执行
-        :param p_path:
+        :param p_para: {PATH, PARA, ...}
         :return:
         """
         # Todo 如果所有驱动被占用,显示驱动忙
@@ -77,8 +81,12 @@ class RunCore(object):
         #     return False, u'驱动忙'
 
         # self.__status.director = True
+        parameter = OrcFactory.create_default_dict(p_para)
+        run_path = parameter.value('PATH')
+        run_para = parameter.value('PARA')
 
-        self._recoder.set_path(p_path)
+        self._recoder.set_path(run_path)
+
         self._allot.init(self._recoder.get_rec_file())
 
         main = ThreadPool(1)
@@ -88,22 +96,35 @@ class RunCore(object):
             _current_path = self._allot.get_current_path()
 
             for i in _current_path:
+
                 _home = os.path.join(_home, i['flag'])
 
             runner = CaseRunner(_current_path, _home)
-            req = WorkRequest(runner.run, p_args=[_steps], p_kwds={}, p_callback=None)
+            runner.set_parameter(run_para)
+
+            req = WorkRequest(runner.run, p_args=[_steps], p_kwds={}, p_callback=self.set_status)
 
             main.put_request(req)
 
         while True:
             try:
                 main.poll()
-
             except NoResultsPending:
                 self._logger.info('Finished all cases...')
                 break
 
         main.stop()
+
+    def set_status(self, p_req, p_res):
+        """
+        设置状态
+        :param p_req:
+        :param p_res:
+        :return:
+        """
+        for _cmd in p_res:
+            assert isinstance(_cmd, OrcRecordCmd)
+            self._allot.update_status(_cmd)
 
 
 class CaseRunner(object):
@@ -140,33 +161,72 @@ class CaseRunner(object):
         self._case_path = p_case_path
         self._case_folder = p_folder
 
-        # 用例分配器
-        self._allot = CaseAllot()
-
         # service
-        self.__service_core = RunCoreService()
+        self._service_core = RunCoreService()
 
+        # 数据标识
         self._data_flag = ''
+
+        # 环境
+        self._env = None
+
+        # 运行所需其他参数
+        self._parameter = dict()
+
+        # 数据获取接口
+        self._data_client = OrcDataClient()
+
+        # 当前函数 id, 用于标识函数步骤, 非函数步骤时为 None
+        self.__func_step = None
+
+    def set_parameter(self, p_para):
+        """
+        设置参数
+        :param p_para:
+        :return:
+        """
+        self._parameter.update(p_para)
 
     def run(self, p_steps):
         """
-        :param p_steps: [step]
+        运用
+        :param p_steps:
         :return:
         """
+        if 'env' not in self._parameter:
+            return
+
         # 终止 Todo
 
-        # case 目录
-        # case_path = self._allot.get_current_path()
-
+        # 申请一台驱动服务器
         self.apply()
 
         if self._key is None:
             self.__logger.error("Apply a driver server failed.")
             return
 
+        result = self._run_case(p_steps)
+
+        # 释放服务器
+        self.release()
+
+        return result
+
+    def _run_case(self, p_steps):
+        """
+        :param p_steps: [step] 步骤
+        :return:
+        """
+        # 生成 case 运行记录目录
         self._run_logger.set_case_folder(self._case_folder)
 
+        result_list = []
+
+        step_result = True
+
+        # 执行步骤
         for _step in p_steps:
+
             step_cmd = OrcRecordCmd(_step['content'])
 
             self._data_flag = step_cmd.flag
@@ -174,13 +234,23 @@ class CaseRunner(object):
 
             if step_cmd.is_func_step():
 
+                self.__func_step = step_cmd.id
+
                 for _sub_step in _step['children']:
                     sub_stp_cmd = OrcRecordCmd(_sub_step['content'])
 
                     self._data_flag = "%s:%s" % (self._data_flag, sub_stp_cmd.flag)
-                    self.run(_sub_step['children'])
-            else:
+                    _func_result = self._run_case(_sub_step['children'])
+                    result_list.extend(_func_result)
 
+                    # 函数的最后一个步骤结果表示函数步骤的状态
+                    step_result = _func_result[-1].status.get_status() == RunRecordType.PASS
+
+                    if not step_result:
+                        break
+
+                self.__func_step = None
+            else:
                 # 将步骤加入路径
                 _step_path = self._case_path[:]
                 _step_path.append(_step['content'])
@@ -201,15 +271,22 @@ class CaseRunner(object):
 
                     # 运行
                     _result = self.__run_item(_item_path)
+                    step_result = step_result and _result
 
                     # 更新状态
                     _item_cmd.status.set_status(RunRecordType.from_bool(_result))
-                    self._allot.update_status(_item_cmd)
+                    result_list.append(_item_cmd)
 
                     # 记录结束
                     self._run_logger.run_end(_item_cmd.status.status)
 
-        self.release()
+                    if not step_result:
+                        break
+
+            if not step_result:
+                break
+
+        return result_list
 
     def __run_item(self, p_item_path):
         """
@@ -225,7 +302,7 @@ class CaseRunner(object):
 
         # 执行该 list 的最后一项,最后一项为 item, 其他为路径用于数据查找
         item_id = p_item_path[len(p_item_path) - 1]["id"]
-        item = self.__service_core.get_item(item_id)
+        item = self._service_core.get_item(item_id)
 
         if item is None:
             return False
@@ -234,30 +311,38 @@ class CaseRunner(object):
         driver_command.set_type(item.item_type)
         driver_command.set_mode(item.item_mode)
 
+        if self._key is None:
+            self.__logger.error('Resource is None')
+
         # Web 步骤
         if driver_command.is_web():
 
             web_command = WebCmd()
 
             try:
+
                 web_command.set_cmd(json.loads(item.item_operate))
-                web_command.set_data(self.__get_data(p_item_path, web_command.cmd_object))
+                web_command.set_mode(driver_command.operate_mode)
+
+                if web_command.data_num:
+                    data = self._data_client.get_cmd_data(
+                        OrcRecordCmd(p_item_path[-1]), web_command.cmd_object, self.__func_step)
+                    if not data:
+                        self.__logger.error('no enough data to run command %s' % web_command.get_cmd_dict())
+                    web_command.set_data(data)
+
             except (TypeError, ValueError):
                 return False
 
             driver_command.set_cmd(web_command)
             self._command.set_cmd(driver_command)
 
-            if self._key is not None:
-                result = self._driver_lib.resource(self._key).get(self._command.get_cmd_dict())
+            result = self._driver_lib.resource(self._key).get(self._command.get_cmd_dict())
 
-                if not ResourceCheck.result_status(result, u"执行命令 %s" % web_command.get_cmd_dict(), self.__logger):
-                    return False
+            if not ResourceCheck.result_status(result, u"执行命令 %s" % web_command.get_cmd_dict(), self.__logger):
+                return False
 
-                _result = result.data
-
-            else:
-                self.__logger.error('Resource is None')
+            _result = result.data
 
             # 执行项
             if driver_command.is_operation():
@@ -265,44 +350,43 @@ class CaseRunner(object):
                 pic_name = os.path.join(self._case_folder, "%s.png" % self._data_flag)
 
                 try:
-                    self.__service_core.get_web_pic(pic_name)
+                    self._service_core.get_web_pic(pic_name)
                 except Exception:
                     self.__logger.error("Saver image error, %s" % pic_name)
-                    pass
 
             # 检查项
             elif driver_command.is_check():
-                _result = web_command.data == _result
+                _result = web_command.data_chk == _result
 
             else:
                 pass
 
-        return _result
+        elif driver_command.is_data():
 
-    def __get_data(self, p_item_path, p_id):
-        """
-        获取数据
-        :return:
-        """
-        # 步骤需要数据时读取数据
-        data = self.__service_core.get_data(p_item_path, p_id)
+            data_command = DataCmd()
 
-        if data:
-            return data
+            data_command.set_cmd(json.loads(item.item_operate))
+            data_command.set_data(self._service_core.get_data(self._env, p_item_path, data_command.cmd_object))
+
+            _result = data_command.get_cmd_dict()['DATA']
+
+            if driver_command.is_check():
+                _result = _result[0] == _result[1]
+
         else:
-            # Todo raise a error
-            return None
+            pass
+
+        return _result
 
     def apply(self):
         """
-        占用测试机
+        占用测试机并设置相关参数
         :return:
         """
         for _key in self._driver_lib.driver_keys:
 
             if self._driver_lib.status(_key).is_waiting():
                 self._occupy(_key)
-
                 return True
 
         return False
@@ -324,6 +408,17 @@ class CaseRunner(object):
         result = self._driver_lib.resource(p_key).get(self._command.get_cmd_dict())
 
         if not ResourceCheck.result_status(result, 'Error: occupy driver %s failed' % p_key):
+            return False
+
+        # 设置参数
+        self._sys_command.set_parameter()
+        self._sys_command.set_data(self._parameter)
+        self._command.set_session(self._sessions.session)
+        self._command.set_cmd(self._sys_command)
+
+        result = self._driver_lib.resource(p_key).get(self._command.get_cmd_dict())
+
+        if not ResourceCheck.result_status(result, 'Error: set parameter %s failed' % self._parameter):
             return False
 
         self._key = p_key
@@ -418,11 +513,11 @@ class CaseAllot(RunData):
         :param p_file:
         :return:
         """
-        self.load_list(p_file)
+        self.load_data_list(p_file)
 
     def cases(self, p_node=None):
         """
-
+        case 迭代器
         :param p_node:
         :return:
         """
@@ -444,7 +539,10 @@ class CaseAllot(RunData):
         :param p_tree:
         :return:
         """
-        tree = self.tree if p_tree is None else p_tree
+        tree = p_tree or self.tree
+        if not tree['content']:
+            tree = tree['children'][0]
+
         item_path = list()
 
         if self._node is None:

@@ -2,11 +2,11 @@
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-from selenium.common.exceptions import WebDriverException
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
-from OrcApi.OrcDriver.Web import WebDriverService
+from OrcApi.OrcDriver.Web.WebDriverService import WebDriverService
 from OrcLib.LibLog import OrcLog
+from OrcLib.LibCmd import WebCmd
 from OrcLibFrame.LibRunTime import OrcRunTime
 
 
@@ -32,7 +32,11 @@ class WidgetBlock(object):
     控件基类
     """
     def __init__(self, p_root, p_id):
-
+        """
+        :param p_root:
+        :param p_id:
+        :return:
+        """
         object.__init__(self)
 
         self._logger = OrcLog('driver.web')
@@ -52,8 +56,11 @@ class WidgetBlock(object):
         # 实时数据
         self.__runtime = OrcRunTime('RUN')
 
+        # id 数组/兼容多控件操作
+        self._ids = str(p_id).split('|')
+
         # 控件定义
-        self._def = self.__get_def_info(p_id)
+        self._def = self.__get_def_info(self._ids[0])
 
         # 获取控件
         self._get_widget()
@@ -120,9 +127,15 @@ class WidgetBlock(object):
         if self._widget is None:
             return False
 
-        try:
-            self._widget.is_displayed()
-        except NoSuchElementException:
+        for i in range(10):
+
+            try:
+                self._get_widget()
+                self._widget.is_displayed()
+                break
+            except (NoSuchElementException, AttributeError):
+                pass
+        else:
             return False
 
         return True
@@ -161,7 +174,6 @@ class WidgetBlock(object):
                 self.__meet_frame = _definition.id
 
             elif "WINDOW" == _definition.widget_type:
-
                 _window_id = _definition.id
 
                 # 还没有当前 window
@@ -205,8 +217,18 @@ class WidgetBlock(object):
                 self._widget = self._widget.find_element_by_link_text(_attr)
             elif "CSS" == _type:
                 self._widget = self._widget.find_element_by_css_selector(_attr)
+            elif 'LAST_CHILD' == _type:
+                self._widget = self.__get_child(_attr)
             else:
                 pass
+
+    def __get_child(self, p_tag):
+        """
+        获取子节点
+        :return:
+        """
+        result = self._root.find_elements_by_tag_name(p_tag)
+        return result[len(result) - 1]
 
     def __switch_window(self, p_def):
         """
@@ -262,38 +284,19 @@ class WidgetBlock(object):
 
         return status
 
-    def __check_object(self, p_time=20):
-        """
-        加载判断函数，加载页面直至 p_item_id 控件出现
-        :param p_time:
-        :return:
-        """
-        _displayed = True
-
-        def get_object(_driver, _item):
-            return OrcWidget(_driver, _item)
-
-        try:
-            WebDriverWait(self._root, p_time).until(lambda _sup, _def: get_object(_sup, _def).exists())
-        except WebDriverException:
-            _displayed = False
-
-        return _displayed
-
     def basic_execute(self, p_para):
         """
         基本控件操作
         :param p_para:
+        :type p_para: WebCmd
         :return:
         """
-        _flag = p_para["OPERATION"]
-
         # 判断存在
-        if 'EXISTS' == _flag:
+        if 'EXISTS' == p_para.cmd_operation:
             return self.exists()
 
         # 点击
-        elif 'CLICK' == _flag:
+        elif 'CLICK' == p_para.cmd_operation:
 
             try:
                 self._widget.click()
@@ -305,32 +308,51 @@ class WidgetBlock(object):
             return True
 
         # 获取属性
-        elif 'GET_ATTR' == _flag:
-
-            if "DATA" not in p_para:
-                return ""
-            else:
-                return self._widget.get_attribute(p_para["DATA"])
+        elif 'GET_ATTR' == p_para.cmd_operation:
+            return self._widget.get_attribute(p_para.data_inp[0])
 
         # 获取内容
-        elif 'GET_TEXT' == _flag:
+        elif 'GET_TEXT' == p_para.cmd_operation:
             return self._widget.text
 
         # 获取HTML
-        elif 'GET_HTML' == _flag:
+        elif 'GET_HTML' == p_para.cmd_operation:
             return self._widget.get_attribute("outerHTML")
 
         # 滚动至显示区
-        elif 'SCROLL' == _flag:
+        elif 'SCROLL' == p_para.cmd_operation:
             self._root.execute_script("arguments[0].scrollIntoView();", self._widget)
 
         # Focus
-        elif 'FOCUS' == _flag:
+        elif 'FOCUS' == p_para.cmd_operation:
             self._root.execute_script("arguments[0].focus();", self._widget)
 
-        # 检查控件存在
-        elif 'DISPLAY' == _flag:
-            return self.__check_object()
+        elif 'SET_ATTR' == p_para.cmd_operation:
+            js_cmd = "setAttribute('%s', '%s')" % (p_para.data_inp[0], p_para.data_inp[1])
+            self._root.execute_script("arguments[0].%s;" % js_cmd, self._widget)
+
+        elif 'DEL_ATTR' == p_para.cmd_operation:
+            js_cmd = "removeAttribute('%s')" % p_para.data_inp[0]
+            self._root.execute_script("arguments[0].%s;" % js_cmd, self._widget)
+
+        # 双击
+        elif 'DOUBLE_CLICK' == p_para.cmd_operation:
+            ActionChains(self._root).double_click(self._widget).perform()
+
+        # 右键
+        elif 'CONTEXT' == p_para.cmd_operation:
+            ActionChains(self._root).context_click(self._widget).perform()
+
+        elif 'MOVE' == p_para.cmd_operation:
+            ActionChains(self._root).drag_and_drop_by_offset(self._widget, p_para.data_inp[0], p_para.data_inp[1])
+
+        # ----
+        elif 'DEL_ATTR' == p_para.cmd_operation:
+            js_cmd = "removeAttribute('%s')" % p_para.data_inp[0]
+            self._root.execute_script("arguments[0].%s;" % js_cmd, self._widget)
+
+        elif 'SCRIPT' == p_para.cmd_operation:
+            self._root.execute_script("arguments[0].%s;" % p_para.data_inp[0], self._widget)
 
         else:
             return None

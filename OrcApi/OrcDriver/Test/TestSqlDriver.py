@@ -13,9 +13,9 @@ class TestDataSrc(unittest.TestCase):
 
         OrcTest.test_print_begin()
 
-        from OrcApi.OrcDriver.SQL.SqlDriver import SqlDriver
+        from OrcApi.OrcDriver.SQL.DataDriver import DataDriver
 
-        test = SqlDriver()
+        test = DataDriver()
 
         OrcTest.test_print_result(test.execute(dict(DATA_SRC='1.PRE', SQL='select * from tab_item;')))
 

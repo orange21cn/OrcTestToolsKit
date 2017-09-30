@@ -1,174 +1,197 @@
-[2017-08-04 16:26:13 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:26:13 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:26:13 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 56, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
+[2017-09-22 14:25:34 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 326, in basic_execute
+    self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: SyntaxError: missing { before class body
 
-[2017-08-04 16:27:10 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:27:10 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': False}
-[2017-08-04 16:27:10 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:27:10 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:27:10 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 56, in execute
-    
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
 
-[2017-08-04 16:27:13 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:27:15 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:27:15 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:27:15 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:27:15 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:27:15 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 57, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
+[2017-09-22 14:25:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'cldddass', u'aaa {"a": "b"}']}, u'MODE': None}}
+[2017-09-22 14:25:51 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:25:51 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 326, in basic_execute
+    self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: SyntaxError: missing ) after argument list
 
-[2017-08-04 16:27:54 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:27:57 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:27:57 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:27:57 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:27:57 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:27:57 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 58, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
 
-[2017-08-04 16:28:16 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:28:17 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:28:17 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:28:17 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:28:18 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:28:18 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 58, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
+[2017-09-22 14:26:17 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'cldddass', u'onmhgod']}, u'MODE': None}}
+[2017-09-22 14:26:17 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:26:17 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 326, in basic_execute
+    self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: ReferenceError: cldddass is not defined
 
-[2017-08-04 16:29:36 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:29:38 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:29:38 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:29:38 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:29:38 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:29:38 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 58, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
 
-[2017-08-04 16:30:36 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:30:39 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:30:39 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:30:39 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:30:39 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-04 16:30:39 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 135, in start
-    _res = self._driver.sql.execute(sql_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/SQLDriver.py", line 58, in execute
-    db.db_init(p_cmd.data_src)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/SQL/DataSrcSQLite.py", line 29, in db_init
-    if os.path.exists(_file):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/genericpath.py", line 26, in exists
-    os.stat(path)
-TypeError: coercing to Unicode: need string or buffer, NoneType found
+[2017-09-22 14:28:21 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SCRIPT', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'setAttribute("abc", "def")']}, u'MODE': None}}
+[2017-09-22 14:28:22 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 14:31:54 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-22 14:31:54 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-22 14:32:17 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-22 14:32:37 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 14:32:42 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 14:33:27 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SCRIPT', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'setAttribute("abc", "def")']}, u'MODE': None}}
+[2017-09-22 14:33:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 14:34:23 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'abc', u'def']}, u'MODE': None}}
+[2017-09-22 14:34:23 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:34:23 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 327, in basic_execute
+    self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: ReferenceError: abc is not defined
 
-[2017-08-04 16:31:13 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 16:31:16 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 16:31:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 16:31:16 driver.web.selenium] INFO Run command {u'SESSION': 1234, u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * from tab_item;'}}
-[2017-08-04 16:31:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': [u'id', u'item_type', u'item_mode', u'item_operate', u'item_desc', u'comment', u'create_time', u'modify_time'], 'DATA': [(240000013, u'WEB', u'OPERATE', u'{"OPERATION": "GET", "OBJECT": "300000001", "TYPE": "PAGE"}', u'', u'', u'2017-06-15 18:31:40.226596', u'2017-06-15 18:31:40.226609'), (240000018, u'WEB', u'OPERATE', u'{"OPERATION": "GET", "OBJECT": "300000002", "TYPE": "PAGE"}', u'aaa', None, u'2017-06-21 15:04:52.045061', u'2017-06-21 15:04:52.045077'), (240000028, u'WEB', u'OPERATE', u'{"OPERATION": "GET", "OBJECT": "300000002", "TYPE": "PAGE"}', u'', u'', u'2017-07-10 16:46:57.155397', u'2017-07-10 16:46:57.155412'), (240000029, u'WEB', u'OPERATE', u'{"OPERATION": "GET", "OBJECT": "300000002", "TYPE": "PAGE"}', u'', u'', u'2017-07-12 17:38:47.122971', u'2017-07-12 17:38:47.122990')]}}
-[2017-08-04 17:14:16 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417141600', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:14:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': False}
-[2017-08-04 17:14:16 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417141600', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:18:29 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 17:18:48 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417184800', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:18:48 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:18:48 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417184800', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:18:48 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:18:48 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417184800', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:18:48 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193000', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193000', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193000', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:19:30 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193700', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193700', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417193700', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:19:37 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417194000', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417194000', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417194000', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:19:40 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:20:12 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417201200', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:20:12 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:20:12 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417201200', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:20:12 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:20:28 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417202800', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:20:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': False}
-[2017-08-04 17:20:28 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417202800', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:23:21 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 17:23:28 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417232800', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:23:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:23:28 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417232800', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:23:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:23:28 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417232800', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:23:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:26:22 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-04 17:26:24 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417262400', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:26:24 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:26:24 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417262400', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:26:24 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run sql command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:26:24 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417262400', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:26:24 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417333300', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417333300', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run sql command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417333300', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:33:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417340300', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'OCCUPY', u'DATA': None}}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417340300', u'TYPE': u'SQL', u'CMD': {u'DATA_SRC': u'1.PRE', u'SQL': u'select * form tab_item;'}}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run sql command succeed', 'DATA': {'FIELDS': ['tab_item;'], 'DATA': []}}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Run command {u'SESSION': u'2017080417340300', u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'RELEASE', u'DATA': None}}
-[2017-08-04 17:34:03 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': True}
+
+[2017-09-22 14:41:59 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-22 14:41:59 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-22 14:42:14 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-22 14:42:23 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 14:42:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 14:42:36 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'abc', u'def']}, u'MODE': None}}
+[2017-09-22 14:42:36 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:42:36 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 328, in basic_execute
+    self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: ReferenceError: abc is not defined
+
+
+[2017-09-22 14:43:21 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'"abc"', u'"def"']}, u'MODE': None}}
+[2017-09-22 14:43:22 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 14:53:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'DEL_ATTR', u'OBJECT': u'330000028', u'TYPE': u'WIDGET'}, u'MODE': None}}
+[2017-09-22 14:53:40 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:53:40 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 331, in basic_execute
+    elif 'SCRIPT' == p_para.cmd_operation:
+TypeError: 'NoneType' object has no attribute '__getitem__'
+
+[2017-09-22 14:56:37 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-22 14:56:46 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 14:56:51 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 14:57:11 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'DEL_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'id']}, u'MODE': None}}
+[2017-09-22 14:57:11 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 14:57:11 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 329, in basic_execute
+    self._root.execute_script("arguments[0].removeAttribute(%s);" % p_para.data_inp[0], self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: ReferenceError: id is not defined
+
+
+[2017-09-22 14:57:57 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'add_ATTR', u'OBJECT': u'330000028', u'TYPE': u'WIDGET'}, u'MODE': None}}
+[2017-09-22 14:57:58 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 14:58:14 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-22 14:58:14 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-22 14:59:24 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-22 14:59:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 14:59:45 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 14:59:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'add_ATTR', u'OBJECT': u'330000028', u'TYPE': u'WIDGET'}, u'MODE': None}}
+[2017-09-22 14:59:51 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:00:09 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'ADD_ATTR', u'OBJECT': u'330000028', u'TYPE': u'WIDGET'}, u'MODE': None}}
+[2017-09-22 15:00:10 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:01:09 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'ADD_ATTR', u'OBJECT': u'330000028', u'TYPE': u'WIDGET'}, u'MODE': None}}
+[2017-09-22 15:01:10 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:02:22 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'id', u'ddd']}, u'MODE': None}}
+[2017-09-22 15:02:23 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:02:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 15:02:41 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 15:03:15 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'SET_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'abc', u'ddd']}, u'MODE': None}}
+[2017-09-22 15:03:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:13:48 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'DEL_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u'abc']}, u'MODE': None}}
+[2017-09-22 15:13:48 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-22 15:13:48 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 118, in start
+    _res = self._driver.web.execute(web_command)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 69, in execute
+    _status = self.__action(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 119, in __action
+    result = _node.basic_execute(p_para)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/Widget/OrcWidget.py", line 329, in basic_execute
+    self._root.execute_script("arguments[0].removeAttribute(%s);" % p_para.data_inp[0], self._widget)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 491, in execute_script
+    'args': converted_args})['value']
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
+    raise exception_class(message, screen, stacktrace)
+WebDriverException: Message: ReferenceError: abc is not defined
+
+
+[2017-09-22 15:14:05 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'TYPE': u'WIDGET', u'OPERATION': u'DEL_ATTR', u'OBJECT': u'330000028', u'DATA': 1, u'DATA_INP': [u"'abc'"]}, u'MODE': None}}
+[2017-09-22 15:14:06 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': None}
+[2017-09-22 15:20:28 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-22 15:20:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-22 16:42:43 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-22 16:42:57 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': 300000006, u'TYPE': u'PAGE'}, u'MODE': None}}
+[2017-09-22 16:43:02 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
+[2017-09-22 16:43:55 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}

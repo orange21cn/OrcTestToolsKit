@@ -10,6 +10,7 @@ from OrcLib.LibCmd import OrcCmd
 from OrcLib.LibCmd import OrcDriverCmd
 from OrcLib.LibCmd import WebCmd
 from OrcLib.LibType import WebObjectType
+from OrcLib.LibType import WebItemModeType
 from OrcLib.LibNet import OrcSocketResource
 
 from OrcView.Lib.LibBaseWidget import WidgetCreator
@@ -51,6 +52,9 @@ class WebDebug(QWidget):
         self._wid_result = WidgetCreator.create_select('result', True)
         self._wid_result.setEnabled(False)
 
+        # 结果数据
+        self._wid_data = WidgetCreator.create_text_area(self)
+
         # 注释
         self._wid_comment = WidgetCreator.create_text_area(self)
 
@@ -60,6 +64,7 @@ class WebDebug(QWidget):
         # 底部布局
         layout_bottom = QFormLayout()
         layout_bottom.addRow(u'结果', self._wid_result)
+        layout_bottom.addRow(u'数据', self._wid_data)
         layout_bottom.addRow(u'备注', self._wid_comment)
 
         layout_bottom.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
@@ -76,8 +81,10 @@ class WebDebug(QWidget):
 
         self.setLayout(layout_main)
 
+        # 样式
         self.setStyleSheet(get_theme('WebDebug'))
 
+        # +---- Connection -----+
         btn_debug.sig_clicked.connect(self.debug)
 
         # 设置当前控件
@@ -111,7 +118,6 @@ class WebDebug(QWidget):
         执行调试命令
         :return:
         """
-
         cls_cmd = self._current_debug.get_data()
 
         command = OrcCmd()
@@ -124,28 +130,17 @@ class WebDebug(QWidget):
         _resource = OrcSocketResource('Driver')
         _result = _resource.get(command.get_cmd_dict())
 
-        if _result.data:
-            self._set_result('PASS')
+        # 设置结果状态
+        if _result.status:
+            self._wid_result.set_data('PASS')
         else:
-            self._set_result('FAIL')
+            self._wid_result.set_data('FAIL')
 
-        self._set_comment(_result.message)
+        # 设置结果数据
+        self._wid_data.set_data(str(_result.data))
 
-    def _set_result(self, p_result):
-        """
-        设置结果
-        :param p_result:
-        :return:
-        """
-        self._wid_result.set_data(p_result)
-
-    def _set_comment(self, p_comment):
-        """
-
-        :param p_comment:
-        :return:
-        """
-        self._wid_comment.set_data(p_comment)
+        # 设置返回信息
+        self._wid_comment.set_data(_result.message)
 
 
 class PageDebug(QWidget):
@@ -319,6 +314,7 @@ class WidgetDebug(QWidget):
         res_cmd.set_cmd_type(WebObjectType.WIDGET)
         res_cmd.set_cmd_object(self._widget_data['id'])
         res_cmd.set_cmd_operation(self._operation.get_data())
-        res_cmd.set_data(self._data.get_data())
+        res_cmd.set_mode(WebItemModeType.OPERATE)
+        res_cmd.set_data(self._data.get_data().split("|"))
 
         return res_cmd

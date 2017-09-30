@@ -50,7 +50,7 @@ class OrcResourceBase(object):
             Driver=dict(config='DRIVER', path="OrcDriver.DriverApi"),
             View=dict(config="VIEW", path=""),
             MEM=dict(config="MEM", path=""),
-            DriverWeb=dict(config='SERVER_WEB_001', path=""),
+            DriverWeb=dict(config='SERVER_WEB_001', path="")
         )
 
         # Configuration
@@ -156,10 +156,16 @@ class OrcSocketResource(OrcResourceBase):
         :return:
         """
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((self._ip, self._port))
 
-        sock.send(json.dumps(p_para))
-        _msg = sock.recv(1024)
+        try:
+            sock.connect((self._ip, self._port))
+            sock.send(json.dumps(p_para))
+            _msg = sock.recv(1024)
+        except socket.error:
+            error_message = 'Socket connect %s:%s failed.' % (self._ip, self._port)
+            _logger.error(error_message)
+            _msg=dict(STATUS=False, MESSAGE=error_message)
+
         sock.close()
 
         return OrcResult(_msg)
@@ -191,14 +197,13 @@ class OrcDriverResource(object):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         try:
-
             sock.connect((self._ip, self._port))
 
             sock.send(json.dumps(p_para))
             _msg = sock.recv(1024)
             sock.close()
 
-        except Exception:
+        except socket.error:
             _logger.error("Connect to socket server(%s:%s) Failed" % (self._ip, self._port))
             _msg = None
 

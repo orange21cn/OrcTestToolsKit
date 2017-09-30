@@ -1,5 +1,6 @@
 # coding=utf-8
 from .OrcWidget import OrcWidget
+from OrcLib.LibCmd import WebCmd
 
 
 class WidgetAlert(OrcWidget):
@@ -12,11 +13,12 @@ class WidgetAlert(OrcWidget):
         """
         执行
         :param p_para:
+        :type p_para: WebCmd
         :return:
         """
         self._widget = self._widget.switch_to.alert
 
-        _flag = p_para["OPERATION"]
+        _flag = p_para.cmd_operation
 
         if 'ACCEPT' == _flag:
             self._widget.accept()

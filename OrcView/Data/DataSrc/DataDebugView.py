@@ -1,7 +1,5 @@
 # coding=utf-8
 from PySide.QtCore import Qt
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QWidget
 from PySide.QtGui import QSplitter
 
 from OrcView.Lib.LibSearch import OrcButtons

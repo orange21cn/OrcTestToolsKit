@@ -493,10 +493,7 @@ class ModelTree(ModelTreeBase):
         if not isinstance(self._data, list):
             self._data = list()
 
-        for _item in self._data:
-
-            if ('None' == _item['pid']) or (_item['pid'] is None):
-                self._root.append_node(self.mod_create_tree_node(_item))
+        self._root = self._data_struct.get_tree_node()
 
         # Clean checked list
         self._checked_list = list()
@@ -544,23 +541,6 @@ class ModelTree(ModelTreeBase):
             for _child in node.children:
 
                 self.mod_set_data(parameter, _child)
-
-    def mod_create_tree_node(self, p_cont):
-        """
-        Add all data to root node
-        :param p_cont:
-        :return:
-        """
-        _node = TreeNode(p_cont)
-
-        for i in self._data:
-
-            if p_cont['id'] == i['pid']:
-
-                t_node = self.mod_create_tree_node(i)
-                _node.append_node(t_node)
-
-        return _node
 
     def mod_get_checked(self):
         """

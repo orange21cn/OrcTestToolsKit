@@ -1,6 +1,7 @@
 # coding=utf-8
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
+from OrcLib.LibCmd import WebCmd
 from OrcWidget import WidgetBlock
 
 
@@ -13,49 +14,51 @@ class WidgetSelect(WidgetBlock):
         WidgetBlock.__init__(self, p_root, p_id)
 
     def execute(self, p_para):
-
+        """
+        运行
+        :param p_para:
+        :type p_para: WebCmd
+        :return:
+        """
         res = self.basic_execute(p_para)
 
         if res is not None:
             return res
 
-        _flag = p_para["OPERATION"]
-        _data = None if "DATA" not in p_para else p_para["DATA"]
-
-        if "TEXT" == _flag:
+        if "TEXT" == p_para.cmd_operation:
 
             try:
                 # 获取 option
-                opt = self._widget.find_element_by_xpath("option[text()='%s']" % _data).get_attribute('value')
+                opt = self._widget.find_element_by_xpath("option[text()='%s']" % p_para.data_num).get_attribute('value')
 
                 # 根据 value 属性来选择
                 Select(self._widget).select_by_value(opt)
 
             except NoSuchElementException:
-                self._logger.error("未找到控件: TEXT--%s" % _data)
+                self._logger.error("未找到控件: TEXT--%s" % p_para.data_inp[0])
                 return False
 
             return True
 
-        elif "LABEL" == _flag:
+        elif "LABEL" == p_para.cmd_operation:
 
             try:
                 # 获取 option
-                opt = self._widget.find_element_by_xpath("option[@label='%s']" % _data).get_attribute('value')
+                opt = self._widget.find_element_by_xpath("option[@label='%s']" % p_para.data_num).get_attribute('value')
 
                 # 根据 value 属性来选择
                 Select(self._widget).select_by_value(opt)
 
             except NoSuchElementException:
-                self._logger.error("未找到控件: LABEL--%s" % _data)
+                self._logger.error("未找到控件: LABEL--%s" % p_para.data_inp[0])
                 return False
 
             return True
 
-        elif "VALUE" == _flag:
+        elif "VALUE" == p_para.cmd_operation:
 
             # 根据 value 属性来选择
-            Select(self._widget).select_by_value(_data)
+            Select(self._widget).select_by_value(p_para.data_inp[0])
 
             return True
 

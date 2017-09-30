@@ -202,6 +202,13 @@ class ServerDriver(ServerBase):
         if 'LOCAL' == self._mode:
             self.start_service()
 
+    def __del__(self):
+
+        self.stop_service()
+
+        if self._service is not None:
+            self._service.kill()
+
     def manage_service(self):
         """
         管理 api 起停

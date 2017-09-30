@@ -3,5 +3,6 @@
   "OBJ_SELECT": {"PATH": "OrcView.Views.WebWidget", "NAME": "ObjectSelect", "COMMENT": "WEB操作方式"},
   "OPE_SELECT": {"PATH": "OrcView.Views.WebWidget", "NAME": "OperationSelect", "COMMENT": "WEB对象类型"},
   "TYPE_SELECT": {"PATH": "OrcView.Views.WebWidget", "NAME": "TypeSelect", "COMMENT": "WEB控件类型"},
-  "OPE_DISP": {"PATH": "OrcView.Views.WebWidget", "NAME": "OperationDisp", "COMMENT": "WEB命令文字显示"}
+  "OPE_DISP": {"PATH": "OrcView.Views.WebWidget", "NAME": "OperationDisp", "COMMENT": "WEB命令文字显示"},
+  "DATA_EDIT": {"PATH": "OrcView.Views.DataWidget", "NAME": "DataValueView", "COMMENT": "数据编辑器"}
 }

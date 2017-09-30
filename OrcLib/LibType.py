@@ -55,12 +55,15 @@ class WebObjectType:
     # 控件
     WIDGET = 'WIDGET'
 
+    # 驱动
+    DRIVER = 'DRIVER'
+
     def __init__(self):
         pass
 
     @classmethod
     def all(cls):
-        return cls.PAGE, cls.WINDOW, cls.WIDGET
+        return cls.PAGE, cls.WINDOW, cls.WIDGET, cls.DRIVER
 
 
 class DriverType:
@@ -154,7 +157,67 @@ class RunRecordType:
         return cls.PASS if p_status else cls.FAIL
 
 
-class DataFlagType:
+class BatchType:
+    """
+    计划处理
+    """
+    # 计划组
+    BATCH_SUITE = 'SUITE'
+
+    # 计划
+    BATCH = 'BATCH'
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def all(cls):
+        return cls.BATCH_SUITE, cls.BATCH
+
+
+class CaseType:
+    """
+    用例类型
+    """
+    # 用例组
+    CASE_SUITE = 'CASE_SUITE'
+
+    # 用例
+    CASE = 'CASE'
+
+    # 函数组
+    FUNC_SUITE = 'FUNC_SUITE'
+
+    # 函数
+    FUNC = 'FUNC'
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def all(cls):
+        return cls.CASE_SUITE, cls.CASE, cls.FUNC_SUITE, cls.FUNC
+
+
+class StepType:
+    """
+    步骤类型
+    """
+    # 普通步骤
+    STEP_NORMAL = 'STEP_NORMAL'
+
+    # 函数步骤
+    STEP_FUNC = 'STEP_FUNC'
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def all(cls):
+        return cls.STEP_NORMAL, cls.STEP_FUNC
+
+
+class ItemType:
     """
     数据标识类型
     """

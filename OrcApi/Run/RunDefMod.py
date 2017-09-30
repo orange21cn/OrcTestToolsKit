@@ -1,7 +1,7 @@
 # coding=utf-8
 import os
 import re
-from OrcLib.LibCommon import DateStr
+from OrcLib.LibCommon import OrcString
 from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
@@ -109,7 +109,7 @@ class RunDefMod:
                 if 10 > _flag:
                     _flag = "%s%s" % (0, _flag)
 
-                res_folder = os.path.join(folder_root, "%s%s" % (DateStr.get_data_str(), _flag))
+                res_folder = os.path.join(folder_root, "%s%s" % (OrcString.get_data_str(), _flag))
                 res_file = os.path.join(res_folder, "default.res")
 
                 if os.path.exists(res_folder):
@@ -118,6 +118,7 @@ class RunDefMod:
                 os.mkdir(res_folder)
 
                 self.__data.save_list(_type, _id, res_file)
+
                 break
 
         return _id

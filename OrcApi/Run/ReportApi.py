@@ -33,6 +33,9 @@ class ResourceAPI(OrcBaseAPI):
 
         OrcBaseAPI.__init__(self, 'resource', ReportDetMod)
 
+    def dispatch_request(self, *args, **kwargs):
+        return super(OrcBaseAPI, self).dispatch_request(*args, **kwargs)
+
     def get(self, p_file):
 
         return self._business.usr_get_resource(p_file)

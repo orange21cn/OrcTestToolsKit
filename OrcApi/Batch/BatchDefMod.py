@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from OrcLib.LibCommon import DateStr
+from OrcLib.LibCommon import OrcString
 from OrcLib.LibCommon import is_null
 from OrcLib.LibException import OrcDatabaseException
 from OrcLib.LibDatabase import TabBatchDef
@@ -182,7 +182,7 @@ class BatchDefMod(TabBatchDef):
         Create a no
         :return:
         """
-        base_no = DateStr.get_data_str()
+        base_no = OrcString.get_data_str()
 
         for _index in range(100):
 

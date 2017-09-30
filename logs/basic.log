@@ -1,117 +1,89 @@
-[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
-    self.view_widget_det.set_widget(widget_def_data)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
-    self.mod_search({"widget_id": self._widget_info['id']})
-AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+[2017-09-19 17:22:46 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 161, in get
+    sock.connect((self._ip, self._port))
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 4] Interrupted system call
 
-[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 16:24:57 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
-    self.view_widget_det.set_widget(widget_def_data)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
-    self.mod_search({"widget_id": self._widget_info['id']})
-AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+[2017-09-22 14:56:18 basic.lib_net] ERROR Socket connect localhost:5001 failed.
+[2017-09-22 14:56:18 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 163, in get
+    _msg = sock.recv(1024)
+error: [Errno 4] Interrupted system call
 
-[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
-    self.view_widget_det.set_widget(widget_def_data)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
-    self.mod_search({"widget_id": self._widget_info['id']})
-AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+[2017-09-22 16:50:28 basic.lib_net] ERROR Socket connect localhost:5001 failed.
+[2017-09-22 16:50:28 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 163, in get
+    _msg = sock.recv(1024)
+error: [Errno 4] Interrupted system call
 
-[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 16:24:58 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 78, in act_select
-    self.view_widget_det.set_widget(widget_def_data)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetDetView.py", line 96, in set_widget
-    self.mod_search({"widget_id": self._widget_info['id']})
-AttributeError: 'WidgetDetView' object has no attribute 'mod_search'
+[2017-09-25 11:03:16 basic.lib_net] ERROR Socket connect localhost:5001 failed.
+[2017-09-25 11:03:16 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 163, in get
+    _msg = sock.recv(1024)
+error: [Errno 4] Interrupted system call
 
-[2017-08-24 16:27:19 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 16:27:19 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 453, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Widget/WidgetMain.py", line 68, in act_search
-    self.view_widget_det.model.clean()
-AttributeError: 'WidgetDetModel' object has no attribute 'clean'
+[2017-09-25 11:40:49 basic.lib_net] ERROR Socket connect localhost:5001 failed.
+[2017-09-25 11:40:49 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 161, in get
+    sock.connect((self._ip, self._port))
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 61] Connection refused
 
-[2017-08-24 16:37:18 basic.lib_net] ERROR 获取字典信息失败, None
-[2017-08-24 16:37:18 basic.lib_net] ERROR None
+[2017-09-25 11:40:59 basic.lib_net] ERROR Socket connect localhost:5001 failed.
+[2017-09-25 11:40:59 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 161, in get
+    sock.connect((self._ip, self._port))
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 61] Connection refused
 
-[2017-08-24 16:42:29 basic.lib_net] ERROR 获取字典信息失败, None
-[2017-08-24 16:42:29 basic.lib_net] ERROR None
+[2017-09-26 09:44:08 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 09:44:09 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 09:45:25 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 09:45:49 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 09:46:07 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 09:50:09 basic.lib_net] ERROR Socket connect 192.168.210.204:5001 failed.
+[2017-09-26 09:50:09 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 161, in get
+    sock.connect((self._ip, self._port))
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 60] Operation timed out
 
-[2017-08-24 17:19:26 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
-[2017-08-24 17:19:26 basic.lib_net] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 284, in action
+[2017-09-26 15:01:09 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-26 16:05:59 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 15:17:11 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 15:54:44 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:03:52 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:04:46 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:07:54 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:09:24 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:20:16 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-27 16:26:41 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:37:09 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:42:09 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:42:53 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:44:35 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:48:26 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 09:54:44 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:06:28 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:09:04 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:17:00 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:20:43 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:26:24 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:28:17 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:32:54 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:34:19 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 10:51:15 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-28 11:04:17 basic.lib_net.orc_resource] WARNING Path and parameter is none.
+[2017-09-29 09:56:11 basic.lib_net] ERROR function invoke error: 'module' object has no attribute 'WindowDefAPI'
+[2017-09-29 09:56:11 basic.lib_net] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 289, in action
     _module = self.__get_module(p_path)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 353, in __get_module
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibNet.py", line 358, in __get_module
     return getattr(__import__(self._path, fromlist=True), _name)()
 AttributeError: 'module' object has no attribute 'WindowDefAPI'
 
-[2017-08-24 18:19:48 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 18:19:48 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 316, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 112, in act_add
-    _data = ItemAdder.static_get_data()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 240, in static_get_data
-    view = ItemAdder()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 213, in __init__
-    BaseAdder.__init__(self, 'Item')
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibAdd.py", line 34, in __init__
-    OrcDialogView.__init__(self)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 359, in __init__
-    self.view.doubleClicked.connect(self.act_submit)
-AttributeError: 'ItemAdder' object has no attribute 'view'
-
-[2017-08-24 18:19:50 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 18:19:50 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 316, in _dispatch_action
-    func()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 112, in act_add
-    _data = ItemAdder.static_get_data()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 240, in static_get_data
-    view = ItemAdder()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Case/Step/ItemView.py", line 213, in __init__
-    BaseAdder.__init__(self, 'Item')
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibAdd.py", line 34, in __init__
-    OrcDialogView.__init__(self)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 359, in __init__
-    self.view.doubleClicked.connect(self.act_submit)
-AttributeError: 'ItemAdder' object has no attribute 'view'
-
-[2017-08-24 18:23:52 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 18:23:52 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
-    getattr(self, "%s" % p_flag)()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
-    self.model.mod_search(self.searcher.get_cond())
-AttributeError: 'PageSelector' object has no attribute 'searcher'
-
-[2017-08-24 18:23:53 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 18:23:53 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
-    getattr(self, "%s" % p_flag)()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
-    self.model.mod_search(self.searcher.get_cond())
-AttributeError: 'PageSelector' object has no attribute 'searcher'
-
-[2017-08-24 18:23:54 basic.view.lib.shell] ERROR Button clicked but no func founded
-[2017-08-24 18:23:54 basic.view.lib.shell] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibShell.py", line 365, in _dispatch_action
-    getattr(self, "%s" % p_flag)()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Driver/Web/Page/PageSelector.py", line 59, in act_search
-    self.model.mod_search(self.searcher.get_cond())
-AttributeError: 'PageSelector' object has no attribute 'searcher'
-
+[2017-09-29 10:32:18 basic.lib_net.orc_resource] WARNING Path and parameter is none.

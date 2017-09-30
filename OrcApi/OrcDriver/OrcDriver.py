@@ -3,17 +3,17 @@ import gc
 import json
 import socket
 
-from OrcApi.DataBase.DataBaseBus import DataBaseBus
 from OrcLib import get_config
 from OrcLib.LibCmd import OrcCmd
 from OrcLib.LibCmd import OrcDriverCmd
 from OrcLib.LibCmd import DataCmd
+from OrcLib.LibCmd import WebCmd
 from OrcLib.LibCmd import OrcSysCmd
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResult
 from OrcLib.LibStatus import OrcDriverStatus
 from Web.WebDriver import WebDriver
-from SQL.SqlDriver import SqlDriver
+from SQL.DataDriver import DataDriver
 
 
 class OrcDriver(object):
@@ -22,7 +22,7 @@ class OrcDriver(object):
 
         web = WebDriver()
 
-        sql = SqlDriver()
+        data = DataDriver()
 
         def __init__(self):
             pass
@@ -82,7 +82,7 @@ class OrcDriver(object):
                 # 接收数据
                 connection.settimeout(5)
                 res_data = json.loads(connection.recv(1024))
-                print 100, res_data
+
                 # 驱动忙
                 self._status.set_busy()
 
@@ -115,7 +115,6 @@ class OrcDriver(object):
                     if driver_command.is_web():
 
                         web_command = driver_command.cmd
-
                         _res = self._driver.web.execute(web_command)
 
                         result.set_status(True)
@@ -125,10 +124,10 @@ class OrcDriver(object):
                     # 执行 sql 命令
                     elif driver_command.is_data():
                         # Todo
-                        sql_command = command.cmd
+                        sql_command = driver_command.cmd
                         assert isinstance(sql_command, DataCmd)
 
-                        _res = self._driver.sql.execute(sql_command)
+                        _res = self._driver.data.execute(sql_command)
 
                         result.set_status(True)
                         result.set_data(_res)
@@ -180,6 +179,12 @@ class OrcDriver(object):
         if p_command.is_quit():
             self._loop_flag = False
 
+            web_cmd = WebCmd()
+            web_cmd.set_driver()
+            web_cmd.set_cmd_operation('QUIT')
+
+            self._driver.web.execute(web_cmd)
+
         # 占用服务
         elif p_command.is_occupy():
 
@@ -196,11 +201,11 @@ class OrcDriver(object):
             self._status.set_waiting()
             return True
 
-        # 设置环境
-        elif p_command.is_env():
-            _env = p_command.get_data()
-
-            self._driver.web.set_env(_env)
+        # 设置参数(驱动所需其他参数)
+        elif p_command.is_parameter():
+            _parameter = p_command.get_data()
+            self.__configer_driver.set_option('DEFAULT', 'environment', _parameter['env'])
+            self.__configer_driver.set_option('WEB', 'browser', _parameter['browser'])
 
         # 其他
         else:

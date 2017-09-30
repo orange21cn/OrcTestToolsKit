@@ -94,9 +94,13 @@ class RunDefModel(ModelTree):
         :param p_id:
         :return:
         """
+        # Todo env 和执行不太一样
         _env = self.__configer_driver.get_option("DEFAULT", "environment")
+        _browser = self.__configer_driver.get_option("WEB", "browser")
 
-        result = self.__resource_run.put(parameter=dict(env=_env, pid=p_pid, id=p_id))
+        result = self.__resource_run.put(
+            parameter=dict(PATH=dict(pid=p_pid, id=p_id),
+                           PARA=dict(env=_env, browser=_browser)))
 
         # 检查结果
         if not ResourceCheck.result_status(result, u"运行测试项", self.__logger):

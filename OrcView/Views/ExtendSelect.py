@@ -7,9 +7,9 @@ from OrcView.Lib.LibView import OrcSelectBase
 
 class DataSrcSelect(OrcSelectBase):
 
-    def __init__(self):
+    def __init__(self, parent=None):
 
-        OrcSelectBase.__init__(self)
+        super(DataSrcSelect, self).__init__(parent)
 
         self.__logger = LogClient()
         self.__resource = OrcResource('DataSrc')

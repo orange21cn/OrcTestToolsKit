@@ -8,213 +8,189 @@ from OrcLib.LibDatabase import LibWidgetType
 from OrcLib.LibDatabase import LibWidgetOperation
 
 
-init_value_dictionary = [
+dict_batch_type = [
+    ('10101', 'batch_type', '1', 'BATCH_SUITE', u'计划组', '', u'用于存放批量计划'),
+    ('10102', 'batch_type', '2', 'BATCH', u'计划', '', u'单个计划')]
 
-    LibDictionary(dict(id="10101", dict_flag="batch_type", dict_order="1",
-                       dict_value="BATCH_SUITE", dict_text=u"计划组", dict_param='', dict_desc=u"用于存放批量计划")),
-    LibDictionary(dict(id="10102", dict_flag="batch_type", dict_order="2",
-                       dict_value="BATCH", dict_text=u"计划", dict_param='', dict_desc=u"单个计划")),
+dict_case_type = [
+    ('10201', 'case_type', '1', 'CASE_SUITE', u'用例组', '', u'用于存放批量用例'),
+    ('10202', 'case_type', '2', 'CASE', u'用例', '', u'单个用例'),
+    ('10203', 'case_type', '3', 'FUNC_SUITE', u'函数组', '', u'函数组'),
+    ('10204', 'case_type', '3', 'FUNC', u'函数', '', u'用例但不能单独执行')]
 
-    LibDictionary(dict(id="10201", dict_flag="case_type", dict_order="1",
-                       dict_value="CASE_SUITE", dict_text=u"用例组", dict_param='', dict_desc=u"用于存放批量用例")),
-    LibDictionary(dict(id="10202", dict_flag="case_type", dict_order="2",
-                       dict_value="CASE", dict_text=u"用例", dict_param='', dict_desc=u"单个用例")),
-    LibDictionary(dict(id="10203", dict_flag="case_type", dict_order="3",
-                       dict_value="FUNC_SUITE", dict_text=u"函数组", dict_param='', dict_desc=u"函数组")),
-    LibDictionary(dict(id="10204", dict_flag="case_type", dict_order="3",
-                       dict_value="FUNC", dict_text=u"函数", dict_param='', dict_desc=u"用例但不能单独执行")),
+dict_item_type = [
+    ('10301', 'step_type', '1', 'STEP_NORMAL', u'普通步骤', '', u'普通步骤'),
+    ('10302', 'step_type', '1', 'STEP_FUNC', u'函数步骤', '', u'函数步骤'),
+    ('10401', 'item_type', '1', 'WEB', 'WEB', '', ''),
+    ('10402', 'item_type', '2','DATA', u'数据', '', ''),
+    ('10403', 'item_type', '3', 'IOS', 'IOS', '', ''),
+    ('10404', 'item_type', '4', 'ANDROID', 'ANDROID', '', ''),
+    ('10405', 'item_type', '5', 'JSON', u'JSON接口', '', ''),
+    ('10406', 'item_type', '6', 'WEBSERVICE', 'WEBSERVICE', '', ''),
+    ('10501', 'item_mode', '1', 'OPERATE', u'操作项', '', u'执行操作'),
+    ('10502', 'item_mode', '2', 'CHECK', u'检查项', '', u'执行检查')]
 
-    LibDictionary(dict(id="10301", dict_flag="step_type", dict_order="1",
-                       dict_value="STEP_NORMAL", dict_text=u"普通步骤", dict_param='', dict_desc=u"普通步骤")),
-    LibDictionary(dict(id="10302", dict_flag="step_type", dict_order="1",
-                       dict_value="STEP_FUNC", dict_text=u"函数步骤", dict_param='', dict_desc=u"函数步骤")),
+dict_data_mode = [
+    ('10601', 'data_mode', '1', 'DEFAULT', u'默认', '', ''),
+    ('10602', 'data_mode', '2', 'FILE', u'文件', '', ''),
+    ('10603', 'data_mode', '3', 'DATABASE', u'数据库', '', '')]
 
-    LibDictionary(dict(id="10401", dict_flag="item_type", dict_order="1",
-                       dict_value="WEB", dict_text="WEB", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10402", dict_flag="item_type", dict_order="2",
-                       dict_value="DATA", dict_text=u"数据", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10403", dict_flag="item_type", dict_order="3",
-                       dict_value="IOS", dict_text="IOS", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10404", dict_flag="item_type", dict_order="4",
-                       dict_value="ANDROID", dict_text="ANDROID", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10405", dict_flag="item_type", dict_order="5",
-                       dict_value="JSON", dict_text=u"JSON接口", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10406", dict_flag="item_type", dict_order="6",
-                       dict_value="WEBSERVICE", dict_text="WEBSERVICE", dict_param='', dict_desc="")),
+dict_data_type = [
+    ('10701', 'data_type', '1', 'INT', u'整数', '', ''),
+    ('10702', 'data_type', '2', 'STR', u'字符', '', ''),
+    ('10703', 'data_type', '3', 'ARRAY', u'数组', '', ''),
+    ('10704', 'data_type', '4', 'USER_DEFINE', u'自定义', '', '')]
 
-    LibDictionary(dict(id="10501", dict_flag="item_mode", dict_order="1",
-                       dict_value="OPERATE", dict_text=u"操作项", dict_param='', dict_desc=u"执行操作")),
-    LibDictionary(dict(id="10502", dict_flag="item_mode", dict_order="2",
-                       dict_value="CHECK", dict_text=u"检查项", dict_param='', dict_desc=u"执行检查")),
+dict_widget_attr_type = [
+    ('10801', 'widget_attr_type', '1', 'ID', 'ID', '', ''),
+    ('10802', 'widget_attr_type', '2', 'NAME', 'NAME', '', ''),
+    ('10803', 'widget_attr_type', '3', 'XPATH', 'XPATH', '', ''),
+    ('10804', 'widget_attr_type', '4', 'TAGNAME', u'标签名称', '', ''),
+    ('10805', 'widget_attr_type', '5', 'LINK_TEXT', u'链接文字', '', ''),
+    ('10806', 'widget_attr_type', '6', 'CSS', 'CSS', '', ''),
+    ('10807', 'widget_attr_type', '7', 'LAST_CHILD', u'最末子节点', '', '')]
 
-    LibDictionary(dict(id="10601", dict_flag="data_mode", dict_order="1",
-                       dict_value="STR", dict_text=u"字符", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10602", dict_flag="data_mode", dict_order="2",
-                       dict_value="INT", dict_text=u"整数", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10603", dict_flag="data_mode", dict_order="3",
-                       dict_value="SQL", dict_text="SQL", dict_param='', dict_desc="")),
+dict_src_type = [
+    ('10901', 'src_type', '1', 'BATCH', u'计划', '', ''),
+    ('10902', 'src_type', '2', 'CASE', u'用例', '', ''),
+    ('10903', 'src_type', '3', 'STEP', u'步骤', '', ''),
+    ('10904', 'src_type', '4', 'ITEM', u'执行项', '', '')]
 
-    LibDictionary(dict(id="10701", dict_flag="data_type", dict_order="1",
-                       dict_value="INP", dict_text=u"输入", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10702", dict_flag="data_type", dict_order="2",
-                       dict_value="OUT", dict_text=u"输出", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10703", dict_flag="data_type", dict_order="3",
-                       dict_value="CHK", dict_text=u"检查", dict_param='', dict_desc="")),
+dict_operate_object_type = [
+    ('11001', 'operate_object_type', '1', 'PAGE', u'页面', '(\'operation\',)', ''),
+    ('11002', 'operate_object_type', '2', 'WINDOW', u'窗口', '', ''),
+    ('11003', 'operate_object_type', '3', 'WIDGET', u'控件', '(\'operation\', \'check\')', '')]
 
-    LibDictionary(dict(id="10801", dict_flag="widget_attr_type", dict_order="1",
-                       dict_value="ID", dict_text="ID", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10802", dict_flag="widget_attr_type", dict_order="2",
-                       dict_value="NAME", dict_text="NAME", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10803", dict_flag="widget_attr_type", dict_order="3",
-                       dict_value="XPATH", dict_text="XPATH", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10804", dict_flag="widget_attr_type", dict_order="4",
-                       dict_value="TAGNAME", dict_text=u"标签名称", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10805", dict_flag="widget_attr_type", dict_order="5",
-                       dict_value="LINK_TEXT", dict_text=u"链接文字", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10806", dict_flag="widget_attr_type", dict_order="6",
-                       dict_value="CSS", dict_text="CSS", dict_param='', dict_desc="")),
+dict_run_def = [
+    ('11101', 'run_def', '3','TEST', u'执行记录', '', '')]
 
-    LibDictionary(dict(id="10901", dict_flag="src_type", dict_order="1",
-                       dict_value="BATCH", dict_text=u"计划", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10902", dict_flag="src_type", dict_order="2",
-                       dict_value="CASE", dict_text=u"用例", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10903", dict_flag="src_type", dict_order="3",
-                       dict_value="STEP", dict_text=u"步骤", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="10904", dict_flag="src_type", dict_order="4",
-                       dict_value="ITEM", dict_text=u"执行项", dict_param='', dict_desc="")),
+dict_test_env = [
+    ('11201', 'test_env', '1', 'TEST', u'测试环境', '', ''),
+    ('11202', 'test_env', '2', 'PRE', u'预生产环境', '', ''),
+    ('11203', 'test_env', '3', 'PRD', u'生产环境', '', '')]
 
-    LibDictionary(dict(id="11001", dict_flag="operate_object_type", dict_order="1",
-                       dict_value="PAGE", dict_text=u"页面", dict_param='(\'operation\',)', dict_desc="")),
-    LibDictionary(dict(id="11002", dict_flag="operate_object_type", dict_order="2",
-                       dict_value="WINDOW", dict_text=u"窗口", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11003", dict_flag="operate_object_type", dict_order="3",
-                       dict_value="WIDGET", dict_text=u"控件", dict_param='(\'operation\', \'check\')', dict_desc="")),
+dict_browser = [
+    ('11301', 'browser', '1', 'FIREFOX', 'FIREFOX', '', ''),
+    ('11302', 'browser', '2', 'CHROME', 'CHROME', '', ''),
+    ('11303', 'browser', '3', 'IE', 'IE', '', ''),
+    ('11304', 'browser', '4', 'EDGE', 'EDGE', '', ''),
+    ('11305', 'browser', '5', 'PHANTOMJS', 'PHANTOMJS', '', ''),
+    ('11306', 'browser', '6', 'SAFARI', 'SAFARI', '', ''),
+    ('11307', 'browser', '7', 'HTMLUNIT', 'HTMLUNIT', '', '')]
 
-    # LibDictionary(dict(id="11003", dict_flag="run_def_type", dict_order="1",
-    #                    dict_value="BATCH", dict_text=u"计划", dict_param='', dict_desc="")),
-    # LibDictionary(dict(id="11004", dict_flag="run_def_type", dict_order="2",
-    #                    dict_value="CASE", dict_text=u"用例", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11101", dict_flag="run_def", dict_order="3",
-                       dict_value="TEST", dict_text=u"执行记录", dict_param='', dict_desc="")),
+dict_data_src_type = [
+    ('11401', 'data_src_type', '1', 'SQLite', 'SQLite', '', ''),
+    ('11402', 'data_src_type', '2', 'MySql', 'MySql', '', ''),
+    ('11403', 'data_src_type', '3', 'Oracle', 'Oracle', '', '')]
 
-    LibDictionary(dict(id="11201", dict_flag="test_env", dict_order="1",
-                       dict_value="TEST", dict_text=u"测试环境", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11202", dict_flag="test_env", dict_order="2",
-                       dict_value="PRE", dict_text=u"预生产环境", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11203", dict_flag="test_env", dict_order="3",
-                       dict_value="PRD", dict_text=u"生产环境", dict_param='', dict_desc="")),
+dict_result = [
+    ('11501', 'result', '1', 'PASS', u'通过', '', ''),
+    ('11502', 'result', '2', 'FAIL', u'失败', '', '')]
 
-    LibDictionary(dict(id="11301", dict_flag="browser", dict_order="1",
-                       dict_value="FIREFOX", dict_text="FIREFOX", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11302", dict_flag="browser", dict_order="2",
-                       dict_value="CHROME", dict_text="CHROME", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11303", dict_flag="browser", dict_order="3",
-                       dict_value="IE", dict_text="IE", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11304", dict_flag="browser", dict_order="4",
-                       dict_value="EDGE", dict_text="EDGE", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11305", dict_flag="browser", dict_order="5",
-                       dict_value="PHANTOMJS", dict_text="PHANTOMJS", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11306", dict_flag="browser", dict_order="6",
-                       dict_value="SAFARI", dict_text="SAFARI", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11307", dict_flag="browser", dict_order="7",
-                       dict_value="HTMLUNIT", dict_text="HTMLUNIT", dict_param='', dict_desc="")),
+seq = (
+    ('20001', 'batch_def', '100000000'),
+    ('20002', 'batch_det', '110000000'),
+    ('20003', 'case_def', '200000000'),
+    ('20004', 'case_det', '210000000'),
+    ('20005', 'step_def', '220000000'),
+    ('20006', 'step_det', '230000000'),
+    ('20007', 'item', '240000000'),
+    ('20008', 'page_def', '300000000'),
+    ('20009', 'page_det', '310000000'),
+    ('20010', 'window_def', '320000000'),
+    ('20011', 'widget_def', '330000000'),
+    ('20012', 'widget_det', '340000000'),
+    ('20013', 'data', '400000000'),
+    ('20014', 'dictionary', '20000'),
+    ('20015', 'widget_type', '21000'),
+    ('20016', 'widget_operation', '22000'))
 
-    LibDictionary(dict(id="11401", dict_flag="data_src_type", dict_order="1",
-                       dict_value="SQLite", dict_text="SQLite", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11402", dict_flag="data_src_type", dict_order="2",
-                       dict_value="MySql", dict_text="MySql", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11403", dict_flag="data_src_type", dict_order="3",
-                       dict_value="Oracle", dict_text="Oracle", dict_param='', dict_desc="")),
+widget_type = (
+    ('30001', 1, 'PRO', 'GROUP', u'控件组', ''),
+    ('30004', 4, 'PRO', 'FRAME', u'FRAME', ''),
+    ('30005', 5, 'PRO', 'BLOCK', u'块', ''),
+    ('30006', 6, 'PRO', 'INP', u'输入框', ''),
+    ('30007', 7, 'PRO', 'BTN', u'按钮', ''),
+    ('30008', 8, 'PRO', 'LINK', u'链接', ''),
+    ('30009', 9, 'PRO', 'SELECT', u'下拉框', ''),
+    ('30010', 10, 'PRO', 'ALERT', u'提示框', ''),
+    ('30011', 11, 'PRO', 'MULTI', u'多控件', ''))
 
-    LibDictionary(dict(id="11501", dict_flag="result", dict_order="1",
-                       dict_value="PASS", dict_text=u"通过", dict_param='', dict_desc="")),
-    LibDictionary(dict(id="11502", dict_flag="result", dict_order="2",
-                       dict_value="FAIL", dict_text=u"失败", dict_param='', dict_desc=""))]
+widget_operation_page = (
+    ('40001', 'PAGE', '1', 'GET', u'打开', u'打开', u'', u''),
+    ('40002', 'PAGE', '2', 'MAX', u'最大化', u'最大化', u'', u''))
 
+widget_operation_block = (
+    ('40101', 'BLOCK', '1', 'EXISTS', u'存在', u'', u'检查存在', u''),
+    ('40102', 'BLOCK', '2', 'CLICK', u'点击', u'点击', u'', u''),
+    ('40103', 'BLOCK', '3', 'GET_ATTR', u'获取属性', u'', u'检查属性', u''),
+    ('40104', 'BLOCK', '4', 'GET_TEXT', u'获取文本', u'', u'检查文本', u''),
+    ('40105', 'BLOCK', '5', 'GET_HTML', u'获取HTML', u'', u'', u''),
+    ('40106', 'BLOCK', '6', 'SET_ATTR', u'设置属性', u'设置属性', u'', u''),
+    ('40107', 'BLOCK', '7', 'DEL_ATTR', u'删除属性', u'删除属性', u'', u''),
+    ('40108', 'BLOCK', '8', 'SCROLL', u'滚动至显示', u'滚动至显示', u'', u''),
+    ('40109', 'BLOCK', '9', 'FOCUS', u'焦点至', u'焦点至', u'', u''),
+    ('40110', 'BLOCK', '10', 'SCRIPT', u'运行脚本', u'运行脚本', u'', u''))
 
-init_value_sequence = [
-    LibSequence(dict(id="20001", field_name="batch_def", field_seq="100000000")),
-    LibSequence(dict(id="20002", field_name="batch_det", field_seq="110000000")),
-    LibSequence(dict(id="20003", field_name="case_def", field_seq="200000000")),
-    LibSequence(dict(id="20004", field_name="case_det", field_seq="210000000")),
-    LibSequence(dict(id="20005", field_name="step_def", field_seq="220000000")),
-    LibSequence(dict(id="20006", field_name="step_det", field_seq="230000000")),
-    LibSequence(dict(id="20007", field_name="item", field_seq="240000000")),
-    LibSequence(dict(id="20008", field_name="page_def", field_seq="300000000")),
-    LibSequence(dict(id="20009", field_name="page_det", field_seq="310000000")),
-    LibSequence(dict(id="20010", field_name="window_def", field_seq="320000000")),
-    LibSequence(dict(id="20011", field_name="widget_def", field_seq="330000000")),
-    LibSequence(dict(id="20012", field_name="widget_det", field_seq="340000000")),
-    LibSequence(dict(id="20013", field_name="data", field_seq="400000000")),
-    LibSequence(dict(id="20014", field_name="dictionary", field_seq="20000")),
-    LibSequence(dict(id="20015", field_name="widget_type", field_seq="21000")),
-    LibSequence(dict(id="20016", field_name="widget_operation", field_seq="22000"))]
+widget_operation_select = (
+    ('40201', 'SELECT', '1', 'TEXT', u'文字', u'设置文字', u'检查文字', u''),
+    ('40202', 'SELECT', '1', 'LABEL', u'标签', u'设置标签', u'检查标签', u''),
+    ('40203', 'SELECT', '1', 'VALUE', u'值', u'设置值', u'检查值', u''))
 
-init_value_widget_type = [
-    LibWidgetType(dict(id="30001", type_order=1, type_mode="PRO",
-                       type_name="GROUP", type_text=u"控件组", type_desc="")),
-    # LibWidgetType(dict(id="30002", type_order=2, type_mode="PRO",
-    #                    type_name="PAGE", type_text=u"页面", type_desc="")),
-    # LibWidgetType(dict(id="30003", type_order=3, type_mode="PRO",
-    #                    type_name="WINDOW", type_text=u"窗口", type_desc="")),
-    LibWidgetType(dict(id="30004", type_order=4, type_mode="PRO",
-                       type_name="FRAME", type_text=u"FRAME", type_desc="")),
-    LibWidgetType(dict(id="30005", type_order=5, type_mode="PRO",
-                       type_name="BLOCK", type_text=u"块", type_desc="")),
-    LibWidgetType(dict(id="30006", type_order=6, type_mode="PRO",
-                       type_name="INP", type_text=u"输入框", type_desc="")),
-    LibWidgetType(dict(id="30007", type_order=7, type_mode="PRO",
-                       type_name="BTN", type_text=u"按钮", type_desc="")),
-    LibWidgetType(dict(id="30008", type_order=8, type_mode="PRO",
-                       type_name="LINK", type_text=u"链接", type_desc="")),
-    LibWidgetType(dict(id="30009", type_order=9, type_mode="PRO",
-                       type_name="SELECT", type_text=u"下拉框", type_desc="")),
-    LibWidgetType(dict(id="30010", type_order=10, type_mode="PRO",
-                       type_name="ALERT", type_text=u"提示框", type_desc=""))]
-    # LibWidgetType(dict(id="31000", type_order=8, type_mode="USR",
-    #                    type_name="TEST", type_text="TEST", type_desc=u"测试用"))]
+widget_operation_inp = (
+    ('40301', 'INP', '1', 'INPUT', u'输入', u'输入', u'', u''),)
 
-init_value_widget_operation = [
-    LibWidgetOperation(dict(id="40001", type_name="PAGE", ope_order="1", ope_name="GET", ope_text=u"打开",
-                            operate_text=u"打开", check_text=u"", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40002", type_name="PAGE", ope_order="2", ope_name="MAX", ope_text=u"最大化",
-                            operate_text=u"最大化", check_text=u"", ope_desc=u"")),
+widget_operation_alert = (
+    ('40401', 'ALERT', '1', 'ACCEPT', u'确定', u'确定', u'', u''),
+    ('40402', 'ALERT', '2', 'DISMISS', u'取消', u'取消', u'', u''))
 
-    LibWidgetOperation(dict(id="40101", type_name="BLOCK", ope_order="1", ope_name="EXISTS", ope_text=u"存在",
-                            operate_text=u"", check_text=u"检查存在", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40102", type_name="BLOCK", ope_order="2", ope_name="CLICK", ope_text=u"点击",
-                            operate_text=u"点击", check_text=u"", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40103", type_name="BLOCK", ope_order="3", ope_name="GET_ATTR", ope_text=u"获取属性",
-                            operate_text=u"", check_text=u"检查属性", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40104", type_name="BLOCK", ope_order="4", ope_name="GET_TEXT", ope_text=u"获取文本",
-                            operate_text=u"", check_text=u"检查文本", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40105", type_name="BLOCK", ope_order="5", ope_name="GET_HTML", ope_text=u"获取HTML",
-                            operate_text=u"", check_text=u"", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40106", type_name="BLOCK", ope_order="6", ope_name="SCROLL", ope_text=u"滚动至显示",
-                            operate_text=u"滚动至显示", check_text=u"", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40107", type_name="BLOCK", ope_order="7", ope_name="FOCUS", ope_text=u"焦点至",
-                            operate_text=u"焦点至", check_text=u"", ope_desc=u"")),
+widget_operation_multi = (
+    ('40501', 'MULTI', '1', 'DRAG_AND_DROP', u'拖放', u'拖放', u'', u''),)
 
-    LibWidgetOperation(dict(id="40201", type_name="SELECT", ope_order="1", ope_name="TEXT", ope_text=u"文字",
-                            operate_text=u"设置文字", check_text=u"设置文字", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40202", type_name="SELECT", ope_order="1", ope_name="LABEL", ope_text=u"标签",
-                            operate_text=u"设置标签", check_text=u"检查标签", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40203", type_name="SELECT", ope_order="1", ope_name="VALUE", ope_text=u"值",
-                            operate_text=u"设置值", check_text=u"检查值", ope_desc=u"")),
+init_value_dictionary = []
+for _file in (dict_batch_type, dict_case_type, dict_item_type, dict_data_mode, dict_data_type,
+              dict_widget_attr_type, dict_src_type, dict_operate_object_type, dict_run_def,
+              dict_test_env, dict_browser, dict_data_src_type, dict_result):
+    for _item in _file:
+        init_value_dictionary.append(LibDictionary(dict(
+            id=_item[0],
+            dict_flag=_item[1],
+            dict_order=_item[2],
+            dict_value=_item[3],
+            dict_text=_item[4],
+            dict_param=_item[5],
+            dict_desc=_item[6])))
 
-    LibWidgetOperation(dict(id="40301", type_name="INP", ope_order="1", ope_name="INPUT", ope_text=u"输入",
-                            operate_text=u"输入", check_text=u"", ope_desc=u"")),
+init_value_sequence = []
+for _item in seq:
+    init_value_sequence.append(LibSequence(dict(id=_item[0], field_name=_item[1], field_seq=_item[2])))
 
-    LibWidgetOperation(dict(id="40401", type_name="ALERT", ope_order="1", ope_name="ACCEPT", ope_text=u"确定",
-                            operate_text=u"确定", check_text=u"", ope_desc=u"")),
-    LibWidgetOperation(dict(id="40402", type_name="ALERT", ope_order="2", ope_name="DISMISS", ope_text=u"取消",
-                            operate_text=u"取消", check_text=u"", ope_desc=u""))]
+init_value_widget_type = []
+for _item in widget_type:
+    init_value_widget_type.append(LibWidgetType(dict(
+        id=_item[0],
+        type_order=_item[1],
+        type_mode=_item[2],
+        type_name=_item[3],
+        type_text=_item[4],
+        type_desc=_item[5])))
 
-from OrcLib.LibDatabase import LibDictionary
-from OrcLib.LibDatabase import LibWidgetType
-from OrcLib.LibDatabase import LibWidgetOperation
+init_value_widget_operation = []
+for _file in (widget_operation_page, widget_operation_block, widget_operation_multi,
+              widget_operation_select, widget_operation_inp, widget_operation_alert):
+    for _item in _file:
+        init_value_widget_operation.append(LibWidgetOperation(dict(
+            id=_item[0],
+            type_name=_item[1],
+            ope_order=_item[2],
+            ope_name=_item[3],
+            ope_text=_item[4],
+            operate_text=_item[5],
+            check_text=_item[6],
+            ope_desc=_item[7])))
 
 orc_db.session.query(LibDictionary).delete()
+orc_db.session.query(LibSequence).delete()
 orc_db.session.query(LibWidgetType).delete()
 orc_db.session.query(LibWidgetOperation).delete()
 
@@ -224,7 +200,6 @@ orc_db.session.query(LibWidgetOperation).delete()
 orc_db.session.add_all(init_value_widget_type)
 orc_db.session.add_all(init_value_widget_operation)
 orc_db.session.add_all(init_value_dictionary)
-# orc_db.session.add_all(init_value_sequence)
-
+orc_db.session.add_all(init_value_sequence)
 
 orc_db.session.commit()

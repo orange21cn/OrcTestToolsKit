@@ -10,14 +10,11 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibDataStruct import ListTree
 from OrcLib.LibCmd import OrcRecordCmd
 from OrcLib.LibStatus import RecordStatus
-from OrcLib.LibType import RunRecordType
 from OrcLib.LibDatabase import TabBatchDef
 from OrcLib.LibDatabase import TabBatchDet
 from OrcLib.LibDatabase import TabCaseDef
 from OrcLib.LibDatabase import TabCaseDet
-from OrcLib.LibDatabase import TabStepDef
 from OrcLib.LibDatabase import TabStepDet
-from OrcLib.LibDatabase import TabItem
 
 
 class RunData(ListTree):
@@ -41,6 +38,8 @@ class RunData(ListTree):
         self._resource_item = OrcResource("Item")
 
         self._root_id = ''
+
+        self._file = None
 
     def search_list(self, p_type, p_id):
         """
@@ -263,16 +262,16 @@ class RunData(ListTree):
         :param p_file:
         :return:
         """
+        self._file = p_file
         self.search_list(p_type, p_id)
         self.update_list(p_file)
 
-    def update_list(self, p_file):
+    def update_list(self, p_file=None):
         """
         把 list 存储为xml
         :param p_file:
         :return:
         """
-
         def indent(p_elem, p_level=0):
             """
             格式化 xml
@@ -290,6 +289,7 @@ class RunData(ListTree):
                 for i in xrange(_len):
 
                     _element = p_elem[i]
+
                     indent(p_elem[i], p_level + 1)
 
                     if not _element.tail or not _element.tail.strip():
@@ -305,7 +305,11 @@ class RunData(ListTree):
         indent(root_node)
 
         xml_file = ElementTree(root_node)
-        xml_file.write(p_file)
+
+        if p_file is not None:
+            xml_file.write(p_file)
+        else:
+            xml_file.write(self._file)
 
     def __list2etree(self, p_node=None):
 
@@ -314,9 +318,19 @@ class RunData(ListTree):
         else:
             _node = p_node
 
-        # Todo 如果 _node 格式不正确,报错,原因可能是没有进行查询
+        if not _node['content']:
+            _node = _node['children'][0]
 
+        # Todo 如果 _node 格式不正确,报错,原因可能是没有进行查询
         content = _node["content"]
+
+        for _key, _value in content.items():
+            if _value is None:
+                content[_key] = ''
+            elif isinstance(_value, int):
+                content[_key] = str(_value)
+            else:
+                pass
         if content["pid"] is None:
             content["pid"] = ""
 
@@ -327,7 +341,7 @@ class RunData(ListTree):
 
         return element
 
-    def load_list(self, p_path):
+    def load_data_list(self, p_path):
         """
         从文件中读取数据
         :param p_path:
@@ -335,6 +349,7 @@ class RunData(ListTree):
         """
         if not os.path.exists(p_path):
             return None
+        self._file = p_path
 
         element = ElementTree()
         try:
@@ -346,7 +361,7 @@ class RunData(ListTree):
         _list = self.__xml2list(element.getroot())
 
         # 解析成 tree
-        self.load("LIST", _list)
+        self.load_list(_list)
 
         # 去重
         self._clean_duplication()
@@ -367,7 +382,16 @@ class RunData(ListTree):
 
         return res
 
-    def update_status(self, p_cmd, p_node=None):
+    def update_status(self, p_cmd):
+        """
+
+        :param p_cmd:
+        :return:
+        """
+        self.update_tree(p_cmd)
+        self.update_list()
+
+    def update_tree(self, p_cmd, p_node=None):
         """
         更新状态
         :param p_cmd:
@@ -375,7 +399,11 @@ class RunData(ListTree):
         :param p_node:
         :return:
         """
-        current_node = self.tree if p_node is None else p_node
+        current_node = p_node or self.tree
+
+        if not current_node['content']:
+            current_node = current_node['children'][0]
+
         if not current_node:
             return
 
@@ -394,7 +422,7 @@ class RunData(ListTree):
         for _index in range(len_child):
 
             _child = current_node['children'][_index]
-            _result = self.update_status(p_cmd, _child)
+            _result = self.update_tree(p_cmd, _child)
 
             if _result is None:
                 continue

@@ -78,7 +78,11 @@ class ListTree(object):
         :param p_value:
         :return:
         """
-        self.load('LIST', p_value)
+        if not isinstance(p_value, list):
+            return
+
+        self.list = p_value
+        self.resolve_list()
 
     def load_tree(self, p_value):
         """
@@ -86,36 +90,46 @@ class ListTree(object):
         :param p_value:
         :return:
         """
-        self.load('TREE', p_value)
+        if not isinstance(p_value, dict):
+            return
+
+        self.tree = p_value
+        self.resolve_tree()
 
     def load(self, p_type, p_value):
-
+        """
+        读入数据
+        :param p_type:
+        :param p_value:
+        :return:
+        """
         if "LIST" == p_type:
-            self.list = p_value
-            self.resolve_list()
-
+            self.load_list(p_value)
         elif "TREE" == p_type:
-            self.tree = p_value
-            self.resolve_tree()
-
+            self.load_tree(p_value)
         else:
             pass
 
     def resolve_list(self):
         """
         解析已读入 list 数据
-        :param p_value:
         :return:
         """
-        self.resolve('LIST')
+        self._clean_duplication()
+        self.tree = dict(content='', children=[])
+
+        root_nodes = self._list_get_root()
+
+        for _node in root_nodes:
+            self.tree['children'].append(self._list2tree(_node))
 
     def resolve_tree(self):
         """
         解析已读入 tree 数据
-        :param p_value:
         :return:
         """
-        self.resolve('TREE')
+        self.list = self._tree2list(self.tree)
+        self._clean_duplication()
 
     def resolve(self, p_type):
         """
@@ -124,16 +138,28 @@ class ListTree(object):
         :return:
         """
         if "LIST" == p_type:
-            self._clean_duplication()
-            self.tree = dict()
-            self.tree = self._list2tree(self._list_get_root())
-
+            self.resolve_list()
         elif "TREE" == p_type:
-            self.list = self._tree2list(self.tree)
-            self._clean_duplication()
-
+            self.resolve_tree()
         else:
             pass
+
+    def get_tree_node(self, p_tree=None):
+        """
+        获取 TreeNode 类型的树
+        :param p_tree:
+        :return:
+        """
+        tree = p_tree or self.tree
+        if not tree:
+            return TreeNode('')
+
+        node = TreeNode(tree['content'])
+
+        for _item in tree['children']:
+            node.append_node(self.get_tree_node(_item))
+
+        return node
 
     def _list_get_root(self, p_root_id=None):
         """
@@ -141,11 +167,14 @@ class ListTree(object):
         :param p_root_id:
         :return:
         """
+        root_nodes = []
+        ids = [_item['id'] for _item in self.list]
+
         for _item in self.list:
-            if _item["pid"] == p_root_id:
-                return dict(content=_item, children=[])
-        else:
-            return None
+            if _item['pid'] not in ids:
+                root_nodes.append(dict(content=_item, children=[]))
+
+        return root_nodes
 
     def _list2tree(self, p_node):
         """
@@ -157,6 +186,7 @@ class ListTree(object):
             return
 
         for _item in self.list:
+
             _parent_id = p_node["content"]["id"]
             _item_pid = _item["pid"]
 
@@ -207,13 +237,15 @@ class ListTree(object):
         :param p_id:
         :return:
         """
-        if p_node is None:
-            p_node = self.tree
+        node = p_node or self.tree
 
-        if p_id == p_node['content']['id']:
-            return p_node
+        if not node['content']:
+            node = node['children'][0]
+
+        if p_id == node['content']['id']:
+            return node
         else:
-            for _child in p_node['children']:
+            for _child in node['children']:
                 result = self.get_children_tree(p_id, _child)
                 if result:
                     return result
@@ -236,14 +268,17 @@ class ListTree(object):
         :param p_id:
         :return:
         """
-        node_data = p_node if p_node is not None else self.tree
+        node = p_node or self.tree
 
-        if node_data['content']['id'] == p_id:
-            return [node_data['content']]
+        if not node['content']:
+            node = node['children'][0]
+
+        if node['content']['id'] == p_id:
+            return [node['content']]
         else:
-            result = [node_data['content']]
+            result = [node['content']]
 
-            for _item in node_data['children']:
+            for _item in node['children']:
                 temp = self.get_path(p_id, _item)
 
                 if temp is not None:
@@ -251,20 +286,3 @@ class ListTree(object):
                     return result
 
             return None
-
-    # def steps(self, p_node=None):
-    #     """
-    #     形成列表迭代,可能没有用
-    #     :param p_node:
-    #     :return:
-    #     """
-    #     if p_node is None:
-    #         node = self.tree
-    #     else:
-    #         node = p_node
-    #
-    #     for _item in node["children"]:
-    #         for _sub in self.steps(_item):
-    #             yield _sub
-    #
-    #     yield node["content"]

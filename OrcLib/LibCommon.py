@@ -1,6 +1,8 @@
 # coding=utf-8
+import re
 import sys
 import time
+import random
 
 
 def is_equal_str(str_a, str_b):
@@ -55,7 +57,7 @@ class OrcCovert:
     def time2str(p_time):
         try:
             _res = p_time.strftime("%Y-%m-%d %H:%M:%S")
-        except AttributeError:
+        except (AttributeError, TypeError):
             _res = None
         return _res
 
@@ -63,12 +65,12 @@ class OrcCovert:
     def str2time(p_str):
         try:
             _res = time.mktime(time.strptime(p_str, "%Y-%m-%d %H:%M:%S"))
-        except AttributeError:
+        except (AttributeError, TypeError):
             _res = None
         return _res
 
 
-class DateStr(object):
+class OrcString(object):
 
     def __init__(self):
 
@@ -85,3 +87,51 @@ class DateStr(object):
         :return:
         """
         return time.strftime("%Y%m%d%H%M%S")
+
+    @staticmethod
+    def fetch_string(p_start, p_end, p_str):
+        """
+        根据起始和结束字符串截取一个字符串,找不到返回 None
+        :param p_start:
+        :type p_start: str
+        :param p_end:
+        :type p_end: str
+        :param p_str:
+        :type p_str: str
+        :return:
+        """
+        start_index = p_str.find(p_start)
+        end_index = p_str.find(p_end)
+        if (0 >= start_index) or (0 >= end_index):
+            return ''
+
+        start_index += len(p_start)
+
+        return p_str[start_index:end_index].strip()
+
+    @staticmethod
+    def random_by_len(p_length):
+        """
+        获取指定长度随机数
+        :param p_length:
+        :return:
+        """
+        try:
+            num = int(p_length)
+        except (ValueError, TypeError):
+            return ''
+
+        if 0 >= num:
+            return ''
+
+        return random.randint(10**(num - 1), (10**num - 1))
+
+    @staticmethod
+    def trim_str_list(p_list):
+        """
+        list 中所有的 string 进行 trim 操作
+        :return:
+        """
+        for _index in range(len(p_list)):
+            p_list[_index] = re.sub('^[ \t]*', '', p_list[_index])
+            p_list[_index] = re.sub('[ \t]*$', '', p_list[_index])

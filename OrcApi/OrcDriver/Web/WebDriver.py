@@ -1,18 +1,18 @@
 # coding=utf-8
 import time
-import time
 import multiprocessing
 from multiprocessing import queues
 from time import sleep
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import WebDriverException
 
 from OrcApi.OrcDriver.Web.Widget.OrcWidget import WidgetBlock
 from OrcApi.OrcDriver.Web.Widget.WidgetA import WidgetA
 from OrcApi.OrcDriver.Web.Widget.WidgetAlert import WidgetAlert
 from OrcApi.OrcDriver.Web.Widget.WidgetButton import WidgetButton
 from OrcApi.OrcDriver.Web.Widget.WidgetInput import WidgetInput
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.common.exceptions import WebDriverException
+from OrcApi.OrcDriver.Web.Widget.WidgetMulti import WidgetMulti
 
 from OrcApi.OrcDriver.Web.Widget.WidgetSelect import WidgetSelect
 from OrcLib import LibCommon
@@ -38,10 +38,10 @@ class WebDriver:
         self._driver_configer = get_config("driver")
 
         # 浏览器
-        self._browser = self._driver_configer.get_option('WEB', 'browser')
+        self._browser = None
 
         # 环境
-        self._env = self._driver_configer.get_option('DEFAULT', 'env')
+        self._env = None
 
         # 窗口,用于窗口切换
         self._window = None
@@ -54,15 +54,6 @@ class WebDriver:
 
         # 截图
         self._pic_name = self._driver_configer.get_option("WEB", "pic_name")
-
-    def set_env(self, p_env):
-        """
-        设置环境
-        :param p_env:
-        :return:
-        """
-        self._env = p_env
-        self._driver_configer.set_option('DEFAULT', 'environment', p_env)
 
     def execute(self, p_cmd):
         """
@@ -77,6 +68,9 @@ class WebDriver:
             _status = self.__get_page(p_cmd)
         elif p_cmd.is_widget():
             _status = self.__action(p_cmd)
+        elif p_cmd.is_driver():
+            self.__run_sys_cmd(p_cmd.cmd_operation)
+            return True
         else:
             self._logger.error("Wrong type %s." % p_cmd.cmd_type)
             return False
@@ -91,9 +85,13 @@ class WebDriver:
         """
         操作
         :param p_para:
-        :type p_para: WebCmd
         :return:
         """
+        # 多控件操作
+        if 1 < len(p_para.cmd_object):
+            _node = WidgetMulti(self._root, p_para.cmd_object)
+            _node.execute(p_para)
+
         _definition = self._service.widget_get_definition(p_para.cmd_object)
 
         # 输入框
@@ -114,6 +112,11 @@ class WebDriver:
         # 下拉框
         elif "SELECT" == _definition.widget_type:
             _node = WidgetSelect(self._root, p_para.cmd_object)
+            result = _node.execute(p_para)
+
+        # 双控件操作
+        elif "MULTI" == _definition.widget_type:
+            _node = WidgetMulti(self._root, p_para.cmd_object)
             result = _node.execute(p_para)
 
         # win 提示框
@@ -140,12 +143,14 @@ class WebDriver:
         # 浏览器
         self._browser = self._driver_configer.get_option("WEB", "browser")
         if not self._browser:
-            self._browser = "PHANTOMJS"
+            self._logger.error('browser is not set')
+            return False
 
         # 环境
-        self._env = self._driver_configer.get_option("WEB", "env")
+        self._env = self._driver_configer.get_option("DEFAULT", "environment")
         if not self._env:
-            self._env = "TEST"
+            self._logger.error('environment is not set')
+            return False
 
         if self._root is None:
 
@@ -180,17 +185,22 @@ class WebDriver:
 
             # 打开界面
             try:
-                self.get(_url)
+                self._root.get(_url)
             except TimeoutException:
                 pass
 
         elif "MAX" == p_para.cmd_type:
             self._root.maximize_window()
 
-        elif "QUIT" == p_para.cmd_object:
-            self._root.quit()
-
         return self._root is not None
+
+    def __run_sys_cmd(self, p_cmd):
+        """
+        运行系统命令
+        :return:
+        """
+        if ("QUIT" == p_cmd) and self._root is not None:
+            self._root.quit()
 
     def get(self, p_url, p_timeout=40):
 

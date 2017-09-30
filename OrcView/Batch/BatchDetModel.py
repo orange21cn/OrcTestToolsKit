@@ -94,18 +94,24 @@ class BatchDetModel(ModelTable):
         if not ResourceCheck.result_status(batch_det_info, u"查询计划用例列表", self.__logger):
             return list()
 
+        batch_det_data = batch_det_info.data
+
         # case_det id 列表
-        case_def_id_list = [batch_det["case_id"] for batch_det in batch_det_info.data]
+        case_def_id_list = [batch_det["case_id"] for batch_det in batch_det_data['data']]
 
         # case_def 列表
         case_info = self.__resource_case_def.get(parameter=dict(id=case_def_id_list))
 
         # 检查结果
-        if not ResourceCheck.result_status(batch_det_info, u"查询用例信息列表", self.__logger):
+        if not ResourceCheck.result_status(case_info, u"查询用例信息列表", self.__logger):
             return list()
 
         # 打印成功信息
         ResourceCheck.result_success(u"查询用例信息列表", self.__logger)
 
         # 连接 list 并返回
-        return connect_list(batch_det_info.data, case_info.data, "case_id")
+        res_data = connect_list(batch_det_data['data'], case_info.data, "case_id")
+        batch_det_data['data'] = res_data
+        print batch_det_data
+
+        return batch_det_data

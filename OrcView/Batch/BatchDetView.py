@@ -41,6 +41,9 @@ class BatchDetView(OrcDisplayView):
             dict(id="act_delete", name=u"删除"),
             dict(id="act_search", name=u"查询")]
 
+        # 初始化界面
+        self.main.init_view()
+
     def act_add(self):
         """
         新增
@@ -51,7 +54,7 @@ class BatchDetView(OrcDisplayView):
             return
 
         ids = [_item['id'] for _item in _data]
-        self.display.model.mod_add(dict(batch_id=self._batch_id, case=ids))
+        self.model.mod_add(dict(batch_id=self._batch_id, case=ids))
 
     def act_delete(self):
         """
@@ -59,7 +62,7 @@ class BatchDetView(OrcDisplayView):
         :return:
         """
         if OrcMessage.question(self, u"确认删除"):
-            self.display.model.mod_delete()
+            self.model.mod_delete()
 
     def act_search(self):
         """

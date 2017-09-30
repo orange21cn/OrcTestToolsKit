@@ -1,4 +1,5 @@
 from OrcWidget import WidgetBlock
+from OrcLib.LibCmd import WebCmd
 
 
 class WidgetInput(WidgetBlock):
@@ -8,21 +9,23 @@ class WidgetInput(WidgetBlock):
         WidgetBlock.__init__(self, p_root, p_id)
 
     def execute(self, p_para):
+        """
 
+        :param p_para:
+        :type p_para: WebCmd
+        :return:
+        """
         res = self.basic_execute(p_para)
 
         if res is not None:
             return res
 
-        _flag = p_para["OPERATION"]
-        _data = None if "DATA" not in p_para else p_para["DATA"]
-
-        if "INPUT" == _flag:
+        if "INPUT" == p_para.cmd_operation:
 
             if self._widget.get_attribute("value") is not None:
                 self._widget.clear()
 
-            self._widget.send_keys(_data)
+            self._widget.send_keys(str(p_para.data_inp[0]))
 
             return True
 

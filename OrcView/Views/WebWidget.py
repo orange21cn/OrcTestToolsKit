@@ -86,7 +86,7 @@ class OperationSelect(OrcSelectBase):
         self._type = p_type
 
         # 查询条件
-        if self._type in ('BLOCK', 'PAGE', 'WINDOW', 'ALERT', 'GROUP'):
+        if self._type in ('BLOCK', 'PAGE', 'WINDOW', 'ALERT', 'GROUP', 'MULTI'):
             cond = dict(type_name=self._type)
         else:
             cond = dict(type_name=['BLOCK', self._type])

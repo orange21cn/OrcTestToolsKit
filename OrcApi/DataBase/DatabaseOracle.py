@@ -94,7 +94,7 @@ class DatabaseOracle(object):
 
             result = self.db_execute(
                 "SELECT column_name"
-                "  FROM user_db_columns"
+                "  FROM user_tab_columns"
                 " WHERE TABLE_NAME = '%s'" % table_name
             )
 

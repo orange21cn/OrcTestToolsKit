@@ -153,6 +153,23 @@ class OrcDefaultDict(object):
         if isinstance(data_dict, dict):
             self._data = data_dict
 
+    def init(self, data_dict=None, default=None, func=None):
+        """
+        初始化
+        :param func:
+        :param default:
+        :param data_dict:
+        :return:
+        """
+        # 执行函数
+        self._func = func
+
+        # 默认值
+        self._default = default
+
+        if isinstance(data_dict, dict):
+            self._data = data_dict
+
     def value(self, p_key, p_default=None):
         """
         值
@@ -251,6 +268,8 @@ class OrcOrderedDict(object):
     def append(self, p_key, p_value):
         """
         增加一个值
+        :param p_value:
+        :param p_key:
         :return:
         """
         self._order.append(p_key)

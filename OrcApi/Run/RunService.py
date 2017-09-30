@@ -1,7 +1,4 @@
 # coding=utf-8
-import os
-
-from OrcLib import get_config
 from OrcLib.LibLog import OrcLog
 from OrcLib.LibNet import OrcResource
 from OrcLib.LibNet import OrcSocketResource
@@ -9,6 +6,7 @@ from OrcLib.LibNet import ResourceCheck
 from OrcLib.LibCmd import OrcCmd
 from OrcLib.LibDatabase import TabItem
 from OrcLib.LibProgram import OrcDataStruct
+from OrcLibFrame.LibData import OrcDataClient
 
 from OrcLib.LibCmd import OrcRecordCmd
 
@@ -27,7 +25,7 @@ class RunCoreService(object):
 
         self.__resource_driver = OrcSocketResource('Driver')
         self.__resource_item = OrcResource("Item")
-        self.__resource_data = OrcResource("Data")
+        self.__data_client = OrcDataClient()
 
     def new_launch_web_step(self, p_cmd):
         """
@@ -66,9 +64,10 @@ class RunCoreService(object):
 
         return TabItem(result.data)
 
-    def get_data(self, p_def_list, p_object_id):
+    def get_data(self, p_env, p_def_list, p_object_id):
         """
-        获取数据
+        获取数据,获取则返回,未获取报错
+        :param p_env:
         :param p_object_id:
         :param p_def_list:
         :type p_def_list: list
@@ -77,34 +76,13 @@ class RunCoreService(object):
         for _node in OrcDataStruct.iterator_reversed_list(p_def_list):
 
             _cmd = OrcRecordCmd(_node)
+            _scope = _cmd.get_scope()
 
-            if _cmd.is_batch_type():
-                _type = 'BATCH'
-            elif _cmd.is_case_type():
-                _type = 'CASE'
-            elif _cmd.is_step_type():
-                _type = 'STEP'
-            elif _cmd.is_item_type():
-                _type = 'ITEM'
-            else:
-                _type = ''
+            self.__data_client.set_env(p_env)
 
-            result = self.__resource_data.get(
-                parameter=dict(src_id=_cmd.id, src_type=_type, data_flag=p_object_id))
+            result = self.__data_client.get_one(_scope, _cmd.id, p_object_id)
 
-            # 检查结果
-            if not ResourceCheck.result_status(result, u"获取%s数据" % _type, self.__logger):
-                continue
-
-            # 打印成功信息
-            ResourceCheck.result_success(u"获取%s数据" % _type, self.__logger)
-
-            if result.data:
-                break
-        else:
-            return None
-
-        if result.data:
-            return result.data[0]["data_value"]
+            if result:
+                return result
         else:
             return None

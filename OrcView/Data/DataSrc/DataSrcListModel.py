@@ -7,7 +7,7 @@ from OrcView.Lib.LibTable import ModelTable
 
 class DataSrcListModel(ModelTable):
     """
-
+    数据源列表模型
     """
     def __init__(self):
 
@@ -67,7 +67,7 @@ class DataSrcListModel(ModelTable):
         """
         result = self._resource.get()
 
-        if not ResourceCheck.result_status(result, '查找数据源'):
+        if not ResourceCheck.result_status(result, u'查找数据源'):
             return list()
 
         return result.data

@@ -118,7 +118,7 @@ class DataFlagModel(ModelTable):
 
                 cmd = WebCmd(eval(_item_data['item_operate']))
 
-                if not cmd.data:
+                if not cmd.data_num:
                     continue
 
                 if cmd.is_page():
@@ -135,7 +135,7 @@ class DataFlagModel(ModelTable):
                     flag=cmd.get_flag(),
                     data_flag_type=cmd.cmd_type,
                     item_mode=_item_data['item_mode'],
-                    num=cmd.data,
+                    num=cmd.data_num,
                     desc=obj_desc,
                 )
 

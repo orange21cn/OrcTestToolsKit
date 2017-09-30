@@ -1,223 +1,205 @@
-[2017-08-21 18:06:47 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 85, in start
-    print 100, res_data
-IOError: [Errno 32] Broken pipe
+[2017-09-27 14:02:14 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 680, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 547, in cmd_object
+    self.cmd_object[0] = p_id
+TypeError: 'NoneType' object does not support item assignment
 
-[2017-08-21 18:07:24 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-21 18:07:33 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-21 18:10:00 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-21 18:10:10 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:47:38 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:47:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:48:20 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
-[2017-08-22 13:49:48 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:49:59 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:50:38 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
-[2017-08-22 13:52:18 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:52:27 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:54:48 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-22 13:54:48 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
-    _res = self._driver.web.execute(web_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
-    self.save_screen()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 225, in save_screen
-    return
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
-    return self.get_screenshot_as_file(filename)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
-    png = self.get_screenshot_as_png()
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
-    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
-    return self.execute(Command.SCREENSHOT)['value']
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
-    self.error_handler.check_response(response)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
-    raise exception_class(message, screen, stacktrace)
-WebDriverException: Message: Tried to run command without establishing a connection
+[2017-09-27 14:04:30 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:04:44 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:04:44 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 14:04:44 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 680, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 547, in cmd_object
+    self.cmd_object[0] = p_id
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 543, in cmd_object
+    return self.cmd_object_ids[0]
+IndexError: list index out of range
 
+[2017-09-27 14:11:20 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:11:29 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:11:29 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 14:11:29 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 686, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 550, in cmd_object
+    self.cmd_object[0] = p_id
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 544, in cmd_object
+    return self.cmd_object_ids[0]
+IndexError: list index out of range
 
-[2017-08-22 13:54:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
-[2017-08-22 13:54:51 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
-[2017-08-22 13:54:53 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:55:03 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:55:12 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:58:19 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-22 13:58:19 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
-    _res = self._driver.web.execute(web_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
-    self.save_screen()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 227, in save_screen
-    self._root.save_screenshot(self._pic_name)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
-    return self.get_screenshot_as_file(filename)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
-    png = self.get_screenshot_as_png()
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
-    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
-    return self.execute(Command.SCREENSHOT)['value']
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
-    self.error_handler.check_response(response)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
-    raise exception_class(message, screen, stacktrace)
-WebDriverException: Message: Tried to run command without establishing a connection
+[2017-09-27 14:13:00 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:13:13 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:13:13 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 14:13:13 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 686, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 550, in cmd_object
+    self.cmd_object[0] = p_id
+TypeError: 'NoneType' object does not support item assignment
 
+[2017-09-27 14:50:55 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:51:06 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:51:06 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 14:51:06 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 680, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 547, in cmd_object
+    self.cmd_object['FROM'] = p_id
+TypeError: 'NoneType' object does not support item assignment
 
-[2017-08-22 13:58:22 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
-[2017-08-22 13:58:22 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
-[2017-08-22 13:58:23 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:58:34 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:58:49 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 13:59:40 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-22 13:59:40 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
-    _res = self._driver.web.execute(web_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
-    self.save_screen()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 227, in save_screen
-    self._root.save_screenshot(self._pic_name)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 858, in save_screenshot
-    return self.get_screenshot_as_file(filename)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 837, in get_screenshot_as_file
-    png = self.get_screenshot_as_png()
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 867, in get_screenshot_as_png
-    return base64.b64decode(self.get_screenshot_as_base64().encode('ascii'))
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 877, in get_screenshot_as_base64
-    return self.execute(Command.SCREENSHOT)['value']
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
-    self.error_handler.check_response(response)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
-    raise exception_class(message, screen, stacktrace)
-WebDriverException: Message: Tried to run command without establishing a connection
+[2017-09-27 14:52:44 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:52:52 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:52:52 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 14:52:52 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 539, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 680, in set_cmd
+    self.cmd_object = _cmd.value('OBJECT')
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 547, in cmd_object
+    self.cmd_object['FROM'] = p_id
+TypeError: 'NoneType' object does not support item assignment
 
+[2017-09-27 14:53:59 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:54:14 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:54:14 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 14:56:20 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 14:56:32 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 14:56:32 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:01:10 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:12:33 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:12:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:12:59 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:23:06 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:23:06 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:41:49 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:41:59 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:41:59 driver.web.selenium] ERROR Driver run command failed!
+[2017-09-27 15:41:59 driver.web.selenium] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 98, in start
+    _res = self.launch_system_command(sys_command, command.session)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 182, in launch_system_command
+    web_cmd = WebCmd()
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 540, in __init__
+    self.set_cmd(p_cmd)
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcLib/LibCmd.py", line 684, in set_cmd
+    self.cmd_object = _cmd_object[0]
+TypeError: 'NoneType' object has no attribute '__getitem__'
 
-[2017-08-22 13:59:41 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
-[2017-08-22 13:59:41 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
-[2017-08-22 13:59:42 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 13:59:50 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 14:00:04 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 14:00:57 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
-[2017-08-22 14:34:14 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 14:34:24 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 14:35:16 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
-[2017-08-22 14:36:24 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 14:36:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 14:37:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run web command succeed', 'DATA': True}
-[2017-08-22 14:38:28 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
-[2017-08-22 14:38:28 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
-[2017-08-22 14:38:39 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 14:49:05 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 14:49:26 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'DRIVER', u'CMD': {u'DTYPE': u'WEB', u'CMD': {u'OPERATION': u'GET', u'OBJECT': u'300000004', u'TYPE': u'PAGE'}, u'MODE': None}}
-[2017-08-22 14:49:27 driver.web.selenium] ERROR Open browser failed.
-[2017-08-22 14:49:27 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 162, in __get_page
-    self._root = webdriver.Chrome(executable_path=driver_path)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/chrome/webdriver.py", line 69, in __init__
-    desired_capabilities=desired_capabilities)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 98, in __init__
-    self.start_session(desired_capabilities, browser_profile)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 188, in start_session
-    response = self.execute(Command.NEW_SESSION, parameters)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 256, in execute
-    self.error_handler.check_response(response)
-  File "/Library/Python/2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 194, in check_response
-    raise exception_class(message, screen, stacktrace)
-WebDriverException: Message: chromeOptions was not a the name of a known capability or a valid extension capability
-
-
-[2017-08-22 14:49:28 driver.web.selenium] ERROR Driver run command failed!
-[2017-08-22 14:49:28 driver.web.selenium] ERROR Traceback (most recent call last):
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/OrcDriver.py", line 119, in start
-    _res = self._driver.web.execute(web_command)
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 84, in execute
-    self.save_screen()
-  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcApi/OrcDriver/Web/WebDriver.py", line 224, in save_screen
-    self._root.save_screenshot(self._pic_name)
-AttributeError: 'NoneType' object has no attribute 'save_screenshot'
-
-[2017-08-22 15:10:53 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 15:12:09 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 15:26:11 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 16:22:57 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 16:31:20 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 16:34:49 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 17:14:33 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 17:51:26 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 17:56:26 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 17:58:55 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 17:59:51 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 18:02:28 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 18:03:18 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 18:28:30 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 18:29:49 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-22 18:30:25 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:28:12 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:45:54 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:46:23 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:57:16 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:57:37 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 14:58:48 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 15:00:02 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 15:00:28 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:06:37 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:07:18 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:07:54 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:08:37 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:13:56 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:14:38 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:20:26 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:22:24 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:26:15 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:29:43 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:30:17 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 16:57:10 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:21:52 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:23:15 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:25:15 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:26:04 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:31:34 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:32:49 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:34:59 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:38:13 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:42:15 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:45:01 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:46:30 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 17:52:02 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 18:51:01 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 18:51:51 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 18:52:25 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 18:57:27 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 19:01:09 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 19:02:03 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-23 19:04:19 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:09:26 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:13:04 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:23:08 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:32:09 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:33:02 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:34:14 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:35:38 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:43:44 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:46:46 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:47:25 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:49:33 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 09:54:38 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:06:09 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:08:30 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:10:15 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:13:18 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:14:21 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:21:43 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:23:08 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:34:38 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:36:48 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:39:00 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:43:05 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:44:52 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:46:21 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 10:53:51 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 11:10:30 driver.web.selenium] INFO Start driver server on localhost:5001
-[2017-08-24 11:19:32 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:43:49 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:44:07 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:44:07 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:44:25 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:44:35 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:44:35 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:45:41 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:45:56 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:45:56 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:50:41 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:50:54 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:50:54 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:51:33 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:53:30 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:53:30 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 15:53:35 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 15:55:10 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 15:55:10 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:01:03 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:01:33 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:01:33 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:03:34 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:03:56 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:03:56 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:04:32 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:04:50 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:04:50 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:07:37 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:07:57 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:07:57 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:08:30 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:09:54 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:09:54 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:20:02 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:20:20 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:20:20 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:23:50 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:23:51 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:23:51 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:26:27 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:27:40 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:27:40 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-27 16:31:59 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-27 16:32:48 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-27 16:32:48 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 09:36:11 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 09:41:41 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 09:41:41 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 09:41:46 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 09:48:31 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 09:48:31 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 09:54:24 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:06:03 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:06:03 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:06:09 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:15:21 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:15:21 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:16:44 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:17:02 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:17:02 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:20:24 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:25:59 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:25:59 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:26:04 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:26:26 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:26:26 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:28:03 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:28:20 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:28:20 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:32:35 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:32:57 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:32:57 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:34:05 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:39:37 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:39:37 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:39:42 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:40:58 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:40:58 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:42:59 driver.web.selenium] INFO Start driver server on localhost:5001
+[2017-09-28 10:43:30 driver.web.selenium] INFO Run command {u'SESSION': None, u'TYPE': u'SYSTEM', u'CMD': {u'OPERATION': u'QUIT', u'DATA': None}}
+[2017-09-28 10:43:30 driver.web.selenium] INFO Result is {'STATUS': True, 'MESSAGE': 'Run system command succeed.', 'DATA': None}
+[2017-09-28 10:46:24 driver.web.selenium] INFO Start driver server on localhost:5001

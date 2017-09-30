@@ -1,132 +1,141 @@
-[2017-08-24 16:34:48 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:42 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:46:42 view.table.model] ERROR None
 
-[2017-08-24 16:34:48 view.lib.view_def] ERROR get dict test_env failed.
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:44 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:46:44 view.table.model] ERROR None
 
-[2017-08-24 16:34:48 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:45 view.table.model] ERROR 获取 item 数据 ['240000069']失败, None
+[2017-09-14 16:46:45 view.table.model] ERROR None
 
-[2017-08-24 16:34:48 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:47 view.table.model] ERROR 获取 item 数据 ['240000069']失败, None
+[2017-09-14 16:46:47 view.table.model] ERROR None
 
-[2017-08-24 16:34:48 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:48 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:46:48 view.table.model] ERROR None
 
-[2017-08-24 16:34:48 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:34:48 view.lib.view_def] ERROR None
+[2017-09-14 16:46:52 view.table.model] ERROR 获取 item 数据 ['240000069']失败, None
+[2017-09-14 16:46:52 view.table.model] ERROR None
 
-[2017-08-24 16:34:49 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:49 view.lib.view_def] ERROR None
+[2017-09-14 16:46:52 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:46:52 view.table.model] ERROR None
 
-[2017-08-24 16:34:49 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:34:49 view.lib.view_def] ERROR None
+[2017-09-14 16:47:15 view.table.model] ERROR 获取 item 数据 ['240000074']失败, None
+[2017-09-14 16:47:15 view.table.model] ERROR None
 
-[2017-08-24 16:34:49 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:49 view.lib.view_def] ERROR None
+[2017-09-14 16:47:17 view.table.model] ERROR 获取 item 数据 ['240000074']失败, None
+[2017-09-14 16:47:17 view.table.model] ERROR None
 
-[2017-08-24 16:34:49 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:34:49 view.lib.view_def] ERROR None
+[2017-09-14 16:47:19 view.table.model] ERROR 获取 item 数据 ['240000069']失败, None
+[2017-09-14 16:47:19 view.table.model] ERROR None
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-14 16:47:20 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:47:20 view.table.model] ERROR None
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR get dict test_env failed.
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-14 16:47:34 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:47:34 view.table.model] ERROR None
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-14 16:48:38 view.table.model] ERROR 获取 item 数据 ['240000074', '240000069']失败, None
+[2017-09-14 16:48:38 view.table.model] ERROR None
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:26 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:26 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:26 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:26 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:26 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:26 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:26 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:26 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:34:52 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:34:52 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR get dict test_env failed.
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:27 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:27 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:33 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:33 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:33 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:33 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:33 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:33 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
+[2017-09-19 13:29:33 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:33 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 
-[2017-08-24 16:35:35 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:35:35 view.lib.view_def] ERROR None
-
-[2017-08-24 16:37:18 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:37:18 view.lib.view_def] ERROR None
-
-[2017-08-24 16:37:18 view.lib.view_def] ERROR get dict batch_type failed.
-[2017-08-24 16:37:18 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR get dict test_env failed.
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR get dict widget_type failed.
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:39:27 view.lib.view_def] ERROR get dict widget_attr_type failed.
-[2017-08-24 16:39:27 view.lib.view_def] ERROR None
-
-[2017-08-24 16:42:29 view.lib.view_def] ERROR 获取字典值失败, None
-[2017-08-24 16:42:29 view.lib.view_def] ERROR None
-
-[2017-08-24 16:42:29 view.lib.view_def] ERROR get dict case_type failed.
-[2017-08-24 16:42:29 view.lib.view_def] ERROR None
+[2017-09-19 13:29:34 view.table.model] ERROR select value error: data_type, USER_DEFINE
+[2017-09-19 13:29:34 view.table.model] ERROR Traceback (most recent call last):
+  File "/Users/zhaojingping/PycharmProjects/AuxiTools/test/OrcTestToolsKit/OrcView/Lib/LibTable.py", line 138, in data
+    return self._definition.select_def[_field.id][_value]
+KeyError: u'USER_DEFINE'
 

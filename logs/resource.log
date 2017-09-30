@@ -1,28 +1,4 @@
-[2017-08-25 11:12:50 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'dict_flag': 'batch_type'}, 'TYPE': 'dictionary'}
-[2017-08-25 11:12:52 resource.batch_defs.api] INFO Search batch_def, parameter is: {'type': 'all'}
-[2017-08-25 11:13:06 resource.batch_defs.api] INFO Delete batch_def, parameter is: [100000040, 100000041]
-[2017-08-25 11:13:06 resource.batch_defs.api] INFO Search batch_def, parameter is: {'type': 'all'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'test_env'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'widget_attr_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'widget_attr_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:18:31 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'dict_flag': 'result'}, 'TYPE': 'dictionary'}
-[2017-08-25 14:18:33 resource.page_defs.api] INFO Search page_def, parameter is: {}
-[2017-08-25 14:18:34 resource.page_dets.api] INFO Search page_det, parameter is: {'page_id': 300000002}
-[2017-08-25 14:18:39 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'type_name': 'PAGE'}, 'TYPE': 'widget_operation'}
-[2017-08-25 14:18:42 resource.page_def.api] INFO Search page_def, parameter is: 300000002
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'test_env'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'widget_attr_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'dict_flag': 'widget_attr_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {}, 'TYPE': 'widget_type'}
-[2017-08-25 14:20:04 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'dict_flag': 'result'}, 'TYPE': 'dictionary'}
-[2017-08-25 14:20:05 resource.page_defs.api] INFO Search page_def, parameter is: {}
-[2017-08-25 14:20:07 resource.page_dets.api] INFO Search page_det, parameter is: {'page_id': 300000002}
-[2017-08-25 14:20:08 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'type_name': 'PAGE'}, 'TYPE': 'widget_operation'}
-[2017-08-25 14:20:10 resource.page_def.api] INFO Search page_def, parameter is: 300000002
+[2017-09-29 13:17:38 resource.widget_def.api] INFO Search widget_def, parameter is: 330000018
+[2017-09-29 13:17:38 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'ope_name': 'DRAG_AND_DROP'}, 'TYPE': 'widget_operation'}
+[2017-09-29 13:17:38 resource.widget_def.api] INFO Search widget_def, parameter is: 330000018
+[2017-09-29 13:17:38 resource.dicts.api] INFO Search dict, parameter is: {'DATA': {'ope_name': 'INPUT'}, 'TYPE': 'widget_operation'}
